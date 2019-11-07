@@ -16,14 +16,14 @@ class Product_Categories extends Model
      * 
      * @var string
      */
-    protected $table = 'product_categories';
+    protected $table = 'Product_categories';
 
     /**
      * The primary key for the model.
      * 
      * @var string
      */
-    protected $primaryKey = 'idproduct_category';
+    protected $primaryKey = 'idProduct_category';
 
     /**
      * @var array
