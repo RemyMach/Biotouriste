@@ -39,4 +39,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function status()
+    {
+        return $this->belongsTo(Status_User::class,"Status_User_idStatus_User", "idStatus_User");
+    }
 }
