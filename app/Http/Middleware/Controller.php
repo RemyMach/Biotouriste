@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class Admin
+class Controller
 {
     private $auth;
     /**
@@ -18,7 +18,7 @@ class Admin
     {
         $this->auth =
             auth()->user() ?
-                (preg_match('#admin#i',auth()->user()->status['status_user_label']))
+                (preg_match('#controller#i',auth()->user()->status['status_user_label']))
                 : 0;
 
         if($this->auth === 1){
