@@ -12,7 +12,7 @@ class CreateProductCategoriesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('product_categories', function(Blueprint $table)
+		Schema::create('Product_categories', function(Blueprint $table)
 		{
 			$table->integer('idProduct_category', true);
 			$table->string('product_label', 45);
@@ -27,7 +27,7 @@ class CreateProductCategoriesTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('product_categories');
+		Schema::drop('Product_categories');
 	}
 
 }
