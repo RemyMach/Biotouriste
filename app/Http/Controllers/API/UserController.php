@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
@@ -15,10 +16,10 @@ class UserController extends Controller
     {
         $user = User::all();
         $response = [
-            'success' => true,
             'data'    => $user,
         ];
 
         return response()->json($response, 200);
     }
+
 }
