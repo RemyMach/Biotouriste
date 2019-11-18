@@ -10,6 +10,11 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+    }
+
     protected $primaryKey = 'idUser';
 
     /**
@@ -18,7 +23,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'user_name','user_surname','user_adress','user_postal_code','user_phone','user_mail',
+        'user_name','user_surname','user_adress','user_postal_code','user_phone','email',
         'password','user_img','remember_token','Status_User_idStatus_User','api_token',
     ];
 
@@ -28,7 +33,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'remember_token',
     ];
 
     /**

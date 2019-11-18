@@ -4,17 +4,25 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use App\Http\Resources\User as UserResource;
+use GuzzleHttp\Client;
 
 class UserController extends Controller
 {
+    protected $user;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $client = new Client();
+        $request = $client->get('http://localhost:8001/api/users');
+        $responses = json_decode($request->getBody()->getContents());
+
+        return view('test',compact('responses'));
+
     }
 
     /**
@@ -24,7 +32,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('form.view');
     }
 
     /**
@@ -41,12 +49,24 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\User  $user
+     * @param \App\User $user
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(User $user,Request $request)
     {
-        //
+        $this->user = $request->session()->get('user');
+
+        abort_if($user->idUser !== $this->user->idUser,403);
+
+        $client = new Client();
+        $request = $client->get(
+            'http://localhost:8001/api/show/?api_token='.$this->user->idUser->api_token);
+        $response = json_decode($request->getBody()->getContents());
+
+        $user = User::findOrFail($user->id);
+
+        return view('users.profile',compact("user"));
     }
 
     /**
