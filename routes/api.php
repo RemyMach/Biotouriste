@@ -30,6 +30,11 @@ Route::get('user/delete','API\UserController@destroy');
 
 Route::post('user/email','API\ForgotPasswordController@sendResetLinkEmail');
 
+Route::post('user/showResetForm','API\ResetPasswordController@showResetForm');
+
+Route::post('user/reset','API\ResetPasswordController@reset');
+
+
 
 /*Route::get('/users', function () {
     return UserResource::collection(User::paginate(2));

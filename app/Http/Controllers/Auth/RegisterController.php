@@ -60,7 +60,7 @@ class RegisterController extends Controller
 
         if($response->status === "400")
         {
-            return redirect($this->redirectPath());
+            return redirect($this->redirectTo);
         }
 
         $User_attributes_array = json_decode(json_encode($response->user),true);

@@ -26,8 +26,6 @@ class RegisterController extends Controller
             'user_img' => ['string'],
         ]);
 
-        /*var_dump($validator);
-        die();*/
         if($validator->fails())
         {
             return response()->json([

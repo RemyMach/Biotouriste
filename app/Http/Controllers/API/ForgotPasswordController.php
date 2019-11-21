@@ -5,8 +5,11 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\API\ApiTokenController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\HomeController;
+use App\Mail\UserForgotPassword;
+use App\password_resets;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -51,12 +54,21 @@ class ForgotPasswordController extends Controller
             ]);
         }
         $token = Str::random(80);
+        $urlgenerate = action('Auth\ResetPasswordController@reset', ['token' => $token,'email' => $email]);
 
-        $urlgenerate = action('ResetPasswordController@reset', ['token' => $token,'email' => $email]);
+        $urlgenerate = preg_replace('#8001#','8000',$urlgenerate);
 
-        $url = preg_replace('#8001#','8000',$urlgenerate);
+        $urlgenerate = preg_replace('#%40#','@',$urlgenerate);
 
-        return $url;
+        $urlgenerate = preg_replace('#&amp#','&',$urlgenerate);
+
+        $password_resets = $this->addTokenEmailToDB($token,$email);
+
+        $this->sendEmail($password_resets,$urlgenerate);
+
+        return response()->json([
+            'status'    => '200',
+        ]);
     }
 
     public function verifyEmailExist($email)
@@ -88,6 +100,13 @@ class ForgotPasswordController extends Controller
 
     protected function addTokenEmailToDB(string $token, string $email)
     {
+        $password_reset = password_resets::create(['email' => $email,'token' => $token]);
 
+        return $password_reset;
+    }
+
+    protected function sendEmail($password_reset,$url){
+
+        Mail::to('rmachavoine@wynd.eu')->send(new UserForgotPassword($password_reset,$url));
     }
 }
