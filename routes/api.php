@@ -1,8 +1,6 @@
 <?php
 
-use App\User;
 use Illuminate\Http\Request;
-use App\Http\Resources\User as UserResource;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,13 +18,18 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 //list users
-Route::get('users','API\UserController@index');
+Route::get('user/users','API\UserController@index');
 
-Route::get('show/','API\UserController@show');
+Route::post('user/show','API\UserController@show');
 
-Route::post('store','API\RegisterController@store');
+Route::post('user/store','API\RegisterController@store');
 
-Route::post('login','API\LoginController@login');
+Route::post('user/login','API\LoginController@login');
+
+Route::get('user/delete','API\UserController@destroy');
+
+Route::post('user/email','API\ForgotPasswordController@sendResetLinkEmail');
+
 
 /*Route::get('/users', function () {
     return UserResource::collection(User::paginate(2));

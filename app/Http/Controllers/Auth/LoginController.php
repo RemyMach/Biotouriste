@@ -32,7 +32,7 @@ class LoginController extends Controller
     public function login(Request $FormRequest)
     {
         $client = new Client();
-        $request = $client->request('POST','http://localhost:8001/api/login',
+        $request = $client->request('POST','http://localhost:8001/api/user/login',
             ['form_params' => $FormRequest->all()
             ]);
         $response = json_decode($request->getBody()->getContents());

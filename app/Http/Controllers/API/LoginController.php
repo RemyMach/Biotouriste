@@ -18,41 +18,40 @@ class LoginController extends Controller
 
         if($validator->fails())
         {
-            $response = response()->json([
+            return response()->json([
                 'message'   => 'The request is not good',
                 'error'     => $validator->errors(),
                 'status'    => "400"
             ]);
-            return $response->getOriginalContent();
         }
 
         $user = $this->tryToAuthenticateByEmail();
 
         if(!$user)
         {
-            $response = response()->json([
+            return response()->json([
                 'message'   => 'Your login or your password is not correct',
                 'error'     => $validator->errors(),
                 'status'    => "400"
             ]);
-            return $response->getOriginalContent();
         }
 
         if(!$this->verifyPassword($user,request('password')))
         {
-            $response = response()->json([
+            return response()->json([
                 'message'   => 'Your login or your password is not correct',
                 'error'     => $validator->errors(),
                 'status'    => "400"
             ]);
-            return $response->getOriginalContent();
+
         }
 
-        return response()->json([
+            return response()->json([
             'message'   => 'You are now register',
             'status'    => '200',
-            'user'      => $user[0]
+            'user'      => $user
         ]);
+
     }
 
     protected function validateLogin($data)
@@ -71,7 +70,7 @@ class LoginController extends Controller
 
     protected function tryToAuthenticateByEmail()
     {
-        $user = User::where('email',request('email'))->get();
+        $user = User::where('email',request('email'))->first();
 
         if($user){
             return $user;
@@ -81,7 +80,7 @@ class LoginController extends Controller
 
     protected function verifyPassword($user,$requestPassword)
     {
-        $validateCredentials = Hash::check($requestPassword,$user[0]->password);
+        $validateCredentials = Hash::check($requestPassword,$user->password);
 
         if(!$validateCredentials)
         {

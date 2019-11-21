@@ -30,12 +30,11 @@ class RegisterController extends Controller
         die();*/
         if($validator->fails())
         {
-            $response = response()->json([
+            return response()->json([
                 'message'   => 'The request is not good',
                 'error'     => $validator->errors(),
                 'status'    => "400"
             ]);
-            return $response->getOriginalContent();
         }
 
         $data['Status_User_idStatus_User'] = 1;

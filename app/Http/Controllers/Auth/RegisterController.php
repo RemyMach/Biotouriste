@@ -53,7 +53,7 @@ class RegisterController extends Controller
     public function register(Request $request1)
     {
         $client = new Client();
-        $request = $client->request('POST','http://localhost:8001/api/store',
+        $request = $client->request('POST','http://localhost:8001/api/user/store',
             ['form_params' => $request1->all()
             ]);
         $response = json_decode($request->getBody()->getContents());
@@ -106,5 +106,10 @@ class RegisterController extends Controller
         unset($data['password_confirmation']);
         unset($data['_token']);
         return User::create($data);
+    }
+
+    protected function registered(Request $request,User $user)
+    {
+        event(new Registered($user));
     }
 }

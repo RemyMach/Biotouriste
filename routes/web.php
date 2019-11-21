@@ -33,11 +33,19 @@ Route::post('register','Auth\RegisterController@register');
 
 Route::get('password/reset','Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
 
-Route::get('password/reset/{token}','Auth\ForgotPasswordController@showLinkRequestForm')->name('password.reset');
+Route::get('password/reset/{token}','Auth\ResetPasswordController@showResetForm')->name('password.reset');
 
 Route::post('password/reset','Auth\ResetPasswordController@reset')->name('password.update');
 
-Route::post('password/email','Auth\ResetPasswordController@reset')->name('password.email');
+Route::post('password/email','Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+
+//autre
+
+Route::get('user/{token}','UserController@show');
+
+Route::post('user/update/{user}','UserController@updateProfile');
+
+Route::post('/admin/user/{user}','UserController@destroy');
 
 
 
