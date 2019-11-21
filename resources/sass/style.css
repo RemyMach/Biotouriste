@@ -1,30 +1,179 @@
+/* #547412
+#648818
+#263621
+#778968
+#EEEAE1
+#B9B5A5 */
 body {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+nav {
+  display: inline;
+  background-color: inherit;
+  width: 100%;
+  text-align: center;
+
+}
+nav img {
+  width: auto;
+  height: 30px;
+}
+nav a {
+  margin: 3%;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  text-decoration: none;
+  color: #547412;
+
+}
+nav a:hover {
+  text-decoration: none;
+  color: #da4f44;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #da4f44;
+}
+.active {
+  color: #da4f44;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #da4f44;
+}
+nav button {
+    margin: 2%;
+    background-color: inherit;
+    border: none;
+    color: #547412;
+}
+nav button:hover {
+    color: #da4f44;
+}
+#content-1 {
+  height: 100vh;
+  width: 100%;
+  background-color: #EEEAE1;
+      /* background-image: url(../../storage/app/resources/background.jpg);
+      background-repeat: no-repeat;
+      background-size: cover; */
+}
+.title {
+  font-size: 24px;
+}
+.announcement {
+  background-color: white;
+  border-radius: 10px;
+  width: 700px;
+  height: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1%;
+}
+.announcement:hover {
+  transition-delay: 0.05s;
+  transform: scale(1.1);
+}
+
+
+.sidebar {
+  width: 70px;
+  height: 100vh;
+  background-color: #1D1D1D;
+}
+
+.sidebar a {
+  color: white; /* Black text color */
+  display: block; /* Make the links appear below each other */
+  padding: 25%; /* Add some padding */
+  text-align: center;
+  text-decoration: none; /* Remove underline from links */
+}
+
+.sidebar a:hover {
+  /* background-color: #ccc; /* Dark grey background on mouse-over */ */
+}
+
+.sidebar a.active {
+  background-color: #4CAF50; /* Add a green color to the "active/current" link */
+  color: white;
+}
+
+/* Button style */
+.btn-style {
+  border: none;
+  border-radius: 25px;
+  color: white;
+  width: 170px;
+  padding: 10px;
+  background-color: #da4f44;
+}
+.btn-style:hover {
+  opacity: 0.70;
+}
+.btn-next {
+  border-radius: 50px;
+  border: none;
+  color: white;
+  width: 50px;
+  height: 50px;
+  padding: 10px;
+  background-color: #263621;
+}
+.btn-next:hover {
+  opacity: 0.70;
+}
+.blob-container h3 {
+  color: #EEEAE1;
+  padding-top: 25%;
+  padding-left: 20%;
+}
+.blob-container {
+  height: 70vh;
+  background-image: url(../views/blob-shape.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+.blob-content {
+  margin-left: 15%;
+}
+.blob-content-left {
+  margin-left: 15%;
+}
+.blob-content-right {
+  margin-top: 5%;
+  margin-left: 15%;
+}
+.blob-content input {
+  border: none;
+  background-color: #EEEAE1;
+  margin-top: 5%;
+  height: 40px;
+  border-radius: 5px;
+}
+.btn-map-submit {
+  background-color: #263621;
+  border-radius: 50px;
+  border: none;
+  color: #EEEAE1  ;
+  width: 200px;
+  height: 50px;
+  padding: 10px;
+}
+.btn-map-submit:hover {
+  opacity: 0.70;
+}
+.btn-map {
+  padding: 0;
+  background-color: #EEEAE1;
+  color: #263621;
+  font-size: 48px;
+  border: none;
+  width: 100px;
+  height: 100px;
+  border-radius: 25%;
+}
+.btn-map:hover {
+    color: rgba(38, 54, 33, 0.70);
 }
 .sp-10 {
-  margin-left: 10px;
-}
-.sp-30 {
-  margin-left: 20px;
-}
-.content-1 {
-  height: 100vh;
-
-}
-
-
-
-
-.overlay {
-  background-color: #F2F2F2;
-  display: none;
-  height: 100%;
-  transition: 0.5s;
-}
-.show {
-  display: block;
-  transition: all 500ms ease;
-}
-.btn-quit {
-  padding-top: 50px;
+  margin-top: 20px;
 }
