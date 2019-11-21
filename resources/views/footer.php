@@ -1,3 +1,5 @@
+<footer>
+</footer>
 <script type="text/javascript">
 function openProfil() {
   document.getElementById("overlay_profil").classList.toggle("show");
