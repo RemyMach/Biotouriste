@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class AnnounceController extends Controller
 {
+    public function printMap()
+    {
+        return view('Openstreet');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,6 +23,7 @@ class AnnounceController extends Controller
     }
 
     /**
+     *
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
