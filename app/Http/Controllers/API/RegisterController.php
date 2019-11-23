@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\API\ApiTokenController;
 use App\Http\Resources\User as UserResource;
 use App\User;
 use Illuminate\Http\Request;
@@ -9,7 +10,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use App\Http\Controllers\API\ApiTokenController;
 
 class RegisterController extends Controller
 {
@@ -20,7 +20,7 @@ class RegisterController extends Controller
 
         $apiTokenController = new ApiTokenController();
 
-        $requestParameters = $apiTokenController->verifyCredentials();
+        $requestParameters = $apiTokenController->verifyAdminCredentials();
 
         if(!$requestParameters)
         {

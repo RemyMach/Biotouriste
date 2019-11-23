@@ -20,15 +20,6 @@ class ForgotPasswordController extends Controller
     public function sendResetLinkEmail()
     {
 
-        //on valide l'email
-        $email = request('email');
-        $validator = $this->validateEmail(['email' => $email]);
-
-        if($validator != true){
-
-            return $validator;
-        }
-
         //on vérifie que c'est bien l'admin user qui demande l'envoi
         $apiTokenController = new ApiTokenController();
 
@@ -40,6 +31,13 @@ class ForgotPasswordController extends Controller
                 'message'   => 'Your credentials are not valid',
                 'status'    => '400',
             ]);
+        }
+        //on valide l'email
+        $email = request('email');
+        $validator = $this->validateEmail(['email' => $email]);
+
+        if($validator->original['status'] == '400') {
+            return $validator;
         }
 
         $idAdmin = $requestParameters['idUser'];
@@ -89,13 +87,16 @@ class ForgotPasswordController extends Controller
 
         if($validator->fails())
         {
-            return $response = response()->json([
+            return response()->json([
                 'message'   => 'The request is not good',
                 'error'     => $validator->errors(),
                 'status'    => "400"
             ]);
         }
-        return true;
+        return response()->json([
+            'message'   => 'The request is good',
+            'status'    => "200"
+        ]);
     }
 
     protected function addTokenEmailToDB(string $token, string $email)

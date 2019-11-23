@@ -41,31 +41,6 @@ class ResetPasswordController extends Controller
         ]);
     }
 
-    public function validTokenAndEmail()
-    {
-        $token = request('token');
-        $email = request('email');
-        if(!$token || !$email)
-        {
-            return false;
-        }
-
-        $password_reset = password_resets::where('email',$email)->first();
-
-
-        if(!$password_reset)
-        {
-            return false;
-        }
-
-        if($password_reset->email != $email)
-        {
-            return false;
-        }
-
-        return true;
-    }
-
     public function reset()
     {
         $data = request()->all();
@@ -118,6 +93,31 @@ class ResetPasswordController extends Controller
         ]);
     }
 
+    public function validTokenAndEmail()
+    {
+        $token = request('token');
+        $email = request('email');
+        if(!$token || !$email)
+        {
+            return false;
+        }
+
+        $password_reset = password_resets::where('email',$email)->first();
+
+
+        if(!$password_reset)
+        {
+            return false;
+        }
+
+        if($password_reset->email != $email)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     protected function validateEmailPassword($data)
     {
         $validator = Validator::make($data, [
@@ -127,13 +127,13 @@ class ResetPasswordController extends Controller
 
         if($validator->fails())
         {
-            return $response = response()->json([
+            return response()->json([
                 'message'   => 'The request is not good',
                 'error'     => $validator->errors(),
                 'status'    => "400"
             ]);
         }
-        return $response = response()->json([
+        return response()->json([
             'message'   => 'The request is good',
             'status'    => "200"
         ]);

@@ -51,7 +51,7 @@ Route::post('admin/user/{user}','UserController@destroy');
 
 Route::get('comment','CommentController@create');
 
-Route::post('comment','CommentController@store');
+Route::post('comment/store','CommentController@store');
 
 
 

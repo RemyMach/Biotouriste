@@ -22,7 +22,7 @@ class CommentController extends Controller
      */
     public function index(Request $request)
     {
-
+        //
     }
 
     /**
@@ -32,31 +32,29 @@ class CommentController extends Controller
      */
     public function create()
     {
-
+        return view('test123');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         if(!$request->session()->has('user')){
+
             return redirect('home');
         }
 
         $this->user = $request->session()->get('user');
+
         $data = request()->all();
         $data['idUser'] = $this->user->idUser;
         $data['api_token'] = $this->user->api_token;
 
         $client = new Client();
-        $request = $client->request('POST','http://localhost:8001/api/comment/register',
+        $request = $client->request('POST','http://localhost:8001/api/comment/store',
             ['form_params' => $data]);
 
         $response = json_decode($request->getBody()->getContents());
+
+        dd($response);
 
         return view('comment');
 
