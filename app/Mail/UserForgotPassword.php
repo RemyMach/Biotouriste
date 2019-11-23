@@ -20,11 +20,11 @@ class UserForgotPassword extends Mailable
      *
      * @return void
      */
-    public function __construct($password_reset,$url)
+    public function __construct(array $data)
     {
-        $this->password_reset = $password_reset;
+        $this->password_reset = $data['password_reset'];
 
-        $this->url = $url;
+        $this->url = $data['url'];
     }
 
     /**

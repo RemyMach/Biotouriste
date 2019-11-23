@@ -45,8 +45,8 @@ class ForgotPasswordController extends Controller
     {
         $data = request()->all();
 
-        $data['api_token'] = 'UqYJEF0wUazDsX0HbR9wDXoAf1YWlLI3WRvGyXrkfUcvRseMnUYxFL4xUmLvuy3Uw9Fx1BqU53Rfraeq';
-        $data['idUser'] = 5;
+        $data['idUser'] = config('api.api_admin_id');
+        $data['api_token'] = config('api.api_admin_token');
 
         $client = new Client();
 

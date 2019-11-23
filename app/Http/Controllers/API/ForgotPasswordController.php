@@ -7,9 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\HomeController;
 use App\Mail\UserForgotPassword;
 use App\password_resets;
+use App\Services\Mail;
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -17,7 +17,7 @@ use Illuminate\Support\Str;
 class ForgotPasswordController extends Controller
 {
 
-    public function sendResetLinkEmail()
+    public function sendResetLinkEmail(Mail $mail)
     {
 
         //on vérifie que c'est bien l'admin user qui demande l'envoi
@@ -62,7 +62,7 @@ class ForgotPasswordController extends Controller
 
         $password_resets = $this->addTokenEmailToDB($token,$email);
 
-        $this->sendEmail($password_resets,$urlgenerate);
+        $mail->send('rmachavoine@wynd.eu','UserForgotPassword',['password_reset' => $password_resets, 'url' => $urlgenerate]);
 
         return response()->json([
             'status'    => '200',
@@ -104,10 +104,5 @@ class ForgotPasswordController extends Controller
         $password_reset = password_resets::create(['email' => $email,'token' => $token]);
 
         return $password_reset;
-    }
-
-    protected function sendEmail($password_reset,$url){
-
-        Mail::to('rmachavoine@wynd.eu')->send(new UserForgotPassword($password_reset,$url));
     }
 }
