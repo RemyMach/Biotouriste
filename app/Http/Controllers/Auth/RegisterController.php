@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Str;
+
 
 class RegisterController extends Controller
 {
@@ -49,9 +51,13 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'user_name' => ['required', 'string', 'max:45'],
+            'user_surname' => ['required', 'string', 'max:45'],
+            'user_mail' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'user_postal_code' => ['integer'],
+            'user_phone' => ['unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'user_img' => ['string'],
         ]);
     }
 
@@ -63,10 +69,12 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        $data['Status_User_idStatus_User'] = 1;
+        $data['password'] = Hash::make($data['password']);
+        $data['api_token'] = Str::random(80);
+        unset($data['password_confirmation']);
+        unset($data['_token']);
+        //dd($data);
+        return User::create($data);
     }
 }
