@@ -6,6 +6,7 @@ use App\Http\Controllers\API\ApiTokenController;
 use App\Http\Controllers\Controller;
 use App\password_resets;
 use App\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class ResetPasswordController extends Controller
@@ -107,7 +108,7 @@ class ResetPasswordController extends Controller
             ]);
         }
 
-        $user->update(['password' => $data['password']]);
+        $user->update(['password' => Hash::make($data['password'])]);
 
         $this->deleteLineUsePasswordReset($data['email']);
 

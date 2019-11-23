@@ -45,7 +45,13 @@ Route::get('user/{token}','UserController@show');
 
 Route::post('user/update/{user}','UserController@updateProfile');
 
-Route::post('/admin/user/{user}','UserController@destroy');
+Route::post('admin/user/{user}','UserController@destroy');
+
+//comment
+
+Route::get('comment','CommentController@index');
+
+Route::post('comment','CommentController@store');
 
 
 
