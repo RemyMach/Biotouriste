@@ -53,7 +53,8 @@ class CommentController extends Controller
 
         return response()->json([
             'comments'  => $comments,
-            'users'     => $users
+            'users'     => $users,
+            'status'    => '200'
             ]);
     }
 

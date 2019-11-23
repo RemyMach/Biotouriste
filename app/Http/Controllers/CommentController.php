@@ -81,17 +81,15 @@ class CommentController extends Controller
 
         $response = json_decode($request->getBody()->getContents());
 
-        dd($response);
-
         if($response->status === "400")
         {
             return redirect($this->redirectTo);
         }
 
-        dd($response);
 
-        //retourne la page annonce
-        return view('test123');
+        //retourne la page annonce avec un tableau contenant commentaires
+        // et les users qui ont posté les commentaires
+        return view('test123',['comments' => $response->comments]);
     }
 
     /**
