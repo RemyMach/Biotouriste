@@ -39,6 +39,5 @@ Route::post('password/reset','Auth\ResetPasswordController@reset')->name('passwo
 
 Route::post('password/email','Auth\ResetPasswordController@reset')->name('password.email');
 
-
-
+Route::get('myMap','AnnounceController@printMap');
 
