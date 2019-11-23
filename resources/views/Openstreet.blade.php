@@ -17,6 +17,8 @@
 
 
 <h2>Ma carte</h2>
+
+
 <div id="mapid"></div>
 
 {{--    AJout du cdn pour la map--}}
@@ -33,6 +35,9 @@
         maxZoom: 14
     }).addTo(mymap);
     //creation du marqueur et attribution d'une popup
+     @foreach($announces as $announce)
+        var marqueur{{$announce->idAnnounce}} = L.marker([{{ $announce->announce_latLong }}]).addTo(mymap);
+     @endforeach
     var marqueur = L.marker([48.852969, 2.349903]).addTo(mymap);
     marqueur.bindPopup('<h1>PARIS ICICI</h1>');
 

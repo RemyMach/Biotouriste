@@ -9,7 +9,9 @@ class AnnounceController extends Controller
 {
     public function printMap()
     {
-        return view('Openstreet');
+        $announces = Announce::all();
+        dump($announces);
+        return view('Openstreet', ['announces' => $announces]);
     }
 
     /**
