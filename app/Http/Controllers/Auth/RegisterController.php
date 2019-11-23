@@ -52,9 +52,14 @@ class RegisterController extends Controller
 
     public function register(Request $request1)
     {
+        $data = request()->all();
+
+        $data['api_token'] = 'UqYJEF0wUazDsX0HbR9wDXoAf1YWlLI3WRvGyXrkfUcvRseMnUYxFL4xUmLvuy3Uw9Fx1BqU53Rfraeq';
+        $data['idUser'] = 5;
+
         $client = new Client();
         $request = $client->request('POST','http://localhost:8001/api/user/store',
-            ['form_params' => $request1->all()
+            ['form_params' => $data
             ]);
         $response = json_decode($request->getBody()->getContents());
 

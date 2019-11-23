@@ -72,11 +72,11 @@ class UserController extends Controller
         }
 
         $client = new Client();
-        $request = $client->request('POST','http://localhost:8001/api/user/show', [
+        $query = $client->request('POST','http://localhost:8001/api/user/show', [
             'form_params' => [
                 "api_token"=>$api_token,"idUser"=>$this->user->idUser]
             ]);
-        $response = json_decode($request->getBody()->getContents());
+        $response = json_decode($query->getBody()->getContents());
 
         dd($response);
         $user = $response->user;

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Announce;
 use App\Comment;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -18,9 +20,9 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('test123');
+
     }
 
     /**
@@ -30,7 +32,7 @@ class CommentController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -41,7 +43,23 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(!$request->session()->has('user')){
+            return redirect('home');
+        }
+
+        $this->user = $request->session()->get('user');
+        $data = request()->all();
+        $data['idUser'] = $this->user->idUser;
+        $data['api_token'] = $this->user->api_token;
+
+        $client = new Client();
+        $request = $client->request('POST','http://localhost:8001/api/comment/register',
+            ['form_params' => $data]);
+
+        $response = json_decode($request->getBody()->getContents());
+
+        return view('comment');
+
     }
 
     /**
@@ -50,9 +68,33 @@ class CommentController extends Controller
      * @param  \App\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function show(Comment $comment)
+    public function show(Announce $announce, Request $request)
     {
-        //
+        if(!$request->session()->has('user')){
+            return redirect('home');
+        }
+
+        $this->user = $request->session()->get('user');
+        $data = request()->all();
+        //vérification pour sécu api de qui fait l'appel
+        $data['idUser'] = $this->user->idUser;
+        $data['api_token'] = $this->user->api_token;
+
+        $client = new Client();
+        $request = $client->request('POST','http://localhost:8001/api/user/show',
+            ['form_params' => $data]);
+
+        $response = json_decode($request->getBody()->getContents());
+
+        if($response->status === "400")
+        {
+            return redirect($this->redirectTo);
+        }
+
+        dd($response);
+
+        //retourne la page annonce
+        return view('test123');
     }
 
     /**

@@ -49,7 +49,7 @@ Route::post('admin/user/{user}','UserController@destroy');
 
 //comment
 
-Route::get('comment','CommentController@index');
+Route::get('comment','CommentController@create');
 
 Route::post('comment','CommentController@store');
 

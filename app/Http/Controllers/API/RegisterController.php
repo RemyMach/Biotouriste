@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use App\Http\Controllers\API\ApiTokenController;
 
 class RegisterController extends Controller
 {
@@ -16,6 +17,19 @@ class RegisterController extends Controller
     public function store(Request $request)
     {
         $data = request()->all();
+
+        $apiTokenController = new ApiTokenController();
+
+        $requestParameters = $apiTokenController->verifyCredentials();
+
+        if(!$requestParameters)
+        {
+            return response()->json([
+                'message'   => 'Your credentials are not valid',
+                'status'    => '400',
+            ]);
+        }
+
         $validator = Validator::make($data, [
             'user_name' => ['required', 'string', 'max:45'],
             'user_surname' => ['required', 'string', 'max:45'],
