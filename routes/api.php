@@ -37,6 +37,8 @@ Route::post('user/reset','API\ResetPasswordController@reset');
 //comment
 Route::post('comment/store','API\CommentController@store');
 
+Route::post('comment/seller','API\CommentController@CommentsOfASeller');
+
 /*Route::get('/users', function () {
     return UserResource::collection(User::paginate(2));
 });*/

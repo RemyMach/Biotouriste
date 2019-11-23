@@ -53,6 +53,8 @@ Route::get('comment','CommentController@create');
 
 Route::post('comment/store','CommentController@store');
 
+Route::get('comment/announce/{announce}','CommentController@CommentsOfASeller');
+
 
 
 

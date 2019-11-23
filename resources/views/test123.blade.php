@@ -12,7 +12,7 @@
             </div>
             <textarea rows="8" cols="80" class="col-8" name="comment_content" required></textarea>
             <div  class="mybtn">
-                <input class="btn btn-primary mybtn" type="submit" value="Send FeedBack" name="comment_note" required>
+                <input class="btn btn-primary mybtn" type="submit" value="Send FeedBack" required>
             </div>
         </form>
     </div>

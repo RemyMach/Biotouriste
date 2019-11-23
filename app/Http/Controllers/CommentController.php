@@ -37,6 +37,7 @@ class CommentController extends Controller
 
     public function store(Request $request)
     {
+
         if(!$request->session()->has('user')){
 
             return redirect('home');
@@ -45,9 +46,8 @@ class CommentController extends Controller
         $this->user = $request->session()->get('user');
 
         $data = request()->all();
-        $data['idUser'] = $this->user->idUser;
-        $data['api_token'] = $this->user->api_token;
-
+        $data['idUser'] = config('api.api_admin_id');
+        $data['api_token'] = config('api.api_admin_token');
         $client = new Client();
         $request = $client->request('POST','http://localhost:8001/api/comment/store',
             ['form_params' => $data]);
@@ -66,23 +66,22 @@ class CommentController extends Controller
      * @param  \App\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function show(Announce $announce, Request $request)
+    public function CommentsOfASeller(Announce $announce, Request $request)
     {
-        if(!$request->session()->has('user')){
-            return redirect('home');
-        }
-
-        $this->user = $request->session()->get('user');
         $data = request()->all();
+
         //vérification pour sécu api de qui fait l'appel
-        $data['idUser'] = $this->user->idUser;
-        $data['api_token'] = $this->user->api_token;
+        $data['idUser'] = config('api.api_admin_id');
+        $data['api_token'] = config('api.api_admin_token');
+        $data['idAnnounce'] = $announce->idAnnounce;
 
         $client = new Client();
-        $request = $client->request('POST','http://localhost:8001/api/user/show',
+        $request = $client->request('POST','http://localhost:8001/api/comment/seller',
             ['form_params' => $data]);
 
         $response = json_decode($request->getBody()->getContents());
+
+        dd($response);
 
         if($response->status === "400")
         {

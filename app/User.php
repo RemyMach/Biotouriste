@@ -49,4 +49,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Status_User::class,"Status_User_idStatus_User", "idStatus_User");
     }
+
+    public function announces()
+    {
+        return $this->hasMany('App\Announce', 'Users_idUser', 'idUser');
+    }
 }
