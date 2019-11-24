@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Check;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class CheckController extends Controller
@@ -10,7 +11,7 @@ class CheckController extends Controller
 
     public function __construct()
     {
-        $this->middleware('Controller');
+        //$this->middleware('Controller');
     }
 
     /**
@@ -41,7 +42,17 @@ class CheckController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(!$request->session()->has('user')){
+
+            return redirect('home');
+        }
+
+        $this->user = $request->session()->get('user');
+
+        $data['idUser'] = $this->user->idUser;
+        $data['api_token'] = $this->user->api_token;
+
+
     }
 
     /**
@@ -62,7 +73,15 @@ class CheckController extends Controller
         $data['idUser'] = $this->user->idUser;
         $data['api_token'] = $this->user->api_token;
 
+        $client = new Client();
+        $request = $client->request('POST','http://localhost:8001/api/check/showChecksOfAController',
+            ['form_params' => $data]);
 
+        $response = json_decode($request->getBody()->getContents());
+
+        dd($response);
+
+        return view('testCheck');
     }
 
     /**

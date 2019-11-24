@@ -59,6 +59,10 @@ Route::get('comment/destroy/{comment}','CommentController@destroy');
 
 Route::get('comment/show','CommentController@showYourPostedComments');
 
+//checks
+
+Route::get('check','CheckController@create');
+
 
 
 

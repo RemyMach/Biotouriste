@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class CheckController extends Controller
 {
@@ -30,13 +31,54 @@ class CheckController extends Controller
         $arrayChecks = $this->statusChecks($checks);
 
         return response()->json([
-        'checks_to_do'  => $arrayChecks['checkNotVerify'],
-        'checks_done'     => $arrayChecks['checkVerify'],
-        'status'    => '200'
-    ]);
+            'checks_to_do'  => $arrayChecks['checkNotVerify'],
+            'checks_done'     => $arrayChecks['checkVerify'],
+            'status'    => '200'
+        ]);
+    }
+
+    public function store(ApiTokenController $apiTokenController)
+    {
+        $requestParameters = $apiTokenController->verifyCredentials();
+
+        if(!$requestParameters)
+        {
+            return response()->json([
+                'message'   => 'Your credentials are not valid',
+                'status'    => '400',
+            ]);
+        }
+
+        $this->verifyUserStatus($requestParameters['idUser']);
+
+        $data = request()->all();
+
+        $validator = $this->validateCheck($data);
+
+        if($validator->original['status'] == '400')
+        {
+            return $validator;
+        }
+
+        $validData = $this->keepKeysThatWeNeed($data,['comment_subject','comment_note','comment_content']);
+
 
     }
 
+    public function verifyUserStatus($idUser)
+    {
+        $user = User::findOrFail($idUser);
+
+        if(preg_match('#admin#i',$user->status['status_user_label']))
+        {
+            return $user;
+        }
+        if(preg_match('#controller#i',$user->status['status_user_label']))
+        {
+            return $user;
+        }
+        return false;
+    }
 
     public function collectChecks($idUser)
     {
@@ -52,7 +94,7 @@ class CheckController extends Controller
         return $checks;
     }
 
-    public function statusChecks($checks)
+    protected function statusChecks($checks)
     {
         $checkNotVerify = [];
         $checkVerify = [];
@@ -71,5 +113,28 @@ class CheckController extends Controller
             'checkNotVerify'    => $checkNotVerify,
             'checkVerify'       => $checkVerify
         ];
+    }
+
+    protected function validateCheck($data)
+    {
+        $validator = Validator::make($data, [
+            'check_date'                => 'required',
+            'check_comment'             => 'required|text',
+            'check_customer_service'    => 'required|integer|max:5',
+            'check_state_place'         => 'required|integer|max:5',
+        ]);
+
+        if($validator->fails())
+        {
+            return response()->json([
+                'message'   => 'The request is not good',
+                'error'     => $validator->errors(),
+                'status'    => "400"
+            ]);
+        }
+        return response()->json([
+            'message'   => 'The request is good',
+            'status'    => "200"
+        ]);
     }
 }
