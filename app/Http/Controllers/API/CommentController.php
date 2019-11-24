@@ -13,10 +13,8 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-    public function CommentsOfASeller()
+    public function CommentsOfASeller(ApiTokenController $apiTokenController)
     {
-        $apiTokenController = new ApiTokenController();
-
         $requestParameters = $apiTokenController->verifyAdminCredentials();
 
         if(!$requestParameters)
@@ -29,16 +27,30 @@ class CommentController extends Controller
 
         $data = request()->all();
 
-        $announce = Announce::findOrFail($data['idAnnounce']);
-        if(!$announce)
-        {
-            return response()->json([
-                'error'   => 'The id of the announce doesn\'t exist',
-                'status'    => '400',
-            ]);
-        }
+        if(isset($data['idAnnounce'])){
+            //pour quand on est fait une recherche depuis l'id d'une annonce
+            $announce = Announce::findOrFail($data['idAnnounce']);
+            if(!$announce)
+            {
+                return response()->json([
+                    'error'   => 'The id of the announce doesn\'t exist',
+                    'status'    => '400',
+                ]);
+            }
 
-        $announces = $announce->user->announces;
+            $announces = $announce->user->announces;
+        }else{
+            //pour quand on est dans le profil pour que le vendeur voit tous ses comments
+            $user = User::findOrFail($requestParameters['idUser']);
+            //normalement ne sert à rien car findorfail sort une 404
+            if(!$user)
+            {
+                return response()->json([
+                    'error'   => 'The id of the announce doesn\'t exist',
+                    'status'    => '400',
+                ]);
+            }
+        }
 
         $comments = $this->collectCommentsFromAnnounces($announces);
         if(!$comments)
@@ -58,10 +70,8 @@ class CommentController extends Controller
             ]);
     }
 
-    public function store(Request $request)
+    public function store(Request $request,ApiTokenController $apiTokenController)
     {
-        $apiTokenController = new ApiTokenController();
-
         $requestParameters = $apiTokenController->verifyCredentials();
 
         if(!$requestParameters)
@@ -94,10 +104,8 @@ class CommentController extends Controller
         ]);
     }
 
-    public function show(Request $request)
+    public function show(Request $request,ApiTokenController $apiTokenController)
     {
-        $apiTokenController = new ApiTokenController();
-
         $requestParameters = $apiTokenController->verifyCredentials();
 
         if(!$requestParameters)
@@ -115,6 +123,83 @@ class CommentController extends Controller
         return response()->json([
             'user'   => $user,
             'status'    => '200',
+        ]);
+    }
+
+    public function showYourPostedComments(ApiTokenController $apiTokenController)
+    {
+        $requestParameters = $apiTokenController->verifyCredentials();
+
+        if (!$requestParameters) {
+            return response()->json([
+                'message' => 'Your credentials are not valid',
+                'status' => '400',
+            ]);
+        }
+
+        $user = User::findOrFail($requestParameters['idUser']);
+        //normalement ne sert à rien car findorfail sort une 404
+        if(!$user)
+        {
+            return response()->json([
+                'error'   => 'The id of the announce doesn\'t exist',
+                'status'    => '400',
+            ]);
+        }
+
+        $comments = $user->comments;
+
+        if(!$comments)
+        {
+            return response()->json([
+                'error'   => 'cet utilisateur n\'a pas posté de commentaires',
+                'status'    => '200',
+            ]);
+        }
+
+        $users = $this->collectCommentsUser($comments);
+        if(!$comments)
+        {
+            return response()->json([
+                'error'   => 'The seller doesn\'t has comments',
+                'status'    => '200',
+            ]);
+        }
+
+        return response()->json([
+            'comments'  => $comments,
+            'users'     => $users,
+            'status'    => '200'
+        ]);
+    }
+
+    public function destroy(ApiTokenController $apiTokenController)
+    {
+        $requestParameters = $apiTokenController->verifyCredentials();
+
+        if (!$requestParameters) {
+            return response()->json([
+                'message' => 'Your credentials are not valid',
+                'status' => '400',
+            ]);
+        }
+        $data = request()->all();
+
+        $comment = $this->compareSessionUserToCommentUser($data);
+
+        if (!$comment) {
+            return response()->json([
+                'message' => 'Your request is not good',
+                'status' => '400',
+            ]);
+        }
+
+        $comment->delete();
+
+
+        return response()->json([
+            'message' => 'Your comment has been destroy',
+            'status' => '200',
         ]);
     }
 
@@ -176,5 +261,16 @@ class CommentController extends Controller
             $UserFromComments[] = $comment->user;
         }
         return $UserFromComments;
+    }
+
+    protected function compareSessionUserToCommentUser($data)
+    {
+        $comment = Comment::findorFail($data['idComment']);
+        if($comment->user->idUser != $data['idUser'])
+        {
+            return false;
+        }
+
+        return $comment;
     }
 }

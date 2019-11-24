@@ -15,5 +15,8 @@
                 <input class="btn btn-primary mybtn" type="submit" value="Send FeedBack" required>
             </div>
         </form>
+        <div>
+            <a href="http://localhost:8000/comment/destroy/3">Détruire le commentaire numéro 3</a>
+        </div>
     </div>
 </div>

@@ -17,12 +17,10 @@ use Illuminate\Support\Str;
 class ForgotPasswordController extends Controller
 {
 
-    public function sendResetLinkEmail(Mail $mail)
+    public function sendResetLinkEmail(Mail $mail,ApiTokenController $apiTokenController)
     {
 
         //on vérifie que c'est bien l'admin user qui demande l'envoi
-        $apiTokenController = new ApiTokenController();
-
         $requestParameters = $apiTokenController->verifyAdminCredentials();
 
         if(!$requestParameters)

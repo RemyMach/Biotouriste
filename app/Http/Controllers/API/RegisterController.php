@@ -14,12 +14,8 @@ use Illuminate\Support\Str;
 class RegisterController extends Controller
 {
 
-    public function store(Request $request)
+    public function store(Request $request, ApiTokenController $apiTokenController)
     {
-        $data = request()->all();
-
-        $apiTokenController = new ApiTokenController();
-
         $requestParameters = $apiTokenController->verifyAdminCredentials();
 
         if(!$requestParameters)
@@ -29,6 +25,8 @@ class RegisterController extends Controller
                 'status'    => '400',
             ]);
         }
+
+        $data = request()->all();
 
         $validator = Validator::make($data, [
             'user_name' => ['required', 'string', 'max:45'],

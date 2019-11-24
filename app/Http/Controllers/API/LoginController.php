@@ -12,8 +12,18 @@ use Illuminate\Support\Str;
 
 class LoginController extends Controller
 {
-    public function login()
+    public function login(ApiTokenController $apiTokenController)
     {
+        $requestParameters = $apiTokenController->verifyAdminCredentials();
+
+        if(!$requestParameters)
+        {
+            return response()->json([
+                'message'   => 'Your credentials are not valid',
+                'status'    => '400',
+            ]);
+        }
+
         $validator = $this->validateLogin(request()->all());
 
         if($validator->fails())

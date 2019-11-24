@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class CheckController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('Controller');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -24,7 +30,7 @@ class CheckController extends Controller
      */
     public function create()
     {
-        //
+        return view('testCheck');
     }
 
     /**
@@ -44,9 +50,19 @@ class CheckController extends Controller
      * @param  \App\Check  $check
      * @return \Illuminate\Http\Response
      */
-    public function show(Check $check)
+    public function showChecksOfAController(Request $request)
     {
-        //
+        if(!$request->session()->has('user')){
+
+            return redirect('home');
+        }
+
+        $this->user = $request->session()->get('user');
+
+        $data['idUser'] = $this->user->idUser;
+        $data['api_token'] = $this->user->api_token;
+
+
     }
 
     /**

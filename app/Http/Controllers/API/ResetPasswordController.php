@@ -11,12 +11,8 @@ use Illuminate\Support\Facades\Validator;
 
 class ResetPasswordController extends Controller
 {
-    public function showResetForm()
+    public function showResetForm(ApiTokenController $apiTokenController)
     {
-        $data = request()->all();
-
-        $apiTokenController = new ApiTokenController();
-
         $requestParameters = $apiTokenController->verifyAdminCredentials();
 
         if(!$requestParameters)
@@ -26,6 +22,8 @@ class ResetPasswordController extends Controller
                 'status'    => '400',
             ]);
         }
+
+        $data = request()->all();
 
         if(!$this->validTokenAndEmail())
         {
@@ -41,12 +39,8 @@ class ResetPasswordController extends Controller
         ]);
     }
 
-    public function reset()
+    public function reset(ApiTokenController $apiTokenController)
     {
-        $data = request()->all();
-
-        $apiTokenController = new ApiTokenController();
-
         $requestParameters = $apiTokenController->verifyAdminCredentials();
 
         if(!$requestParameters)
@@ -56,6 +50,7 @@ class ResetPasswordController extends Controller
                 'status'    => '400',
             ]);
         }
+        $data = request()->all();
 
         $validate = $this->validateEmailPassword($data);
 

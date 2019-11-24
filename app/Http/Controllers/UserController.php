@@ -175,13 +175,14 @@ class UserController extends Controller
      */
     public function destroy(Request $request,User $user)
     {
-        $this->user = $request->session()->get('user');
+        if(!$request->session()->has('user')){
 
-        if($user->idUser != $this->user->idUser){
             return redirect('home');
         }
 
-        $data['idUser'] = $user->idUser;
+        $this->user = $request->session()->get('user');
+
+        $data['idUser'] = $this->user->idUser;
         $data['api_token'] = $this->user->api_token;
 
         $client = new Client();

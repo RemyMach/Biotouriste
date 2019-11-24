@@ -39,6 +39,10 @@ Route::post('comment/store','API\CommentController@store');
 
 Route::post('comment/seller','API\CommentController@CommentsOfASeller');
 
+Route::post('comment/destroy','API\CommentController@destroy');
+
+Route::post('comment/showYourPostedComments','API\CommentController@showYourPostedComments');
+
 /*Route::get('/users', function () {
     return UserResource::collection(User::paginate(2));
 });*/
