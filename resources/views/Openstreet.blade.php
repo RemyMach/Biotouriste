@@ -26,20 +26,27 @@
         integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
         crossorigin=""></script>
 <script>
-             // on set la position sur la carte
-    var mymap = L.map('mapid').setView([48.852969, 2.349903], 14);
+    // on set la position sur la carte
+    var mymap = L.map('mapid').setView([48.852969, 2.349903], 10);
     //Skin de la map
     L.tileLayer('//{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
         attribution: 'donn&eacute;es &copy; <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
         minZoom: 1,
         maxZoom: 14
     }).addTo(mymap);
-    //creation du marqueur et attribution d'une popup
+    //ajout du nouveau marqueur
+    var icone = L.icon({
+        iconUrl: 'path',
+        iconSize: [50, 50]
+    });
+
+    //creation des marqueurs et attributions des popups
+    // var marqueur = L.marker([48.852969, 2.349903]).addTo(mymap);
+    // marqueur.bindPopup('<h1>PARIS ICICI</h1>');
      @foreach($announces as $announce)
         var marqueur{{$announce->idAnnounce}} = L.marker([{{ $announce->announce_latLong }}]).addTo(mymap);
+        marqueur{{$announce->idAnnounce}}.bindPopup('{{$announce->announce_name}}');
      @endforeach
-    var marqueur = L.marker([48.852969, 2.349903]).addTo(mymap);
-    marqueur.bindPopup('<h1>PARIS ICICI</h1>');
 
 
 </script>
