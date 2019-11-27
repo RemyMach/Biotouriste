@@ -44,8 +44,8 @@ class Check extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user1()
+    public function Seller()
     {
-        return $this->belongsTo('App\User', 'Users_idUser1', 'idUser');
+        return $this->belongsTo('App\Seller', 'Sellers_idSeller', 'idSeller');
     }
 }
