@@ -23,8 +23,8 @@ class CreateChecksTable extends Migration {
 			$table->integer('check_state_place')->nullable();
 			$table->integer('check_quality_product')->nullable();
 			$table->string('check_bio_status')->nullable();
-			$table->integer('Users_idUser')->index('fk_Verifications_Users1_idx');
-			$table->integer('Users_idUser1')->index('fk_Verifications_Users2_idx');
+			$table->integer('Users_idUser')->index('fk_Verifications_Users_idx');
+			$table->integer('Sellers_idSeller')->index('fk_Verifications_Sellers_idx');
 		});
 	}
 
