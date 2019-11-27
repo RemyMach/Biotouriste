@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\API\NoApiClass\UsefullController;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
@@ -37,7 +38,7 @@ class CheckController extends Controller
         ]);
     }
 
-    public function store(ApiTokenController $apiTokenController)
+    public function store(ApiTokenController $apiTokenController, UsefullController $usefullController)
     {
         $requestParameters = $apiTokenController->verifyCredentials();
 
@@ -60,7 +61,16 @@ class CheckController extends Controller
             return $validator;
         }
 
-        $validData = $this->keepKeysThatWeNeed($data,['comment_subject','comment_note','comment_content']);
+        $validData = $usefullController->keepKeysThatWeNeed($data,[
+            'check_date','check_comment','check_customer_service',
+            'check_state_place','check_quality_product','check_bio_status'
+        ]);
+        //controller
+        $validData['Users_idUser'] = $data['idUser'];
+        //vendeur
+        $validData['Users_idUser1'] = $data['idSeller'];
+        //vérification que c'est bien un vendeur
+
 
 
     }
@@ -122,6 +132,8 @@ class CheckController extends Controller
             'check_comment'             => 'required|text',
             'check_customer_service'    => 'required|integer|max:5',
             'check_state_place'         => 'required|integer|max:5',
+            'check_quality_product'     => 'required|integer|max:5',
+            'check_bio_status'          => 'required|string',
         ]);
 
         if($validator->fails())
@@ -136,5 +148,10 @@ class CheckController extends Controller
             'message'   => 'The request is good',
             'status'    => "200"
         ]);
+    }
+
+    protected function keepKeysThatWeNeed()
+    {
+
     }
 }

@@ -63,6 +63,8 @@ Route::get('comment/show','CommentController@showYourPostedComments');
 
 Route::get('check','CheckController@create');
 
+Route::post('check/store','CheckController@store');
+
 
 
 

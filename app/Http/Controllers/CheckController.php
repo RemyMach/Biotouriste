@@ -42,6 +42,7 @@ class CheckController extends Controller
      */
     public function store(Request $request)
     {
+        //seul un admin ou un controlleur peut register un check
         if(!$request->session()->has('user')){
 
             return redirect('home');
@@ -49,9 +50,17 @@ class CheckController extends Controller
 
         $this->user = $request->session()->get('user');
 
-        $data['idUser'] = $this->user->idUser;
-        $data['api_token'] = $this->user->api_token;
+        $data['idUser']     = $this->user->idUser;
+        $data['api_token']  = $this->user->api_token;
+        // $data['idSeller']   =
 
+        $client = new Client();
+        $request = $client->request('POST','http://localhost:8001/api/check/store',
+            ['form_params' => $data]);
+
+        $response = json_decode($request->getBody()->getContents());
+
+        dd($response);
 
     }
 
@@ -72,6 +81,7 @@ class CheckController extends Controller
 
         $data['idUser'] = $this->user->idUser;
         $data['api_token'] = $this->user->api_token;
+        $data['idSeller'] = 2;
 
         $client = new Client();
         $request = $client->request('POST','http://localhost:8001/api/check/showChecksOfAController',

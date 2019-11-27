@@ -225,19 +225,6 @@ class CommentController extends Controller
         ]);
     }
 
-    public function keepKeysThatWeNeed(array $data,array $keys)
-    {
-        $validData = [];
-        foreach($keys as $key => $value)
-        {
-            if(array_key_exists($value,$data))
-            {
-                $validData[$value] = $data[$value];
-            }
-        }
-        return $validData;
-    }
-
     protected function collectCommentsFromAnnounces($announces)
     {
         $commentsFromAnnounces = [];

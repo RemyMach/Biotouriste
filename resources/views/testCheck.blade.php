@@ -11,9 +11,6 @@
                 <input type="text" name="check_comment" placeholder="check_comment">
             </div>
             <div>
-                <input type="text" name="check_status_verification" placeholder="check_status_verification">
-            </div>
-            <div>
                 <input type="number" name="check_customer_service" placeholder="note du service">
             </div>
             <div>
@@ -23,9 +20,9 @@
                 <input type="number" name="check_quality_product" placeholder="qualité du produit">
             </div>
             <div>
-                <input type="number" name="check_bio_status" placeholder="si le produit est bio tapé 1">
+                <input type="text" name="check_bio_status" placeholder="si le produit est bio tapé bio">
             </div>
-            <div  class="mybtn">
+            <div class="mybtn">
                 <input class="btn btn-primary mybtn" type="submit" value="Send Check" required>
             </div>
         </form>
