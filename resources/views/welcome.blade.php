@@ -1,6 +1,11 @@
-<?php include('header.php'); ?>
+@include('layouts.header')
   <div id="content-1">
-    <?php include('navbar.php'); ?>
+    @include('layouts.navbar')
+    @include('layouts.navbar_default')
+    @include('layouts.navbar_login')
+    @include('layouts.overlay_login')
+    @include('layouts.overlay_profil')
+    @include('layouts.overlay_cart')
     <div class="row">
       <div class="col-md-8">
         <div class="blob-container-1">
@@ -69,4 +74,4 @@
 
     </div>
   </div>
-<?php include('footer.php'); ?>
+@include('layouts.footer')

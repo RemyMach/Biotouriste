@@ -7,7 +7,6 @@
       <div class="cont">
         <span class="icon-user"><i class="fas fa-shopping-cart fa-2x"></i></span>
         <h2 class="title-h2">CART</h2>
-
       </div>
     </div>
   </div>

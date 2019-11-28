@@ -21,7 +21,7 @@
               </div>
               <div class="header-log">
                 <i class="fas fa-user sp-30"></i>
-                <button id="btn-log" class="btn-log sp-10" type="button" name="connexion" onclick="openLog()">Connexion</button>
+                <button id="btn-log" class="btn-log sp-10" type="button" name="connexion" onclick="openLogin()">Connexion</button>
               </div>
               <div class="header-log">
                 <button id="btn-sign" class="btn-sign sp-10" type="button" name="connexion" onclick="openSignup()">Inscription</button>
