@@ -68,7 +68,7 @@ class CheckController extends Controller
         //controller
         $validData['Users_idUser'] = $data['idUser'];
         //vendeur
-        $validData['Users_idUser1'] = $data['idSeller'];
+        $validData['Sellers_idSeller'] = $data['idSeller'];
         //vérification que c'est bien un vendeur
 
 
