@@ -1,11 +1,12 @@
 @include('layouts.header')
   <div id="content-1">
     @include('layouts.navbar')
-    <!-- @include('layouts.navbar_default')
-    @include('layouts.navbar_login') -->
+    <!-- @include('layouts.navbar_default') -->
+    <!-- @include('layouts.navbar_login') -->
     @include('layouts.overlay_login')
     @include('layouts.overlay_profil')
     @include('layouts.overlay_cart')
+    @include('layouts.overlay_signup')
     <div class="row">
       <div class="col-md-8">
         <div class="blob-container-1">
