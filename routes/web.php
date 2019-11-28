@@ -68,3 +68,19 @@ Route::post('check/store','CheckController@store');
 Route::get('myMap','AnnounceController@printMap');
 
 Route::post('password/email','Auth\ResetPasswordController@reset')->name('password.email');
+
+
+/********************************************** Route pour front test **********************************************/
+
+Route::get('announces','AnnounceController@index');
+
+Route::get('messages','MessageController@index');
+
+Route::get('aide',function(){
+    return view('');
+});
+
+Route::get('contact','ContactController@index');
+
+
+/********************************************** Route pour front test **********************************************/
