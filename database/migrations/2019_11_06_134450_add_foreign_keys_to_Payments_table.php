@@ -14,7 +14,8 @@ class AddForeignKeysToPaymentsTable extends Migration {
 	{
 		Schema::table('Payments', function(Blueprint $table)
 		{
-			$table->foreign('Orders_idOrders', 'fk_Bills_Orders1')->references('idOrders')->on('Orders')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+            $table->foreign('Announces_idAnnounce', 'fk_Orders_Announces1')->references('idAnnounce')->on('Announces')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+            $table->foreign('Users_idUser', 'fk_Orders_Users1')->references('idUser')->on('Users')->onUpdate('NO ACTION')->onDelete('NO ACTION');
 		});
 	}
 
@@ -28,7 +29,8 @@ class AddForeignKeysToPaymentsTable extends Migration {
 	{
 		Schema::table('Payments', function(Blueprint $table)
 		{
-			$table->dropForeign('fk_Bills_Orders1');
+            $table->dropForeign('fk_Orders_Announces1');
+            $table->dropForeign('fk_Orders_Users1');
 		});
 	}
 
