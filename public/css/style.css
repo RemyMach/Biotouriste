@@ -13,7 +13,7 @@ body {
   overflow-x: hidden;
 }
 footer {
-  background-image: url("{{ URL::asset('/') }}");
+  background-image: url("../img/home/footer.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -152,21 +152,21 @@ nav button:hover {
 }
 .blob-container-1 {
   height: 700px;
-  background-image: url(../img/blob-shape.svg);
+  background-image: url(../img/home/blob-shape.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
 }
 .blob-container-2 {
   height: 1080px;
-  background-image: url(../img/blob-shape-2.svg);
+  background-image: url(../img/home/blob-shape-2.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
 }
 .blob-container-3 {
   height: 1080px;
-  background-image: url(../img/blob-shape-3.svg);
+  background-image: url(../img/home/blob-shape-3.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
