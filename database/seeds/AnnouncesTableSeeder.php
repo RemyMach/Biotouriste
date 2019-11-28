@@ -25,6 +25,18 @@ class AnnouncesTableSeeder extends Seeder
                 'announce_latLong' => '48.837273,2.33538',
             ),
             array(
+                'announce_name' => 'Test5',
+                'announce_status' => 'Test5',
+                'announce_prix' => 23.35,
+                'announce_comment' => 'Test5',
+                'announce_adresse' => 'Test5',
+                'announce_date' => '2019-11-03 11:00:00',
+                'announce_img' => '',
+                'products_idProduct' => 20,
+                'Users_idUser' => 1,
+                'announce_latLong' => '48.837763,2.34538',
+            ),
+            array(
                 'announce_name' => 'Test2',
                 'announce_status' => 'Test2',
                 'announce_prix' => 5.99,

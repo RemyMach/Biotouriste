@@ -7,6 +7,8 @@ use Closure;
 class Seller
 {
     private $auth;
+
+    private $user;
     /**
      * Handle an incoming request.
      *
@@ -16,9 +18,10 @@ class Seller
      */
     public function handle($request, Closure $next)
     {
+        $this->user = $request->session()->get('user');
         $this->auth =
-            auth()->user() ?
-                (preg_match('#seller#i',auth()->user()->status['status_user_label']))
+            $this->user ?
+                (preg_match('#seller#i',$this->user->status['status_user_label']))
                 : 0;
 
         if($this->auth === 1){
