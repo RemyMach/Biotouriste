@@ -31,9 +31,9 @@ Route::get('register','Auth\RegisterController@showRegistrationForm')->name('reg
 
 Route::post('register','Auth\RegisterController@register');
 
-Route::get('password/reset','Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+Route::get('password/email','Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
 
-Route::get('password/reset/{token}','Auth\ResetPasswordController@showResetForm')->name('password.reset');
+Route::get('password/reset','Auth\ResetPasswordController@showResetForm')->name('password.reset');
 
 Route::post('password/reset','Auth\ResetPasswordController@reset')->name('password.update');
 
@@ -43,9 +43,29 @@ Route::post('password/email','Auth\ForgotPasswordController@sendResetLinkEmail')
 
 Route::get('user/{token}','UserController@show');
 
-Route::post('user/update/{user}','UserController@updateProfile');
+Route::get('user/update/{user}','UserController@updateProfile');
 
-Route::post('/admin/user/{user}','UserController@destroy');
+Route::get('admin/user/{user}','UserController@destroy');
+
+//comment
+
+Route::get('comment','CommentController@create');
+
+Route::post('comment/store','CommentController@store');
+
+Route::get('comment/announce/{announce}','CommentController@CommentsOfASeller');
+
+Route::get('comment/destroy/{comment}','CommentController@destroy');
+
+Route::get('comment/show','CommentController@showYourPostedComments');
+
+//checks
+
+Route::get('check','CheckController@create');
+
+Route::post('check/store','CheckController@store');
+
+
 
 
 

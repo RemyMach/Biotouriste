@@ -45,6 +45,7 @@ class ApiTokenController extends Controller
         }
 
         return $this->verifyApiTokenRequestCorrespondToTheAdminUser($parameters['idUser']);
+
         if(!$this->verifyApiTokenRequestCorrespondToTheAdminUser($parameters['idUser'])){
             return false;
         }
@@ -95,7 +96,5 @@ class ApiTokenController extends Controller
         }
 
         return true;
-
-
     }
 }

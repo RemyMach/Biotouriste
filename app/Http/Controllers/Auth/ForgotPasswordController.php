@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\UserForgotPassword;
+use App\password_resets;
 use GuzzleHttp\Client;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
 
 class ForgotPasswordController extends Controller
@@ -42,29 +45,23 @@ class ForgotPasswordController extends Controller
     {
         $data = request()->all();
 
-        $data['api_token'] = 'UqYJEF0wUazDsX0HbR9wDXoAf1YWlLI3WRvGyXrkfUcvRseMnUYxFL4xUmLvuy3Uw9Fx1BqU53Rfraeq';
-        $data['idUser'] = 5;
+        $data['idUser'] = config('api.api_admin_id');
+        $data['api_token'] = config('api.api_admin_token');
 
         $client = new Client();
+
         $request = $client->request('POST','http://localhost:8001/api/user/email', [
             'form_params' => $data
         ]);
 
-        $response = $request->getBody()->getContents();
+        $response = json_decode($request->getBody()->getContents());
 
-        dd($response);
-        $user = $response->user;
+        if($response->status == '400')
+        {
+            return back()->with(['error' => 'Votre email n\'existe pas']);
+        }
 
-        // We will send the password reset link to this user. Once we have attempted
-        // to send the link, we will examine the response then see the message we
-        // need to show to the user. Finally, we'll send out a proper response.
-        $response = $this->broker()->sendResetLink(
-            $this->credentials($request)
-        );
-
-        return $response == Password::RESET_LINK_SENT
-            ? $this->sendResetLinkResponse($request, $response)
-            : $this->sendResetLinkFailedResponse($request, $response);
+        return view('auth.passwords.email')->with(['error' => 'Vous avez reçu un message pour reset votre mot de passe']);
     }
 
     protected function validateEmail(Request $request)

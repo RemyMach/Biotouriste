@@ -31,9 +31,15 @@ class LoginController extends Controller
 
     public function login(Request $FormRequest)
     {
+        $data = request()->all();
+
+        $data['idUser'] = config('api.api_admin_id');
+        $data['api_token'] = config('api.api_admin_token');
+
+
         $client = new Client();
         $request = $client->request('POST','http://localhost:8001/api/user/login',
-            ['form_params' => $FormRequest->all()
+            ['form_params' => $data
             ]);
         $response = json_decode($request->getBody()->getContents());
 

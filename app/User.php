@@ -49,4 +49,24 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Status_User::class,"Status_User_idStatus_User", "idStatus_User");
     }
+
+    public function announces()
+    {
+        return $this->hasMany('App\Announce', 'Users_idUser', 'idUser');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany('App\Comment','Users_idUser','idUser');
+    }
+
+    public function checks()
+    {
+        return $this->hasMany('App\Check','Users_idUser','idUser');
+    }
+
+    public function checks1()
+    {
+        return $this->hasMany('App\Check','Users_idUser1','idUser');
+    }
 }

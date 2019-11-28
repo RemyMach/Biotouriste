@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\API\ApiTokenController;
 use App\Http\Resources\User as UserResource;
 use App\User;
 use Illuminate\Http\Request;
@@ -13,9 +14,20 @@ use Illuminate\Support\Str;
 class RegisterController extends Controller
 {
 
-    public function store(Request $request)
+    public function store(Request $request, ApiTokenController $apiTokenController)
     {
+        $requestParameters = $apiTokenController->verifyAdminCredentials();
+
+        if(!$requestParameters)
+        {
+            return response()->json([
+                'message'   => 'Your credentials are not valid',
+                'status'    => '400',
+            ]);
+        }
+
         $data = request()->all();
+
         $validator = Validator::make($data, [
             'user_name' => ['required', 'string', 'max:45'],
             'user_surname' => ['required', 'string', 'max:45'],
@@ -26,8 +38,6 @@ class RegisterController extends Controller
             'user_img' => ['string'],
         ]);
 
-        /*var_dump($validator);
-        die();*/
         if($validator->fails())
         {
             return response()->json([

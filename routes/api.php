@@ -30,6 +30,18 @@ Route::get('user/delete','API\UserController@destroy');
 
 Route::post('user/email','API\ForgotPasswordController@sendResetLinkEmail');
 
+Route::post('user/showResetForm','API\ResetPasswordController@showResetForm');
+
+Route::post('user/reset','API\ResetPasswordController@reset');
+
+//comment
+Route::post('comment/store','API\CommentController@store');
+
+Route::post('comment/seller','API\CommentController@CommentsOfASeller');
+
+Route::post('comment/destroy','API\CommentController@destroy');
+
+Route::post('comment/showYourPostedComments','API\CommentController@showYourPostedComments');
 
 /*Route::get('/users', function () {
     return UserResource::collection(User::paginate(2));

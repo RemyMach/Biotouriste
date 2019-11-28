@@ -21,8 +21,17 @@ class UserController extends Controller
 
     protected $user;
 
-    public function index()
+    public function index(ApiTokenController $apiTokenController)
     {
+        $requestParameters = $apiTokenController->verifyCredentials();
+
+        if(!$requestParameters)
+        {
+            return response()->json([
+                'message'   => 'Your credentials are not valid',
+                'status'    => '400',
+            ]);
+        }
         //Get Users
         $users = User::all();
 
@@ -36,10 +45,8 @@ class UserController extends Controller
         return response()->json($response, 200);*/
     }
 
-    public function show(Request $Showrequest)
+    public function show(Request $Showrequest, ApiTokenController $apiTokenController)
     {
-        $apiTokenController = new ApiTokenController();
-
         $requestParameters = $apiTokenController->verifyCredentials();
 
         if(!$requestParameters)
@@ -62,10 +69,8 @@ class UserController extends Controller
             ]);
     }
 
-    public function updateProfile()
+    public function updateProfile(ApiTokenController $apiTokenController)
     {
-        $apiTokenController = new ApiTokenController();
-
         $requestParameters = $apiTokenController->verifyCredentials();
 
         if(!$requestParameters)
@@ -117,10 +122,8 @@ class UserController extends Controller
 
     }
 
-    public function updatePassword()
+    public function updatePassword(ApiTokenController $apiTokenController)
     {
-        $apiTokenController = new ApiTokenController();
-
         $requestParameters = $apiTokenController->verifyCredentials();
 
         if(!$requestParameters)
@@ -161,10 +164,8 @@ class UserController extends Controller
 
     }
 
-    public function destroy()
+    public function destroy(ApiTokenController $apiTokenController)
     {
-        $apiTokenController = new ApiTokenController();
-
         $requestParameters = $apiTokenController->verifyCredentials();
 
         if(!$requestParameters)
@@ -175,7 +176,15 @@ class UserController extends Controller
             ]);
         }
 
-        $user = User::findorFail('idUser',$requestParameters['idUser'])->first();
+        $user = $this->verifyIfUserIsAdmin($requestParameters['idUser']);
+
+        if(!$user)
+        {
+            return response()->json([
+                'message' => 'Your request is not good',
+                'status' => '400',
+            ]);
+        }
 
         $user->delete();
 
@@ -186,5 +195,15 @@ class UserController extends Controller
         ]);
 
         //si le user est administrateur il peut delete
+    }
+
+    protected function verifyIfUserIsAdmin($idUser)
+    {
+        $user = User::findorFail($idUser);
+        if(!preg_match('#admin#i',$user->status->status_user_label))
+        {
+            return false;
+        }
+        return $user;
     }
 }
