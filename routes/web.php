@@ -65,7 +65,6 @@ Route::get('check','CheckController@create');
 
 Route::post('check/store','CheckController@store');
 
-
-
 Route::get('myMap','AnnounceController@printMap');
 
+Route::post('password/email','Auth\ResetPasswordController@reset')->name('password.email');
