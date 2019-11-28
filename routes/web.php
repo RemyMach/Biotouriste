@@ -19,7 +19,7 @@ Route::get('/', function () {
 
 Route::get('home', 'HomeController@index')->name('home');
 
-Route::get('users','API\UserController@index')->name('users');
+Route::get('users','UserController@index')->name('users');
 
 Route::post('login','Auth\LoginController@login');
 
@@ -31,13 +31,41 @@ Route::get('register','Auth\RegisterController@showRegistrationForm')->name('reg
 
 Route::post('register','Auth\RegisterController@register');
 
-Route::get('password/reset','Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+Route::get('password/email','Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
 
-Route::get('password/reset/{token}','Auth\ForgotPasswordController@showLinkRequestForm')->name('password.reset');
+Route::get('password/reset','Auth\ResetPasswordController@showResetForm')->name('password.reset');
 
 Route::post('password/reset','Auth\ResetPasswordController@reset')->name('password.update');
 
-Route::post('password/email','Auth\ResetPasswordController@reset')->name('password.email');
+Route::post('password/email','Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+
+//autre
+
+Route::get('user/{token}','UserController@show');
+
+Route::get('user/update/{user}','UserController@updateProfile');
+
+Route::get('admin/user/{user}','UserController@destroy');
+
+//comment
+
+Route::get('comment','CommentController@create');
+
+Route::post('comment/store','CommentController@store');
+
+Route::get('comment/announce/{announce}','CommentController@CommentsOfASeller');
+
+Route::get('comment/destroy/{comment}','CommentController@destroy');
+
+Route::get('comment/show','CommentController@showYourPostedComments');
+
+//checks
+
+Route::get('check','CheckController@create');
+
+Route::post('check/store','CheckController@store');
+
+
 
 Route::get('myMap','AnnounceController@printMap');
 

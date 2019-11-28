@@ -21,6 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Check extends Model
 {
+    public $timestamps = false;
     /**
      * The primary key for the model.
      * 
