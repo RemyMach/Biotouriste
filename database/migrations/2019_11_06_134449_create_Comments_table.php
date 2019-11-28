@@ -16,7 +16,7 @@ class CreateCommentsTable extends Migration {
 		{
 			$table->integer('idComment', true);
 			$table->text('comment_content');
-			$table->float('comment_note', 10, 0)->nullable();
+			$table->decimal('comment_note', 2, 1)->nullable();
 			$table->string('comment_subject', 45);
 			$table->integer('Announces_idAnnounce')->index('fk_Comments_Announces1_idx');
 			$table->integer('Users_idUser')->index('fk_Comments_Users1_idx');

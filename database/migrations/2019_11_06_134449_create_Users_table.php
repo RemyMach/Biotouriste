@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration {
 			$table->string('user_adress')->nullable();
 			$table->integer('user_postal_code')->nullable();
 			$table->string('user_phone', 45)->nullable()->unique('user_phone_UNIQUE');
-			$table->string('user_mail')->unique('user_mail_UNIQUE');
+			$table->string('email')->unique('email_UNIQUE');
 			$table->string('password');
 			$table->string('user_img', 45)->nullable();
             $table->integer('Status_User_idStatus_User')->index('fk_Users_Status_User_idStatus_User1');

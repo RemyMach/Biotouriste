@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Http\Controllers\Controller;
+use GuzzleHttp\Client;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -42,6 +45,41 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+    public function showRegistrationForm()
+    {
+        return view('auth.register');
+    }
+
+    public function register(Request $request1)
+    {
+        $data = request()->all();
+
+        $data['api_token'] = config('api.api_admin_password');
+        $data['idUser'] = config('api.api_admin_id');
+
+
+        $client = new Client();
+        $request = $client->request('POST','http://localhost:8001/api/user/store',
+            ['form_params' => $data
+            ]);
+        $response = json_decode($request->getBody()->getContents());
+
+
+        if($response->status === "400")
+        {
+            return redirect($this->redirectTo);
+        }
+
+        $User_attributes_array = json_decode(json_encode($response->user),true);
+        $user = new User($User_attributes_array);
+        $user->idUser = $response->user->idUser;
+
+        session(['user' => $user]);
+
+        //que $this->registered($request1, $user) soit vrai ou false on redirect
+        return $this->registered($request1, $user)
+            ?: redirect($this->redirectTo);
+    }
     /**
      * Get a validator for an incoming registration request.
      *
@@ -53,7 +91,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'user_name' => ['required', 'string', 'max:45'],
             'user_surname' => ['required', 'string', 'max:45'],
-            'user_mail' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'user_postal_code' => ['integer'],
             'user_phone' => ['unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
@@ -74,7 +112,11 @@ class RegisterController extends Controller
         $data['api_token'] = Str::random(80);
         unset($data['password_confirmation']);
         unset($data['_token']);
-        //dd($data);
         return User::create($data);
+    }
+
+    protected function registered(Request $request,User $user)
+    {
+        event(new Registered($user));
     }
 }

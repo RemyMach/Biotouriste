@@ -3,10 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Check;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class CheckController extends Controller
 {
+
+    public function __construct()
+    {
+        //$this->middleware('Controller');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -24,7 +31,7 @@ class CheckController extends Controller
      */
     public function create()
     {
-        //
+        return view('testCheck');
     }
 
     /**
@@ -35,7 +42,26 @@ class CheckController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //seul un admin ou un controlleur peut register un check
+        if(!$request->session()->has('user')){
+
+            return redirect('home');
+        }
+
+        $this->user = $request->session()->get('user');
+
+        $data['idUser']     = $this->user->idUser;
+        $data['api_token']  = $this->user->api_token;
+        // $data['idSeller']   =
+
+        $client = new Client();
+        $request = $client->request('POST','http://localhost:8001/api/check/store',
+            ['form_params' => $data]);
+
+        $response = json_decode($request->getBody()->getContents());
+
+        dd($response);
+
     }
 
     /**
@@ -44,9 +70,28 @@ class CheckController extends Controller
      * @param  \App\Check  $check
      * @return \Illuminate\Http\Response
      */
-    public function show(Check $check)
+    public function showChecksOfAController(Request $request)
     {
-        //
+        if(!$request->session()->has('user')){
+
+            return redirect('home');
+        }
+
+        $this->user = $request->session()->get('user');
+
+        $data['idUser'] = $this->user->idUser;
+        $data['api_token'] = $this->user->api_token;
+        $data['idSeller'] = 2;
+
+        $client = new Client();
+        $request = $client->request('POST','http://localhost:8001/api/check/showChecksOfAController',
+            ['form_params' => $data]);
+
+        $response = json_decode($request->getBody()->getContents());
+
+        dd($response);
+
+        return view('testCheck');
     }
 
     /**
