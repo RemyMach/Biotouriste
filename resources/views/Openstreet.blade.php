@@ -1,3 +1,6 @@
+@include('layouts.header')
+@include('layouts.navbar')
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -47,7 +50,6 @@
         var marqueur{{$announce->idAnnounce}} = L.marker([{{ $announce->announce_latLong }}]).addTo(mymap);
         marqueur{{$announce->idAnnounce}}.bindPopup('{{$announce->announce_name}}');
      @endforeach
-
 
 </script>
 </body>
