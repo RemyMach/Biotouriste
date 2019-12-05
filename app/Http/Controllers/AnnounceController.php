@@ -7,13 +7,6 @@ use Illuminate\Http\Request;
 
 class AnnounceController extends Controller
 {
-    public function printMap()
-    {
-        $announces = Announce::all();
-        dump($announces);
-        return view('Openstreet', ['announces' => $announces]);
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +14,9 @@ class AnnounceController extends Controller
      */
     public function index()
     {
-        return view('announces');
+        $announces = Announce::all();
+        dump($announces);
+        return view('announces', ['announces' => $announces]);
     }
 
     /**
