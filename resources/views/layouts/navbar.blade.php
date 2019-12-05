@@ -3,7 +3,7 @@
     <a href="{{ url('announces') }}" class="underline">Annonces</a>
     <a href="#" class="underline">Message</a>
     <a href="#" class="underline">Map</a>
-    <a href="#" class="title">BioTourist</a>
+    <a href="{{ url('') }}" class="title">BioTourist</a>
     <a href="#content-3" class="underline">Contact</a>
     <a href="#" class="underline">Aide</a>
     <button id="btn-profil" class="btn-log sp-10" type="button" name="connexion" onclick="openSignup()"><i class="fas fa-user sp-30"></i></button>
