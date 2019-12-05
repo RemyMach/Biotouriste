@@ -1,6 +1,6 @@
 <div class="navbar">
   <nav>
-    <a href="{{ url('map') }}" class="underline">Annonces</a>
+    <a href="{{ url('announces') }}" class="underline">Annonces</a>
     <a href="#" class="underline">Message</a>
     <a href="#" class="underline">Map</a>
     <a href="#" class="title">BioTourist</a>

@@ -234,7 +234,7 @@ nav button:hover {
   bottom: 100%;
   left: 0;
   right: 0;
-  background-color: rgba(238, 234, 225);
+  background-color: rgba(238, 234, 225,0.8);
   overflow: hidden;
   width: 100%;
   height:0;
@@ -278,4 +278,36 @@ nav button:hover {
 .btn-submit:hover {
   background-color: #da4f44;
   color: white;
+}
+
+
+
+
+
+
+
+
+/* Announces */
+
+.post {
+  background-color: white;
+  border: none;
+  border-radius: 15px;
+  width: 100%;
+  height: 120px;
+  transition: .5s ease;
+}
+.post:hover {
+  transform: scale(1.05);
+}
+.icon {
+  background-color: #F6F6F6;
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  margin: 10px;
+}
+.text {
+  vertical-align: middle;
+  margin: 10%; 
 }
