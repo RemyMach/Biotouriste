@@ -16,6 +16,8 @@ class LoginController extends Controller
     {
         $requestParameters = $apiTokenController->verifyAdminCredentials();
 
+        //return ([$requestParameters]);
+
         if(!$requestParameters)
         {
             return response()->json([

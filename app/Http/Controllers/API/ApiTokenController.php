@@ -17,6 +17,7 @@ class ApiTokenController extends Controller
     {
         $parameters = $this->verifyPresenceIdUserAndApiToken();
 
+
         if(!$parameters)
         {
             return false;
@@ -44,7 +45,6 @@ class ApiTokenController extends Controller
             return false;
         }
 
-        return $this->verifyApiTokenRequestCorrespondToTheAdminUser($parameters['idUser']);
 
         if(!$this->verifyApiTokenRequestCorrespondToTheAdminUser($parameters['idUser'])){
             return false;
@@ -60,7 +60,6 @@ class ApiTokenController extends Controller
         {
             return false;
         }
-
         return ["api_token" => $api_token,"idUser" => $idUser];
 
     }

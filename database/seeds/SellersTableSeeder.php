@@ -16,6 +16,7 @@ class SellersTableSeeder extends Seeder
                 'seller_product_bio' => false,
                 'seller_description' => 'je suis un super vendeur',
                 'Users_idUser' => 3,
-                )
-            ));
+            )
+        ));
     }
+}

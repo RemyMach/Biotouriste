@@ -38,10 +38,12 @@ class LoginController extends Controller
 
 
         $client = new Client();
-        $request = $client->request('POST','http://localhost:8001/api/user/login',
-            ['form_params' => $data
+        $request = $client->request('POST','http://localhost:8001/api/user/login', [
+            'form_params' => $data
             ]);
         $response = json_decode($request->getBody()->getContents());
+
+        //dd($response);
 
         if($response->status === "400")
         {
