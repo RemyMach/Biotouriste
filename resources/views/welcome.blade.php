@@ -1,99 +1,78 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title>Laravel</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
+@include('layouts.header')
+  <div id="content-1">
+    @include('layouts.navbar')
+    <!-- @include('layouts.navbar_default') -->
+    <!-- @include('layouts.navbar_login') -->
+    @include('layouts.overlay_login')
+    @include('layouts.overlay_profil')
+    @include('layouts.overlay_cart')
+    @include('layouts.overlay_signup')
+    <div class="row">
+      <div class="col-md-8">
+        <div class="blob-container-1">
+          <div class="col-md-7 text-center">
+            <h3>Rechercher un agriculteur avec une adresse ou en se localisant.</h3>
+          </div>
+          <div class="row blob-content blob-content-left">
+            <div class="col-md-5 text-center">
+              <form class="col-md-12" action="index.html" method="post">
+                <input class="col-md-12" type="text" name="" value="" placeholder="Adresse">
+                <input class="col-md-12" type="text" name="" value="" placeholder="Code postal">
+                <input class="col-md-12" type="text" name="" value="" placeholder="Ville">
+                <input class="col-md-12" type="text" name="" value="" placeholder="Pays">
+                <button class="btn-map-submit sp-10" type="submit" name="button">Rechercher</button>
+              </form>
             </div>
+            <div class="col-md-1 blob-content blob-content-right">
+              <button class="btn-map" type="button" name="button"><i class="fas fa-map-marker-alt"></i></button>
+            </div>
+          </div>
         </div>
-    </body>
-</html>
+      </div>
+      <div class="col-md-4">
+
+      </div>
+    </div>
+    <div class="col-md-12 text-center">
+      <a href="#content-2"><button class="btn-next sp-5" type="button" name="button"><i class="fas fa-chevron-down"></i></button></a>
+    </div>
+  </div>
+  <div id="content-2">
+    <div class="row">
+      <div class="col-md-4">
+
+      </div>
+      <div class="col-md-8">
+        <div class="blob-container-2">
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12 text-center">
+
+    </div>
+  </div>
+  <div id="content-3">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="blob-container-3">
+          <h3>Nous contactez</h3>
+          <div class="row blob-content blob-content-3-left">
+            <div class="col-md-12 text-center">
+              <form class="col-md-6" action="index.html" method="post">
+                <input class="col-md-12" type="text" name="" value="" placeholder="Adresse e-mail">
+                <textarea class="col-md-12" name="name" rows="8" cols="80"></textarea>
+                <button class="btn-map-submit sp-10" type="submit" name="button">Envoyer</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+      </div>
+    </div>
+    <div class="col-md-12 text-center">
+
+    </div>
+  </div>
+@include('layouts.footer')
