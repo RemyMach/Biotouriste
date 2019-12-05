@@ -10,13 +10,21 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+    }
+
+    protected $primaryKey = 'idUser';
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'user_name','user_surname','user_adress','user_postal_code','user_phone','email',
+        'password','user_img','remember_token','Status_User_idStatus_User','api_token',
     ];
 
     /**
@@ -25,7 +33,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'remember_token',
     ];
 
     /**
@@ -36,4 +44,29 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function status()
+    {
+        return $this->belongsTo(Status_User::class,"Status_User_idStatus_User", "idStatus_User");
+    }
+
+    public function announces()
+    {
+        return $this->hasMany('App\Announce', 'Users_idUser', 'idUser');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany('App\Comment','Users_idUser','idUser');
+    }
+
+    public function checks()
+    {
+        return $this->hasMany('App\Check','Users_idUser','idUser');
+    }
+
+    public function checks1()
+    {
+        return $this->hasMany('App\Check','Users_idUser1','idUser');
+    }
 }
