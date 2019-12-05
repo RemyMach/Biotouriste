@@ -67,6 +67,8 @@ Route::post('check/store','CheckController@store');
 
 Route::get('myMap','AnnounceController@printMap');
 
+/*Route::post''*/
+
 
 /********************************************** Route pour front test **********************************************/
 
