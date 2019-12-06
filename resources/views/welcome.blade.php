@@ -16,6 +16,9 @@
             <button class="btn-large green" type="button" name="button">Announces</button>
             <button class="btn-large purple" type="button" name="button">Find me</button>
           </div>
+          <div class="col-md-12 text-center scroll">
+            <button class="btn-next white" type="button" name="button"><a href="#content-2"><i class="fas fa-chevron-down"></i></a></button>
+          </div>
         </div>
       </div>
     </div>

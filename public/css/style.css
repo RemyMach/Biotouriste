@@ -95,11 +95,13 @@ nav button:hover {
 .content-1 button {
   margin: 2%;
 }
-
+.scroll  button a {
+  color: white;
+  text-decoration: none;
+}
 
 
 /******************** Button ********************/
-
 .btn-large {
   border: none;
   border-radius: 25px;
@@ -113,11 +115,27 @@ nav button:hover {
 .btn-large:hover {
   background-color: rgba(255, 255, 255, 0.7);
 }
+.btn-next {
+  border-radius: 50px;
+  border: none;
+  color: white;
+  width: 50px;
+  height: 50px;
+  padding: 10px;
+  background-color: #263621;
+  text-transform: uppercase;
+}
+.btn-next:hover {
+  background-color: rgba(255, 255, 255, 0.7);
+}
 .purple {
   background-color: #a68dc1;
 }
 .green {
   background-color: #b2c308;
+}
+.white {
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 
@@ -173,18 +191,7 @@ nav button:hover {
 
 /* Button style */
 
-.btn-next {
-  border-radius: 50px;
-  border: none;
-  color: white;
-  width: 50px;
-  height: 50px;
-  padding: 10px;
-  background-color: #263621;
-}
-.btn-next:hover {
-  background-color: #da4f44;
-}
+
 .blob-container-1 h3 {
   color: #EEEAE1;
   padding-top: 25%;
