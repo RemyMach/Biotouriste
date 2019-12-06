@@ -15,7 +15,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $payer_first_name
  * @property string $payer_last_name
  * @property int $Orders_idOrders
- * @property Order $order
  */
 class Payment extends Model
 {
@@ -29,13 +28,21 @@ class Payment extends Model
     /**
      * @var array
      */
-    protected $fillable = ['payment_status', 'payment_amount', 'payment_currency', 'payment_date', 'payer_email', 'payer_paypal_id', 'payer_first_name', 'payer_last_name', 'Orders_idOrders'];
+    protected $fillable = ['order_quantity', 'Users_idUser', 'Announces_idAnnounce','payment_status', 'payment_amount', 'payment_currency', 'payment_date', 'payer_paypal_id', 'payer_first_name', 'payer_last_name', 'Orders_idOrders'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function order()
+    public function announce()
     {
-        return $this->belongsTo('App\Order', 'Orders_idOrders', 'idOrders');
+        return $this->belongsTo('App\Payment', 'Announces_idAnnounce', 'idAnnounce');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'Users_idUser', 'idUser');
     }
 }

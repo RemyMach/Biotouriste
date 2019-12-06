@@ -14,8 +14,8 @@ class AddForeignKeysToChecksTable extends Migration {
 	{
 		Schema::table('Checks', function(Blueprint $table)
 		{
-			$table->foreign('Users_idUser', 'fk_Verifications_Users1')->references('idUser')->on('Users')->onUpdate('NO ACTION')->onDelete('NO ACTION');
-			$table->foreign('Users_idUser1', 'fk_Verifications_Users2')->references('idUser')->on('Users')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+			$table->foreign('Users_idUser', 'fk_Verifications_Users')->references('idUser')->on('Users')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+			$table->foreign('Sellers_idSeller', 'fk_Verifications_Sellers')->references('idSeller')->on('Sellers')->onUpdate('NO ACTION')->onDelete('NO ACTION');
 		});
 	}
 
@@ -29,8 +29,8 @@ class AddForeignKeysToChecksTable extends Migration {
 	{
 		Schema::table('Checks', function(Blueprint $table)
 		{
-			$table->dropForeign('fk_Verifications_Users1');
-			$table->dropForeign('fk_Verifications_Users2');
+			$table->dropForeign('fk_Verifications_Users');
+			$table->dropForeign('fk_Verifications_Sellers');
 		});
 	}
 
