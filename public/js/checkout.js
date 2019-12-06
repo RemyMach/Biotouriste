@@ -3,7 +3,7 @@ var stripe;
 
 var orderData = {
   items: [{ id: "photo-subscription" }],
-  currency: "usd"
+  currency: "eur  "
 };
 
 // Disable the button until we have Stripe set up on the page
@@ -27,27 +27,44 @@ fetch("/stripe-key.php")
   });
 
 var setupElements = function(data) {
-  stripe = Stripe(data.publishableKey);
-  /* ------- Set up Stripe Elements to use in checkout form ------- */
-  var elements = stripe.elements();
-  var style = {
-    base: {
-      color: "#32325d",
-      fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-      fontSmoothing: "antialiased",
-      fontSize: "16px",
-      "::placeholder": {
-        color: "#aab7c4"
-      }
-    },
-    invalid: {
-      color: "#fa755a",
-      iconColor: "#fa755a"
-    }
-  };
+  stripe = Stripe('pk_test_Zmf7wAHNQyhKp0hf4BTylXLW00ysnFXmbw');
 
-  var card = elements.create("card", { style: style });
-  card.mount("#card-element");
+  /* ------- Set up Stripe Elements to use in checkout form ------- */
+  var elements = stripe.elements({
+    fonts: [
+      {
+        cssSrc: "https://rsms.me/inter/inter-ui.css"
+      }
+    ],
+    // Stripe's examples are localized to specific languages, but if
+    // you wish to have Elements automatically detect your user's locale,
+    // use `locale: 'auto'` instead.
+    locale: window.__exampleLocale
+  });
+
+  /**
+   * Card Element
+   */
+  var card = elements.create("card", {
+    style: {
+      base: {
+        color: "#32325D",
+        fontWeight: 500,
+        fontFamily: "Inter UI, Open Sans, Segoe UI, sans-serif",
+        fontSize: "16px",
+        fontSmoothing: "antialiased",
+
+        "::placeholder": {
+          color: "#CFD7DF"
+        }
+      },
+      invalid: {
+        color: "#E25950"
+      }
+    }
+  });
+
+  card.mount("#card-element")
 
   return {
     stripe: stripe,

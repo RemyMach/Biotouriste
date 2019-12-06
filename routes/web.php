@@ -83,4 +83,15 @@ Route::get('aide',function(){
 Route::get('contact','ContactController@index');
 
 
+
+
 /********************************************** Route pour front test **********************************************/
+
+
+/********************************************** Route Anthony pour test stripe **********************************************/
+Route::get('checkout',function(){
+    return view('checkout');
+});
+Route::post('create-payment-intent',function(){
+    return view('stripe');
+});
