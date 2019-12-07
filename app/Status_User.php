@@ -14,16 +14,17 @@ class Status_User extends Model
     protected $table = 'Status_User';
 
     /**
+     * @var array
+     */
+    protected $fillable = ['status_user_label'];
+    /**
      * The primary key for the model.
      *
      * @var string
      */
     protected $primaryKey = 'idStatus_User';
 
-    /**
-     * @var array
-     */
-    protected $fillable;
+
 
     public function status()
     {

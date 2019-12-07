@@ -32,7 +32,7 @@ class Check extends Model
     /**
      * @var array
      */
-    protected $fillable = ['check_prevision_date', 'check_status_verification', 'check_date', 'check_comment', 'check_customer_service', 'check_state_place', 'check_quality_product', 'check_bio_status', 'Users_idUser', 'Users_idUser1'];
+    protected $fillable = ['check_prevision_date', 'check_status_verification', 'check_date', 'check_comment', 'check_customer_service', 'check_state_place', 'check_quality_product', 'check_bio_status', 'Users_idUser', 'Sellers_idSeller'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

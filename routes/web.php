@@ -35,7 +35,7 @@ Route::get('password/email','Auth\ForgotPasswordController@showLinkRequestForm')
 
 Route::get('password/reset','Auth\ResetPasswordController@showResetForm')->name('password.reset');
 
-Route::post('password/reset','Auth\ResetPasswordController@reset')->name('password.update');
+Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
 
 Route::post('password/email','Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 
@@ -67,7 +67,7 @@ Route::post('check/store','CheckController@store');
 
 Route::get('myMap','AnnounceController@printMap');
 
-Route::post('password/email','Auth\ResetPasswordController@reset')->name('password.email');
+/*Route::post''*/
 
 
 /********************************************** Route pour front test **********************************************/
