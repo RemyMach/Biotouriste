@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Announce;
+use App\User;
+use App\Status_User;
 use Illuminate\Http\Request;
 
 class AnnounceController extends Controller
@@ -14,9 +16,11 @@ class AnnounceController extends Controller
      */
     public function index()
     {
-        $announces = Announce::all();
-        dump($announces);
-        return view('announces', ['announces' => $announces]);
+//        $announces = Announce::all();
+//        return view('announces', ['announces' => $announces]);
+
+        $status = Status_User::find(1);
+        dd($status);
     }
 
     /**
