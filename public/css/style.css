@@ -27,6 +27,10 @@ body {
   height: 100vh;
   width: 100%;
   background-color: #faf6f0;
+  background-image: url(../img/home/content-2.png);
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: contain;
 }
 
 /******************** Navbar ********************/
@@ -100,17 +104,144 @@ nav button:hover {
   text-decoration: none;
 }
 
+/******************** Content 2 ********************/
+.top {
+  padding-top: 3%;
+  padding-left: 15%;
+  padding-right: 5%;
+}
+#content-2 .title p {
+  font-size: 34px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  color: black;
+}
+#content-2 .main {
+  padding: 5%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.main {
+  margin-left: auto;
+  margin-right: auto;
+}
+.pst {
+  background-color: white;
+  height: 600px;
+  width: 300px;
+  border-radius: 25px;
+  margin-left: 25px;
+  margin-right: 25px;
+  transition: .5s;
+}
+.pst:hover {
+  transform: scale(1.1);
+  -webkit-box-shadow: 0px 0px 30px 0px rgba(0,0,0,0.10);
+  -moz-box-shadow: 0px 0px 30px 0px rgba(0,0,0,0.10);
+  box-shadow: 0px 0px 30px 0px rgba(0,0,0,0.10);
+}
+.pst-title {
+  padding: 5% 10% 0% 10%;
+  font-size: 24px;
+  font-weight: 700;
+  color: #b2c308;
+  text-transform: uppercase;
+}
+.pst-desc {
+  padding: 0% 10% 5% 10%;
+  font-size: 13px;
+  font-weight: 700;
+  color: black;
+}
+.pst-pos {
+  padding: 0% 10% 5% 10%;
+}
+.pst-pos i {
+  padding-left: 5%;
+  padding-right: 5%;
+  color: #b2c308;
+}
+.pst-pos p {
+  color: #b2c308;
+}
+.pst-vendor {
+  padding: 0% 10% 5% 10%;
+}
+.pst-vendor i {
+  padding-left: 5%;
+  padding-right: 5%;
+  color: #b2c308;
+}
+.pst-vendor p {
+  color: #b2c308;
+}
+.pst-price {
+  padding: 0% 15% 5% 15%;
+}
+.pst-price p {
+  color: black;
+  font-size: 32px;
+}
+.pst-price span {
+  color: lightgrey;
+  font-size: 13px;
+}
+.pst-buy button {
+  background-color: #b2c308;
+  width: 100%;
+  color: white;
+  text-transform: uppercase;
+  border-radius: 0 25px 0 25px;
+  border: none;
+  height: 37px;
+}
+.pst-buy button:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.pst-more button {
+  background-color: #4e7f01;
+  width: 100%;
+  height: 37px;
+  border: 0;
+  color: white;
+  border-radius: 25px 0 25px 0;
+}
+.pst-more button:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.pst-img {
+  background-color: lightgrey;
+  height: 200px;
+  width: 300px;
+  border-radius: 25px;
+}
+.pic-1 {
+  background-image: url(../img/home/pic-1.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+.pic-2 {
+  background-image: url(../img/home/pic-2.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+/******************** Content-3 ********************/
 
 /******************** Button ********************/
 .btn-large {
   border: none;
   border-radius: 25px;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 2px;
   color: white;
   width: 170px;
   padding: 10px;
   background-color: #263621;
   text-transform: uppercase;
-
 }
 .btn-large:hover {
   background-color: rgba(255, 255, 255, 0.7);
@@ -136,6 +267,9 @@ nav button:hover {
 }
 .white {
   background-color: rgba(255, 255, 255, 0.3);
+}
+.op:hover {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 
