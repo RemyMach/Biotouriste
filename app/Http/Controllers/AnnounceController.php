@@ -16,11 +16,8 @@ class AnnounceController extends Controller
      */
     public function index()
     {
-//        $announces = Announce::all();
-//        return view('announces', ['announces' => $announces]);
-
-        $status = Status_User::find(1);
-        dd($status);
+        $announces = Announce::all();
+        return view('announces', ['announces' => $announces]);
     }
 
     /**

@@ -1,22 +1,37 @@
-
 @include('layouts.header')
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
         integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
         crossorigin=""/>
   <title>Document</title>
   <style>
-    #mapid { height: 300px; width: 500px; }
+    .divAnnounces{
+        overflow-y: scroll;
+    }
+    .categories div li{
+        margin: auto;
+        padding: 0 10px 0 10px;
+        color: gre;
+        border: 2px solid #1b1e21;
+        border-radius: 30%;
+    }
   </style>
 </head>
 <div id="content-1">
       @include('layouts.navbar')
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-12 navbar navbar-expand-lg">
+              <ul class="navbar-nav inline categories">
+                  <div class="col-md-2"><li>Fruits</li></div>
+                  <div class="col-md-2"><li>Légumes</li></div>
+                  <div class="col-md-2"><li>Epices</li></div>
+                  <div class="col-md-2"><li>Boissons</li></div>
+                  <div class="col-md-2"><li>Gateaux</li></div>
+              </ul>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 divAnnounces">
             @foreach ($announces as $announce)
             <div class="post">
               <div class="row">
@@ -53,18 +68,24 @@
   // on set la position sur la carte
   var mymap = L.map('mapid').setView([48.852969, 2.349903], 10);
   //Skin de la map
-  L.tileLayer('//{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
-    attribution: 'donn&eacute;es &copy; <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
-    minZoom: 1,
-    maxZoom: 14
+  // L.tileLayer('//{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+  //   attribution: 'donn&eacute;es &copy; <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
+  //   minZoom: 1,
+  //   maxZoom: 14
+  // }).addTo(mymap);
+  L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    id: 'mapbox/streets-v11',
+    accessToken: 'pk.eyJ1IjoiYmlvdG91cmlzdGUiLCJhIjoiY2s0MnRjMW1uMDBxZTNlczVueXk1OXRwbyJ9.6HEfIagqNQob01cRbFVpzQ'
   }).addTo(mymap);
   //ajout du nouveau marqueur
   var icone = L.icon({
-    iconUrl: 'path',
-    iconSize: [50, 50]
+    iconUrl: 'img/marker.png',
+    iconSize: [60, 60]
   });
   @foreach($announces as $announce)
-  var marqueur{{$announce->idAnnounce}} = L.marker([{{ $announce->announce_latLong }}]).addTo(mymap);
+  var marqueur{{$announce->idAnnounce}} = L.marker([{{ $announce->announce_latLong }}], {icon: icone}).addTo(mymap);
   marqueur{{$announce->idAnnounce}}.bindPopup('{{$announce->announce_name}}');
   @endforeach
 
