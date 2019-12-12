@@ -37,6 +37,10 @@ body {
   height: 1080px;
   width: 100%;
   background-color: #faf6f0;
+  background-image: url(../img/home/pic-4.jpg);
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: cover;
 }
 #content-4 {
   height: 1080px;
@@ -257,6 +261,60 @@ nav button:hover {
   padding-top: 5%;
 }
 /******************** Content-3 ********************/
+
+
+
+
+
+/******************** Content-4 ********************/
+#content-4 .top {
+  padding-top: 3%;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+#content-4 .main {
+  padding-top: 5%;
+}
+#content-4 .title {
+  font-size: 34px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  color: black;
+}
+.blog-pst {
+  background-color: white;
+  height: 600px;
+  width: 400px;
+  border-radius: 25px;
+  margin-left: 25px;
+  margin-right: 25px;
+  transition: .5s;
+}
+.blog-pst:hover {
+  transform: scale(1.1);
+  -webkit-box-shadow: 0px 0px 30px 0px rgba(0,0,0,0.10);
+  -moz-box-shadow: 0px 0px 30px 0px rgba(0,0,0,0.10);
+  box-shadow: 0px 0px 30px 0px rgba(0,0,0,0.10);
+}
+.blog-img-1 {
+  background-image: url(../img/home/pic-6.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+.blog-img-2 {
+  background-image: url(../img/home/pic-5.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+
+
+
+
+
 
 /******************** Button ********************/
 .btn-large {

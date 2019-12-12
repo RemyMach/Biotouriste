@@ -201,7 +201,7 @@
           </div>
         </div>
       </div>
-      <!-- <div class="slider">
+      <div class="slider">
         <div class="row">
           <div class="col-md-auto text-right">
             <button class="btn-next" type="button" name="button"><i class="fas fa-chevron-left"></i></button>
@@ -210,15 +210,52 @@
             <button class="btn-next" type="button" name="button"><i class="fas fa-chevron-right"></i></button>
           </div>
         </div>
-      </div> -->
+      </div>
     </div>
   </div>
+
+
   <div id="content-3">
 
   </div>
-  <div id="content-4">
 
+
+
+  <div id="content-4">
+    <div class="top">
+      <div class="row">
+        <div class="col-md-6">
+          <p class="title">Blog, what's new?</p>
+        </div>
+        <div class="col-md-6 text-right">
+          <button class="btn-large purple op" type="button" name="button">View more</button>
+        </div>
+      </div>
+      <div class="main">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="blog-pst blog-img-1">
+
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="blog-pst blog-img-2">
+
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="blog-pst blog-img-1">
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+
+
+
+
   <div id="content-5">
 
   </div>
