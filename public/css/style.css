@@ -10,13 +10,14 @@
 
 html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
 }
 body {
   font-family: 'helvetica', sans-serif;
   font-weight: 700;
 }
 #content-1 {
-  height: 100vh;
+  height: 1080px;
   width: 100%;
   background-image: url(../img/home/tim-mossholder-N1c4X5csoTg-unsplash.jpg);
   background-repeat: no-repeat;
@@ -24,10 +25,29 @@ body {
   background-size: cover;
 }
 #content-2 {
-  height: 100vh;
+  height: 1080px;
   width: 100%;
   background-color: #faf6f0;
   background-image: url(../img/home/content-2.png);
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: contain;
+}
+#content-3 {
+  height: 1080px;
+  width: 100%;
+  background-color: #faf6f0;
+}
+#content-4 {
+  height: 1080px;
+  width: 100%;
+  background-color: #faf6f0;
+}
+#content-5 {
+  height: 100%;
+  width: 100%;
+  background-color: #faf6f0;
+  background-image: url(../img/home/pic-3.png);
   background-repeat: no-repeat;
   background-position: top;
   background-size: contain;
@@ -141,21 +161,26 @@ nav button:hover {
   -moz-box-shadow: 0px 0px 30px 0px rgba(0,0,0,0.10);
   box-shadow: 0px 0px 30px 0px rgba(0,0,0,0.10);
 }
+.pst-review {
+  padding: 5% 10% 0 10%;
+  color: black;
+  font-size: 13px;
+}
 .pst-title {
-  padding: 5% 10% 0% 10%;
+  padding: 0 10% 0 10%;
   font-size: 24px;
   font-weight: 700;
   color: #b2c308;
   text-transform: uppercase;
 }
 .pst-desc {
-  padding: 0% 10% 5% 10%;
+  padding: 0 10% 0 10%;
   font-size: 13px;
   font-weight: 700;
   color: black;
 }
 .pst-pos {
-  padding: 0% 10% 5% 10%;
+  padding: 0 10% 0 10%;
 }
 .pst-pos i {
   padding-left: 5%;
@@ -177,7 +202,7 @@ nav button:hover {
   color: #b2c308;
 }
 .pst-price {
-  padding: 0% 15% 5% 15%;
+  padding: 0% 15% 3.3% 15%;
 }
 .pst-price p {
   color: black;
@@ -227,6 +252,9 @@ nav button:hover {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+}
+.slider {
+  padding-top: 5%;
 }
 /******************** Content-3 ********************/
 

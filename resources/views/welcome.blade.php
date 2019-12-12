@@ -39,6 +39,9 @@
         <div class="col-md-auto">
           <div class="pst">
             <div class="pst-img pic-1"></div>
+            <div class="pst-review">
+              <p><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></p>
+            </div>
             <div class="pst-title">
               <p>Tomatos</p>
             </div>
@@ -77,6 +80,9 @@
         <div class="col-md-auto">
           <div class="pst">
             <div class="pst-img pic-2"></div>
+            <div class="pst-review">
+              <p><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half"></i></p>
+            </div>
             <div class="pst-title">
               <p>Carrot</p>
             </div>
@@ -115,6 +121,9 @@
         <div class="col-md-auto">
           <div class="pst">
             <div class="pst-img pic-2"></div>
+            <div class="pst-review">
+              <p><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></p>
+            </div>
             <div class="pst-title">
               <p>Carrot</p>
             </div>
@@ -153,6 +162,9 @@
         <div class="col-md-auto">
           <div class="pst">
             <div class="pst-img pic-2"></div>
+            <div class="pst-review">
+              <p><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></p>
+            </div>
             <div class="pst-title">
               <p>Carrot</p>
             </div>
@@ -189,9 +201,25 @@
           </div>
         </div>
       </div>
+      <!-- <div class="slider">
+        <div class="row">
+          <div class="col-md-auto text-right">
+            <button class="btn-next" type="button" name="button"><i class="fas fa-chevron-left"></i></button>
+          </div>
+          <div class="col-md-auto text-left">
+            <button class="btn-next" type="button" name="button"><i class="fas fa-chevron-right"></i></button>
+          </div>
+        </div>
+      </div> -->
     </div>
   </div>
   <div id="content-3">
+
+  </div>
+  <div id="content-4">
+
+  </div>
+  <div id="content-5">
 
   </div>
 @include('layouts.footer')
