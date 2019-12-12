@@ -235,17 +235,47 @@
         <div class="row">
           <div class="col-md-4">
             <div class="blog-pst blog-img-1">
-
+              <div class="video">
+                <!-- if it's a video show this block -->
+                <button class="btn-next orange" type="button" name="button"><i class="fas fa-play"></i></button>
+                <!-- end if -->
+              </div>
+              <div class="date">
+                <p>June 6, 2019</p>
+              </div>
+              <div class="title">
+                <p>Look what we find here !</p>
+              </div>
             </div>
           </div>
           <div class="col-md-4">
             <div class="blog-pst blog-img-2">
-
+              <div class="video">
+                <!-- if it's a video show this block -->
+                <button class="btn-next orange" type="button" name="button"><i class="fas fa-play"></i></button>
+                <!-- end if -->
+              </div>
+              <div class="date">
+                <p>June 6, 2019</p>
+              </div>
+              <div class="title">
+                <p>Look what we find here !</p>
+              </div>
             </div>
           </div>
           <div class="col-md-4">
             <div class="blog-pst blog-img-1">
-
+              <div class="video">
+                <!-- if it's a video show this block -->
+                <button class="btn-next orange" type="button" name="button"><i class="fas fa-play"></i></button>
+                <!-- end if -->
+              </div>
+              <div class="date">
+                <p>June 6, 2019</p>
+              </div>
+              <div class="title">
+                <p>Look what we find here !</p>
+              </div>
             </div>
           </div>
         </div>

@@ -134,7 +134,7 @@ nav button:hover {
   padding-left: 15%;
   padding-right: 5%;
 }
-#content-2 .title p {
+#content-2 .title {
   font-size: 34px;
   font-weight: 800;
   text-transform: uppercase;
@@ -309,8 +309,32 @@ nav button:hover {
   background-position: center;
   background-size: cover;
 }
-
-
+.blog-pst .video button {
+  margin-top: 10%;
+  margin-left: 10%;
+}
+.blog-pst .video button:hover {
+  background-color: #da4f44;
+}
+.blog-pst .date {
+  padding: 300px 15% 0% 15%;
+}
+.blog-pst .date p {
+  text-transform: uppercase;
+  font-size: 18px;
+  font-weight: 700;
+  color: white;
+}
+.blog-pst .title {
+  padding: 0% 15% 5% 15%;
+}
+.blog-pst .title p {
+  text-transform: uppercase;
+  font-size: 24px;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 0;
+}
 
 
 
@@ -353,6 +377,9 @@ nav button:hover {
 }
 .white {
   background-color: rgba(255, 255, 255, 0.3);
+}
+.orange {
+  background-color: #b2c308;
 }
 .op:hover {
   background-color: rgba(0, 0, 0, 0.1);
