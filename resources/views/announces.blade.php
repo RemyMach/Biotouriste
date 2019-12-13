@@ -8,10 +8,12 @@
     .divAnnounces{
         overflow-y: scroll;
     }
-    .categories div li{
-        margin: auto;
-        padding: 0 10px 0 10px;
-        color: gre;
+    .categories li{
+        text-align: center;
+        margin: 0 10px 0 20px;
+        padding: 0 20px 0 20px;
+        color: darkgrey;
+        background-color: white;
         border: 2px solid #1b1e21;
         border-radius: 30%;
     }
@@ -22,11 +24,12 @@
         <div class="row">
           <div class="col-md-12 navbar navbar-expand-lg">
               <ul class="navbar-nav inline categories">
-                  <div class="col-md-2"><li>Fruits</li></div>
-                  <div class="col-md-2"><li>Légumes</li></div>
-                  <div class="col-md-2"><li>Epices</li></div>
-                  <div class="col-md-2"><li>Boissons</li></div>
-                  <div class="col-md-2"><li>Gateaux</li></div>
+                  <li class="col-md-2"><a onClick="filterByCategorieProduct(1)" href="#">Fruits</a></li>
+                  <li class="col-md-2"><a onClick="filterByCategorieProduct(2)" href="#">Légumes</a></li>
+                  <li class="col-md-2"><a onClick="filterByCategorieProduct(3)" href="#">Céréales</a></li>
+                  <li class="col-md-2"><a onClick="filterByCategorieProduct(4)" href="#">Boissons</a></li>
+                  <li class="col-md-2"><a onClick="filterByCategorieProduct(5)" href="#">Gateaux</a></li>
+                  <li class="col-md-2"><a onClick="filterByCategorieProduct(6)" href="#">Epices</a></li>
               </ul>
           </div>
         </div>
@@ -64,6 +67,7 @@
 <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
         integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
         crossorigin=""></script>
+{{-- Script pour la map  --}}
 <script>
   // on set la position sur la carte
   var mymap = L.map('mapid').setView([48.852969, 2.349903], 10);
@@ -88,5 +92,15 @@
   var marqueur{{$announce->idAnnounce}} = L.marker([{{ $announce->announce_latLong }}], {icon: icone}).addTo(mymap);
   marqueur{{$announce->idAnnounce}}.bindPopup('{{$announce->announce_name}}');
   @endforeach
+
+</script>
+
+{{-- Functions --}}
+
+<script>
+
+function filterByCategorieProduct(categorie){
+    $.post( "mon chemin", categorie);
+}
 
 </script>
