@@ -72,7 +72,6 @@ Route::get('myMap','AnnounceController@printMap');
 
 /********************************************** Route pour front test **********************************************/
 
-Route::get('announces','AnnounceController@index');
 
 Route::get('messages','MessageController@index');
 
@@ -83,4 +82,13 @@ Route::get('aide',function(){
 Route::get('contact','ContactController@index');
 
 
-/********************************************** Route pour front test **********************************************/
+/********************************************** Fin Route pour front test **********************************************/
+
+
+/********************************************** Debut Routes Announces **********************************************/
+
+Route::get('announces','AnnounceController@index');
+
+Route::post('filterByCategorie','AnnounceController@filterByCategorie');
+
+/********************************************** Fin Routes Announces **********************************************/

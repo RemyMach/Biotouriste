@@ -1,5 +1,7 @@
 @include('layouts.header')
 <head>
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
         integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
         crossorigin=""/>
@@ -10,7 +12,7 @@
     }
     .categories li{
         text-align: center;
-        margin: 0 10px 0 20px;
+        margin: 0 10px 0 0;
         padding: 0 20px 0 20px;
         color: darkgrey;
         background-color: white;
@@ -24,12 +26,12 @@
         <div class="row">
           <div class="col-md-12 navbar navbar-expand-lg">
               <ul class="navbar-nav inline categories">
-                  <li class="col-md-2"><a onClick="filterByCategorieProduct(1)" href="#">Fruits</a></li>
-                  <li class="col-md-2"><a onClick="filterByCategorieProduct(2)" href="#">Légumes</a></li>
-                  <li class="col-md-2"><a onClick="filterByCategorieProduct(3)" href="#">Céréales</a></li>
-                  <li class="col-md-2"><a onClick="filterByCategorieProduct(4)" href="#">Boissons</a></li>
-                  <li class="col-md-2"><a onClick="filterByCategorieProduct(5)" href="#">Gateaux</a></li>
-                  <li class="col-md-2"><a onClick="filterByCategorieProduct(6)" href="#">Epices</a></li>
+                  <li class="col-md-2"><a onClick="filterByCategorieProduct(1)">Fruits</a></li>
+                  <li class="col-md-2"><a onClick="filterByCategorieProduct(2)">Légumes</a></li>
+                  <li class="col-md-2"><a onClick="filterByCategorieProduct(3)">Céréales</a></li>
+                  <li class="col-md-2"><a onClick="filterByCategorieProduct(4)">Boissons</a></li>
+                  <li class="col-md-2"><a onClick="filterByCategorieProduct(5)">Gateaux</a></li>
+                  <li class="col-md-2"><a onClick="filterByCategorieProduct(6)">Epices</a></li>
               </ul>
           </div>
         </div>
@@ -96,11 +98,23 @@
 </script>
 
 {{-- Functions --}}
-
+<script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
 <script>
 
 function filterByCategorieProduct(categorie){
-    $.post( "mon chemin", categorie);
+  $.ajax({
+    url: "/filterByCategorie",
+    type: 'POST',
+    data: {categorie: categorie, _token: '{{csrf_token()}}'},
+  success: function (retour, statut) {
+    console.log(retour.announces);
+  },
+  error: function (resultat, statut, erreur) {
+    console.log('NOOOOOOO');
+  }});
 }
 
 </script>

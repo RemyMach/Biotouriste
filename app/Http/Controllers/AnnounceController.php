@@ -86,4 +86,18 @@ class AnnounceController extends Controller
     {
         //
     }
+
+    public function filterByCategorie(Request $request){
+        $idCategorie = $request->get('categorie');
+        $announces = Announce::with('product')
+            ->where('product_categories_idproduct_category', $idCategorie);
+//        App\Parent::with('children')->find($id);
+
+        $data = [
+            'success' => true,
+            'announces' => $announces
+        ];
+        return response()->json($data);
+//        return new Response(json_encode($data));
+    }
 }
