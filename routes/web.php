@@ -49,7 +49,7 @@ Route::get('admin/user/{user}','UserController@destroy');
 
 //comment
 
-Route::get('comment','CommentController@create');
+Route::get('comment','CommentController@create')->name('comment');;
 
 Route::post('comment/store','CommentController@store');
 
@@ -63,9 +63,12 @@ Route::get('comment/show','CommentController@showYourPostedComments');
 
 Route::get('check','CheckController@create');
 
+Route::get('check/status/{check}/{status}','CheckController@updateStatus');
+
 Route::post('check/store','CheckController@store');
 
 Route::get('myMap','AnnounceController@printMap');
+
 
 /*Route::post''*/
 

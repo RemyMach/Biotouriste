@@ -5,10 +5,17 @@ namespace App\Http\Controllers\API;
 use App\Check;
 use App\Http\Controllers\API\NoApiClass\UsefullController;
 use App\Http\Controllers\Controller;
+use App\Seller;
+use App\User;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Middleware\API;
 
 class CheckController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('apiAdmin');
+    }
     public function showChecksOfAController(ApiTokenController $apiTokenController)
     {
         $requestParameters = $apiTokenController->verifyCredentials();
@@ -17,6 +24,14 @@ class CheckController extends Controller
         {
             return response()->json([
                 'message'   => 'Your credentials are not valid',
+                'status'    => '400',
+            ]);
+        }
+
+        if(!$this->verifyUserStatus($requestParameters['idUser']))
+        {
+            return response()->json([
+                'message'   => 'Your idUser are not valid',
                 'status'    => '400',
             ]);
         }
@@ -51,7 +66,7 @@ class CheckController extends Controller
             ]);
         }
 
-        if($this->verifyUserStatus($requestParameters['idUser']))
+        if(!$this->verifyUserStatus($requestParameters['idUser']))
         {
             return response()->json([
                 'message'   => 'Your idUser are not valid',
@@ -61,13 +76,14 @@ class CheckController extends Controller
 
         $data = request()->all();
 
-        if($this->verificationIfItsASeller($data['idSeller']))
+        if(!$this->verificationIfItsASeller($data['idSeller']))
         {
             return response()->json([
                 'message'   => 'Your idSeller are not valid',
                 'status'    => '400',
             ]);
         }
+
 
         $validator = $this->validateCheck($data);
 
@@ -80,12 +96,18 @@ class CheckController extends Controller
             'check_date','check_comment','check_customer_service',
             'check_state_place','check_quality_product','check_bio_status',
         ]);
+
         //controller
         $validData['Users_idUser'] = $data['idUser'];
         //vendeur
         $validData['Sellers_idSeller'] = $data['idSeller'];
 
+        //status
+        $validData['check_status_verification'] = 'waiting';
+
+
         $check = Check::create($validData);
+
 
         return response()->json([
             'message'   => 'Your Check has been register',
@@ -141,7 +163,7 @@ class CheckController extends Controller
 
     private function verifyUserStatus($idUser)
     {
-        $user = User::findOrFail($idUser);
+        $user = User::find($idUser);
 
         if(preg_match('#admin#i',$user->status['status_user_label']))
         {
@@ -193,10 +215,10 @@ class CheckController extends Controller
     {
         $validator = Validator::make($data, [
             'check_date'                => 'required',
-            'check_comment'             => 'required|text',
-            'check_customer_service'    => 'required|decimal|max:5',
-            'check_state_place'         => 'required|decimal|max:5',
-            'check_quality_product'     => 'required|decimal|max:5',
+            'check_comment'             => 'required|string',
+            'check_customer_service'    => 'required|integer|max:5',
+            'check_state_place'         => 'required|integer|max:5',
+            'check_quality_product'     => 'required|integer|max:5',
             'check_bio_status'          => 'required|string',
         ]);
 

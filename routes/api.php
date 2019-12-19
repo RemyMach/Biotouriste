@@ -43,6 +43,14 @@ Route::post('comment/destroy','API\CommentController@destroy');
 
 Route::post('comment/showYourPostedComments','API\CommentController@showYourPostedComments');
 
+//Check
+
+Route::post('check/store','API\CheckController@store');
+
+Route::post('check/UpdateStatusVerification','API\CheckController@UpdateStatusVerification');
+
+
+
 /*Route::get('/users', function () {
     return UserResource::collection(User::paginate(2));
 });*/

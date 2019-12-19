@@ -23,10 +23,10 @@ class Status_User extends Model
     /**
      * @var array
      */
-    protected $fillable;
+    protected $fillable = ["idStatus_User"];
 
-    public function status()
-    {
-        return $this->hasMany(User::class);
-    }
+       public function status()
+       {
+           return $this->hasMany('App\User', 'Status_User_idStatus_User', 'idStatus_User');
+       }
 }

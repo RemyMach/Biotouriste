@@ -9,10 +9,9 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('SessionAuth')->only('store','destroy','showYourPostedComments');
     }
 
     /**
@@ -32,27 +31,21 @@ class CommentController extends Controller
      */
     public function create()
     {
-        return view('test123');
+        return view('testComment');
     }
 
-    public function store(Request $request)
+    public function store(Request $request, Client $client)
     {
-
-        if(!$request->session()->has('user')){
-
-            return redirect('home');
-        }
 
         $this->user = $request->session()->get('user');
 
         $data = request()->all();
         $data['idUser'] = $this->user->idUser;
         $data['api_token'] = $this->user->api_token;
-        $client = new Client();
-        $request = $client->request('POST','http://localhost:8001/api/comment/store',
+        $query = $client->request('POST','http://localhost:8001/api/comment/store',
             ['form_params' => $data]);
 
-        $response = json_decode($request->getBody()->getContents());
+        $response = json_decode($query->getBody()->getContents());
 
         dd($response);
 
@@ -66,7 +59,7 @@ class CommentController extends Controller
      * @param  \App\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function CommentsOfASeller(Announce $announce, Request $request)
+    public function CommentsOfASeller(Announce $announce, Request $request,Client $client)
     {
         $data = request()->all();
 
@@ -75,11 +68,10 @@ class CommentController extends Controller
         $data['api_token'] = config('api.api_admin_token');
         $data['idAnnounce'] = $announce->idAnnounce;
 
-        $client = new Client();
-        $request = $client->request('POST','http://localhost:8001/api/comment/seller',
+        $query = $client->request('POST','http://localhost:8001/api/comment/seller',
             ['form_params' => $data]);
 
-        $response = json_decode($request->getBody()->getContents());
+        $response = json_decode($query->getBody()->getContents());
 
         if($response->status === "400")
         {
@@ -89,7 +81,7 @@ class CommentController extends Controller
 
         //retourne la page annonce avec un tableau contenant commentaires
         // et les users qui ont posté les commentaires
-        return view('test123',['comments' => $response->comments]);
+        return view('testComment',['comments' => $response->comments]);
     }
 
     /**
@@ -121,47 +113,34 @@ class CommentController extends Controller
      * @param  \App\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, Comment $comment)
+    public function destroy(Request $request, Comment $comment, Client $client)
     {
-        //dd($request->session()->has('user'));
-        if(!$request->session()->has('user')){
-
-            return redirect('home');
-        }
-
         $this->user = $request->session()->get('user');
 
         $data['idComment'] = $comment->idComment;
         $data['idUser'] = $this->user->idUser;
         $data['api_token'] = $this->user->api_token;
 
-        $client = new Client();
-        $request = $client->request('POST','http://localhost:8001/api/comment/destroy',
+        $query = $client->request('POST','http://localhost:8001/api/comment/destroy',
             ['form_params' => $data]);
 
-        $response = json_decode($request->getBody()->getContents());
+        $response = json_decode($query->getBody()->getContents());
 
         return back()->with('le commentaire a bien été détruit');
     }
-    public function showYourPostedComments(Request $request)
+    public function showYourPostedComments(Request $request, Client $client)
     {
-        if(!$request->session()->has('user')){
-
-            return redirect('home');
-        }
-
         $this->user = $request->session()->get('user');
 
         $data['idUser'] = $this->user->idUser;
         $data['api_token'] = $this->user->api_token;
 
-        $client = new Client();
-        $request = $client->request('POST','http://localhost:8001/api/comment/showYourPostedComments',
+        $query = $client->request('POST','http://localhost:8001/api/comment/showYourPostedComments',
             ['form_params' => $data]);
 
-        $response = json_decode($request->getBody()->getContents());
+        $response = json_decode($query->getBody()->getContents());
 
-        return view('test123',['comments' => $response->comments]);
+        return view('testComment',['comments' => $response->comments]);
 
     }
 }

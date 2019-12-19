@@ -12,6 +12,7 @@ class CheckController extends Controller
     public function __construct()
     {
         //$this->middleware('Controller');
+        $this->middleware('SessionAuth')->only('store','showChecksOfAController','updateStatus');
     }
 
     /**
@@ -22,6 +23,8 @@ class CheckController extends Controller
     public function index()
     {
         //
+        $user = User::find(1);
+        dd($user->announces);
     }
 
     /**
@@ -40,22 +43,17 @@ class CheckController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Client $client)
     {
-        //seul un admin ou un controlleur peut register un check
-        if(!$request->session()->has('user')){
-
-            return redirect('home');
-        }
 
         $sessionUser = $request->session()->get('user');
 
+        $data = request()->all();
         $data['idUser']     = $sessionUser->idUser;
         $data['api_token']  = $sessionUser->api_token;
-        //à remplacer par autre chose
+        //à remplacer par l'id du seller
         $data['idSeller'] = 1;
 
-        $client = new Client();
         $query = $client->request('POST','http://localhost:8001/api/check/store',
             ['form_params' => $data]);
 
@@ -72,20 +70,14 @@ class CheckController extends Controller
      * @param  \App\Check  $check
      * @return \Illuminate\Http\Response
      */
-    public function showChecksOfAController(Request $request)
+    public function showChecksOfAController(Request $request, Client $client)
     {
-        if(!$request->session()->has('user')){
-
-            return redirect('home');
-        }
-
         $sessionUser = $request->session()->get('user');
 
         $data['idUser'] = $sessionUser->idUser;
         $data['api_token'] = $sessionUser->api_token;
         $data['idSeller'] = 1;
 
-        $client = new Client();
         $query = $client->request('POST','http://localhost:8001/api/check/showChecksOfAController',
             ['form_params' => $data]);
 
@@ -114,22 +106,14 @@ class CheckController extends Controller
      * @param  \App\Check  $check
      * @return \Illuminate\Http\Response
      */
-    public function updateStatus(Request $request, Check $check)
+    public function updateStatus(Request $request, Check $check, Client $client)
     {
-        if(!$request->session()->has('user')){
-
-            return redirect('home');
-        }
-
         $sessionUser = $request->session()->get('user');
 
-        $data['status'] = $request->status
-        $data['idcheck'] = $check->idCheck;
+        $data['status'] = request('status');
+        $data['idCheck'] = $check->idCheck;
         $data['idUser'] = $sessionUser->idUser;
         $data['api_token'] = $sessionUser->api_token;
-
-        $client = new Client();
-
 
         $query = $client->request('POST','http://localhost:8001/api/check/UpdateStatusVerification',
             ['form_params' => $data]);
@@ -139,6 +123,7 @@ class CheckController extends Controller
 
         dd($response);
 
+        //mettre la bonne réponse
         return view('testCheck');
 
     }

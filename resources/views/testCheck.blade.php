@@ -28,7 +28,9 @@
             </div>
         </form>
         <div>
-            <a href="http://localhost:8000/comment/destroy/3"></a>
+            <a href="http://localhost:8000/check/destroy/3"></a>
         </div>
+
+        <a href="http://localhost:8000/check/status/1/decline">decline</a>
     </div>
 </div>

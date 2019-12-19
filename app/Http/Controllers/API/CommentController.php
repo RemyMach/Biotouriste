@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Announce;
 use App\Comment;
 use App\Http\Controllers\API\ApiTokenController;
+use App\Http\Controllers\API\NoApiClass\UsefullController;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Support\Facades\Validator;
@@ -13,6 +14,14 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('apiAdmin')
+            ->only(
+                'store','CommentsOfASeller','showYourPostedComments','show','destroy'
+            );
+    }
+
     public function CommentsOfASeller(ApiTokenController $apiTokenController)
     {
         $requestParameters = $apiTokenController->verifyAdminCredentials();
@@ -70,7 +79,7 @@ class CommentController extends Controller
             ]);
     }
 
-    public function store(Request $request,ApiTokenController $apiTokenController)
+    public function store(Request $request,ApiTokenController $apiTokenController, UsefullController $usefullController)
     {
         $requestParameters = $apiTokenController->verifyCredentials();
 
@@ -90,10 +99,10 @@ class CommentController extends Controller
         {
             return $validator;
         }
-        $validData = $this->keepKeysThatWeNeed($data,['comment_subject','comment_note','comment_content']);
+        $validData = $usefullController->keepKeysThatWeNeed($data,['comment_subject','comment_note','comment_content']);
         $validData['Announces_idAnnounce'] = 1;
         $validData['Users_idUser'] = (int) $requestParameters['idUser'];
-        $validData['comment_note'] = intval($validData['comment_note']);
+        $validData['comment_note'] = (int) $validData['comment_note'];
         //return $validData;
         $comment = Comment::create($validData);
 
@@ -216,12 +225,12 @@ class CommentController extends Controller
             return response()->json([
                 'message'   => 'The request is not good',
                 'error'     => $validator->errors(),
-                'status'    => "400"
+                'status'    => '400'
             ]);
         }
         return response()->json([
             'message'   => 'The request is good',
-            'status'    => "200"
+            'status'    => '200'
         ]);
     }
 
