@@ -1,8 +1,7 @@
 @include('layouts.header')
   <div id="content-1">
     @include('layouts.navbar')
-    <!-- @include('layouts.navbar_default') -->
-    <!-- @include('layouts.navbar_login') -->
+    @include('layouts.navbarMobile')
     @include('layouts.overlay_login')
     @include('layouts.overlay_profil')
     @include('layouts.overlay_cart')
@@ -225,7 +224,7 @@
     <div class="top">
       <div class="row">
         <div class="col-md-6">
-          <p class="title">Blog, what's new?</p>
+          <p class="blog-title">Blog, what's new?</p>
         </div>
         <div class="col-md-6 text-right">
           <button class="btn-large purple op" type="button" name="button">View more</button>
@@ -282,11 +281,19 @@
       </div>
     </div>
   </div>
-
-
-
-
   <div id="content-5">
-
+    <div class="newsletter">
+      <div class="text-center">
+        <p class="newsletter-title">SIGN IN TO FREE NEWSLETTER</p>
+        <p class="newsletter-text">Subrscribe to the newsletter and receive notifications <br> of the latest promotions and offers</p>
+      </div>
+      <form class="" action="index.html" method="post">
+        <div class="col-md-12 text-center">
+          <input class="btn-large blackout" type="text" name="" value="" placeholder="Your email adress">
+          <button class="btn-large purple p" type="submit" name="button">SUBSCRIBE</button>
+        </div>
+      </form>
+      </div>
+    </div>
   </div>
 @include('layouts.footer')

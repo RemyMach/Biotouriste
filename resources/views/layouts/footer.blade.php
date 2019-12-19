@@ -1,4 +1,30 @@
 <footer>
+  <div class="footer-container">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <a href="#"><button class="btn-next green f-white" type="button" name="button"><i class="fab fa-twitter"></i></button></a>
+        <a href="#"><button class="btn-next green f-white" type="button" name="button"><i class="fab fa-facebook-f"></i></button></a>
+        <a href="#"><button class="btn-next green f-white" type="button" name="button"><i class="fab fa-instagram"></i></button></a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-auto">
+        <ul>
+          <li class="li-title"><a href="#">The brand</a></li>
+          <li><a href="#">Who we are ?</a></li>
+          <li><a href="#">Our mission</a></li>
+        </ul>
+      </div>
+      <div class="col-md-auto">
+        <ul>
+          <li class="li-title"><a href="#">Help</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Contact us</a></li>
+          <li><a href="#">Conditions</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </footer>
 <script src="{{ URL::asset('/js/script.js') }}" charset="utf-8"></script>
 <script src="https://kit.fontawesome.com/d9a2e4a111.js" crossorigin="anonymous"></script>
