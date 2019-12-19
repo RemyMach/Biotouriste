@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Announce;
+use App\Repositories\AnnounceRepository;
 use App\User;
 use App\Status_User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AnnounceController extends Controller
 {
@@ -89,9 +91,7 @@ class AnnounceController extends Controller
 
     public function filterByCategorie(Request $request){
         $idCategorie = $request->get('categorie');
-        $announces = Announce::with('product')
-            ->where('product_categories_idproduct_category', $idCategorie);
-//        App\Parent::with('children')->find($id);
+        $announces = AnnounceRepository::filterByCategorieRepo($idCategorie);
 
         $data = [
             'success' => true,
