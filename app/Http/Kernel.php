@@ -51,7 +51,11 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
+        'apiTokenAndIdUserExistAndMatch' => \App\Http\Middleware\API\Authentication::class,
         'apiAdmin' => \App\Http\Middleware\API\Admin::class,
+        'apiController' => \App\Http\Middleware\API\Controller::class,
+        'apiSeller' => \App\Http\Middleware\API\Seller::class,
+        'apiTourist' => \App\Http\Middleware\API\Tourist::class,
         'SessionAuth' => \App\Http\Middleware\SessionAuthentication::class,
         'admin' => \App\Http\Middleware\Admin::class,
         'tourist' => \App\Http\Middleware\Tourist::class,

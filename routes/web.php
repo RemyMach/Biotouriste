@@ -16,7 +16,6 @@ Route::get('/', function () {
 });
 
 //Auth::routes();
-
 Route::get('home', 'HomeController@index')->name('home');
 
 Route::get('users','UserController@index')->name('users');
@@ -65,7 +64,15 @@ Route::get('check','CheckController@create');
 
 Route::get('check/status/{check}/{status}','CheckController@updateStatus');
 
-Route::post('check/store','CheckController@store');
+Route::post('check/storeForAnAdmin','CheckController@storeForAnAdmin');
+
+Route::post('check/storeForAController','CheckController@storeForAController');
+
+Route::post('check/showChecksOfAController','CheckController@showChecksOfAController');
+
+Route::post('check/controllerSendACompleteCheck','CheckController@controllerSendACompleteCheck');
+
+Route::post('check/destroy','CheckController@destroy');
 
 Route::get('myMap','AnnounceController@printMap');
 

@@ -162,6 +162,7 @@ class UserController extends Controller
     {
         $this->sessionUser = $request->session()->get('user');
 
+        $data = request()->all();
         $data['idUser'] = $this->sessionUser->idUser;
         $data['api_token'] = $this->sessionUser->api_token;
 
@@ -171,7 +172,7 @@ class UserController extends Controller
 
         $response = json_decode($query->getBody()->getContents());
 
-        if($response->status)
+        if($response->status === "400")
         {
             return back()->with('fail','The request is not good');
         }

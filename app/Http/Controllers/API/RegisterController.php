@@ -14,18 +14,13 @@ use Illuminate\Support\Str;
 class RegisterController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('apiAdmin');
+    }
+
     public function store(Request $request, ApiTokenController $apiTokenController)
     {
-        $requestParameters = $apiTokenController->verifyAdminCredentials();
-
-        if(!$requestParameters)
-        {
-            return response()->json([
-                'message'   => 'Your credentials are not valid',
-                'status'    => '400',
-            ]);
-        }
-
         $data = request()->all();
 
         $validator = Validator::make($data, [

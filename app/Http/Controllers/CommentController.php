@@ -50,7 +50,6 @@ class CommentController extends Controller
         dd($response);
 
         return view('comment');
-
     }
 
     /**

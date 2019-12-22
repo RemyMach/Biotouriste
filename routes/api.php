@@ -49,6 +49,11 @@ Route::post('check/store','API\CheckController@store');
 
 Route::post('check/UpdateStatusVerification','API\CheckController@UpdateStatusVerification');
 
+Route::post('check/controllerSendACompleteCheck','API\CheckController@controllerSendACompleteCheck');
+
+Route::post('check/showChecksOfAController','API\CheckController@showChecksOfAController');
+
+Route::post('check/destroy','API\CheckController@destroy');
 
 
 /*Route::get('/users', function () {

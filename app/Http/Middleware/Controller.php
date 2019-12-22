@@ -7,7 +7,6 @@ use Closure;
 class Controller
 {
     private $auth;
-
     private $user;
     /**
      * Handle an incoming request.
@@ -19,12 +18,10 @@ class Controller
     public function handle($request, Closure $next)
     {
         $this->user = $request->session()->get('user');
-        $this->auth =
-            $this->user ?
-                (preg_match('#controller#i',$this->user->status['status_user_label']))
-                : 0;
 
-        if($this->auth === 1){
+        if(preg_match('#controller#i',$this->user->status['status_user_label']) ||
+            preg_match('#admin#i',$this->user->status['status_user_label'])){
+
             return $next($request);
         }
 

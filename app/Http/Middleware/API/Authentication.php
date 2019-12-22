@@ -2,10 +2,10 @@
 
 namespace App\Http\Middleware\API;
 
-use Closure;
 use App\Http\Controllers\API\ApiTokenController;
+use Closure;
 
-class Admin
+class Authentication
 {
     /**
      * Handle an incoming request.
@@ -17,9 +17,8 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
-        $role = 'Admin';
         $apiTokenController = new ApiTokenController();
-        $requestParameters = $apiTokenController->verifyRoleCredentials($role);
+        $requestParameters = $apiTokenController->verifyCredentials();
 
         if(!$requestParameters)
         {

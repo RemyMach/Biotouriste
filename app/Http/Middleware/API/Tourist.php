@@ -5,7 +5,7 @@ namespace App\Http\Middleware\API;
 use Closure;
 use App\Http\Controllers\API\ApiTokenController;
 
-class Admin
+class Tourist
 {
     /**
      * Handle an incoming request.
@@ -17,7 +17,7 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
-        $role = 'Admin';
+        $role = 'Tourist';
         $apiTokenController = new ApiTokenController();
         $requestParameters = $apiTokenController->verifyRoleCredentials($role);
 

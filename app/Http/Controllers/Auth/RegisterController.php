@@ -54,9 +54,8 @@ class RegisterController extends Controller
     {
         $data = request()->all();
 
-        $data['api_token'] = config('api.api_admin_password');
+        $data['api_token'] = config('api.api_admin_token');
         $data['idUser'] = config('api.api_admin_id');
-
 
         $client = new Client();
         $request = $client->request('POST','http://localhost:8001/api/user/store',
