@@ -55,6 +55,10 @@ Route::post('check/showChecksOfAController','API\CheckController@showChecksOfACo
 
 Route::post('check/destroy','API\CheckController@destroy');
 
+//Contact
+
+Route::post('contact/store','API\ContactController@store');
+
 
 /*Route::get('/users', function () {
     return UserResource::collection(User::paginate(2));

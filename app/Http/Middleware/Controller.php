@@ -6,7 +6,6 @@ use Closure;
 
 class Controller
 {
-    private $auth;
     private $user;
     /**
      * Handle an incoming request.

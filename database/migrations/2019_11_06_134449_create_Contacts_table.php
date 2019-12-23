@@ -17,8 +17,9 @@ class  CreateContactsTable extends Migration {
 			$table->integer('idContact', true);
 			$table->string('contact_subject');
 			$table->text('contact_content');
+			$table->string('contact_email')->nullable();
 			$table->dateTime('contact_date');
-			$table->integer('Users_idUser')->index('fk_Contacts_Users1_idx');
+			$table->integer('Users_idUser')->index('fk_Contacts_Users1_idx')->nullable();
 		});
 	}
 

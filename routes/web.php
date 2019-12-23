@@ -76,8 +76,13 @@ Route::post('check/destroy','CheckController@destroy');
 
 Route::get('myMap','AnnounceController@printMap');
 
+//Contact
 
-/*Route::post''*/
+Route::get('contact','ContactController@create');
+
+Route::post('contact/storeForAnAnonymous','ContactController@storeForAnAnonymous');
+
+Route::post('contact/storeForAnAuthentifiedUser','ContactController@storeForAnAnonymous');
 
 
 /********************************************** Route pour front test **********************************************/
@@ -89,8 +94,6 @@ Route::get('messages','MessageController@index');
 Route::get('aide',function(){
     return view('');
 });
-
-Route::get('contact','ContactController@index');
 
 
 /********************************************** Route pour front test **********************************************/
