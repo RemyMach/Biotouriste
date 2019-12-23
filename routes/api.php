@@ -59,6 +59,12 @@ Route::post('check/destroy','API\CheckController@destroy');
 
 Route::post('contact/store','API\ContactController@store');
 
+Route::post('contact/ContactsWithAssociedUsers','API\ContactController@ContactsWithAssociedUsers');
+
+Route::post('contact/destroy','API\ContactController@destroy');
+
+Route::post('contact/ContactsOfAUser','API\ContactController@ContactsOfAUser');
+
 
 /*Route::get('/users', function () {
     return UserResource::collection(User::paginate(2));

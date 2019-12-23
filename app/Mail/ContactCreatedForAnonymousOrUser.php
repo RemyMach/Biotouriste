@@ -29,6 +29,6 @@ class ContactCreatedForAnonymousOrUser extends Contact
      */
     public function build()
     {
-        return $this->markdown('mail.ContactCreatedForAnonymous');
+        return $this->markdown('mail.ContactCreatedForAnonymousOrUser');
     }
 }

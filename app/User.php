@@ -69,4 +69,14 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Check','Users_idUser1','idUser');
     }
+
+    public function contacts()
+    {
+        return $this->hasMany('App\Contact','Users_idUser','idUser');
+    }
+
+    public function discount_codes()
+    {
+        return $this->hasMany('App\Discount_Code','Users_idUser','idUser');
+    }
 }

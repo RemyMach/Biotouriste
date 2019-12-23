@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class Discount_CodeController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('admin')->only(
+            'store'
+        );
+    }
     /**
      * Display a listing of the resource.
      *
@@ -24,7 +30,7 @@ class Discount_CodeController extends Controller
      */
     public function create()
     {
-        //
+        //return view('testDiscountCode');
     }
 
     /**
@@ -33,9 +39,21 @@ class Discount_CodeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Client $client)
     {
-        //
+        $data = request()->all();
+        $data['idUser'] = config('api.api_admin_id');
+        $data['api_token'] = config('api.api_admin_token');
+
+
+        $query = $client->request('POST','http://localhost:8001/api/discount_code/store',
+            ['form_params' => $data]);
+
+        $response = json_decode($query->getBody()->getContents());
+
+        dd($response);
+
+        return view('testDiscount_code',["response" => $response]);
     }
 
     /**

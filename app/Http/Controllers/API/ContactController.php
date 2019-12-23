@@ -9,6 +9,7 @@ use App\Services\Mail;
 use App\User;
 use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Middleware\API;
 
@@ -23,6 +24,10 @@ class ContactController extends Controller
     {
         $this->middleware('apiTokenAndIdUserExistAndMatch')->only(
             'store'
+        );
+
+        $this->middleware('apiAdmin')->only(
+            'ContactsWithAssociedUsers','destroy'
         );
     }
 
@@ -39,14 +44,62 @@ class ContactController extends Controller
         }
 
         $this->setValidData($emailExistingOnlyIfUserAuthentified, $usefullController);
-        return [$this->validData];
+
         $this->contact = Contact::create($this->validData);
-        /*$this->sendCreatedEmail($mail);*/
+        $this->sendCreatedEmail($mail);
 
         return response()->json([
             'message'   => 'Your Contact has been register',
             'status'    => '200',
             'check'     => $this->contact,
+        ]);
+    }
+
+    public function ContactsWithAssociedUsers(){
+
+        $contacts = $this->collectContactsWithUsers();
+
+        return [$contacts];
+
+    }
+
+    public function destroy(Request $request){
+
+        $this->request = $request;
+
+        if(!$this->verifyIfContactExist()){
+            return response()->json([
+                'message'   => 'The Contact doesn\'t exists',
+                'status'    => '400',
+            ]);
+        }
+
+        $this->contact->delete();
+
+        return response()->json([
+            'message'   => 'The contact has been deleted',
+            'status'    => '200',
+            'idUser'    => $this->contact
+        ]);
+    }
+
+    public function ContactsOfAUser(Request $request){
+
+        $this->request = $request;
+        if(!$this->verifyIfUserExist()){
+            return response()->json([
+                'message'   => 'The User doesn\'t exists',
+                'status'    => '400',
+            ]);
+        }
+
+        //faire un try catch pour ça
+        $this->collectContactsOfTheUser();
+
+        return response()->json([
+            'message'   => 'This is the Contacts of the user',
+            'status'    => '200',
+            'idUser'    => $this->user
         ]);
     }
 
@@ -99,9 +152,8 @@ class ContactController extends Controller
         if(isset($emailExistingOnlyIfUserAuthentified)){
 
             $this->validData = $usefullController->keepKeysThatWeNeed($this->request->all(),
-                ['contact_subject','contact_content']
+                ['contact_subject','contact_content','contact_email']
             );
-            //'contact_email'
         }else{
 
             $this->validData = $usefullController->keepKeysThatWeNeed($this->request->all(),
@@ -138,4 +190,38 @@ class ContactController extends Controller
         $this->user = User::findOrFail($this->request->input('idUser'));
     }
 
+    private function collectContactsWithUsers(){
+        $contacts = Contact::all();
+        foreach($contacts as $contact){
+            $contact->user;
+        }
+        return $contacts;
+    }
+
+    private function verifyIfContactExist(){
+
+        $this->contact = Contact::findOrFail($this->request->input('idContactDelete'));
+        if(!$this->contact){
+
+            return false;
+        }
+
+        return true;
+    }
+
+    private function verifyIfUserExist(){
+
+        $this->user = User::findOrFail($this->request->input('idUser_contacts'));
+        if(!$this->user){
+
+            return false;
+        }
+
+        return true;
+    }
+
+    private function collectContactsOfTheUser(){
+
+        $this->user->contacts;
+    }
 }

@@ -1,6 +1,5 @@
 @component('mail::message')
     # Introduction
-    Hi {{ $user->user_name }}
 
     @isset($user)
         The user {{ $user->user_name }} has sent you a message,
@@ -12,7 +11,7 @@
     The subject of the contact is
     {{ $contact->contact_subject }}
     The content of the contact is
-    {{ $cntact->contact_content }}
+    {{ $contact->contact_content }}
 
     Thanks,<br>
     {{ config('app.name') }}

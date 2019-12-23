@@ -80,9 +80,15 @@ Route::get('myMap','AnnounceController@printMap');
 
 Route::get('contact','ContactController@create');
 
+Route::get('contact/index','ContactController@ContactsWithAssociedUsers');
+
 Route::post('contact/storeForAnAnonymous','ContactController@storeForAnAnonymous');
 
 Route::post('contact/storeForAnAuthentifiedUser','ContactController@storeForAnAnonymous');
+
+Route::post('contact/destroy','ContactController@destroy');
+
+Route::post('contact/user','ContactController@ContactsOfAUser');
 
 
 /********************************************** Route pour front test **********************************************/

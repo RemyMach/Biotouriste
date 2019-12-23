@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Discount_Code extends Model
 {
+
+    public $timestamps = false;
     /**
      * The table associated with the model.
      * 

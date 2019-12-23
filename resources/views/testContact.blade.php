@@ -17,5 +17,10 @@
                 <input class="btn btn-primary mybtn" type="submit" value="Send Check" required>
             </div>
         </form>
+        <form action="contact/user" method="post">
+            @csrf
+            <input type="hidden" value="5" name="idUser_contacts">
+            <button type="submit">Voir</button>
+        </form>
     </div>
 </div>
