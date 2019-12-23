@@ -44,6 +44,7 @@ class ApiTokenController extends Controller
             return false;
         }
 
+        return $this->verifyApiTokenRequestCorrespondToTheAdminUser($parameters['idUser']);
         if(!$this->verifyApiTokenRequestCorrespondToTheAdminUser($parameters['idUser'])){
             return false;
         }
@@ -87,7 +88,7 @@ class ApiTokenController extends Controller
     public function verifyApiTokenRequestCorrespondToTheAdminUser(string $idUser)
     {
         $user = User::where('idUser',$idUser)->first();
-
+        return [$user->status];
         if(!preg_match('#admin#i',$user->status['status_user_label'])){
             return false;
         }

@@ -6,8 +6,7 @@
     <link rel="stylesheet" href="{{ URL::asset('css/announces.css ') }}" />
     {{--  JS  --}}
     <script src="{{ URL::asset('js/leaflet.js') }}"></script>
-    <script src="{{ URL::asset('js/announces.js') }}"></script>
-    <title>Document</title>
+    <title>Announces</title>
 </head>
 <div id="content-1">
       @include('layouts.navbar')
@@ -29,51 +28,8 @@
         </div>
 </div>
 @include('layouts.footer')
-{{-- Include Functions --}}
-{{--<script>--}}
-{{--    function filterByCategorieProduct(categorie){--}}
-{{--        $.ajax({--}}
-{{--            url: "/filterByCategorie",--}}
-{{--            type: 'POST',--}}
-{{--            data: {categorie: categorie, _token: '{{csrf_token()}}'},--}}
-{{--            success: function (retour, statut) {--}}
-{{--                console.log(retour.announces);--}}
-{{--                remplirDivAnnonce(retour.announces);--}}
-{{--            },--}}
-{{--            error: function (resultat, statut, erreur) {--}}
-{{--                console.log('NOOOOOOO');--}}
-{{--            }});--}}
-{{--    }--}}
-
-{{--    function remplirDivAnnonce(announces){--}}
-{{--        $('#divAnnounces').empty();--}}
-{{--        var div = '';--}}
-{{--        announces.forEach(function (announce) {--}}
-{{--            div = div +--}}
-{{--                "<div class='post'>"+--}}
-{{--                "<div class='row'>"+--}}
-{{--                "<div class='col-md-4'>"+--}}
-{{--                "<div class='icon'></div>"+--}}
-{{--                "</div>"+--}}
-{{--                "<div class='col-md-4'>"+--}}
-{{--                "<div class='text'>"+--}}
-{{--                "<h3>"+announce['announce_name']+"</h3>"+--}}
-{{--                "<h5>"+announce['announce_comment']+"</h5>"+--}}
-{{--                "<h6>"+announce['announce_adresse']+"</h6>"+--}}
-{{--                "</div>"+--}}
-{{--                "</div>"+--}}
-{{--                "<div class='col-md-4'>"+--}}
-{{--                "<div class='text'>"+--}}
-{{--                "<h6>"+announce['announce_price']+"€</h6>"+--}}
-{{--                "</div>"+--}}
-{{--                "</div>"+--}}
-{{--                "</div>"+--}}
-{{--                "</div>"--}}
-{{--        });--}}
-{{--        $('#divAnnounces').append(div);--}}
-{{--    }--}}
-{{--</script>--}}
-
+{{-- Jquery --}}
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
 {{-- Map --}}
 <script>
@@ -94,4 +50,50 @@ iconSize: [60, 60]
     var marqueur{{$announce->idAnnounce}} = L.marker([{{ $announce->announce_latLong }}], {icon: icone}).addTo(mymap);
     marqueur{{$announce->idAnnounce}}.bindPopup('{{$announce->announce_name}}');
 @endforeach
+</script>
+
+
+{{-- Announces --}}
+<script>
+        function filterByCategorieProduct(categorie){
+    $.ajax({
+        url: "/filterByCategorie",
+        type: 'POST',
+        data: {categorie: categorie, _token: '{{csrf_token()}}'},
+        success: function (retour, statut) {
+            console.log(retour.announces);
+            remplirDivAnnonce(retour.announces);
+        },
+        error: function (resultat, statut, erreur) {
+            console.log('NOOOOOOO');
+    }});
+}
+
+function remplirDivAnnonce(announces){
+$('#divAnnounces').empty();
+var div = '';
+announces.forEach(function (announce) {
+div = div +
+"<div class='post'>"+
+    "<div class='row'>"+
+        "<div class='col-md-4'>"+
+            "<div class='icon'></div>"+
+            "</div>"+
+        "<div class='col-md-4'>"+
+            "<div class='text'>"+
+                "<h3>"+announce['announce_name']+"</h3>"+
+                "<h5>"+announce['announce_comment']+"</h5>"+
+                "<h6>"+announce['announce_adresse']+"</h6>"+
+                "</div>"+
+            "</div>"+
+        "<div class='col-md-4'>"+
+            "<div class='text'>"+
+                "<h6>"+announce['announce_price']+"€</h6>"+
+                "</div>"+
+            "</div>"+
+        "</div>"+
+    "</div>"
+});
+$('#divAnnounces').append(div);
+}
 </script>
