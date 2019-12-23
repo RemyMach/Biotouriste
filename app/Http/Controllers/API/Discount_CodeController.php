@@ -35,16 +35,19 @@ class Discount_CodeController extends Controller
 
         $this->request = $request;
 
-        $listUserExistingOnlyIfmultipleDiscountCode = $this->request->input('string_list_idUser');
-        //ou discount_code_iduser
-
-        $this->convertFormatlistUserInIdUserArray($listUserExistingOnlyIfmultipleDiscountCode);
-
-        $validator = $this->validateDiscount_Code($listUserExistingOnlyIfmultipleDiscountCode);
+        $validator = $this->validateDiscount_Code();
 
         if($validator->original['status'] == '400') {
             return $validator;
         }
+        //recherche de tous les users qui correspondent puis on les met dans un tableau
+        $users = $this->findAllUsersThatCorrespondOrTheUser();
+
+        //on setup is_use à false
+        //le discount_code_expiration_date
+        //on donne au tableau de User le discount_code
+        $this->convertFormatlistUserInIdUserArray($listUserExistingOnlyIfmultipleDiscountCode);
+
 
         $this->setValidData($emailExistingOnlyIfUserAuthentified, $usefullController);
 
@@ -57,4 +60,69 @@ class Discount_CodeController extends Controller
             'check'     => $this->contact,
         ]);
     }
+
+    private function validateDiscount_Code(){
+
+        if($this->testIfMultipleUser()){
+            return $this->validatorForMultipleUsers();
+        }
+
+        return $this->validatorForOneUser();
+    }
+
+    private function validatorForMultipleUsers(){
+         $validator = Validator::make($this->request->all(), [
+            'discount_code_amount'      => 'required|integer',
+            'expiration_time'           => 'required|string',
+            'OneOrMultipleUser'         => 'required|string',
+            'minimum_amount'            => 'required|integer',
+            'periode_minimum_amount'     => 'required|regex:/(^([0-9]+)(d|m|y)+$)/'
+         ]);
+
+        return $this->resultValidator($validator);
+    }
+
+    private function validatorForOneUser(){
+        $validator = Validator::make($this->request->all(), [
+            'discount_code_amount'      => 'required|integer',
+            'expiration_time'           => 'required|string',
+            'OneOrMultipleUser'         => 'required|string',
+        ]);
+
+        return $this->resultValidator($validator);
+    }
+
+    private function resultValidator($validator){
+
+        if($validator->fails()) {
+            return response()->json([
+                'message'   => 'The request is not good',
+                'error'     => $validator->errors(),
+                'status'    => "400"
+            ]);
+        }
+        return response()->json([
+            'message'   => 'The request is good',
+            'status'    => "200"
+        ]);
+    }
+
+    private function testIfMultipleUser(){
+
+        if($this->request()->input('OneOrMultipleUser') === 'multiple'){
+            return true;
+        }
+
+        return false;
+    }
+
+    private function findAllUsersThatCorrespondOrTheUser(){
+        if($this->testIfMultipleUser()){
+            //convertir période minimum amount
+            //recherche de tous les users qui ont fait plus de X euros de order dans la période now()-periode_minimum_amount
+            
+        }
+    }
+
+
 }
