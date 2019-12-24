@@ -97,7 +97,6 @@ Route::get('discountCode','Discount_CodeController@store');
 
 /********************************************** Route pour front test **********************************************/
 
-Route::get('announces','AnnounceController@index');
 
 Route::get('messages','MessageController@index');
 
@@ -106,4 +105,13 @@ Route::get('aide',function(){
 });
 
 
-/********************************************** Route pour front test **********************************************/
+/********************************************** Fin Route pour front test **********************************************/
+
+
+/********************************************** Debut Routes Announces **********************************************/
+
+Route::get('announces','AnnounceController@index');
+
+Route::post('filterByCategorie','AnnounceController@filterByCategorie');
+
+/********************************************** Fin Routes Announces **********************************************/

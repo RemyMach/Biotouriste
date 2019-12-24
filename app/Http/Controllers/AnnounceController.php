@@ -3,15 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Announce;
+use App\Repositories\AnnounceRepository;
+use App\User;
+use App\Status_User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AnnounceController extends Controller
 {
-    public function printMap()
-    {
-        return view('Openstreet');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +18,8 @@ class AnnounceController extends Controller
      */
     public function index()
     {
-        return view('');
+        $announces = Announce::all();
+        return view('announces', ['announces' => $announces]);
     }
 
     /**
@@ -87,5 +87,17 @@ class AnnounceController extends Controller
     public function destroy(Announce $announce)
     {
         //
+    }
+
+    public function filterByCategorie(Request $request){
+        $idCategorie = $request->get('categorie');
+        $announces = AnnounceRepository::filterByCategorieRepo($idCategorie);
+
+        $data = [
+            'success' => true,
+            'announces' => $announces
+        ];
+        return response()->json($data);
+//        return new Response(json_encode($data));
     }
 }
