@@ -90,6 +90,10 @@ Route::post('contact/destroy','ContactController@destroy');
 
 Route::post('contact/user','ContactController@ContactsOfAUser');
 
+//Discount_code
+
+Route::get('discountCode','Discount_CodeController@store');
+
 
 /********************************************** Route pour front test **********************************************/
 

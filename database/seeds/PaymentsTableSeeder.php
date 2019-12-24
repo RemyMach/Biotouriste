@@ -18,7 +18,7 @@ class PaymentsTableSeeder extends Seeder
                 'payment_currency'     => 'euros',
                 'payment_date'         => '2019/12/22',
                 'payer_first_name'     => 'jean',
-                'payer-last_name'      => 'onche',
+                'payer_last_name'      => 'onche',
                 'order_quantity'       => '3kilos',
                 'Users_idUser'         => 1,
                 'Announces_idAnnounce' => 3
@@ -29,7 +29,7 @@ class PaymentsTableSeeder extends Seeder
                 'payment_currency'     => 'euros',
                 'payment_date'         => '2019/12/19',
                 'payer_first_name'     => 'jean',
-                'payer-last_name'      => 'onche',
+                'payer_last_name'      => 'onche',
                 'order_quantity'       => '3kilos',
                 'Users_idUser'         => 1,
                 'Announces_idAnnounce' => 3
@@ -40,7 +40,7 @@ class PaymentsTableSeeder extends Seeder
                 'payment_currency'     => 'euros',
                 'payment_date'         => '2019/11/22',
                 'payer_first_name'     => 'jean',
-                'payer-last_name'      => 'onche',
+                'payer_last_name'      => 'onche',
                 'order_quantity'       => '3kilos',
                 'Users_idUser'         => 1,
                 'Announces_idAnnounce' => 3
@@ -51,7 +51,7 @@ class PaymentsTableSeeder extends Seeder
                 'payment_currency'     => 'euros',
                 'payment_date'         => '2019/12/17',
                 'payer_first_name'     => 'jean',
-                'payer-last_name'      => 'onche',
+                'payer_last_name'      => 'onche',
                 'order_quantity'       => '3kilos',
                 'Users_idUser'         => 1,
                 'Announces_idAnnounce' => 3
@@ -62,9 +62,9 @@ class PaymentsTableSeeder extends Seeder
                 'payment_currency'     => 'euros',
                 'payment_date'         => '2019/12/18',
                 'payer_first_name'     => 'jean',
-                'payer-last_name'      => 'onche',
+                'payer_last_name'      => 'onche',
                 'order_quantity'       => '3kilos',
-                'Users_idUser'         => 1,
+                'Users_idUser'         => 2,
                 'Announces_idAnnounce' => 3
             ),
         ));

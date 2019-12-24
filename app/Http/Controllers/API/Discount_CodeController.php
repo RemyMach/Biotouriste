@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\API;
 
 use App\Contact;
+use App\Discount_Code;
 use App\Http\Controllers\API\NoApiClass\UsefullController;
 use App\Http\Controllers\Controller;
 use App\Services\Mail;
 use App\User;
 use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Middleware\API;
@@ -19,6 +21,7 @@ class Discount_CodeController extends Controller
     private $discount_code;
     private $validData;
     private $user;
+    private $users;
 
     public function __construct(){
 
@@ -40,19 +43,21 @@ class Discount_CodeController extends Controller
         if($validator->original['status'] == '400') {
             return $validator;
         }
-        //recherche de tous les users qui correspondent puis on les met dans un tableau
-        $users = $this->findAllUsersThatCorrespondOrTheUser();
 
-        //on setup is_use à false
-        //le discount_code_expiration_date
+        $limitDate = $this->buildLimitDateWithperiode_minimum_amount();
+
+        $this->findAllUsersThatCorrespondOrTheUser($limitDate);
+
+        $validData['is_use'] = false;
+        $validData['discount_code_expiration_date'] = $limitDate;
+        $validData['discount_code_amount'] = $this->request->input('discount_code_amount');
+
+
         //on donne au tableau de User le discount_code
-        $this->convertFormatlistUserInIdUserArray($listUserExistingOnlyIfmultipleDiscountCode);
+        $this->attributeDiscountCode($validData);
 
-
-        $this->setValidData($emailExistingOnlyIfUserAuthentified, $usefullController);
-
-        $this->contact = Contact::create($this->validData);
-        $this->sendCreatedEmail($mail);
+        //envoie de mail pour dire t'as un code discount.
+        .
 
         return response()->json([
             'message'   => 'Your Contact has been register',
@@ -72,7 +77,7 @@ class Discount_CodeController extends Controller
 
     private function validatorForMultipleUsers(){
          $validator = Validator::make($this->request->all(), [
-            'discount_code_amount'      => 'required|integer',
+            'discount_code_amount'      => 'required|integer|max:50',
             'expiration_time'           => 'required|string',
             'OneOrMultipleUser'         => 'required|string',
             'minimum_amount'            => 'required|integer',
@@ -117,14 +122,12 @@ class Discount_CodeController extends Controller
         return false;
     }
 
-    private function findAllUsersThatCorrespondOrTheUser(){
+    private function findAllUsersThatCorrespondOrTheUser($limitDate){
         if($this->testIfMultipleUser()){
-            $limitDate = $this->buildLimitDateWithperiode_minimum_amount();
-            //recherche de tous les users qui ont fait plus de X euros de order dans la période now()-periode_minimum_amount
-            //select * from User where idUser IN(
-            //  select Users_idUser,SUM(payment_amount) as total_amount from Payment where payment_date > $limite_date and payment_status = valid GROUP BY Users_idUser having total_amount > $minimum_amount
-            //);
-            //
+            $minimum_amount = $this->request->input('minimum_amount');
+            $UserIdAndSumPaymentAmount = $this->getIdUserAndTotalPaymentAmountSinceADateAndSuperiorToAnAmount($limitDate, $minimum_amount);
+
+            $this->users = $this->getUsersFromAnIdUserList($UserIdAndSumPaymentAmount);
         }
 
         $this->user = User::findOrFail('idUserDiscount_codeBeneficiary');
@@ -138,5 +141,33 @@ class Discount_CodeController extends Controller
         $currentDate->modify('+'.$dateValue);
 
         return $currentDate->format('Y-m-d');
+    }
+
+    private function getIdUserAndTotalPaymentAmountSinceADateAndSuperiorToAnAmount($limitDate, $minimum_amount){
+
+        $UserIdAndSumPaymentAmount = DB::table('payments')->join('Users','payments.Users_idUser','=','Users.idUser')
+            ->select('payments.Users_idUser',DB::raw('SUM(payment_amount) as total'))
+            ->where('payment_date','>',$limitDate)->where('payment_status','=','valid')->groupBy('Users.idUser')->havingRaw('total > ?', [$minimum_amount])->get();
+
+        return $UserIdAndSumPaymentAmount;
+    }
+
+    private function getUsersFromAnIdUserList($UserIdAndSumPaymentAmount){
+        foreach($UserIdAndSumPaymentAmount as $item){
+            $users[] = User::findOrfail($item->Users_idUser);
+        }
+
+        return $users;
+    }
+
+    private function attributeDiscountCode($validData){
+        if(isset($this->users)){
+            foreach($this->users as $user){
+                $validData['Users_idUser'] = $user->idUser;
+                Discount_Code::create($validData);
+            }
+        }
+
+        $validData['Users_idUser'] = 'idUserDiscount_codeBeneficiary';
     }
 }

@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Discount_Code;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use GuzzleHttp\Client;
 
 class Discount_CodeController extends Controller
 {
-
     public function __construct(){
         $this->middleware('admin')->only(
-            'store'
+           'index'
         );
     }
     /**
@@ -41,6 +43,17 @@ class Discount_CodeController extends Controller
      */
     public function store(Request $request, Client $client)
     {
+        $date = '2019-11-22';
+        $value = 50;
+        $UserIdAndSumPaymentAmount = DB::table('payments')->join('Users','payments.Users_idUser','=','Users.idUser')->select('payments.Users_idUser',DB::raw('SUM(payment_amount) as total'))
+            ->where('payment_date','>',$date)->where('payment_status','=','valid')->groupBy('Users.idUser')->havingRaw('total > ?', [50])->get();
+
+        foreach($UserIdAndSumPaymentAmount as $value){
+            $users[] = User::findOrfail($value->Users_idUser);
+        }
+        dd(count($users));
+        //select Users_idUser,SUM(payment_amount) as total from payments join Users on payments.users_idUser = users.idUser
+        // where payment_date > '2019-11-24' and payment_status= 'valid'  group by users.idUser having total > 50;
         $data = request()->all();
         $data['idUser'] = config('api.api_admin_id');
         $data['api_token'] = config('api.api_admin_token');
