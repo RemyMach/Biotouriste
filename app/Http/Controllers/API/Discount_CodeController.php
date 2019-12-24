@@ -76,7 +76,7 @@ class Discount_CodeController extends Controller
             'expiration_time'           => 'required|string',
             'OneOrMultipleUser'         => 'required|string',
             'minimum_amount'            => 'required|integer',
-            'periode_minimum_amount'     => 'required|regex:/(^([0-9]+)(d|m|y)+$)/'
+            'periode_minimum_amount'    => 'required|regex:/(^([0-9]+)(day|days|month|year|years)$)/'
          ]);
 
         return $this->resultValidator($validator);
@@ -87,6 +87,7 @@ class Discount_CodeController extends Controller
             'discount_code_amount'      => 'required|integer',
             'expiration_time'           => 'required|string',
             'OneOrMultipleUser'         => 'required|string',
+            'idUserDiscount_codeBeneficiary' => 'required|integer'
         ]);
 
         return $this->resultValidator($validator);
@@ -118,11 +119,24 @@ class Discount_CodeController extends Controller
 
     private function findAllUsersThatCorrespondOrTheUser(){
         if($this->testIfMultipleUser()){
-            //convertir période minimum amount
+            $limitDate = $this->buildLimitDateWithperiode_minimum_amount();
             //recherche de tous les users qui ont fait plus de X euros de order dans la période now()-periode_minimum_amount
-            
+            //select * from User where idUser IN(
+            //  select Users_idUser,SUM(payment_amount) as total_amount from Payment where payment_date > $limite_date and payment_status = valid GROUP BY Users_idUser having total_amount > $minimum_amount
+            //);
+            //
         }
+
+        $this->user = User::findOrFail('idUserDiscount_codeBeneficiary');
     }
 
+    private function buildLimitDateWithperiode_minimum_amount(){
 
+        $dateValue = $this->request->input('periode_minimum_amount');
+
+        $currentDate = new DateTime(date("Y-m-d"));
+        $currentDate->modify('+'.$dateValue);
+
+        return $currentDate->format('Y-m-d');
+    }
 }
