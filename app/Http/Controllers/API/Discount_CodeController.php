@@ -57,7 +57,7 @@ class Discount_CodeController extends Controller
         $this->attributeDiscountCode($validData);
 
         //envoie de mail pour dire t'as un code discount.
-        .
+        /*$this->sendCreatedEmail($mail);*/
 
         return response()->json([
             'message'   => 'Your Contact has been register',
