@@ -10,9 +10,15 @@ use GuzzleHttp\Client;
 
 class Discount_CodeController extends Controller
 {
+    private $sessionUser;
+
     public function __construct(){
         $this->middleware('admin')->only(
-           'index'
+           'store'
+        );
+
+        $this->middleware('SessionAuth')->only(
+            'checkDiscountCodeIsValid','updateStatus'
         );
     }
     /**
@@ -43,23 +49,77 @@ class Discount_CodeController extends Controller
      */
     public function store(Request $request, Client $client)
     {
-        $date = '2019-11-22';
-        $value = 50;
-        $UserIdAndSumPaymentAmount = DB::table('payments')->join('Users','payments.Users_idUser','=','Users.idUser')->select('payments.Users_idUser',DB::raw('SUM(payment_amount) as total'))
-            ->where('payment_date','>',$date)->where('payment_status','=','valid')->groupBy('Users.idUser')->havingRaw('total > ?', [50])->get();
+        //$data = request()->all();
+        $data['discount_code_amount'] = 20;
+        $data['expiration_time'] = '30days';
+        $data['periode_minimum_amount'] = '30days';
+        $data['OneOrMultipleUser'] = 'multiple';
+        $data['idUserDiscount_codeBeneficiary'] = 1;
+        $data['minimum_amount'] = 20;
 
-        foreach($UserIdAndSumPaymentAmount as $value){
-            $users[] = User::findOrfail($value->Users_idUser);
-        }
-        dd(count($users));
-        //select Users_idUser,SUM(payment_amount) as total from payments join Users on payments.users_idUser = users.idUser
-        // where payment_date > '2019-11-24' and payment_status= 'valid'  group by users.idUser having total > 50;
-        $data = request()->all();
         $data['idUser'] = config('api.api_admin_id');
         $data['api_token'] = config('api.api_admin_token');
 
 
         $query = $client->request('POST','http://localhost:8001/api/discount_code/store',
+            ['form_params' => $data]);
+
+        $response = json_decode($query->getBody()->getContents());
+
+        dd($response);
+
+        return view('testDiscount_code',["response" => $response]);
+    }
+
+    public function updateStatus(Request $request, Client $client){
+
+        $this->sessionUser = $request->session()->get('user');
+
+        //$data = request()->all();
+        $data['idDiscount_code'] = 1;
+        $data['idUser']     = $this->sessionUser->idUser;
+        $data['api_token']  = $this->sessionUser->api_token;
+
+
+        $query = $client->request('POST','http://localhost:8001/api/discount_code/isUseFalseToTrue',
+            ['form_params' => $data]);
+
+        $response = json_decode($query->getBody()->getContents());
+
+        dd($response);
+
+        return view('testDiscount_code',["response" => $response]);
+    }
+
+    public function checkDiscountCodeIsValid(Request $request, Client $client){
+
+        $this->sessionUser = $request->session()->get('user');
+
+        //$data = request()->all();
+        $data['idDiscount_code'] = 1;
+        $data['idUser']     = $this->sessionUser->idUser;
+        $data['api_token']  = $this->sessionUser->api_token;
+
+
+        $query = $client->request('POST','http://localhost:8001/api/discount_code/checkDiscountCodeIsValid',
+            ['form_params' => $data]);
+
+        $response = json_decode($query->getBody()->getContents());
+
+        dd($response);
+
+        return view('testDiscount_code',["response" => $response]);
+    }
+
+    public function showDiscountCodeOfAUser(Request $request, Client $client){
+
+        $this->sessionUser = $request->session()->get('user');
+
+        $data['idUser']     = $this->sessionUser->idUser;
+        $data['api_token']  = $this->sessionUser->api_token;
+
+
+        $query = $client->request('POST','http://localhost:8001/api/discount_code/showDiscountCodeOfAUser',
             ['form_params' => $data]);
 
         $response = json_decode($query->getBody()->getContents());

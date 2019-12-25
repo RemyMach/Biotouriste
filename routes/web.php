@@ -92,7 +92,13 @@ Route::post('contact/user','ContactController@ContactsOfAUser');
 
 //Discount_code
 
-Route::get('discountCode','Discount_CodeController@store');
+Route::post('discountCode','Discount_CodeController@store');
+
+Route::post('discountCode/updateStatus','Discount_CodeController@updateStatus');
+
+Route::post('discountCode/discountCodeValid','Discount_CodeController@checkDiscountCodeIsValid');
+
+Route::get('discountCode/show','Discount_CodeController@showDiscountCodeOfAUser');
 
 
 /********************************************** Route pour front test **********************************************/

@@ -27,12 +27,12 @@ class Discount_Code extends Model
      * 
      * @var string
      */
-    protected $primaryKey = 'iddiscount_code';
+    protected $primaryKey = 'idDiscount_code';
 
     /**
      * @var array
      */
-    protected $fillable = ['discount_code_amount', 'is_use', 'Users_idUser'];
+    protected $fillable = ['discount_code_amount', 'is_use', 'Users_idUser','discount_code_expiration_date'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

@@ -65,6 +65,17 @@ Route::post('contact/destroy','API\ContactController@destroy');
 
 Route::post('contact/ContactsOfAUser','API\ContactController@ContactsOfAUser');
 
+//Discount_code
+
+Route::post('discount_code/store','API\Discount_CodeController@store');
+
+Route::post('discount_code/isUseFalseToTrue','API\Discount_CodeController@isUseFalseToTrue');
+
+Route::post('discount_code/checkDiscountCodeIsValid','API\Discount_CodeController@checkDiscountCodeIsValid');
+
+Route::post('discount_code/showDiscountCodeOfAUser','API\Discount_CodeController@showDiscountCodeOfAUser');
+
+
 
 /*Route::get('/users', function () {
     return UserResource::collection(User::paginate(2));

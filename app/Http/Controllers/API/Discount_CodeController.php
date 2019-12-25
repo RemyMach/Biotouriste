@@ -6,6 +6,7 @@ use App\Contact;
 use App\Discount_Code;
 use App\Http\Controllers\API\NoApiClass\UsefullController;
 use App\Http\Controllers\Controller;
+use App\Repositories\PaymentRepository;
 use App\Services\Mail;
 use App\User;
 use DateTime;
@@ -26,7 +27,7 @@ class Discount_CodeController extends Controller
     public function __construct(){
 
         $this->middleware('apiTokenAndIdUserExistAndMatch')->only(
-            'DiscountCodesOfAUser'
+            'DiscountCodesOfAUser','isUseFalseToTrue'
         );
 
         $this->middleware('apiAdmin')->only(
@@ -34,7 +35,7 @@ class Discount_CodeController extends Controller
         );
     }
 
-    public function store(Request $request){
+    public function store(Request $request, Mail $mail){
 
         $this->request = $request;
 
@@ -44,25 +45,77 @@ class Discount_CodeController extends Controller
             return $validator;
         }
 
-        $limitDate = $this->buildLimitDateWithperiode_minimum_amount();
+        $limitDate = $this->buildLimitDate($this->request->input('expiration_time'),'+');
+        $this->setAllUsersThatCorrespondOrTheUser();
 
-        $this->findAllUsersThatCorrespondOrTheUser($limitDate);
+        $this->validData['is_use'] = false;
+        $this->validData['discount_code_expiration_date'] = $limitDate;
+        $this->validData['discount_code_amount'] = $this->request->input('discount_code_amount');
 
-        $validData['is_use'] = false;
-        $validData['discount_code_expiration_date'] = $limitDate;
-        $validData['discount_code_amount'] = $this->request->input('discount_code_amount');
+        $this->createDiscountCodeForUsers();
 
-
-        //on donne au tableau de User le discount_code
-        $this->attributeDiscountCode($validData);
-
-        //envoie de mail pour dire t'as un code discount.
-        /*$this->sendCreatedEmail($mail);*/
+        $this->sendCreatedEmail($mail);
 
         return response()->json([
-            'message'   => 'Your Contact has been register',
+            'message'   => 'Your Discount_Code has been register',
             'status'    => '200',
-            'check'     => $this->contact,
+            'check'     => $this->validData,
+        ]);
+    }
+
+    public function isUseFalseToTrue(Request $request){
+
+        $this->request = $request;
+
+        $DiscountCodeValid = $this->checkDiscountCodeIsValid($request);
+        if($DiscountCodeValid->original['status'] == 400){
+
+            return $DiscountCodeValid;
+        }
+
+        $this->discount_code->update(['is_use' => true]);
+
+        return response()->json([
+            'message'   => 'Your Discount_code has been update',
+            'status'    => '200',
+            'check'     => $this->discount_code,
+        ]);
+
+    }
+
+    public function showDiscountCodeOfAUser(Request $request){
+
+    }
+
+    public function checkDiscountCodeIsValid(Request $request){
+
+        $this->request = $request;
+
+        if(!$this->verifyOwnerDiscount_code()){
+            return response()->json([
+                'message'   => 'This Discount_Code isn\'t for this User',
+                'status'    => '400',
+            ]);
+        }
+
+        if(!$this->checkValidExpirationDate()){
+            return response()->json([
+                'message'   => 'This Discount_Code expiration date is past',
+                'status'    => '400',
+            ]);
+        }
+
+        if($this->discount_code->is_use){
+            return response()->json([
+                'message'   => 'This Discount_Code has been used',
+                'status'    => '400',
+            ]);
+        }
+
+        return response()->json([
+            'message'   => 'This Discount_Code is valid',
+            'status'    => '200',
+            'discount_code' => $this->discount_code
         ]);
     }
 
@@ -81,7 +134,7 @@ class Discount_CodeController extends Controller
             'expiration_time'           => 'required|string',
             'OneOrMultipleUser'         => 'required|string',
             'minimum_amount'            => 'required|integer',
-            'periode_minimum_amount'    => 'required|regex:/(^([0-9]+)(day|days|month|year|years)$)/'
+            'periode_minimum_amount'    => ['required','string','regex:/^[0-9]+(day|days|month|year|years)$/']
          ]);
 
         return $this->resultValidator($validator);
@@ -115,44 +168,34 @@ class Discount_CodeController extends Controller
 
     private function testIfMultipleUser(){
 
-        if($this->request()->input('OneOrMultipleUser') === 'multiple'){
+        if($this->request->input('OneOrMultipleUser') === 'multiple'){
             return true;
         }
 
         return false;
     }
 
-    private function findAllUsersThatCorrespondOrTheUser($limitDate){
+    private function setAllUsersThatCorrespondOrTheUser(){
         if($this->testIfMultipleUser()){
+            $limitDateForpaymentClacul = $this->buildLimitDate($this->request->input('periode_minimum_amount'),'-');
             $minimum_amount = $this->request->input('minimum_amount');
-            $UserIdAndSumPaymentAmount = $this->getIdUserAndTotalPaymentAmountSinceADateAndSuperiorToAnAmount($limitDate, $minimum_amount);
-
+            $UserIdAndSumPaymentAmount = PaymentRepository::filterPaymentDateAndPaymentAmountByUser($limitDateForpaymentClacul,$minimum_amount);
             $this->users = $this->getUsersFromAnIdUserList($UserIdAndSumPaymentAmount);
         }
 
-        $this->user = User::findOrFail('idUserDiscount_codeBeneficiary');
+        $this->user = User::findOrFail($this->request->input('idUserDiscount_codeBeneficiary'));
     }
 
-    private function buildLimitDateWithperiode_minimum_amount(){
+    private function buildLimitDate($date, $operation){
 
-        $dateValue = $this->request->input('periode_minimum_amount');
-
-        $currentDate = new DateTime(date("Y-m-d"));
-        $currentDate->modify('+'.$dateValue);
+        $currentDate = new DateTime(date('Y-m-d'));
+        $currentDate->modify($operation.$date);
 
         return $currentDate->format('Y-m-d');
     }
 
-    private function getIdUserAndTotalPaymentAmountSinceADateAndSuperiorToAnAmount($limitDate, $minimum_amount){
-
-        $UserIdAndSumPaymentAmount = DB::table('payments')->join('Users','payments.Users_idUser','=','Users.idUser')
-            ->select('payments.Users_idUser',DB::raw('SUM(payment_amount) as total'))
-            ->where('payment_date','>',$limitDate)->where('payment_status','=','valid')->groupBy('Users.idUser')->havingRaw('total > ?', [$minimum_amount])->get();
-
-        return $UserIdAndSumPaymentAmount;
-    }
-
     private function getUsersFromAnIdUserList($UserIdAndSumPaymentAmount){
+
         foreach($UserIdAndSumPaymentAmount as $item){
             $users[] = User::findOrfail($item->Users_idUser);
         }
@@ -160,14 +203,56 @@ class Discount_CodeController extends Controller
         return $users;
     }
 
-    private function attributeDiscountCode($validData){
+    private function createDiscountCodeForUsers(){
         if(isset($this->users)){
             foreach($this->users as $user){
-                $validData['Users_idUser'] = $user->idUser;
-                Discount_Code::create($validData);
+                $this->validData['Users_idUser'] = $user->idUser;
+                Discount_Code::create($this->validData);
             }
+        }else{
+            $this->validData['Users_idUser'] = $this->request->input('idUserDiscount_codeBeneficiary');
+            Discount_Code::create($this->validData);
+        }
+    }
+
+    private function sendCreatedEmail($mail){
+
+        if(isset($this->users)){
+            foreach($this->users as $user){
+                $mail->send($user->email,'Discount_CodeCreatedForUser',['user' => $user,'date' => $this->validData['discount_code_expiration_date']]);
+            }
+        }else{
+            $mail->send($this->user->email,'Discount_CodeCreatedForUser',['user' => $this->user,'date' => $this->validData['discount_code_expiration_date']]);
+        }
+    }
+
+    private function verifyOwnerDiscount_code(){
+
+        $this->discount_code = Discount_Code::findOrFail($this->request->input('idDiscount_code'));
+        if(!$this->discount_code)
+        {
+            return false;
+        }
+        if($this->request->input('idUser') != $this->discount_code->user->idUser)
+        {
+            return false;
         }
 
-        $validData['Users_idUser'] = 'idUserDiscount_codeBeneficiary';
+        return true;
     }
+
+    private function checkValidExpirationDate(){
+
+        if(isset($this->discount_code->discount_code_expiration_date)){
+            return true;
+        }
+
+        $currentDate = new DateTime(date('Y-m-d'));
+        if($this->discount_code->discount_code_expiration_date < $currentDate->format('Y-m-d')){
+            return false;
+        }
+
+        return true;
+    }
+
 }
