@@ -6,6 +6,7 @@ use App\Contact;
 use App\Discount_Code;
 use App\Http\Controllers\API\NoApiClass\UsefullController;
 use App\Http\Controllers\Controller;
+use App\Repositories\Discount_CodeRepository;
 use App\Repositories\PaymentRepository;
 use App\Services\Mail;
 use App\User;
@@ -85,6 +86,21 @@ class Discount_CodeController extends Controller
 
     public function showDiscountCodeOfAUser(Request $request){
 
+        $this->request = $request;
+        $DiscountCodes = Discount_CodeRepository::allDiscountCodesValidForAUser($this->request->input('idUser'));
+        if(!$DiscountCodes){
+
+            return response()->json([
+                'message'   => 'No Discount codes for this User',
+                'status'    => '400',
+            ]);
+        }
+
+        return response()->json([
+            'message'   => 'Your receive your discount_code',
+            'status'    => '200',
+            'check'     => $DiscountCodes,
+        ]);
     }
 
     public function checkDiscountCodeIsValid(Request $request){

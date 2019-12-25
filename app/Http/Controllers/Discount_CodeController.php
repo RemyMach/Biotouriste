@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Discount_Code;
+use App\Repositories\Discount_CodeRepository;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -112,7 +113,7 @@ class Discount_CodeController extends Controller
     }
 
     public function showDiscountCodeOfAUser(Request $request, Client $client){
-
+        
         $this->sessionUser = $request->session()->get('user');
 
         $data['idUser']     = $this->sessionUser->idUser;
