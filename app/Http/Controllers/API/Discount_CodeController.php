@@ -174,12 +174,12 @@ class Discount_CodeController extends Controller
             return response()->json([
                 'message'   => 'The request is not good',
                 'error'     => $validator->errors(),
-                'status'    => "400"
+                'status'    => '400'
             ]);
         }
         return response()->json([
             'message'   => 'The request is good',
-            'status'    => "200"
+            'status'    => '200'
         ]);
     }
 

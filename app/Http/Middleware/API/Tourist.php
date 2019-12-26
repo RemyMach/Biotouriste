@@ -17,7 +17,7 @@ class Tourist
      */
     public function handle($request, Closure $next)
     {
-        $role = 'Tourist';
+        $role = 'TouristController';
         $apiTokenController = new ApiTokenController();
         $requestParameters = $apiTokenController->verifyRoleCredentials($role);
 

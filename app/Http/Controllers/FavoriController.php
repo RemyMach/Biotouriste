@@ -13,26 +13,21 @@ class FavoriController extends Controller
 
     public function __construct(){
 
+        $this->middleware('touristController')->only(
+            'showFavorisOfAUser'
+        );
 
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function showFavorisOfAUser(Request $request, Client $client)
     {
-        //recherche de tous les favoris en fonction d'un idUser créé dans le repo
-        $favoris = FavoriRepository::allFavorisAnnounceOfAUser(2);
-        dd($favoris);
 
         $this->sessionUser = $request->session()->get('user');
 
         $data['idUser']     = $this->sessionUser->idUser;
         $data['api_token']  = $this->sessionUser->api_token;
 
-        $query = $client->request('POST','http://localhost:8001/api/discount_code/showFavorisOfAUser',
+        $query = $client->request('POST','http://localhost:8001/api/favori/showFavorisOfAUser',
             ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
 
@@ -42,69 +37,38 @@ class FavoriController extends Controller
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function store(Request $request, Client $client){
+
+        $this->sessionUser = $request->session()->get('user');
+
+        $data = request()->all();
+        //$data['idAnnounce'] = 5;
+        $data['idUser']     = $this->sessionUser->idUser;
+        $data['api_token']  = $this->sessionUser->api_token;
+
+        $query = $client->request('POST','http://localhost:8001/api/favori/store',
+            ['form_params' => $data]);
+        $response = json_decode($query->getBody()->getContents());
+
+        dd($response);
+
+        return view('testFavori',["response" => $response]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function destroy(Request $request)
     {
-        //
-    }
+        $this->sessionUser = $request->session()->get('user');
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Favori  $favori
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Favori $favori)
-    {
-        //
-    }
+        $data['idFavori'] = 5;
+        $data['idUser']     = $this->sessionUser->idUser;
+        $data['api_token']  = $this->sessionUser->api_token;
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Favori  $favori
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Favori $favori)
-    {
-        //
-    }
+        $query = $client->request('POST','http://localhost:8001/api/favori/store',
+            ['form_params' => $data]);
+        $response = json_decode($query->getBody()->getContents());
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Favori  $favori
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Favori $favori)
-    {
-        //
-    }
+        dd($response);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Favori  $favori
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Favori $favori)
-    {
-        //
+        return view('testFavori',["response" => $response]);
     }
 }

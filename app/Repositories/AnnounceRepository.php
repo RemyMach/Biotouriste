@@ -28,4 +28,12 @@ class AnnounceRepository extends BaseRepository
             ->where('product_categories_idproduct_category', $idCategorie)
             ->get();
     }
+
+    public static function AnnounceThatIsAvailable($idAnnounce){
+
+        return DB::table('announces')
+            ->where('announce_is_available','=',true)
+            ->where('idAnnounce','=',$idAnnounce)
+            ->get();
+    }
 }

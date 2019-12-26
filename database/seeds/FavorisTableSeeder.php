@@ -11,7 +11,7 @@ class FavorisTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('Comments')->insert(array(
+        DB::table('Favoris')->insert(array(
             array(
                 'Users_idUser'          => 2,
                 'Announces_idAnnounce'  => 1,

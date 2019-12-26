@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class Tourist
+class TouristController
 {
     private $auth;
 

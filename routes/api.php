@@ -79,6 +79,8 @@ Route::post('discount_code/showDiscountCodeOfAUser','API\Discount_CodeController
 
 Route::post('favori/showFavorisOfAUser','API\FavoriController@showFavorisOfAUser');
 
+Route::post('favori/store','API\FavoriController@store');
+
 
 
 /*Route::get('/users', function () {

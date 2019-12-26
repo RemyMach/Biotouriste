@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Report extends Model
 {
+    public $timestamps = false;
     /**
      * The primary key for the model.
      * 

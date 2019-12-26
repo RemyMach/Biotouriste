@@ -18,8 +18,7 @@ class Controller
     {
         $this->user = $request->session()->get('user');
 
-        if(preg_match('#controller#i',$this->user->status['status_user_label']) ||
-            preg_match('#admin#i',$this->user->status['status_user_label'])){
+        if(preg_match('#(controller|admin)#i',$this->user->status['status_user_label'])){
 
             return $next($request);
         }
