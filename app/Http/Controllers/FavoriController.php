@@ -3,18 +3,43 @@
 namespace App\Http\Controllers;
 
 use App\Favori;
+use App\Repositories\FavoriRepository;
 use Illuminate\Http\Request;
+use GuzzleHttp\Client;
 
 class FavoriController extends Controller
 {
+    private $sessionUser;
+
+    public function __construct(){
+
+
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function showFavorisOfAUser(Request $request, Client $client)
     {
-        //
+        //recherche de tous les favoris en fonction d'un idUser créé dans le repo
+        $favoris = FavoriRepository::allFavorisAnnounceOfAUser(2);
+        dd($favoris);
+
+        $this->sessionUser = $request->session()->get('user');
+
+        $data['idUser']     = $this->sessionUser->idUser;
+        $data['api_token']  = $this->sessionUser->api_token;
+
+        $query = $client->request('POST','http://localhost:8001/api/discount_code/showFavorisOfAUser',
+            ['form_params' => $data]);
+        $response = json_decode($query->getBody()->getContents());
+
+        dd($response);
+
+        return view('testFavori',["response" => $response]);
+
     }
 
     /**

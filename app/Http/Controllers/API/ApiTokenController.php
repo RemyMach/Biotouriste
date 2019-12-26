@@ -116,4 +116,13 @@ class ApiTokenController extends Controller
 
         return true;
     }
+
+    private function verifyApiTokenRequestCorrespondToTouristController()
+    {
+        if(!preg_match('#tourist#i',$this->user->status['status_user_label']) && !preg_match('#controller#i',$this->user->status['status_user_label'])){
+            return false;
+        }
+
+        return true;
+    }
 }

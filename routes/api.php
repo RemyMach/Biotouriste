@@ -75,6 +75,10 @@ Route::post('discount_code/checkDiscountCodeIsValid','API\Discount_CodeControlle
 
 Route::post('discount_code/showDiscountCodeOfAUser','API\Discount_CodeController@showDiscountCodeOfAUser');
 
+//Favoris
+
+Route::post('favori/showFavorisOfAUser','API\FavoriController@showFavorisOfAUser');
+
 
 
 /*Route::get('/users', function () {

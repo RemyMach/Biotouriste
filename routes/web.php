@@ -98,7 +98,11 @@ Route::post('discountCode/updateStatus','Discount_CodeController@updateStatus');
 
 Route::post('discountCode/discountCodeValid','Discount_CodeController@checkDiscountCodeIsValid');
 
-Route::get('discountCode/show','Discount_CodeController@showDiscountCodeOfAUser');
+Route::post('discountCode/show','Discount_CodeController@showDiscountCodeOfAUser');
+
+//Favoris
+
+Route::get('favori/show','FavoriController@showFavorisOfAUser');
 
 
 /********************************************** Route pour front test **********************************************/

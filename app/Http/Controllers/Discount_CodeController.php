@@ -6,7 +6,6 @@ use App\Discount_Code;
 use App\Repositories\Discount_CodeRepository;
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use GuzzleHttp\Client;
 
 class Discount_CodeController extends Controller
@@ -19,7 +18,7 @@ class Discount_CodeController extends Controller
         );
 
         $this->middleware('SessionAuth')->only(
-            'checkDiscountCodeIsValid','updateStatus'
+            'checkDiscountCodeIsValid','updateStatus','showDiscountCodeOfAUser'
         );
     }
     /**
@@ -113,7 +112,7 @@ class Discount_CodeController extends Controller
     }
 
     public function showDiscountCodeOfAUser(Request $request, Client $client){
-        
+
         $this->sessionUser = $request->session()->get('user');
 
         $data['idUser']     = $this->sessionUser->idUser;

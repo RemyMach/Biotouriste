@@ -56,6 +56,7 @@ class Kernel extends HttpKernel
         'apiController' => \App\Http\Middleware\API\Controller::class,
         'apiSeller' => \App\Http\Middleware\API\Seller::class,
         'apiTourist' => \App\Http\Middleware\API\Tourist::class,
+        'apiTouristController' => \App\Http\Middleware\API\TouristController::class,
         'SessionAuth' => \App\Http\Middleware\SessionAuthentication::class,
         'admin' => \App\Http\Middleware\Admin::class,
         'tourist' => \App\Http\Middleware\Tourist::class,

@@ -88,7 +88,8 @@ class Discount_CodeController extends Controller
 
         $this->request = $request;
         $DiscountCodes = Discount_CodeRepository::allDiscountCodesValidForAUser($this->request->input('idUser'));
-        if(!$DiscountCodes){
+        @$FirstDiscountCode = $DiscountCodes[0];
+        if(!isset($FirstDiscountCode)){
 
             return response()->json([
                 'message'   => 'No Discount codes for this User',
@@ -99,7 +100,7 @@ class Discount_CodeController extends Controller
         return response()->json([
             'message'   => 'Your receive your discount_code',
             'status'    => '200',
-            'check'     => $DiscountCodes,
+            'discount_codes'     => $DiscountCodes,
         ]);
     }
 
