@@ -81,6 +81,8 @@ Route::post('favori/showFavorisOfAUser','API\FavoriController@showFavorisOfAUser
 
 Route::post('favori/store','API\FavoriController@store');
 
+Route::post('favori/destroy','API\FavoriController@destroy');
+
 
 
 /*Route::get('/users', function () {

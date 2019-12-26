@@ -55,15 +55,15 @@ class FavoriController extends Controller
         return view('testFavori',["response" => $response]);
     }
 
-    public function destroy(Request $request)
+    public function destroy(Request $request, Client $client)
     {
         $this->sessionUser = $request->session()->get('user');
-
-        $data['idFavori'] = 5;
+        //$data = request()->all();
+        $data['idFavori']   = 3;
         $data['idUser']     = $this->sessionUser->idUser;
         $data['api_token']  = $this->sessionUser->api_token;
 
-        $query = $client->request('POST','http://localhost:8001/api/favori/store',
+        $query = $client->request('POST','http://localhost:8001/api/favori/destroy',
             ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
 

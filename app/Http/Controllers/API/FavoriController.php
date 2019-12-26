@@ -81,10 +81,30 @@ class FavoriController extends Controller
 
     }
 
-    public function destroy(){
+    public function destroy(Request $request){
 
-        //je vérifie que les informations correspondent bien à ce user et que le favoris existe
+        $this->request = $request;
 
+        $validator = $this->validateIdFavoriFormat();
+        if($validator->original['status'] == '400') {
+            return $validator;
+        }
+
+        $favori = FavoriRepository::verifyOwnerFavori($this->request->input('idUser'), $this->request->input('idFavori'));
+        if(!isset($favori[0])){
+            return response()->json([
+                'message'   => 'This Favori is not yours',
+                'status'    => '400',
+            ]);
+        }
+
+        Favori::destroy($favori[0]->idFavori);
+
+        return response()->json([
+            'message'   => 'The Favori has been deleted',
+            'status'    => '200',
+            'idUser'    => $favori[0]
+        ]);
     }
 
     private function validateIdAnnounceFormat(){
@@ -92,6 +112,20 @@ class FavoriController extends Controller
         $validator = Validator::make($this->request->all(), [
             'idAnnounce'      => 'required|integer',
         ]);
+
+        return $this->resultValidator($validator);
+    }
+
+    private function validateIdFavoriFormat(){
+
+        $validator = Validator::make($this->request->all(), [
+            'idFavori'      => 'required|integer',
+        ]);
+
+        return $this->resultValidator($validator);
+    }
+
+    private function resultValidator($validator){
 
         if($validator->fails()) {
 

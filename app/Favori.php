@@ -26,7 +26,7 @@ class Favori extends Model
      * 
      * @var string
      */
-    protected $primaryKey = 'idFavoris';
+    protected $primaryKey = 'idFavori';
 
     /**
      * @var array

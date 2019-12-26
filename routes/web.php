@@ -104,7 +104,9 @@ Route::post('discountCode/show','Discount_CodeController@showDiscountCodeOfAUser
 
 Route::post('favori/show','FavoriController@showFavorisOfAUser');
 
-Route::get('favori/store','FavoriController@store');
+Route::post('favori/store','FavoriController@store');
+
+Route::get('favori/destroy','FavoriController@destroy');
 
 
 /********************************************** Route pour front test **********************************************/

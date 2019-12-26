@@ -37,4 +37,12 @@ class FavoriRepository extends BaseRepository
             ->where('Announces_idAnnounce','=',$idAnnounce)
             ->get();
     }
+
+    public static function verifyOwnerFavori($idUser, $idFavori){
+
+        return DB::table('Favoris')
+            ->where('idFavori','=',$idFavori)
+            ->where('Users_idUser','=',$idUser)
+            ->get();
+    }
 }
