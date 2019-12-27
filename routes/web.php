@@ -92,7 +92,7 @@ Route::post('contact/user','ContactController@ContactsOfAUser');
 
 //Discount_code
 
-Route::post('discountCode','Discount_CodeController@store');
+Route::get('discountCode','Discount_CodeController@store');
 
 Route::post('discountCode/updateStatus','Discount_CodeController@updateStatus');
 
@@ -111,6 +111,10 @@ Route::post('favori/destroy','FavoriController@destroy');
 //Messages
 
 Route::get('message/store','MessageController@store');
+
+Route::get('message/show/seller','MessageController@showMessagesOfASeller');
+
+Route::get('message/show/User','MessageController@showMessagesOfATouristController');
 
 
 /********************************************** Route pour front test **********************************************/

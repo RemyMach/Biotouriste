@@ -18,6 +18,7 @@ class CreateMessagesTable extends Migration {
 			$table->string('message_subject');
 			$table->text('message_content');
 			$table->dateTime('message_date');
+			$table->integer('message_idSender');
 			$table->integer('Announces_idAnnounce')->index('fk_Posts_Announces1_idx');
 			$table->integer('Users_idUser')->index('fk_Posts_Users1_idx');
 		});

@@ -87,6 +87,10 @@ Route::post('favori/destroy','API\FavoriController@destroy');
 
 Route::post('message/store','API\MessageController@store');
 
+Route::post('message/showMessagesOfATouristController','API\MessageController@showMessagesOfATouristController');
+
+Route::post('message/showMessagesOfASeller','API\MessageController@showMessagesOfASeller');
+
 
 
 /*Route::get('/users', function () {
