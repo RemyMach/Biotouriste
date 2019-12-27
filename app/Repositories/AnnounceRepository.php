@@ -36,4 +36,13 @@ class AnnounceRepository extends BaseRepository
             ->where('idAnnounce','=',$idAnnounce)
             ->get();
     }
+
+    public static function determineIfUserOwnTheAnnounce($idAnnounce, $idUser){
+
+        return DB::table('announces')
+            ->select('*')
+            ->where('idAnnounce','=',$idAnnounce)
+            ->where('Users_idUser','=',$idUser)
+            ->get();
+    }
 }

@@ -106,7 +106,11 @@ Route::post('favori/show','FavoriController@showFavorisOfAUser');
 
 Route::post('favori/store','FavoriController@store');
 
-Route::get('favori/destroy','FavoriController@destroy');
+Route::post('favori/destroy','FavoriController@destroy');
+
+//Messages
+
+Route::get('message/store','MessageController@store');
 
 
 /********************************************** Route pour front test **********************************************/
