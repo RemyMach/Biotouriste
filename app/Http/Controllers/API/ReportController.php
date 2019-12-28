@@ -11,7 +11,8 @@ use App\Report;
 use App\Repositories\AnnounceRepository;
 use App\Repositories\FavoriRepository;
 use App\Repositories\MessageRepository;
-use App\Repositories\Report_CategoriesRepository;
+use App\Repositories\ReportCategoriesRepository;
+use App\Repositories\ReportRepository;
 use App\User;
 use Illuminate\Http\Request;
 use App\Services\Mail;
@@ -23,15 +24,20 @@ class ReportController extends Controller
     private $request;
     private $announce;
     private $user;
+    private $report;
 
     public function __construct()
     {
         $this->middleware('apiTokenAndIdUserExistAndMatch')->only(
-            'store'
+            'store','showAllMyReports'
+        );
+
+        $this->middleware('apiAdmin')->only(
+            'showAllReportsForAdmin'
         );
     }
 
-    public function store(Request $request){
+    public function store(Request $request, Mail $mail){
 
         $this->request = $request;
 
@@ -45,15 +51,52 @@ class ReportController extends Controller
             return $resultCheck;
         }
 
+
         $validData = $this->setValidDataDependingIdAnnounceExistence();
 
-        $report = Report::create($validData);
+        $this->report = Report::create($validData);
+
+        $this->sendCreatedMail($mail);
 
         return response()->json([
             'message'   => 'Your Report has been register',
             'status'    => '200',
-            'check'     => $report,
+            'check'     => $this->report,
         ]);
+    }
+
+    public function showAllMyReports(Request $request){
+
+        $this->request = $request;
+
+        $report = ReportRepository::getAllReportsFromAnUser($this->request->input('idUser'));
+
+        return response()->json([
+            'status'    => '200',
+            'report'    => $report
+        ]);
+    }
+
+    public function showAllReportsForAdmin(Request $request){
+
+        $this->request = $request;
+
+        $reports = Report::all();
+
+        $userReportsSend = $this->getAllReportsGroupBySender($reports);
+
+        $userReportsGroupByUserReported = $this->getAllReportsGroupByUserReported($reports);
+
+
+        $reportsOrderByDateDesc = $this->getAllReportsOrderByDateDesc();
+
+        return response()->json([
+            'status'                => '200',
+            'reportByUserSender'    => $userReportsSend,
+            'reportByUserReported'  => $userReportsGroupByUserReported,
+            'reportByDateDesc'      => $reportsOrderByDateDesc
+        ]);
+
     }
 
     private function validateReported(){
@@ -151,8 +194,8 @@ class ReportController extends Controller
 
     private function setValidDataDependingIdAnnounceExistence(){
 
-        $idCategorie = Report_CategoriesRepository::getIdCategorieFromCategorieLabel($this->request->input('ReportCategorie'));
-        $validData['Report_Categories_idReportCategorie'] = $idCategorie[0]->idReportCategorie;
+        $idCategorie = ReportCategoriesRepository::getIdCategorieFromCategorieLabel($this->request->input('ReportCategorie'));
+        $validData['ReportCategories_idReportCategorie'] = $idCategorie[0]->idReportCategorie;
         $validData['Users_idUser'] = $this->request->input('idUser');
         $validData['report_date'] = date('Y-m-d h-i-s');
         $validData['report_subject'] = $this->request->input('report_subject');
@@ -167,5 +210,69 @@ class ReportController extends Controller
         }
 
         return $validData;
+    }
+
+    private function sendCreatedMail($mail){
+
+        $userSender = User::findorFail($this->request->input('idUser'));
+        $userReported = User::findorFail($this->request->input('idUserReported'));
+
+        $mail->send('biotourist@gmail.com','ReportCreatedToAdmin',[
+            'sender' => $userSender,'report' => $this->report,'UserReported' => $userReported
+        ]);
+
+        $mail->send($userSender->email,'ReportCreatedToSender',[
+            'sender' => $userSender,'report' => $this->report, 'UserReported' => $userReported
+        ]);
+    }
+
+    private function getAllReportsGroupBySender($reports){
+
+        foreach($reports as $report){
+            if(isset($report->Users_Reported)){
+                $report->userReported;
+            }
+            elseif(isset($report->Announces_idAnnounce)){
+                $report->announce->user;
+            }
+            $report->sender;
+            $userReportsSend[$report->Users_idUser][] = $report;
+        }
+
+        return $userReportsSend;
+    }
+
+    private function getAllReportsGroupByUserReported($reports){
+
+        foreach($reports as $report){
+            $report->sender;
+            if(isset($report->Users_Reported)){
+                $report->userReported;
+                $userReportsGroupByUserReported[$report->Users_Reported][] = $report;
+            }
+            elseif(isset($report->Announces_idAnnounce)){
+                $report->announce->user;
+                $userReportsGroupByUserReported[$report->announce->Users_idUser][] = $report;
+            }
+        }
+
+        return $userReportsGroupByUserReported;
+    }
+
+    private function getAllReportsOrderByDateDesc(){
+
+        $reports = Report::all()->sortByDesc('report_date');
+        foreach($reports as $report){
+            if(isset($report->Users_Reported)){
+                $report->userReported;
+            }
+            elseif(isset($report->Announces_idAnnounce)){
+                $report->announce->user;
+            }
+            $report->sender;
+            $arrayreports[] = $report;
+        }
+
+        return $arrayreports;
     }
 }

@@ -18,7 +18,7 @@ class CreateReportsTable extends Migration {
 			$table->dateTime('report_date');
 			$table->string('report_subject', 45);
 			$table->text('report_comment');
-			$table->integer('Report_Categories_idReportCategorie')->index('fk_Reports_Report_Categories1_idx');
+			$table->integer('ReportCategories_idReportCategorie')->index('fk_Reports_ReportCategories1_idx');
 			$table->integer('Users_Reported')->index('fk_Reports_UsersReported_idx')->nullable();
 			$table->integer('Users_idUser')->index('fk_Reports_Users1_idx');
 			$table->integer('Announces_idAnnounce')->index('fk_Reports_Announces1_idx')->nullable();

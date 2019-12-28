@@ -11,7 +11,7 @@ class ReportCategoriesTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('Report_Categories')->insert(array(
+        DB::table('ReportCategories')->insert(array(
             array('Report_Categorie_label' => 'Message'),
             array('Report_Categorie_label' => 'Announce'),
             array('Report_Categorie_label' => 'Commentary'),

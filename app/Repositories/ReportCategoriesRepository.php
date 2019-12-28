@@ -9,7 +9,7 @@ use JasonGuru\LaravelMakeRepository\Repository\BaseRepository;
 /**
  * Class Discount_CodeRepository.
  */
-class Report_CategoriesRepository extends BaseRepository
+class ReportCategoriesRepository extends BaseRepository
 {
     /**
      * @return string
@@ -22,7 +22,7 @@ class Report_CategoriesRepository extends BaseRepository
 
     public static function getIdCategorieFromCategorieLabel($categorie_label){
 
-        return DB::table('Report_Categories')
+        return DB::table('ReportCategories')
             ->where('Report_Categorie_label','=',$categorie_label)
             ->get();
     }

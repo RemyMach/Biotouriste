@@ -95,6 +95,10 @@ Route::post('message/showMessagesOfASeller','API\MessageController@showMessagesO
 
 Route::post('report/store','API\ReportController@store');
 
+Route::post('report/show/showAllMyReports','API\ReportController@showAllMyReports');
+
+Route::post('report/show/admin','API\ReportController@showAllReportsForAdmin');
+
 
 
 /*Route::get('/users', function () {

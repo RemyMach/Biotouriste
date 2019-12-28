@@ -24,10 +24,12 @@ class Report extends Model
      */
     protected $primaryKey = 'idReport';
 
+    protected $table = 'Reports';
+
     /**
      * @var array
      */
-    protected $fillable = ['report_date', 'report_subject','Report_Categories_idReportCategorie','Users_Reported','report_comment', 'Users_idUser', 'Announces_idAnnounce'];
+    protected $fillable = ['report_date', 'report_subject','ReportCategories_idReportCategorie','Users_Reported','report_comment', 'Users_idUser', 'Announces_idAnnounce'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -40,8 +42,24 @@ class Report extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user()
+    public function sender()
     {
         return $this->belongsTo('App\User', 'Users_idUser', 'idUser');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function userReported()
+    {
+        return $this->belongsTo('App\User', 'Users_Reported', 'idUser');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function categorie()
+    {
+        return $this->belongsTo('App\ReportCategories', 'ReportCategories_idReportCategorie', 'idReportCategorie');
     }
 }

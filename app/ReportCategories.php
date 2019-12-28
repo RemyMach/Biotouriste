@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Report_Categories extends Model
+class ReportCategories extends Model
 {
     public $timestamps = false;
     /**
@@ -13,6 +13,8 @@ class Report_Categories extends Model
      * @var string
      */
     protected $primaryKey = 'idReportCategorie';
+
+    protected $table = 'ReportCategories';
 
     /**
      * @var array

@@ -13,7 +13,7 @@ class ReportCategories extends Migration
      */
     public function up()
     {
-        Schema::create('Report_Categories', function (Blueprint $table) {
+        Schema::create('ReportCategories', function (Blueprint $table) {
             $table->integer('idReportCategorie', true);
             $table->string('Report_Categorie_label',50);
         });
@@ -26,6 +26,6 @@ class ReportCategories extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Report_Categories');
+        Schema::dropIfExists('ReportCategories');
     }
 }

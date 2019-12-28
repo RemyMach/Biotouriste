@@ -118,7 +118,12 @@ Route::post('message/show/User','MessageController@showMessagesOfATouristControl
 
 //Report
 
-Route::get('report/store','ReportController@store');
+Route::post('report/store','ReportController@store');
+
+Route::post('report/show/user','ReportController@showAllMyReports');
+
+Route::get('report/show/admin','ReportController@showAllReportsForAdmin');
+
 
 
 /********************************************** Route pour front test **********************************************/

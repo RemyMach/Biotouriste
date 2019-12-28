@@ -170,7 +170,6 @@ class MessageController extends Controller
         }
 
         return $this->setValidDataForTouristController();
-
     }
 
 
@@ -185,7 +184,6 @@ class MessageController extends Controller
         $this->validData['message_idSender'] = $this->request->input('idUser');
 
         return true;
-
     }
 
     private function checkValidityIdSender(){
