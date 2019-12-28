@@ -40,7 +40,6 @@ class AnnounceRepository extends BaseRepository
     public static function determineIfUserOwnTheAnnounce($idAnnounce, $idUser){
 
         return DB::table('announces')
-            ->select('*')
             ->where('idAnnounce','=',$idAnnounce)
             ->where('Users_idUser','=',$idUser)
             ->get();

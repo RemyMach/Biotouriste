@@ -91,6 +91,10 @@ Route::post('message/showMessagesOfATouristController','API\MessageController@sh
 
 Route::post('message/showMessagesOfASeller','API\MessageController@showMessagesOfASeller');
 
+//Report
+
+Route::post('report/store','API\ReportController@store');
+
 
 
 /*Route::get('/users', function () {

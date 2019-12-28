@@ -27,7 +27,7 @@ class Report extends Model
     /**
      * @var array
      */
-    protected $fillable = ['report_date', 'report_subject', 'report_comment', 'Users_idUser', 'Announces_idAnnounce'];
+    protected $fillable = ['report_date', 'report_subject','Report_Categories_idReportCategorie','Users_Reported','report_comment', 'Users_idUser', 'Announces_idAnnounce'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

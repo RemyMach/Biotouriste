@@ -215,7 +215,7 @@ class MessageController extends Controller
     private function validateIdSenderFormat(){
 
         $validator = Validator::make($this->request->all(), [
-            'idSender'           => 'required|integer|',
+            'idSender'           => 'required|integer',
         ]);
 
         return $this->resultValidator($validator);

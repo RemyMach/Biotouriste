@@ -110,11 +110,15 @@ Route::post('favori/destroy','FavoriController@destroy');
 
 //Messages
 
-Route::get('message/store','MessageController@store');
+Route::post('message/store','MessageController@store');
 
-Route::get('message/show/seller','MessageController@showMessagesOfASeller');
+Route::post('message/show/seller','MessageController@showMessagesOfASeller');
 
-Route::get('message/show/User','MessageController@showMessagesOfATouristController');
+Route::post('message/show/User','MessageController@showMessagesOfATouristController');
+
+//Report
+
+Route::get('report/store','ReportController@store');
 
 
 /********************************************** Route pour front test **********************************************/

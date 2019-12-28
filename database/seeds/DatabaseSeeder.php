@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             PaymentsTableSeeder::class,
             FavorisTableSeeder::class,
             MessagesTableSeeder::class,
+            ReportCategoriesTableSeeder::class,
         ]);
     }
 }
