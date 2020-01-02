@@ -21,6 +21,8 @@ class LoginController extends Controller
     {
         $validator = $this->validateLogin(request()->all());
 
+        return [$validator];
+
         if($validator->fails())
         {
             return response()->json([

@@ -54,6 +54,7 @@ class LoginController extends Controller
             ]);
         $response = json_decode($request->getBody()->getContents());
 
+        dd($response);
         if($response->status === "400")
         {
             return redirect('login');
