@@ -9,11 +9,13 @@ use GuzzleHttp\Client;
 
 class UserController extends Controller
 {
-    protected $user;
+    private $sessionUser;
 
     public function __construct()
     {
+        $this->middleware('SessionAuth')->only('show','updateProfile','UpdatePassword','destroy');
         $this->middleware('admin')->only('destroy','index');
+
     }
 
     /**
@@ -21,11 +23,10 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request, Client $client)
     {
-        $client = new Client();
-        $request = $client->get('http://localhost:8001/api/users');
-        $responses = json_decode($request->getBody()->getContents());
+        $query = $client->get('http://localhost:8001/api/users');
+        $responses = json_decode($query->getBody()->getContents());
 
         return view('test',compact('responses'));
 
@@ -55,23 +56,19 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
+     * @param string $api_token
      * @param Request $request
-     * @return \Illuminate\Http\Response
+     * @param Client $client
+     * @return mixed
      */
-    public function show(string $api_token,Request $request)
+    public function show(string $api_token,Request $request, Client $client)
     {
-        if(!$request->session()->has('user')){
-            return redirect('home');
-        }
-
-        $this->user = $request->session()->get('user');
-
+        $this->sessionUser = $request->session()->get('user');
 
         if($api_token !== $this->user->api_token){
             return redirect('home');
         }
 
-        $client = new Client();
         $query = $client->request('POST','http://localhost:8001/api/user/show', [
             'form_params' => [
                 "api_token"=>$api_token,"idUser"=>$this->user->idUser]
@@ -79,11 +76,8 @@ class UserController extends Controller
         $response = json_decode($query->getBody()->getContents());
 
         dd($response);
-        $user = $response->user;
 
-        //$user = User::findOrFail($user->id);
-
-        return view('users.profile',compact("user"));
+        return view('users.profile',['user' => $response->user]);
     }
 
     /**
@@ -104,57 +98,48 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function updateProfile(Request $request,User $user)
+    public function updateProfile(Request $request,User $user, Client $client)
     {
-        if(!$request->session()->has('user')){
-            return redirect('home');
-        }
 
-        $this->user = $request->session()->get('user');
+        $this->sessionUser = $request->session()->get('user');
 
         if($user->idUser != $this->user->idUser){
             return redirect('home');
         }
 
         $data = request()->all();
-        $data['api_token'] = $this->user->api_token;
-        $data['idUser'] = $this->user->idUser;
+        $data['api_token'] = $this->sessionUser->api_token;
+        $data['idUser'] = $this->sessionUser->idUser;
 
-        $client = new Client();
-        $request = $client->request('POST','http://localhost:8001/api/user/updateProfile', [
+        $query = $client->request('POST','http://localhost:8001/api/user/updateProfile', [
             'form_params' => $data
         ]);
-        $response = json_decode($request->getBody()->getContents());
+        $response = json_decode($query->getBody()->getContents());
 
         dd($response);
 
-        $this->user->update($response);
+        $this->sessionUser->update($response);
 
         return back()->with('success','The Profile has been updated');
     }
 
-    public function UpdatePassword(Request $request,User $user)
+    public function UpdatePassword(Request $request,User $user,Client $client)
     {
-        if(!$request->session()->has('user')){
-            return redirect('home');
-        }
+        $this->sessionUser = $request->session()->get('user');
 
-        $this->user = $request->session()->get('user');
-
-        if($user->idUser != $this->user->idUser){
+        if($user->idUser != $this->sessionUser->idUser){
             return redirect('home');
         }
 
         $data = request()->all();
-        $data['api_token'] = $this->user->api_token;
-        $data['idUser'] = $this->user->idUser;
+        $data['api_token'] = $this->sessionUser->api_token;
+        $data['idUser'] = $this->sessionUser->idUser;
 
-        $client = new Client();
-        $request = $client->request('POST','http://localhost:8001/api/user/updatePassword', [
+        $query = $client->request('POST','http://localhost:8001/api/user/updatePassword', [
             'form_params' => $data
         ]);
 
-        $response = json_decode($request->getBody()->getContents());
+        $response = json_decode($query->getBody()->getContents());
 
         if($response->status === "400")
         {
@@ -173,26 +158,21 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request,User $user)
+    public function destroy(Request $request,User $user, Client $client)
     {
-        if(!$request->session()->has('user')){
+        $this->sessionUser = $request->session()->get('user');
 
-            return redirect('home');
-        }
+        $data = request()->all();
+        $data['idUser'] = $this->sessionUser->idUser;
+        $data['api_token'] = $this->sessionUser->api_token;
 
-        $this->user = $request->session()->get('user');
-
-        $data['idUser'] = $this->user->idUser;
-        $data['api_token'] = $this->user->api_token;
-
-        $client = new Client();
-        $request = $client->request('POST','http://localhost:8001/api/user/destroy', [
+        $query = $client->request('POST','http://localhost:8001/api/user/destroy', [
             'form_params' => $data
         ]);
 
-        $response = json_decode($request->getBody()->getContents());
+        $response = json_decode($query->getBody()->getContents());
 
-        if($response->status)
+        if($response->status === "400")
         {
             return back()->with('fail','The request is not good');
         }

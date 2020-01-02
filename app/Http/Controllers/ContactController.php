@@ -3,28 +3,69 @@
 namespace App\Http\Controllers;
 
 use App\Contact;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
+
+    private $sessionUser;
+
+    public function __construct()
+    {
+        $this->middleware('SessionAuth')->only(
+            'storeForAnAuthentifiedUser'
+        );
+
+        $this->middleware('admin')->only(
+                    'index','destroy'
+        );
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function ContactsWithAssociedUsers(Client $client)
     {
-        return view('');
+        $data['idUser'] = config('api.api_admin_id');
+        $data['api_token'] = config('api.api_admin_token');
+
+        $query = $client->request('POST','http://localhost:8001/api/contact/ContactsWithAssociedUsers',
+            ['form_params' => $data]);
+
+        $response = json_decode($query->getBody()->getContents());
+
+        dd($response);
+
+        return view('testComment',["response" => $response]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        //
+        return view('testContact');
+    }
+
+    public function storeForAnAnonymous(Request $request, Client $client)
+    {
+        $data = request()->all();
+        $data['idUser'] = config('api.api_admin_id');
+        $data['api_token'] = config('api.api_admin_token');
+
+
+        $query = $client->request('POST','http://localhost:8001/api/contact/store',
+            ['form_params' => $data]);
+
+        $response = json_decode($query->getBody()->getContents());
+
+        dd($response);
+
+        return view('testContact',["response" => $response]);
     }
 
     /**
@@ -33,9 +74,39 @@ class ContactController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeForAnAuthentifiedUser(Request $request, Client $client)
     {
-        //
+        $this->sessionUser = $request->session()->get('user');
+
+        $data = request()->all();
+        $data['idUser']     = $this->sessionUser->idUser;
+        $data['api_token']  = $this->sessionUser->api_token;
+
+        $query = $client->request('POST','http://localhost:8001/api/contact/store',
+            ['form_params' => $data]);
+
+        $response = json_decode($query->getBody()->getContents());
+
+        dd($response);
+
+        return view('testContact',["response" => $response]);
+    }
+
+    public function ContactsOfAUser(Request $request, Client $client){
+
+        $data = request()->all();
+        $data['idUser'] = config('api.api_admin_id');
+        $data['api_token'] = config('api.api_admin_token');
+
+
+        $query = $client->request('POST','http://localhost:8001/api/contact/ContactsOfAUser',
+            ['form_params' => $data]);
+
+        $response = json_decode($query->getBody()->getContents());
+
+        dd($response);
+
+        return view('testContact',["response" => $response]);
     }
 
     /**
@@ -78,8 +149,21 @@ class ContactController extends Controller
      * @param  \App\Contact  $contact
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Contact $contact)
+    public function destroy(Request $request, Client $client)
     {
-        //
+        $this->sessionUser = $request->session()->get('user');
+
+        $data = request()->all();
+        $data['idUser']     = $this->sessionUser->idUser;
+        $data['api_token']  = $this->sessionUser->api_token;
+
+        $query = $client->request('POST','http://localhost:8001/api/contact/delete',
+            ['form_params' => $data]);
+
+        $response = json_decode($query->getBody()->getContents());
+
+        dd($response);
+
+        return view('testContact',["response" => $response]);
     }
 }

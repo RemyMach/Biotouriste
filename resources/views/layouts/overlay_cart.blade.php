@@ -1,4 +1,4 @@
-<div id="overlay_cart" class="overlay">
+<div id="overlay_cart" class="overlay overlay-bottom">
   <div class="col-md-9 offset-md-1 text-right">
     <button id="btn-quit" class="btn-quit" type="button" name="button" onclick="quitCart()"><i class="fas fa-times fa-2x"></i></button>
   </div>

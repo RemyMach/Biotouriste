@@ -3,7 +3,7 @@
     <div class="container text-center">
         <h2>Welcome</h2>
         <p>Send Check To Admin</p>
-        <form action="/check/store" method="post">
+        <form action="/check/storeForAController" method="post">
             @csrf
             <div>
                 <input type="date" name="check_date" placeholder="date de vérification">
@@ -28,7 +28,14 @@
             </div>
         </form>
         <div>
-            <a href="http://localhost:8000/comment/destroy/3"></a>
+            <a href="http://localhost:8000/check/destroy/3"></a>
         </div>
+
+        <a href="http://localhost:8000/check/status/1/decline">decline</a>
+        <form action="destroy" method="post">
+            @csrf
+            <input type="hidden" value="6" name="idCheckDelete">
+            <button type="submit">Supprimer</button>
+        </form>
     </div>
 </div>

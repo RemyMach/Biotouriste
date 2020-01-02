@@ -15,11 +15,13 @@ class CreateReportsTable extends Migration {
 		Schema::create('Reports', function(Blueprint $table)
 		{
 			$table->integer('idReport', true);
-			$table->dateTime('report_date')->nullable();
-			$table->string('report_subject', 45)->nullable();
-			$table->text('report_comment')->nullable();
+			$table->dateTime('report_date');
+			$table->string('report_subject', 45);
+			$table->text('report_comment');
+			$table->integer('ReportCategories_idReportCategorie')->index('fk_Reports_ReportCategories1_idx');
+			$table->integer('Users_Reported')->index('fk_Reports_UsersReported_idx')->nullable();
 			$table->integer('Users_idUser')->index('fk_Reports_Users1_idx');
-			$table->integer('Announces_idAnnounce')->index('fk_Reports_Announces1_idx');
+			$table->integer('Announces_idAnnounce')->index('fk_Reports_Announces1_idx')->nullable();
 		});
 	}
 

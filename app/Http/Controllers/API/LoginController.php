@@ -12,19 +12,13 @@ use Illuminate\Support\Str;
 
 class LoginController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('apiAdmin');
+    }
+
     public function login(ApiTokenController $apiTokenController)
     {
-        $requestParameters = $apiTokenController->verifyAdminCredentials();
-
-
-        if(!$requestParameters)
-        {
-            return response()->json([
-                'message'   => 'Your credentials are not valid',
-                'status'    => '400',
-            ]);
-        }
-
         $validator = $this->validateLogin(request()->all());
 
         if($validator->fails())
@@ -65,7 +59,7 @@ class LoginController extends Controller
 
     }
 
-    protected function validateLogin($data)
+    private function validateLogin($data)
     {
         $validator = Validator::make($data, [
             $this->username() => 'required|string',
@@ -74,12 +68,12 @@ class LoginController extends Controller
         return $validator;
     }
 
-    protected function username()
+    private function username()
     {
         return 'email';
     }
 
-    protected function tryToAuthenticateByEmail()
+    private function tryToAuthenticateByEmail()
     {
         $user = User::where('email',request('email'))->first();
 
@@ -89,7 +83,7 @@ class LoginController extends Controller
         return null;
     }
 
-    protected function verifyPassword($user,$requestPassword)
+    private function verifyPassword($user,$requestPassword)
     {
         $validateCredentials = Hash::check($requestPassword,$user->password);
 

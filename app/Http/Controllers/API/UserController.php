@@ -14,24 +14,21 @@ use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     */
 
-    protected $user;
+    public function __construct(){
+
+        $this->middleware('apiTokenAndIdUserExistAndMatch')->only(
+            'show','updateProfile','updatePassword','destroy'
+        );
+        $this->middleware('apiAdmin')->only(
+            'destroy','index'
+        );
+    }
+
+    private $user;
 
     public function index(ApiTokenController $apiTokenController)
     {
-        $requestParameters = $apiTokenController->verifyCredentials();
-
-        if(!$requestParameters)
-        {
-            return response()->json([
-                'message'   => 'Your credentials are not valid',
-                'status'    => '400',
-            ]);
-        }
         //Get Users
         $users = User::all();
 
@@ -45,20 +42,11 @@ class UserController extends Controller
         return response()->json($response, 200);*/
     }
 
-    public function show(Request $Showrequest, ApiTokenController $apiTokenController)
+    public function show()
     {
-        $requestParameters = $apiTokenController->verifyCredentials();
-
-        if(!$requestParameters)
-        {
-            return response()->json([
-                'message'   => 'Your credentials are not valid',
-                'status'    => '400',
-            ]);
-        }
-
-        $idUser = $requestParameters['idUser'];
-        $api_token = $requestParameters['api_token'];
+        $data = request()->all();
+        $idUser = $data['idUser'];
+        $api_token = $data['api_token'];
 
 
         $user =  User::findorFail($idUser);
@@ -69,18 +57,8 @@ class UserController extends Controller
             ]);
     }
 
-    public function updateProfile(ApiTokenController $apiTokenController)
+    public function updateProfile()
     {
-        $requestParameters = $apiTokenController->verifyCredentials();
-
-        if(!$requestParameters)
-        {
-            return response()->json([
-                'message'   => 'Your key is not valid',
-                'status'    => '400',
-            ]);
-        }
-
         $data = request()->all();
 
         $validator = Validator::make($data, [
@@ -94,7 +72,7 @@ class UserController extends Controller
 
         if($validator->fails())
         {
-            return $response = response()->json([
+            return response()->json([
                 'message'   => 'The request is not good',
                 'error'     => $validator->errors(),
                 'status'    => "400"
@@ -122,17 +100,8 @@ class UserController extends Controller
 
     }
 
-    public function updatePassword(ApiTokenController $apiTokenController)
+    public function updatePassword()
     {
-        $requestParameters = $apiTokenController->verifyCredentials();
-
-        if(!$requestParameters)
-        {
-            return response()->json([
-                'message'   => 'Your key is not valid',
-                'status'    => '400',
-            ]);
-        }
 
         $data = request()->all();
 
@@ -142,12 +111,11 @@ class UserController extends Controller
 
         if($validator->fails())
         {
-            $response = response()->json([
+            return response()->json([
                 'message'   => 'The request is not good',
                 'error'     => $validator->errors(),
                 'status'    => "400"
             ]);
-            return $response->getOriginalContent();
         }
 
         $validArray = $data['password'];
@@ -164,46 +132,35 @@ class UserController extends Controller
 
     }
 
-    public function destroy(ApiTokenController $apiTokenController)
+    public function destroy()
     {
-        $requestParameters = $apiTokenController->verifyCredentials();
+        $data = request()->all();
 
-        if(!$requestParameters)
-        {
+        if(!$this->verifyIfUserExist($data['idUserDelete'])){
             return response()->json([
-                'message'   => 'Your key is not valid',
+                'message'   => 'The User doesn\'t exists',
                 'status'    => '400',
             ]);
         }
 
-        $user = $this->verifyIfUserIsAdmin($requestParameters['idUser']);
-
-        if(!$user)
-        {
-            return response()->json([
-                'message' => 'Your request is not good',
-                'status' => '400',
-            ]);
-        }
-
-        $user->delete();
+        $this->user->delete();
 
         return response()->json([
             'message'   => 'The user has been deleted',
             'status'    => '200',
-            'idUser'    => $requestParameters['idUser']
+            'idUser'    => $this->user
         ]);
-
-        //si le user est administrateur il peut delete
     }
 
-    protected function verifyIfUserIsAdmin($idUser)
-    {
-        $user = User::findorFail($idUser);
-        if(!preg_match('#admin#i',$user->status->status_user_label))
-        {
+    private function verifyIfUserExist($idUserDelete){
+
+
+        $this->user = User::findOrFail($idUserDelete);
+
+        if(!$this->user){
             return false;
         }
-        return $user;
+
+        return true;
     }
 }

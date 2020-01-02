@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Contact extends Model
 {
+    public $timestamps = false;
     /**
      * The primary key for the model.
      * 
@@ -24,7 +25,7 @@ class Contact extends Model
     /**
      * @var array
      */
-    protected $fillable = ['contact_subject', 'contact_content', 'contact_date', 'Users_idUser'];
+    protected $fillable = ['contact_subject', 'contact_content', 'contact_date', 'Users_idUser','contact_email'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

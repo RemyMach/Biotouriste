@@ -14,7 +14,7 @@ class CreateFavorisTable extends Migration {
 	{
 		Schema::create('Favoris', function(Blueprint $table)
 		{
-			$table->integer('idFavoris', true);
+			$table->integer('idFavori', true);
 			$table->integer('Users_idUser')->index('fk_Favoris_Users1_idx');
 			$table->integer('Announces_idAnnounce')->index('fk_Favoris_Announces1_idx');
 		});

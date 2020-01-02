@@ -16,7 +16,6 @@ Route::get('/', function () {
 });
 
 //Auth::routes();
-
 Route::get('home', 'HomeController@index')->name('home');
 
 Route::get('users','UserController@index')->name('users');
@@ -49,7 +48,7 @@ Route::get('admin/user/{user}','UserController@destroy');
 
 //comment
 
-Route::get('comment','CommentController@create');
+Route::get('comment','CommentController@create')->name('comment');;
 
 Route::post('comment/store','CommentController@store');
 
@@ -63,16 +62,72 @@ Route::get('comment/show','CommentController@showYourPostedComments');
 
 Route::get('check','CheckController@create');
 
-Route::post('check/store','CheckController@store');
+Route::get('check/status/{check}/{status}','CheckController@updateStatus');
+
+Route::post('check/storeForAnAdmin','CheckController@storeForAnAdmin');
+
+Route::post('check/storeForAController','CheckController@storeForAController');
+
+Route::post('check/showChecksOfAController','CheckController@showChecksOfAController');
+
+Route::post('check/controllerSendACompleteCheck','CheckController@controllerSendACompleteCheck');
+
+Route::post('check/destroy','CheckController@destroy');
 
 Route::get('myMap','AnnounceController@printMap');
 
-/*Route::post''*/
+//Contact
+
+Route::get('contact','ContactController@create');
+
+Route::get('contact/index','ContactController@ContactsWithAssociedUsers');
+
+Route::post('contact/storeForAnAnonymous','ContactController@storeForAnAnonymous');
+
+Route::post('contact/storeForAnAuthentifiedUser','ContactController@storeForAnAnonymous');
+
+Route::post('contact/destroy','ContactController@destroy');
+
+Route::post('contact/user','ContactController@ContactsOfAUser');
+
+//Discount_code
+
+Route::get('discountCode','Discount_CodeController@store');
+
+Route::post('discountCode/updateStatus','Discount_CodeController@updateStatus');
+
+Route::post('discountCode/discountCodeValid','Discount_CodeController@checkDiscountCodeIsValid');
+
+Route::post('discountCode/show','Discount_CodeController@showDiscountCodeOfAUser');
+
+//Favoris
+
+Route::post('favori/show','FavoriController@showFavorisOfAUser');
+
+Route::post('favori/store','FavoriController@store');
+
+Route::post('favori/destroy','FavoriController@destroy');
+
+//Messages
+
+Route::post('message/store','MessageController@store');
+
+Route::post('message/show/seller','MessageController@showMessagesOfASeller');
+
+Route::post('message/show/User','MessageController@showMessagesOfATouristController');
+
+//Report
+
+Route::post('report/store','ReportController@store');
+
+Route::post('report/show/user','ReportController@showAllMyReports');
+
+Route::get('report/show/admin','ReportController@showAllReportsForAdmin');
+
 
 
 /********************************************** Route pour front test **********************************************/
 
-Route::get('announces','AnnounceController@index');
 
 Route::get('messages','MessageController@index');
 
@@ -80,7 +135,14 @@ Route::get('aide',function(){
     return view('');
 });
 
-Route::get('contact','ContactController@index');
+
+/********************************************** Fin Route pour front test **********************************************/
 
 
-/********************************************** Route pour front test **********************************************/
+/********************************************** Debut Routes Announces **********************************************/
+
+Route::get('announces','AnnounceController@index');
+
+Route::post('filterByCategorie','AnnounceController@filterByCategorie');
+
+/********************************************** Fin Routes Announces **********************************************/

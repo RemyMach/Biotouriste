@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\API\ApiTokenController;
+use App\Http\Controllers\API\NoApiClass\UsefullController;
 use App\Http\Resources\User as UserResource;
 use App\User;
 use Illuminate\Http\Request;
@@ -14,21 +15,18 @@ use Illuminate\Support\Str;
 class RegisterController extends Controller
 {
 
-    public function store(Request $request, ApiTokenController $apiTokenController)
+    private $request;
+
+    public function __construct()
     {
-        $requestParameters = $apiTokenController->verifyAdminCredentials();
+        $this->middleware('apiAdmin');
+    }
 
-        if(!$requestParameters)
-        {
-            return response()->json([
-                'message'   => 'Your credentials are not valid',
-                'status'    => '400',
-            ]);
-        }
+    public function store(Request $request, UsefullController $usefullController)
+    {
+        $this->request = $request;
 
-        $data = request()->all();
-
-        $validator = Validator::make($data, [
+        $validator = Validator::make($this->request->all(), [
             'user_name' => ['required', 'string', 'max:45'],
             'user_surname' => ['required', 'string', 'max:45'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -36,6 +34,7 @@ class RegisterController extends Controller
             'user_phone' => ['unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'user_img' => ['string'],
+            'status_user' => 'required|integer'
         ]);
 
         if($validator->fails())
@@ -47,17 +46,34 @@ class RegisterController extends Controller
             ]);
         }
 
-        $data['Status_User_idStatus_User'] = 1;
-        $data['password'] = Hash::make($data['password']);
-        $data['api_token'] = Str::random(80);
-        unset($data['password_confirmation']);
-        unset($data['_token']);
-        $user = User::create($data);
+        $validData = $this->setValidDateDependingOnTheUserStatus($usefullController);
+
+        $validData['password'] = Hash::make($validData['password']);
+        $validData['api_token'] = Str::random(80);
+        $user = User::create($validData);
 
         return response()->json([
-            'message'   => 'information has been updated',
+            'message'   => 'the User has been Register',
             'status'    => '200',
             'user'      => $user
         ]);
+    }
+
+    private function setValidDateDependingOnTheUserStatus($usefullController){
+
+        $validData = $usefullController->keepKeysThatWeNeed($this->request->all(),
+            'user_name','user_surname','email','user_postal_code','user_phone','password','user_img'
+            );
+
+        if($this->request->input('status') == 1){
+
+            $validData['Status_User_idStatus_User'] = 3;
+        }else{
+
+            $validData['Status_User_idStatus_User'] = 1;
+        }
+
+        return $validData;
+
     }
 }

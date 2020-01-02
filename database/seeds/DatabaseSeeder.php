@@ -20,6 +20,11 @@ class DatabaseSeeder extends Seeder
             AnnouncesTableSeeder::class,
             CommentsTableSeeder::class,
             SellersTableSeeder::class,
+            PaymentsTableSeeder::class,
+            FavorisTableSeeder::class,
+            MessagesTableSeeder::class,
+            ReportCategoriesTableSeeder::class,
+            ReportsTableSeeder::class
         ]);
     }
 }

@@ -5,87 +5,57 @@ namespace App\Http\Controllers\API;
 use App\Check;
 use App\Http\Controllers\API\NoApiClass\UsefullController;
 use App\Http\Controllers\Controller;
+use App\Seller;
+use App\User;
+use DateTime;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Middleware\API;
 
 class CheckController extends Controller
 {
-    public function showChecksOfAController(ApiTokenController $apiTokenController)
+    private $user;
+    private $check;
+    private $validData;
+    private $requestData;
+    private $request;
+
+    public function __construct()
     {
-        $requestParameters = $apiTokenController->verifyCredentials();
+        $this->middleware('apiTokenAndIdUserExistAndMatch')->only(
+            'UpdateStatusVerification'
+        );
 
-        if(!$requestParameters)
-        {
-            return response()->json([
-                'message'   => 'Your credentials are not valid',
-                'status'    => '400',
-            ]);
-        }
+        $this->middleware('apiController')->only(
+            'store','showChecksOfAController','controllerSendACompleteCheck'
+        );
 
-        $UserChecks = $this->collectChecks($requestParameters['idUser']);
-
-        if(!$UserChecks){
-            return response()->json([
-                'message'   => 'Vous n\'avez fait aucun check et vous n\'en avez pas en attente',
-                'status'    => '200',
-            ]);
-        }
-
-        $arrayChecks = $this->statusChecks($UserChecks);
-
-        return response()->json([
-            'checks_to_do'  => $arrayChecks['checkNotVerify'],
-            'checks_done'     => $arrayChecks['checkVerify'],
-            'status'    => '200'
-        ]);
+        $this->middleware('apiAdmin')->only(
+            'destroy'
+        );
     }
 
-    public function store(ApiTokenController $apiTokenController, UsefullController $usefullController)
+    public function store()
     {
-        $requestParameters = $apiTokenController->verifyCredentials();
-
-        if(!$requestParameters)
-        {
-            return response()->json([
-                'message'   => 'Your credentials are not valid',
-                'status'    => '400',
-            ]);
-        }
-
-        if($this->verifyUserStatus($requestParameters['idUser']))
-        {
-            return response()->json([
-                'message'   => 'Your idUser are not valid',
-                'status'    => '400',
-            ]);
-        }
-
         $data = request()->all();
 
-        if($this->verificationIfItsASeller($data['idSeller']))
-        {
+        if(!$this->verificationIfCheckIsForASeller($data['idSeller'])){
             return response()->json([
-                'message'   => 'Your idSeller are not valid',
+                'message'   => 'Your Check doesn\'t correspond to a seller',
                 'status'    => '400',
             ]);
         }
 
-        $validator = $this->validateCheck($data);
-
-        if($validator->original['status'] == '400')
-        {
-            return $validator;
-        }
-
-        $validData = $usefullController->keepKeysThatWeNeed($data,[
-            'check_date','check_comment','check_customer_service',
-            'check_state_place','check_quality_product','check_bio_status',
-        ]);
-        //controller
-        $validData['Users_idUser'] = $data['idUser'];
+        //date expiration
+        $this->validData['check_prevision_date'] = $this->AddSevenDaysToNowInDateTime();
         //vendeur
-        $validData['Sellers_idSeller'] = $data['idSeller'];
+        $this->validData['Sellers_idSeller'] = $data['idSeller'];
 
-        $check = Check::create($validData);
+        $this->setValidDataAccordinglyToUserStatus($data);
+
+
+        $check = Check::create($this->validData);
+
 
         return response()->json([
             'message'   => 'Your Check has been register',
@@ -95,90 +65,146 @@ class CheckController extends Controller
 
     }
 
-    /**The Controller decline the offer of the Admin**/
-    public function UpdateStatusVerification(ApiTokenController $apiTokenController)
+    public function showChecksOfAController()
     {
-        $requestParameters = $apiTokenController->verifyCredentials();
+        $data = request()->all();
 
-        if(!$requestParameters)
-        {
+        if(!$this->collectChecks($data['idUser'])){
             return response()->json([
-                'message'   => 'Your credentials are not valid',
+                'message'   => 'Vous n\'avez fait aucun check et vous n\'en avez pas en attente',
                 'status'    => '400',
             ]);
         }
 
-        $data = request()->all();
+        $arrayChecks = $this->statusChecks();
 
-        $check = $this->verifyOwnerCheck($data['idUser'],$data['idCheck']);
+        //utile d'avoir les historique des check
+        return response()->json([
+            'checks_to_do'  => $arrayChecks['checkNotVerify'],
+            'checks_done'     => $arrayChecks['checkVerify'],
+            'status'    => '200'
+        ]);
+    }
 
-        if(!$check)
-        {
+    public function controllerSendACompleteCheck(UsefullController $usefullController)
+    {
+        $this->requestData = request()->all();
+
+        if(!$this->verifyOwnerCheck()){
             return response()->json([
                 'message'   => 'This Check isn\'t for this User',
                 'status'    => '400',
             ]);
         }
 
-        $newStatus = $this->checkNewStatus(request('status'));
+        $validator = $this->validateCheck();
 
-        if(!$newStatus)
-        {
-            return response()->json([
-                'message'   => 'The status is not correct',
-                'status'    => '400',
-            ]);
+        if($validator->original['status'] == '400') {
+            return $validator;
         }
 
-        $check->update(['check_status_verification' => $newStatus]);
+        $validData = $usefullController->keepKeysThatWeNeed($this->requestData,[
+            'check_date','check_comment','check_customer_service',
+            'check_state_place','check_quality_product','check_bio_status',
+        ]);
+
+        //status
+        $validData['check_status_verification'] = 'done';
+
+        $check = Check::update($validData);
 
         return response()->json([
             'message'   => 'Your Check has been update',
             'status'    => '200',
             'check'     => $check,
         ]);
+
     }
 
-    private function verifyUserStatus($idUser)
+    /**The Controller decline the offer of the Admin**/
+    public function UpdateStatusVerification()
     {
-        $user = User::findOrFail($idUser);
+        $this->requestData = request()->all();
 
-        if(preg_match('#admin#i',$user->status['status_user_label']))
-        {
-            return $user;
+        if(!$this->verifyOwnerCheck()){
+            return response()->json([
+                'message'   => 'This Check isn\'t for this User',
+                'status'    => '400',
+            ]);
         }
-        if(preg_match('#controller#i',$user->status['status_user_label']))
-        {
-            return $user;
+
+        if(!$this->checkNewStatus()){
+            return response()->json([
+                'message'   => 'The status is not correct',
+                'status'    => '400',
+            ]);
         }
-        return false;
+
+        $this->check->update(['check_status_verification' => $this->requestData['status']]);
+
+        return response()->json([
+            'message'   => 'Your Check has been update',
+            'status'    => '200',
+            'check'     => $this->check,
+        ]);
+    }
+
+    public function destroy(Request $request)
+    {
+        $this->request = $request;
+
+        if(!$this->verifyIfCheckExist()){
+            return response()->json([
+                'message'   => 'The Check doesn\'t exists',
+                'status'    => '400',
+            ]);
+        }
+
+        $this->check->delete();
+
+        return response()->json([
+            'message'   => 'The check has been deleted',
+            'status'    => '200',
+            'idUser'    => $this->check
+        ]);
+    }
+
+    private function verifyIfCheckExist(){
+
+        $this->check = Check::findOrFail($this->request->input('idCheckDelete'));
+        if(!$this->check){
+
+            return false;
+        }
+
+        return true;
     }
 
     private function collectChecks($idUser)
     {
-        $user = User::findOrFail($idUser);
+        $this->user = User::findOrFail($idUser);
 
-        $checks = $user->checks;
+        $checks = $this->user->checks;
 
-        if(!$checks)
-        {
+        if(!$checks){
             return false;
         }
 
-        return $checks;
+        return true;
     }
 
-    private function statusChecks($checks)
+    private function statusChecks()
     {
         $checkNotVerify = [];
         $checkVerify = [];
-        foreach ($checks as $check)
-        {
-            if($check->check_status_verification == 'to do')
-            {
+        foreach ($this->user->checks as $check){
+
+            if($check->check_status_verification == 'done'){
+
                 $checkVerify[] = $check;
             }
             else{
+
                 $checkNotVerify[] = $check;
             }
         }
@@ -189,19 +215,18 @@ class CheckController extends Controller
         ];
     }
 
-    private function validateCheck($data)
+    private function validateCheck()
     {
-        $validator = Validator::make($data, [
-            'check_date'                => 'required',
-            'check_comment'             => 'required|text',
-            'check_customer_service'    => 'required|decimal|max:5',
-            'check_state_place'         => 'required|decimal|max:5',
-            'check_quality_product'     => 'required|decimal|max:5',
-            'check_bio_status'          => 'required|string',
+        $validator = Validator::make($this->requestData, [
+            'check_date'                => 'required|date',
+            'check_comment'             => 'required|string',
+            'check_customer_service'    => 'required|integer|max:5',
+            'check_state_place'         => 'required|integer|max:5',
+            'check_quality_product'     => 'required|integer|max:5',
+            'check_bio_status'          => 'required',
         ]);
 
-        if($validator->fails())
-        {
+        if($validator->fails()) {
             return response()->json([
                 'message'   => 'The request is not good',
                 'error'     => $validator->errors(),
@@ -214,9 +239,9 @@ class CheckController extends Controller
         ]);
     }
 
-    private function verificationIfItsASeller($idSeller)
+    private function verificationIfCheckIsForASeller()
     {
-        $seller = Seller::findOrFail($idSeller);
+        $seller = Seller::findOrFail($this->requestData['idSeller']);
 
         if(!$seller){
             return false;
@@ -225,32 +250,62 @@ class CheckController extends Controller
         return true;
     }
 
-    private function verifyOwnerCheck($idUser,$idCheck)
+    private function verifyOwnerCheck()
     {
-        $check = Check::findOrFail($idCheck);
+        $this->check = Check::findOrFail($this->requestData['idCheck']);
 
-        if(!$check)
+        if(!$this->check)
         {
             return false;
         }
 
-        if($idUser == $check->user->id)
+        if($this->requestData['idUser'] != $this->check->user->id)
         {
             return false;
         }
 
-        return $check;
+        return true;
     }
 
-    private function checkNewStatus($status)
+    private function checkNewStatus()
     {
-        if(isset($status))
+        if(isset($this->requestData['status']))
         {
-            if($status == 'decline' || $status == 'accept'){
-                return $status;
-            }
+            $this->validNewStatusValue();
         }
-
         return false;
+    }
+
+    private function validNewStatusValue(){
+
+        if($this->requestData['status'] == 'decline' || $this->requestData['status'] == 'accept'){
+            return true;
+        }
+        return false;
+    }
+
+    private function AddSevenDaysToNowInDateTime(){
+
+        $currentDate = new DateTime(date("Y-m-d"));
+        $currentDate->modify('+7 day');
+
+        return $currentDate->format('Y-m-d');
+    }
+
+    private function setValidDataAccordinglyToUserStatus($data)
+    {
+        $user = User::findOrFail($data['idUser']);
+
+        if(preg_match('#admin#i',$user->status['status_user_label'])){
+            //controller car c'est l'admin dans un formulaire qui indique qui fera le control
+            $this->validData['Users_idUser'] = $data['idController'];
+            //status
+            $this->validData['check_status_verification'] = 'waiting';
+        }else{
+
+            $this->validData['Users_idUser'] = $data['idUser'];
+            //status
+            $this->validData['check_status_verification'] = 'In progress';
+        }
     }
 }
