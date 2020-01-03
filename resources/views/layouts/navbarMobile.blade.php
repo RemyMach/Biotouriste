@@ -1,13 +1,15 @@
-<div id="navbar-mobile" class="navbar">
-  <div class="row">
-    <div class="col-sm-4 text-left">
-      <button type="button" name="button"><i class="fas fa-bars"></i></button>
+<div id="navbar-mobile" class="navigation">
+  <nav>
+    <div class="row" style="margin: 0;">
+      <div class="col-4 text-center menu">
+        <button type="button" name="button" onclick=""><i class="fas fa-bars"></i></i></button>
+      </div>
+      <div class="col-4 text-center menu">
+        <h1>Healthy's</h1>
+      </div>
+      <div class="col-4 text-center menu">
+        <button type="button" name="button" onclick="openCart()"><i class="fas fa-shopping-bag"></i></button>
+      </div>
     </div>
-    <div class="col-sm-4 text-center">
-      <p>HEALTHY'S</p>
-    </div>
-    <div class="col-sm-4 text-right">
-      <button id="btn-cart" class="btn-cart sp-30" type="button" name="btn-cart" onclick="openCart()"><i class="fas fa-shopping-cart"></i></button>
-    </div>
-  </div>
+  </nav>
 </div>

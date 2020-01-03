@@ -1,31 +1,42 @@
-<footer>
-  <div class="footer-container">
-    <div class="row">
-      <div class="col-md-12 text-center">
-        <a href="#"><button class="btn-next green f-white" type="button" name="button"><i class="fab fa-twitter"></i></button></a>
-        <a href="#"><button class="btn-next green f-white" type="button" name="button"><i class="fab fa-facebook-f"></i></button></a>
-        <a href="#"><button class="btn-next green f-white" type="button" name="button"><i class="fab fa-instagram"></i></button></a>
+<div class="footer">
+  <div class="footer-title text-center">
+    <h1>Healthy's</h1>
+  </div>
+  <div class="row" style="margin:0;">
+    <div class="col-md-4 offset-md-4 text-center col-sm-12">
+      <div class="newsletter">
+        <h3>Subscribe to our newsletter</h3>
+        <h2>to be part of the family</h2>
+        <form class="" action="index.html" method="post">
+          <input class="input col-md-12" type="text" name="" value="">
+          <input class="btn-send col-md-4" type="submit" name="" value="Submit">
+        </form>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-auto">
+  </div>
+  <div class="footer-social">
+    <div class="row" style="margin:0;">
+      <div class="col-md-4 offset-md-4 text-center col-sm-12">
         <ul>
-          <li class="li-title"><a href="#">The brand</a></li>
-          <li><a href="#">Who we are ?</a></li>
-          <li><a href="#">Our mission</a></li>
-        </ul>
-      </div>
-      <div class="col-md-auto">
-        <ul>
-          <li class="li-title"><a href="#">Help</a></li>
-          <li><a href="#">FAQ</a></li>
-          <li><a href="#">Contact us</a></li>
-          <li><a href="#">Conditions</a></li>
+          <li><i class="fab fa-twitter"></i></li>
+          <li><i class="fab fa-instagram"></i></li>
+          <li><i class="fab fa-facebook"></i></li>
         </ul>
       </div>
     </div>
   </div>
-</footer>
+  <div class="footer-link">
+    <div class="col-md-12 text-center col-sm-12">
+      <div class="footer-line"></div>
+      <ul>
+        <li><a href="#">Announces</a></li>
+        <li><a href="#">Products</a></li>
+        <li><a href="#">FAQ</a></li>
+      </ul>
+      <p>© HEALTHY'S | Realization Agency | Design Studio Rive Droite</p>
+    </div>
+  </div>
+</div>
 <script src="{{ URL::asset('/js/script.js') }}" charset="utf-8"></script>
 <script src="https://kit.fontawesome.com/d9a2e4a111.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
