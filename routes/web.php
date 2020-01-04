@@ -126,6 +126,11 @@ Route::post('report/show/user','ReportController@showAllMyReports');
 
 Route::get('report/show/admin','ReportController@showAllReportsForAdmin');
 
+//User_status_Correspondence
+
+Route::post('user/change','User_Status_CorrespondenceController@changeDefaultUserStatus');
+Route::get('User_status/change','User_Status_CorrespondenceController@testChangeDefaultUserStatus');
+
 
 
 /********************************************** Route pour front test **********************************************/

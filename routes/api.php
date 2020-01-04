@@ -100,6 +100,10 @@ Route::post('report/show/showAllMyReports','API\ReportController@showAllMyReport
 Route::post('report/show/admin','API\ReportController@showAllReportsForAdmin');
 
 
+//User_Status_CorrespondenceController
+
+Route::post('user/change','API\User_Status_CorrespondenceController@ChangeDefaultUserStatus');
+
 
 /*Route::get('/users', function () {
     return UserResource::collection(User::paginate(2));

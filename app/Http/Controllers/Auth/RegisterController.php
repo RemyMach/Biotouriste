@@ -104,6 +104,13 @@ class RegisterController extends Controller
 
         dd($response);
 
+        session([
+            'user'          => $response->user,
+            'allStatus'     => $response->user_current_status,
+            'active_status' => $response->user_status,
+        ]);
+
+        dd($request->session()->get('active_status'));
         return $this->registered($request, $user)
             ?: redirect($this->redirectTo);
     }

@@ -9,6 +9,8 @@ class ApiTokenController extends Controller
 {
 
     private $user;
+    private $currentStatus;
+    private $allStatus;
 
     public function verifyRoleCredentials($role)
     {
@@ -18,6 +20,17 @@ class ApiTokenController extends Controller
         {
             return false;
         }
+
+        $this->allStatus = User_status_correspondenceController::getAllStatusFromAnUser($this->user->idUser);
+        if($this->allStatus->original['status'] == '400'){
+
+            return false;
+        }
+
+        $this->currentStatus = User_status_correspondenceController::getCurrentStatus(
+            $this->user->idUser, $this->allStatus->original['allStatus']
+        );
+
 
         $method = 'verifyApiTokenRequestCorrespondTo' . $role;
 
@@ -83,7 +96,7 @@ class ApiTokenController extends Controller
 
     private function verifyApiTokenRequestCorrespondToAdmin()
     {
-        if(!preg_match('#admin#i',$this->user->status['status_user_label'])){
+        if(!preg_match('#admin#i',$this->currentStatus->status_user_label)){
             return false;
         }
 
@@ -92,7 +105,7 @@ class ApiTokenController extends Controller
 
     private function verifyApiTokenRequestCorrespondToController()
     {
-        if(!preg_match('#controller#i',$this->user->status['status_user_label']) && !preg_match('#admin#i',$this->user->status['status_user_label'])){
+        if(!preg_match('#(admin|controller)#i',$this->currentStatus->status_user_label)){
             return false;
         }
 
@@ -101,7 +114,7 @@ class ApiTokenController extends Controller
 
     private function verifyApiTokenRequestCorrespondToSeller()
     {
-        if(!preg_match('#seller#i',$this->user->status['status_user_label'])){
+        if(!preg_match('#seller#i',$this->currentStatus->status_user_label)){
             return false;
         }
 
@@ -110,7 +123,7 @@ class ApiTokenController extends Controller
 
     private function verifyApiTokenRequestCorrespondToTourist()
     {
-        if(!preg_match('#tourist#i',$this->user->status['status_user_label'])){
+        if(!preg_match('#tourist#i',$this->currentStatus->status_user_label)){
             return false;
         }
 
@@ -119,7 +132,7 @@ class ApiTokenController extends Controller
 
     private function verifyApiTokenRequestCorrespondToTouristController()
     {
-        if(!preg_match('#(tourist|controller)#i',$this->user->status['status_user_label'])){
+        if(!preg_match('#(tourist|controller)#i',$this->currentStatus->status_user_label)){
             return false;
         }
 

@@ -3,18 +3,48 @@
 namespace App\Http\Controllers;
 
 use App\Type_Measure;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class User_Status_CorrespondenceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+
+    public function changeDefaultUserStatus(Request $request, Client $client){
+
+        $this->sessionUser = $request->session()->get('user');
+
+        $data = request()->all();
+        $data['idUser'] = $this->sessionUser->idUser;
+        $data['api_token'] = $this->sessionUser->api_token;
+
+        $query = $client->request('POST','http://localhost:8001/api/user/login', [
+            'form_params' => $data
+        ]);
+        $response = json_decode($query->getBody()->getContents());
+
+        dd($response);
+        if($response->status === "400")
+        {
+            return redirect('login');
+        }
+    }
+
+    public function testChangeDefaultUserStatus(Request $request, Client $client){
+
+        $data['idUser'] = 4;
+        $data['api_token'] = 'my0t5u6lbJPVIHaXC0GSN9Wg84bJ7GGNnFOj5uVs5QyX7nkAW85VUxakMyYLFDt1sGyuNDaNZdk6kj13';
+        $data['default_status'] = 'tourist';
+
+        $query = $client->request('POST','http://localhost:8001/api/user/change', [
+            'form_params' => $data
+        ]);
+        $response = json_decode($query->getBody()->getContents());
+
+        dd($response);
+        if($response->status === "400")
+        {
+            return redirect('login');
+        }
     }
 
     /**

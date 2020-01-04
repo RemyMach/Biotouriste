@@ -21,7 +21,7 @@ class RegisterController extends Controller
 
     public function __construct()
     {
-        //$this->middleware('apiAdmin');
+        $this->middleware('apiAdmin');
     }
 
     public function store(Request $request, UsefullController $usefullController, User_Status_CorrespondenceController $user_Status_CorrespondenceController)
@@ -42,11 +42,20 @@ class RegisterController extends Controller
         $user_Status_CorrespondenceController->createUserStatusCorrespondence($this->status_User_idStatus_User, $user);
         $this->createSellerIfUserHasSellerStatus($validData, $user);
 
+        $checkStatus = User_status_correspondenceController::getAllStatusFromAnUser($user->idUser);
+        if($checkStatus->original['status'] == '400'){
+
+            return $checkStatus;
+        }
+
+        $current_status = User_status_correspondenceController::getCurrentStatus($user->idUser, $checkStatus->original['allStatus']);
+
         return response()->json([
             'message'   => 'the User has been Register',
             'status'    => '200',
-            'user'      => $user,
-            'seller'    => $this->seller
+            'user'                  => $user,
+            'user_current_status'   => $current_status,
+            'user_status'           => $checkStatus->original['allStatus']
         ]);
     }
 
