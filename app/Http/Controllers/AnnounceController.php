@@ -102,6 +102,6 @@ class AnnounceController extends Controller
     }
 
     public function filterByCity(Request $request){
-
+        $test = "";
     }
 }

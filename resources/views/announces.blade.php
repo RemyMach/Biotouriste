@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col-md-12">
             <input type="text" name="cityZone" id="cityZone" value="paris">
-                <button type="submit" onclick="findByCity()">Find</button>
+                <button type="submit" onclick="findCityData()">Find</button>
             </div>
             <div class="col-md-12 navbar navbar-expand-lg">
                   <ul class="navbar-nav inline categories">
@@ -60,27 +60,27 @@ iconSize: [60, 60]
 
 {{-- Announces --}}
 <script>
-function findByCity(){
-    var cityData = findCityData();
+function findByCity(cityData){
     console.log(cityData);
-        // $.ajax({
-        //    url: 'filterByCity',
-        //    type: 'POST',
-        //    data: cityData,
-        //    success: function(result){
-        //        console.log(result);
-        //    }
-        // });
-
+    $.ajax({
+        url: '/filterByCity',
+        type: 'POST',
+        data: {cityData: cityData[0],  _token: '{{csrf_token()}}'},
+        dataType: "json",
+        success: function(result){
+           console.log(result);
+       }
+    });
 }
 
 function findCityData(){
-    return $.ajax({
+    $.ajax({
         url: 'http://api.geonames.org/searchJSON?&',
         type: 'GET',
         data: {q : $('#cityZone').val(), maxRows: 1, username: 'biotouriste'},
+        dataType: "json",
         success: function (result){
-            console.log(result.geonames);
+            findByCity(result.geonames);
         }
     });
 }
