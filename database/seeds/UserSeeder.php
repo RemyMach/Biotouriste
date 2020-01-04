@@ -22,7 +22,6 @@ class UserSeeder extends Seeder
                 'user_phone' => '0276373828',
                 'email' => 'tourist@tourist.fr',
                 'password' => Hash::make('azertyuiop'),
-                'Status_User_idStatus_User' => 1,
                 'api_token' => Str::random(80),
             ),
             array(
@@ -33,7 +32,6 @@ class UserSeeder extends Seeder
                 'user_phone' => '0276373829',
                 'email' => 'controller@controller.fr',
                 'password' => Hash::make('azertyuiop'),
-                'Status_User_idStatus_User' => 2,
                 'api_token' => Str::random(80),
             ),
             array(
@@ -44,7 +42,6 @@ class UserSeeder extends Seeder
                 'user_phone' => '0276373869',
                 'email' => 'seller@seller.fr',
                 'password' => Hash::make('azertyuiop'),
-                'Status_User_idStatus_User' => 3,
                 'api_token' => Str::random(80),
             ),
             array(
@@ -55,7 +52,6 @@ class UserSeeder extends Seeder
                 'user_phone' => '0276573829',
                 'email' => 'touristSeller@touristSeller.fr',
                 'password' => Hash::make('azertyuiop'),
-                'Status_User_idStatus_User' => 4,
                 'api_token' => Str::random(80),
             ),
             array(
@@ -66,7 +62,6 @@ class UserSeeder extends Seeder
                 'user_phone' => '0246373829',
                 'email' => 'admin@admin.fr',
                 'password' => Hash::make('azertyuiop'),
-                'Status_User_idStatus_User' => 5,
                 'api_token' => Str::random(80),
             ),
 

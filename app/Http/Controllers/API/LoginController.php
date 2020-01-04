@@ -14,14 +14,13 @@ class LoginController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('apiAdmin');
+        //$this->middleware('apiAdmin');
     }
 
     public function login(ApiTokenController $apiTokenController)
     {
         $validator = $this->validateLogin(request()->all());
 
-        return [$validator];
 
         if($validator->fails())
         {
@@ -54,7 +53,7 @@ class LoginController extends Controller
         }
 
             return response()->json([
-            'message'   => 'You are now register',
+            'message'   => 'You are now login',
             'status'    => '200',
             'user'      => $user
         ]);

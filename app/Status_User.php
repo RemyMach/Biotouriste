@@ -26,8 +26,8 @@ class Status_User extends Model
      */
     protected $fillable = ["idStatus_User"];
 
-       public function status()
+       public function UsersId()
        {
-           return $this->hasMany('App\User', 'Status_User_idStatus_User', 'idStatus_User');
+           return $this->hasMany('App\User_Status_Correspondence', 'Status_User_idStatus_User', 'idStatus_User');
        }
 }

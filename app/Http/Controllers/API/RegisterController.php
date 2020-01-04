@@ -17,13 +17,14 @@ class RegisterController extends Controller
 
     private $request;
     private $seller;
+    private $status_User_idStatus_User;
 
     public function __construct()
     {
-        $this->middleware('apiAdmin');
+        //$this->middleware('apiAdmin');
     }
 
-    public function store(Request $request, UsefullController $usefullController)
+    public function store(Request $request, UsefullController $usefullController, User_Status_CorrespondenceController $user_Status_CorrespondenceController)
     {
         $this->request = $request;
 
@@ -38,7 +39,7 @@ class RegisterController extends Controller
         $validData['api_token'] = Str::random(80);
 
         $user = User::create($validData);
-
+        $user_Status_CorrespondenceController->createUserStatusCorrespondence($this->status_User_idStatus_User, $user);
         $this->createSellerIfUserHasSellerStatus($validData, $user);
 
         return response()->json([
@@ -64,14 +65,14 @@ class RegisterController extends Controller
             'user_name' => ['required', 'string', 'max:45'],
             'user_surname' => ['required', 'string', 'max:45'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'user_postal_code' => '[integer','regex:/^(\d\d(\s)?){4}(\d\d)$/]',
-            'user_phone' => ['unique:users'],
+            'user_postal_code' => ['integer'],
+            'user_phone' => ['unique:users','regex:/^(\d\d(\s)?){4}(\d\d)$/'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'user_img' => ['string'],
-            'status_user' => 'required|integer|max:2',
+            'status_user' => ['required','string','regex:/^(tourist|seller)$/'],
         ];
 
-        if($this->request->input('status_user') == 1){
+        if($this->request->input('status_user') == 'seller'){
 
             $rules ['seller_description'] = 'required|string|max:255';
         }
@@ -103,13 +104,14 @@ class RegisterController extends Controller
             ['user_name','user_surname','email','user_postal_code','user_phone','password','user_img']
             );
 
-        if($this->request->input('status_user') == 1){
+        if($this->request->input('status_user') == 'seller'){
 
-            $validData['Status_User_idStatus_User'] = 3;
+            $this->status_User_idStatus_User = 3;
+            //appel à une fonction qui crée dans User_Status_Correspondences une ligne avec le user et son statut
             $validData['seller_description'] = $this->request->input('seller_description');
         }else{
 
-            $validData['Status_User_idStatus_User'] = 1;
+            $this->status_User_idStatus_User = 1;
         }
 
         return $validData;
@@ -118,7 +120,7 @@ class RegisterController extends Controller
 
     private function createSellerIfUserHasSellerStatus($validData, $user){
 
-        if($validData['Status_User_idStatus_User'] === 3) {
+        if($this->status_User_idStatus_User === 3) {
             //appel à la fonction pour store un Seller
             $sellerController = new SellerController();
             $this->seller = $sellerController->createSeller($validData, $user);

@@ -21,6 +21,7 @@ Route::get('home', 'HomeController@index')->name('home');
 Route::get('users','UserController@index')->name('users');
 
 Route::post('login','Auth\LoginController@login');
+Route::get('testLogin','Auth\LoginController@testLogin');
 
 Route::get('login','Auth\LoginController@showLoginForm')->name('login');
 
@@ -29,7 +30,7 @@ Route::post('logout','Auth\LoginController@logout')->name('logout');
 Route::get('register','Auth\RegisterController@showRegistrationForm')->name('register');
 
 Route::post('register','Auth\RegisterController@register');
-Route::get('register','Auth\RegisterController@testRegister');
+Route::get('testRegister','Auth\RegisterController@testRegister');
 
 Route::get('password/email','Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
 

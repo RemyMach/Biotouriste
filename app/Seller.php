@@ -22,6 +22,8 @@ class Seller extends Model
      */
     protected $primaryKey = 'idSeller';
 
+    protected $table = 'Sellers';
+
     /**
      * @var array
      */

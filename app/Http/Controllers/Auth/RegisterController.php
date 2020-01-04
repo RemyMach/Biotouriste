@@ -62,7 +62,6 @@ class RegisterController extends Controller
             ]);
         $response = json_decode($query->getBody()->getContents());
 
-
         if($response->status === "400")
         {
             return redirect($this->redirectTo);
@@ -72,7 +71,11 @@ class RegisterController extends Controller
         $user = new User($User_attributes_array);
         $user->idUser = $response->user->idUser;
 
-        session(['user' => $user]);
+        session([
+            'user'          => $user,
+            'status'        => $status,
+            'active_status' => $active_status,
+        ]);
 
         //que $this->registered($request1, $user) soit vrai ou false on redirect
         return $this->registered($request, $user)
@@ -83,16 +86,16 @@ class RegisterController extends Controller
 
         $data['api_token'] = config('api.api_admin_token');
         $data['idUser'] = config('api.api_admin_id');
-        $data['seller_description'] = 'je suis un super vendeur';
+        $data['seller_description'] = 'je suis un super vendeur de pomme';
         $data['user_name'] = 'name';
         $data['user_surname'] = 'surname';
         $data['user_adress'] = '12 rue bangbang';
         $data['user_postal_code'] = '95234';
-        $data['user_phone'] = '0634526786';
-        $data['email'] = 'testouille@testouille.fr';
+        $data['user_phone'] = '0634526776';
+        $data['email'] = 'test@testouille.fr';
         $data['password'] = 'ouligandu29';
         $data['password_confirmation'] = 'ouligandu29';
-        $data['status_user'] = 1;
+        $data['status_user'] = 'seller';
 
         $query = $client->request('POST','http://localhost:8001/api/user/store',
             ['form_params' => $data

@@ -41,18 +41,17 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function login(Request $FormRequest)
+    public function login(Request $Request, Client $client)
     {
         $data = request()->all();
 
         $data['idUser'] = config('api.api_admin_id');
         $data['api_token'] = config('api.api_admin_token');
 
-        $client = new Client();
-        $request = $client->request('POST','http://localhost:8001/api/user/login', [
+        $query = $client->request('POST','http://localhost:8001/api/user/login', [
             'form_params' => $data
             ]);
-        $response = json_decode($request->getBody()->getContents());
+        $response = json_decode($query->getBody()->getContents());
 
         dd($response);
         if($response->status === "400")
@@ -64,27 +63,29 @@ class LoginController extends Controller
         $user = new User($User_attributes_array);
         $user->idUser = $response->user->idUser;
 
-        session(['user' => $user]);
+        session([
+            'user'          => $user,
+            'status'        => $status,
+            'active_status' => $active_status,
+        ]);
 
         return redirect($this->redirectTo);
     }
 
-    protected function validateLogin(Request $request)
-    {
-        $request->validate([
-            $this->username() => 'required|string',
-            'password' => 'required|string',
-        ]);
-    }
+    public function testLogin(Request $request, Client $client){
 
-    /**
-     * Get the login username to be used by the controller.
-     *
-     * @return string
-     */
-    public function username()
-    {
-        return 'email';
+        $data['idUser'] = config('api.api_admin_id');
+        $data['api_token'] = config('api.api_admin_token');
+        $data['email'] = 'tourist@tourist.fr';
+        $data['password'] = 'azertyuiop';
+
+        $query = $client->request('POST','http://localhost:8001/api/user/login', [
+            'form_params' => $data
+        ]);
+        $response = json_decode($query->getBody()->getContents());
+
+        dd($response);
+
     }
 
     public function logout(Request $request)
