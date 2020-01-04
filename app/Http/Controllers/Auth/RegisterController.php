@@ -62,19 +62,15 @@ class RegisterController extends Controller
             ]);
         $response = json_decode($query->getBody()->getContents());
 
-        if($response->status === "400")
+        if($response->status === '400')
         {
             return redirect($this->redirectTo);
         }
 
-        $User_attributes_array = json_decode(json_encode($response->user),true);
-        $user = new User($User_attributes_array);
-        $user->idUser = $response->user->idUser;
-
         session([
-            'user'          => $user,
-            'status'        => $status,
-            'active_status' => $active_status,
+            'user'          => $response->user,
+            'allStatus'     => $response->user_current_status,
+            'active_status' => $response->user_status,
         ]);
 
         //que $this->registered($request1, $user) soit vrai ou false on redirect

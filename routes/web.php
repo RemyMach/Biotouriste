@@ -128,8 +128,11 @@ Route::get('report/show/admin','ReportController@showAllReportsForAdmin');
 
 //User_status_Correspondence
 
-Route::post('user/change','User_Status_CorrespondenceController@changeDefaultUserStatus');
+Route::post('User_status/change','User_Status_CorrespondenceController@changeDefaultUserStatus');
 Route::get('User_status/change','User_Status_CorrespondenceController@testChangeDefaultUserStatus');
+
+Route::post('user/addStatus','User_Status_CorrespondenceController@addUserStatusTouristOrSeller');
+Route::get('User_status/addStatus','User_Status_CorrespondenceController@testaddUserStatusTouristOrSeller');
 
 
 

@@ -82,7 +82,6 @@ class LoginController extends Controller
 
         if($response->status === '400')
         {
-            dd('pomme');
             return redirect('login');
         }
 
@@ -92,9 +91,7 @@ class LoginController extends Controller
             'active_status' => $response->user_current_status,
         ]);
 
-        dd($request->session()->get('active_status'));
         return redirect($this->redirectTo);
-
     }
 
     public function logout(Request $request)

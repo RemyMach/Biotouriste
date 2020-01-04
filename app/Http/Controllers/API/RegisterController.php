@@ -39,7 +39,7 @@ class RegisterController extends Controller
         $validData['api_token'] = Str::random(80);
 
         $user = User::create($validData);
-        $user_Status_CorrespondenceController->createUserStatusCorrespondence($this->status_User_idStatus_User, $user);
+        $user_Status_CorrespondenceController->createUserStatusCorrespondence($this->status_User_idStatus_User, $user,true);
         $this->createSellerIfUserHasSellerStatus($validData, $user);
 
         $checkStatus = User_status_correspondenceController::getAllStatusFromAnUser($user->idUser);

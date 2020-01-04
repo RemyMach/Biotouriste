@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 class User_Status_CorrespondenceController extends Controller
 {
 
+    private $sessionUser;
+
     public function changeDefaultUserStatus(Request $request, Client $client){
 
         $this->sessionUser = $request->session()->get('user');
@@ -45,6 +47,50 @@ class User_Status_CorrespondenceController extends Controller
         {
             return redirect('login');
         }
+    }
+
+    public function addUserStatusTouristOrSeller(Request $request, Client $client){
+
+        $this->sessionUser = $request->session()->get('user');
+
+        $data = request()->all();
+        $data['idUser'] = $this->sessionUser->idUser;
+        $data['api_token'] = $this->sessionUser->api_token;
+
+        $query = $client->request('POST','http://localhost:8001/api/user/login', [
+            'form_params' => $data
+        ]);
+        $response = json_decode($query->getBody()->getContents());
+
+        dd($response);
+
+        if($response->status === "400")
+        {
+            return redirect('login');
+        }
+
+    }
+
+    public function testaddUserStatusTouristOrSeller(Request $request, Client $client){
+
+        $this->sessionUser = $request->session()->get('user');
+
+        $data['new_status'] = 'Seller';
+        $data['idUser'] = $this->sessionUser->idUser;
+        $data['api_token'] = $this->sessionUser->api_token;
+
+        $query = $client->request('POST','http://localhost:8001/api/user/addStatus', [
+            'form_params' => $data
+        ]);
+        $response = json_decode($query->getBody()->getContents());
+
+        dd($response);
+
+        if($response->status === "400")
+        {
+            return redirect('login');
+        }
+
     }
 
     /**

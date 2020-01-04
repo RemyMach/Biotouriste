@@ -45,11 +45,11 @@ class User_Status_CorrespondenceController extends Controller
         return $checkupdate;
     }
 
-    public function createUserStatusCorrespondence($status_User_idStatus_User,User $user){
+    public function createUserStatusCorrespondence($status_User_idStatus_User, User $user, $valueDefaultStatus){
 
         $data['Status_User_idStatus_User'] = $status_User_idStatus_User;
         $data['Users_idUser'] = $user->idUser;
-        $data['default_status'] = true;
+        $data['default_status'] = $valueDefaultStatus;
 
         $UserStatusCorrespondance = User_Status_Correspondence::create($data);
 
@@ -90,15 +90,33 @@ class User_Status_CorrespondenceController extends Controller
         return $current_status[0];
     }
 
-    public function addUserStatusCorrespondance(User $user){
+    public function addUserStatusTouristOrSeller(Request $request){
 
-        $data['Status_User_idStatus_User'] = $status_User_idStatus_User;
-        $data['Users_idUser'] = $user->idUser;
-        $data['default_status'] = false;
+        $this->request = $request;
 
-        $UserStatusCorrespondance = User_Status_Correspondence::create($data);
+        $validator = $this->validateNewStatus();
+        if($validator->original['status'] == '400') {
+            return $validator;
+        }
 
-        return $UserStatusCorrespondance;
+        $status = Status_User::where('status_user_label','=',$this->request->input('new_status'))->first();
+        $user = User::where('idUser','=',$this->request->input('idUser'))->first();
+
+        if(!$this->checkIfNewStatusIsValid($user->idUser)){
+
+            return response()->json([
+                'message'   => 'You already have this status',
+                'status'    => '400'
+            ]);
+        }
+
+        $this->createUserStatusCorrespondence($status->idStatus_User, $user, false);
+
+        return response()->json([
+            'message'   => 'Your new status is available',
+            'status'    => '200',
+            'allStatus' => $status
+        ]);
     }
 
     private function validateDefaultStatus(){
@@ -189,6 +207,26 @@ class User_Status_CorrespondenceController extends Controller
         User_Status_Correspondence::where('idUser_Status_Correspondence',$currentDefaultStatus[0]->idUser_status_Correspondence)
             ->update(['default_status' => false]);
 
+        return true;
+    }
+
+    private function validateNewStatus(){
+
+        $validator = Validator::make($this->request->all(), [
+            'new_status' => ['required','string','regex:/^(Tourist|Seller)$/']
+        ]);
+
+        return $this->resultValidator($validator);
+    }
+
+    private function checkIfNewStatusIsValid($idUser){
+
+        $allStatus = self::getAllStatusFromAnUser($idUser);
+        foreach($allStatus->original['allStatus'] as $status){
+            if($status->status_user_label == $this->request->input('new_status')){
+                return false;
+            }
+        }
         return true;
     }
 }

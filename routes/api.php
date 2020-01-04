@@ -104,6 +104,8 @@ Route::post('report/show/admin','API\ReportController@showAllReportsForAdmin');
 
 Route::post('user/change','API\User_Status_CorrespondenceController@ChangeDefaultUserStatus');
 
+Route::post('user/addStatus','API\User_Status_CorrespondenceController@addUserStatusTouristOrSeller');
+
 
 /*Route::get('/users', function () {
     return UserResource::collection(User::paginate(2));
