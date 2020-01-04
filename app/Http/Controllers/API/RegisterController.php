@@ -64,7 +64,7 @@ class RegisterController extends Controller
             'user_name' => ['required', 'string', 'max:45'],
             'user_surname' => ['required', 'string', 'max:45'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'user_postal_code' => ['integer'],
+            'user_postal_code' => '[integer','regex:/^(\d\d(\s)?){4}(\d\d)$/]',
             'user_phone' => ['unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'user_img' => ['string'],
