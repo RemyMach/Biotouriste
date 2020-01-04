@@ -8,19 +8,24 @@
     <script src="{{ URL::asset('js/leaflet.js') }}"></script>
     <title>Announces</title>
 </head>
+
 <div id="content-1">
       @include('layouts.navbar')
         <div class="row">
-          <div class="col-md-12 navbar navbar-expand-lg">
-              <ul class="navbar-nav inline categories">
-                  <li class="col-md-2"><a onClick="filterByCategorieProduct(1)">Fruits</a></li>
-                  <li class="col-md-2"><a onClick="filterByCategorieProduct(2)">Légumes</a></li>
-                  <li class="col-md-2"><a onClick="filterByCategorieProduct(3)">Céréales</a></li>
-                  <li class="col-md-2"><a onClick="filterByCategorieProduct(4)">Boissons</a></li>
-                  <li class="col-md-2"><a onClick="filterByCategorieProduct(5)">Gateaux</a></li>
-                  <li class="col-md-2"><a onClick="filterByCategorieProduct(6)">Epices</a></li>
-              </ul>
-          </div>
+            <div class="col-md-12">
+            <input type="text" name="cityZone" id="cityZone" value="paris">
+                <button type="submit" onclick="findByCity()">Find</button>
+            </div>
+            <div class="col-md-12 navbar navbar-expand-lg">
+                  <ul class="navbar-nav inline categories">
+                      <li class="col-md-2"><a onClick="filterByCategorieProduct(1)">Fruits</a></li>
+                      <li class="col-md-2"><a onClick="filterByCategorieProduct(2)">Légumes</a></li>
+                      <li class="col-md-2"><a onClick="filterByCategorieProduct(3)">Céréales</a></li>
+                      <li class="col-md-2"><a onClick="filterByCategorieProduct(4)">Boissons</a></li>
+                      <li class="col-md-2"><a onClick="filterByCategorieProduct(5)">Gateaux</a></li>
+                      <li class="col-md-2"><a onClick="filterByCategorieProduct(6)">Epices</a></li>
+                  </ul>
+            </div>
         </div>
         <div class="row">
             <div id="divAnnounces" class="col-md-6 divAnnounces"></div>
@@ -55,7 +60,32 @@ iconSize: [60, 60]
 
 {{-- Announces --}}
 <script>
-        function filterByCategorieProduct(categorie){
+function findByCity(){
+    var cityData = findCityData();
+    console.log(cityData);
+        // $.ajax({
+        //    url: 'filterByCity',
+        //    type: 'POST',
+        //    data: cityData,
+        //    success: function(result){
+        //        console.log(result);
+        //    }
+        // });
+
+}
+
+function findCityData(){
+    return $.ajax({
+        url: 'http://api.geonames.org/searchJSON?&',
+        type: 'GET',
+        data: {q : $('#cityZone').val(), maxRows: 1, username: 'biotouriste'},
+        success: function (result){
+            console.log(result.geonames);
+        }
+    });
+}
+
+function filterByCategorieProduct(categorie){
     $.ajax({
         url: "/filterByCategorie",
         type: 'POST',
@@ -70,30 +100,30 @@ iconSize: [60, 60]
 }
 
 function remplirDivAnnonce(announces){
-$('#divAnnounces').empty();
-var div = '';
-announces.forEach(function (announce) {
-div = div +
-"<div class='post'>"+
-    "<div class='row'>"+
-        "<div class='col-md-4'>"+
-            "<div class='icon'></div>"+
-            "</div>"+
-        "<div class='col-md-4'>"+
-            "<div class='text'>"+
-                "<h3>"+announce['announce_name']+"</h3>"+
-                "<h5>"+announce['announce_comment']+"</h5>"+
-                "<h6>"+announce['announce_adresse']+"</h6>"+
+    $('#divAnnounces').empty();
+    var div = '';
+    announces.forEach(function (announce) {
+        div = div +
+        "<div class='post'>"+
+            "<div class='row'>"+
+                "<div class='col-md-4'>"+
+                    "<div class='icon'></div>"+
+                    "</div>"+
+                "<div class='col-md-4'>"+
+                    "<div class='text'>"+
+                        "<h3>"+announce['announce_name']+"</h3>"+
+                        "<h5>"+announce['announce_comment']+"</h5>"+
+                        "<h6>"+announce['announce_adresse']+"</h6>"+
+                        "</div>"+
+                    "</div>"+
+                "<div class='col-md-4'>"+
+                    "<div class='text'>"+
+                        "<h6>"+announce['announce_price']+"€</h6>"+
+                        "</div>"+
+                    "</div>"+
                 "</div>"+
-            "</div>"+
-        "<div class='col-md-4'>"+
-            "<div class='text'>"+
-                "<h6>"+announce['announce_price']+"€</h6>"+
-                "</div>"+
-            "</div>"+
-        "</div>"+
-    "</div>"
-});
-$('#divAnnounces').append(div);
+            "</div>"
+    });
+    $('#divAnnounces').append(div);
 }
 </script>

@@ -100,4 +100,8 @@ class AnnounceController extends Controller
         return response()->json($data);
 //        return new Response(json_encode($data));
     }
+
+    public function filterByCity(Request $request){
+
+    }
 }

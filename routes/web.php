@@ -147,4 +147,6 @@ Route::get('announces','AnnounceController@index');
 
 Route::post('filterByCategorie','AnnounceController@filterByCategorie');
 
+Route::post('filterByCity','AnnounceController@filterByCity');
+
 /********************************************** Fin Routes Announces **********************************************/
