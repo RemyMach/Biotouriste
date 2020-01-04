@@ -61,8 +61,8 @@ class LoginController extends Controller
 
         session([
             'user'          => $response->user,
-            'allStatus'     => $response->user_current_status,
-            'active_status' => $response->user_status,
+            'allStatus'     => $response->user_status,
+            'active_status' => $response->user_current_status,
         ]);
 
         return redirect($this->redirectTo);
@@ -88,8 +88,8 @@ class LoginController extends Controller
 
         session([
             'user'          => $response->user,
-            'allStatus'     => $response->user_current_status,
-            'active_status' => $response->user_status,
+            'allStatus'     => $response->user_status,
+            'active_status' => $response->user_current_status,
         ]);
 
         dd($request->session()->get('active_status'));
@@ -100,6 +100,8 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         $request->session()->forget('user');
+        $request->session()->forget('allStatus');
+        $request->session()->forget('active_status');
 
         return $this->loggedOut($request) ?: redirect('/');
     }

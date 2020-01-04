@@ -20,7 +20,7 @@ class TouristController
     {
         $this->active_status = $request->session()->get('active_status');
         $this->auth =
-            $this->user ?
+            $this->active_status ?
                 (preg_match('#(controller|tourist)#i',$this->active_status->status_user_label))
                 : 0;
 
