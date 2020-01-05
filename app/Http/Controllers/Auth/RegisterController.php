@@ -82,23 +82,26 @@ class RegisterController extends Controller
 
         $data['api_token'] = config('api.api_admin_token');
         $data['idUser'] = config('api.api_admin_id');
-        $data['seller_description'] = 'je suis un super vendeur de pomme';
-        $data['user_name'] = 'name';
+        //$data['seller_description'] = 'j\'aime les pommes surtout les 2';
+        $data['user_name'] = 'pomme1';
         $data['user_surname'] = 'surname';
         $data['user_adress'] = '12 rue bangbang';
         $data['user_postal_code'] = '95234';
-        $data['user_phone'] = '0634526776';
-        $data['email'] = 'test@testouille.fr';
-        $data['password'] = 'ouligandu29';
-        $data['password_confirmation'] = 'ouligandu29';
-        $data['status_user'] = 'seller';
+        $data['user_phone'] = '0646527876';
+        $data['email'] = 'pomme2@pomme2.fr';
+        $data['password'] = 'azertyuiop';
+        $data['password_confirmation'] = 'azertyuiop';
+        $data['status_user'] = 'Tourist';
 
         $query = $client->request('POST','http://localhost:8001/api/user/store',
             ['form_params' => $data
             ]);
         $response = json_decode($query->getBody()->getContents());
 
-        dd($response);
+        if($response->status === '400')
+        {
+            return redirect('login');
+        }
 
         session([
             'user'          => $response->user,
@@ -106,9 +109,7 @@ class RegisterController extends Controller
             'active_status' => $response->user_status,
         ]);
 
-        dd($request->session()->get('active_status'));
-        return $this->registered($request, $user)
-            ?: redirect($this->redirectTo);
+        return redirect($this->redirectTo);
     }
 
 

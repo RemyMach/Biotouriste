@@ -78,10 +78,10 @@ class RegisterController extends Controller
             'user_phone' => ['unique:users','regex:/^(\d\d(\s)?){4}(\d\d)$/'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'user_img' => ['string'],
-            'status_user' => ['required','string','regex:/^(tourist|seller)$/'],
+            'status_user' => ['required','string','regex:/^(Tourist|Seller)$/'],
         ];
 
-        if($this->request->input('status_user') == 'seller'){
+        if($this->request->input('status_user') == 'Seller'){
 
             $rules ['seller_description'] = 'required|string|max:255';
         }
@@ -113,7 +113,7 @@ class RegisterController extends Controller
             ['user_name','user_surname','email','user_postal_code','user_phone','password','user_img']
             );
 
-        if($this->request->input('status_user') == 'seller'){
+        if($this->request->input('status_user') == 'Seller'){
 
             $this->status_User_idStatus_User = 3;
             //appel à une fonction qui crée dans User_Status_Correspondences une ligne avec le user et son statut
@@ -131,8 +131,7 @@ class RegisterController extends Controller
 
         if($this->status_User_idStatus_User === 3) {
             //appel à la fonction pour store un Seller
-            $sellerController = new SellerController();
-            $this->seller = $sellerController->createSeller($validData, $user);
+            $this->seller = SellerController::createSeller($validData, $user);
         }
     }
 }

@@ -21,9 +21,13 @@ class User_Status_CorrespondenceController extends Controller
 
     public function __construct(){
 
-        /*$this->middleware('apiTokenAndIdUserExistAndMatch')->only(
+        $this->middleware('apiTokenAndIdUserExistAndMatch')->only(
             'update'
-        );*/
+        );
+
+        $this->middleware('apiAdmin')->only(
+            'addUserStatusAdminOrController'
+        );
     }
 
     public function changeDefaultUserStatus(Request $request){
@@ -99,8 +103,42 @@ class User_Status_CorrespondenceController extends Controller
             return $validator;
         }
 
-        $status = Status_User::where('status_user_label','=',$this->request->input('new_status'))->first();
         $user = User::where('idUser','=',$this->request->input('idUser'))->first();
+
+        $resultVerifAndCreation = $this->VerificationThatTheUserCanHaveThisStatus($user);
+        if($resultVerifAndCreation->original['status'] == '400') {
+            return $resultVerifAndCreation;
+        }
+
+        $this->createSellerDependingNewStatus($user);
+
+        return $resultVerifAndCreation;
+    }
+
+    public function addUserStatusAdminOrController(Request $request){
+
+        $this->request = $request;
+
+        $validator = $this->validateNewStatusAndUser();
+        if($validator->original['status'] == '400') {
+            return $validator;
+        }
+
+        $user = User::where('idUser','=',$this->request->input('idUserWithNewStatus'))->first();
+        if(!isset($user)){
+
+            return response()->json([
+                'message'   => 'Your user doesn\'t exist',
+                'status'    => '400'
+            ]);
+        }
+
+        return $this->VerificationThatTheUserCanHaveThisStatus($user);
+    }
+
+    private function VerificationThatTheUserCanHaveThisStatus($user){
+
+        $status = Status_User::where('status_user_label','=',$this->request->input('new_status'))->first();
 
         if(!$this->checkIfNewStatusIsValid($user->idUser)){
 
@@ -123,6 +161,16 @@ class User_Status_CorrespondenceController extends Controller
 
         $validator = Validator::make($this->request->all(), [
             'default_status' => ['required','string','regex:/^(tourist|seller|controller|admin)$/']
+        ]);
+
+        return $this->resultValidator($validator);
+    }
+
+    private function validateNewStatusAndUser(){
+
+        $validator = Validator::make($this->request->all(), [
+            'new_status' => ['required','string','regex:/^(Admin|Controller)$/'],
+            'idUserWithNewStatus' => ['required','integer']
         ]);
 
         return $this->resultValidator($validator);
@@ -212,9 +260,14 @@ class User_Status_CorrespondenceController extends Controller
 
     private function validateNewStatus(){
 
-        $validator = Validator::make($this->request->all(), [
-            'new_status' => ['required','string','regex:/^(Tourist|Seller)$/']
-        ]);
+        if($this->request->input('new_status') == 'Seller'){
+
+           $rules['seller_description'] = ['required','string','max:255'];
+        }
+
+        $rules['new_status'] = ['required','string','regex:/^(Tourist|Seller)$/'];
+
+        $validator = Validator::make($this->request->all(), $rules);
 
         return $this->resultValidator($validator);
     }
@@ -228,5 +281,15 @@ class User_Status_CorrespondenceController extends Controller
             }
         }
         return true;
+    }
+
+    private function createSellerDependingNewStatus($user){
+
+        if($this->request->input('new_status') == 'Seller'){
+
+            SellerController::createSeller(
+                $this->request->all(), $user
+            );
+        }
     }
 }

@@ -102,4 +102,9 @@ class LoginController extends Controller
 
         return $this->loggedOut($request) ?: redirect('/');
     }
+
+    public function showLoginForm(Request $request)
+    {
+        return view('auth.login');
+    }
 }

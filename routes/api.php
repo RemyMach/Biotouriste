@@ -102,9 +102,18 @@ Route::post('report/show/admin','API\ReportController@showAllReportsForAdmin');
 
 //User_Status_CorrespondenceController
 
-Route::post('user/change','API\User_Status_CorrespondenceController@ChangeDefaultUserStatus');
+Route::post('user_status/change','API\User_Status_CorrespondenceController@ChangeDefaultUserStatus');
 
-Route::post('user/addStatus','API\User_Status_CorrespondenceController@addUserStatusTouristOrSeller');
+Route::post('user_status/addStatus','API\User_Status_CorrespondenceController@addUserStatusTouristOrSeller');
+
+Route::post('user_status/addStatusAdminController','API\User_Status_CorrespondenceController@addUserStatusAdminOrController');
+
+//Seller
+
+Route::post('seller/updateBio','API\SellerController@updateReverseBioStatus');
+
+Route::post('seller/updateDescription','API\SellerController@updateSellerDescription');
+
 
 
 /*Route::get('/users', function () {
