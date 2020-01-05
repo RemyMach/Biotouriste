@@ -52,7 +52,7 @@ iconUrl: 'img/marker.png',
 iconSize: [60, 60]
 });
 @foreach($announces as $announce)
-    var marqueur{{$announce->idAnnounce}} = L.marker([{{ $announce->announce_latLong }}], {icon: icone}).addTo(mymap);
+    var marqueur{{$announce->idAnnounce}} = L.marker([{{ $announce->announce_lat }},{{ $announce->announce_lng }}], {icon: icone}).addTo(mymap);
     marqueur{{$announce->idAnnounce}}.bindPopup('{{$announce->announce_name}}');
 @endforeach
 </script>
@@ -60,16 +60,21 @@ iconSize: [60, 60]
 
 {{-- Announces --}}
 <script>
+$(function() {
+    findCityData()
+});
+
 function findByCity(cityData){
-    console.log(cityData);
     $.ajax({
         url: '/filterByCity',
         type: 'POST',
         data: {cityData: cityData[0],  _token: '{{csrf_token()}}'},
         dataType: "json",
         success: function(result){
-           console.log(result);
-       }
+            mymap.removeLayer(this);
+            mymap.setView([result.lat, result.lng], 11, { animation: true });
+            remplirDivAnnonce(result.announces);
+        }
     });
 }
 
@@ -87,16 +92,24 @@ function findCityData(){
 
 function filterByCategorieProduct(categorie){
     $.ajax({
-        url: "/filterByCategorie",
-        type: 'POST',
-        data: {categorie: categorie, _token: '{{csrf_token()}}'},
-        success: function (retour, statut) {
-            console.log(retour.announces);
-            remplirDivAnnonce(retour.announces);
-        },
-        error: function (resultat, statut, erreur) {
-            console.log('NOOOOOOO');
-    }});
+        url: 'http://api.geonames.org/searchJSON?&',
+        type: 'GET',
+        data: {q : $('#cityZone').val(), maxRows: 1, username: 'biotouriste'},
+        dataType: "json",
+        success: function (result){
+            $.ajax({
+                url: "/filterByCategorie",
+                type: 'POST',
+                data: {cityData: result.geonames[0], categorie: categorie, _token: '{{csrf_token()}}'},
+                success: function (retour, statut) {
+                    remplirDivAnnonce(retour.announces);
+                },
+                error: function (resultat, statut, erreur) {
+                    console.log('marche pas frero')
+                }});
+        }
+    });
+
 }
 
 function remplirDivAnnonce(announces){
@@ -108,21 +121,21 @@ function remplirDivAnnonce(announces){
             "<div class='row'>"+
                 "<div class='col-md-4'>"+
                     "<div class='icon'></div>"+
-                    "</div>"+
+                "</div>"+
                 "<div class='col-md-4'>"+
                     "<div class='text'>"+
                         "<h3>"+announce['announce_name']+"</h3>"+
                         "<h5>"+announce['announce_comment']+"</h5>"+
                         "<h6>"+announce['announce_adresse']+"</h6>"+
-                        "</div>"+
                     "</div>"+
+                "</div>"+
                 "<div class='col-md-4'>"+
                     "<div class='text'>"+
                         "<h6>"+announce['announce_price']+"€</h6>"+
-                        "</div>"+
                     "</div>"+
                 "</div>"+
-            "</div>"
+            "</div>"+
+        "</div>"
     });
     $('#divAnnounces').append(div);
 }

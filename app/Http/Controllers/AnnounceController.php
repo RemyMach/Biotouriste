@@ -91,17 +91,33 @@ class AnnounceController extends Controller
 
     public function filterByCategorie(Request $request){
         $idCategorie = $request->get('categorie');
-        $announces = AnnounceRepository::filterByCategorieRepo($idCategorie);
-
+        $cityData = $request->get('cityData');
+        $lng = $cityData['lng'];
+        $lat = $cityData['lat'];
+        $announces = AnnounceRepository::filterByLngAndLatOrAndCategorie($lng, $lat, $idCategorie);
+        $test= "";
         $data = [
             'success' => true,
-            'announces' => $announces
+            'announces' => $announces,
+            'lng' => $lng,
+            'lat' => $lat
         ];
         return response()->json($data);
 //        return new Response(json_encode($data));
     }
 
     public function filterByCity(Request $request){
-        $test = "";
+        $cityData = $request->get('cityData');
+        $lng = $cityData['lng'];
+        $lat = $cityData['lat'];
+        $announces = AnnounceRepository::filterByLngAndLatOrAndCategorie($lng, $lat);
+
+        $data = [
+            'success' => true,
+            'announces' => $announces,
+            'lng' => $lng,
+            'lat' => $lat
+        ];
+        return response()->json($data);
     }
 }
