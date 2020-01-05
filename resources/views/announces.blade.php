@@ -39,19 +39,20 @@
 {{-- Map --}}
 <script>
 // on set la position sur la carte
-var mymap = L.map('mapid').setView([48.852969, 2.349903], 10);
+var mymap = L.map('mapid');
+// Ajout de la tuile pour la map
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
 attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
 maxZoom: 18,
 id: 'mapbox/streets-v11',
 accessToken: 'pk.eyJ1IjoiYmlvdG91cmlzdGUiLCJhIjoiY2s0MnRjMW1uMDBxZTNlczVueXk1OXRwbyJ9.6HEfIagqNQob01cRbFVpzQ'
 }).addTo(mymap);
-//ajout du nouveau marker
+//ajout de l'icone du marker
 var icone = L.icon({
 iconUrl: 'img/marker.png',
 iconSize: [60, 60]
 });
-var marker;
+// creation d'un groupe pour les marker que que je peux vider et remplir comme je veux.
 lgMarkers = new L.LayerGroup();
 mymap.addLayer(lgMarkers);
 </script>
@@ -71,7 +72,7 @@ function findByCity(cityData){
         dataType: "json",
         success: function(result){
             mymap.removeLayer(this);
-            mymap.setView([result.lat, result.lng], 2, { animation: true });
+            mymap.setView([result.lat, result.lng], 10, { animation: true });
             remplirDivAnnonce(result.announces);
         }
     });
@@ -112,7 +113,6 @@ function filterByCategorieProduct(categorie){
 
 function remplirDivAnnonce(announces){
     lgMarkers.clearLayers();
-
     $('#divAnnounces').empty();
     var div = '';
     announces.forEach(function (announce) {
@@ -140,10 +140,5 @@ function remplirDivAnnonce(announces){
         marker.bindPopup(announce['announce_name']);
     });
     $('#divAnnounces').append(div);
-    {{--marker.clearLayers();--}}
-    {{--@foreach($announces as $announce)--}}
-    {{--    var marker = L.marker([{{ $announce->announce_lat }},{{ $announce->announce_lng }}], {icon: icone}).addTo(mymap);--}}
-    {{--    marker.bindPopup('{{$announce->announce_name}}');--}}
-    {{--@endforeach--}}
 }
 </script>
