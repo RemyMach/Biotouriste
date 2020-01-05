@@ -18,8 +18,8 @@ class AnnounceController extends Controller
      */
     public function index()
     {
-        $announces = Announce::all();
-        return view('announces', ['announces' => $announces]);
+//        $announces = Announce::all();
+        return view('announces');
     }
 
     /**

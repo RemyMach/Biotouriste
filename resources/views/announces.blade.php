@@ -46,22 +46,21 @@ maxZoom: 18,
 id: 'mapbox/streets-v11',
 accessToken: 'pk.eyJ1IjoiYmlvdG91cmlzdGUiLCJhIjoiY2s0MnRjMW1uMDBxZTNlczVueXk1OXRwbyJ9.6HEfIagqNQob01cRbFVpzQ'
 }).addTo(mymap);
-//ajout du nouveau marqueur
+//ajout du nouveau marker
 var icone = L.icon({
 iconUrl: 'img/marker.png',
 iconSize: [60, 60]
 });
-@foreach($announces as $announce)
-    var marqueur{{$announce->idAnnounce}} = L.marker([{{ $announce->announce_lat }},{{ $announce->announce_lng }}], {icon: icone}).addTo(mymap);
-    marqueur{{$announce->idAnnounce}}.bindPopup('{{$announce->announce_name}}');
-@endforeach
+var marker;
+lgMarkers = new L.LayerGroup();
+mymap.addLayer(lgMarkers);
 </script>
 
 
 {{-- Announces --}}
 <script>
 $(function() {
-    findCityData()
+    findCityData();
 });
 
 function findByCity(cityData){
@@ -72,7 +71,7 @@ function findByCity(cityData){
         dataType: "json",
         success: function(result){
             mymap.removeLayer(this);
-            mymap.setView([result.lat, result.lng], 11, { animation: true });
+            mymap.setView([result.lat, result.lng], 2, { animation: true });
             remplirDivAnnonce(result.announces);
         }
     });
@@ -109,10 +108,11 @@ function filterByCategorieProduct(categorie){
                 }});
         }
     });
-
 }
 
 function remplirDivAnnonce(announces){
+    lgMarkers.clearLayers();
+
     $('#divAnnounces').empty();
     var div = '';
     announces.forEach(function (announce) {
@@ -135,8 +135,15 @@ function remplirDivAnnonce(announces){
                     "</div>"+
                 "</div>"+
             "</div>"+
-        "</div>"
+        "</div>";
+        var marker = new L.marker([announce['announce_lat'], announce['announce_lng']], {icon: icone}).addTo(lgMarkers);
+        marker.bindPopup(announce['announce_name']);
     });
     $('#divAnnounces').append(div);
+    {{--marker.clearLayers();--}}
+    {{--@foreach($announces as $announce)--}}
+    {{--    var marker = L.marker([{{ $announce->announce_lat }},{{ $announce->announce_lng }}], {icon: icone}).addTo(mymap);--}}
+    {{--    marker.bindPopup('{{$announce->announce_name}}');--}}
+    {{--@endforeach--}}
 }
 </script>
