@@ -29,6 +29,10 @@ body {
   padding: 5px;
 }
 .b-product {
+  background-image: url(../img/home/product.png);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
   background-color: #F2F2F2;
   width: 100%;
   height: 810px;
@@ -42,6 +46,10 @@ body {
   padding: 5px;
 }
 .b-map {
+  background-image: url(../img/home/map.png);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
   background-color: #c2cdc1;
   width: 100%;
   height: 400px;
@@ -56,6 +64,10 @@ body {
 
 }
 .b-faq {
+  background-image: url(../img/home/message.png);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
   background-color: #F2F2F2;
   width: 100%;
   height: 400px;
@@ -218,7 +230,7 @@ background-color: #677A70;
   color: #677A70;
 }
 .footer h2 {
-  font-size: 32px;
+  font-size: 24px;
   color: #677A70;
   font-family: minerva-modern, sans-serif;
   font-weight: 700;

@@ -33,7 +33,7 @@
         <li><a href="#">Products</a></li>
         <li><a href="#">FAQ</a></li>
       </ul>
-      <p>© HEALTHY'S | Realization Agency | Design Studio Rive Droite</p>
+      <p>© HEALTHY'S</p>
     </div>
   </div>
 </div>
