@@ -144,6 +144,8 @@ Route::get('seller/testupdateBio','SellerController@testupdateBioStatus');
 Route::post('seller/updateDescription','SellerController@updateDescription');
 Route::get('seller/testupdateDescription','SellerController@testupdateDescription');
 
+Route::get('seller/testSelect','SellerController@testSelectSellersByCommentsNotes');
+
 /********************************************** Route pour front test **********************************************/
 
 

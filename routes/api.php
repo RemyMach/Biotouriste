@@ -114,6 +114,8 @@ Route::post('seller/updateBio','API\SellerController@updateReverseBioStatus');
 
 Route::post('seller/updateDescription','API\SellerController@updateSellerDescription');
 
+Route::post('seller/testSelect','API\SellerController@SelectSellersByCommentsNotes');
+
 
 
 /*Route::get('/users', function () {

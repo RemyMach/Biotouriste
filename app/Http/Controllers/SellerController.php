@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\SellerRepository;
 use App\Seller;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SellerController extends Controller
 {
@@ -13,6 +15,10 @@ class SellerController extends Controller
     {
         $this->middleware('admin')->only(
             'updateBioStatus'
+        );
+
+        $this->middleware('seller')->only(
+            'updateDescription'
         );
     }
 
@@ -84,8 +90,8 @@ class SellerController extends Controller
 
         $this->sessionUser = $request->session()->get('user');
 
-        $data['idUser'] = $this->sessionUser->idUser;
-        $data['api_token'] = $this->sessionUser->api_token;
+        $data['idUser'] = 3;
+        $data['api_token'] = '07gNZrFGOnyJjKD5K39OHDtOi2iGu3keNO7GeK1EmmvWVvtuuXppvo1VaS7PcTjSTMO91m9f8lT1s9a8';
         $data['seller_description'] = 'je suis la nouvelle description';
 
         $query = $client->request('POST','http://localhost:8001/api/seller/updateDescription', [
@@ -99,6 +105,25 @@ class SellerController extends Controller
         {
             return redirect('login');
         }
+    }
+
+    public function testSelectSellersByCommentsNotes(Request $request, Client $client){
+
+        $data['idUser'] = config('api.api_admin_id');
+        $data['api_token'] = config('api.api_admin_token');
+
+        $query = $client->request('POST','http://localhost:8001/api/seller/testSelect', [
+            'form_params' => $data
+        ]);
+        $response = json_decode($query->getBody()->getContents());
+
+        dd($response);
+
+        if($response->status === '400')
+        {
+            return redirect('login');
+        }
+
     }
 
 

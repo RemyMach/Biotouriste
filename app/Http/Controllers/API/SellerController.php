@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\API\ApiTokenController;
 use App\Http\Controllers\Controller;
 use App\password_resets;
+use App\Repositories\SellerRepository;
 use App\Seller;
 use App\User;
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ class SellerController extends Controller
         );
 
         $this->middleware('apiAdmin')->only(
-            'updateBioStatus'
+            'updateBioStatus','SelectSellersByCommentsNotes'
         );
         $this->middleware('apiSeller')->only(
             'updateSellerDescription'
@@ -92,6 +93,90 @@ class SellerController extends Controller
             'seller'    =>  $seller
         ]);
     }
+
+    public function SelectSellersByCommentsNotes(Request $request){
+
+        $this->request = $request;
+        //récupère touts les sellers qui ont des notes
+        $comments = SellerRepository::GetAllSellersWithComments();
+
+        $SellerComments = $this->filterCommentsForASeller($comments);
+
+        $sellerCommentsAvgNotesCountComments = $this->CalculateAvgAndCountCommentsForAUser($SellerComments);
+
+        $sellerCommentsAvgNotesCountCommentsOrderByNotes = $this->OrderByNotesDescending($sellerCommentsAvgNotesCountComments);
+
+        return response()->json([
+            'message'   => 'The description has been update',
+            'status'    => '200',
+            'arrays'    =>  $SellerComments,
+            'note'      => $sellerCommentsAvgNotesCountComments,
+            'sellerComments'       => $sellerCommentsAvgNotesCountCommentsOrderByNotes,
+        ]);
+    }
+
+    private function filterCommentsForASeller($comments){
+
+        foreach($comments as $comment){
+            $array[$comment->idSeller][] = $comment;
+        }
+
+        return $array;
+    }
+
+    private function CalculateAvgAndCountCommentsForAUser($arrays){
+
+        $i=0;
+        $sellerCommentsAvgNotesCountComments = [];
+        foreach($arrays as $user => $array){
+            $note = 0;
+            foreach ($array as $comment){
+                $note += $comment->comment_note;
+                $sellerCommentsAvgNotesCountComments[$i][] = $comment;
+            }
+            $sellerCommentsAvgNotesCountComments[$i]['nombreNote'] = count($array);
+            $sellerCommentsAvgNotesCountComments[$i]['moyenne'] = $note/count($array);
+            $i++;
+        }
+
+        return $sellerCommentsAvgNotesCountComments;
+    }
+
+    //algorithme de tri utilisé
+    private function triABulle($note){
+
+        $table = [14,6,3,2,5,8,4,9];
+
+        for($i=count($table);$i>=1;$i--){
+
+            for($j=0;$j<$i-1;$j++){
+
+                if($table[$j+1]<$table[$j]){
+                    $temporaire = $table[$j+1];
+                    $table[$j+1] = $table[$j];
+                    $table[$j] = $temporaire;
+                }
+            }
+        }
+        return $table;
+    }
+
+    private function OrderByNotesDescending($notes){
+
+        for($i=count($notes);$i>=1;$i--){
+
+            for($j=0;$j<$i-1;$j++){
+
+                if($notes[$j+1]['moyenne']<$notes[$j]['moyenne']){
+                    $temporaire = $notes[$j+1];
+                    $notes[$j+1] = $notes[$j];
+                    $notes[$j] = $temporaire;
+                }
+            }
+        }
+        return $notes;
+    }
+
 
     private function validateIdSeller(){
 
