@@ -6,7 +6,7 @@
     <div class="row" style="margin: 0;">
       <div class="col-md-4 menu"></div>
       <div class="col-md-4 text-center menu">
-        <a href="#">Announces</a>
+        <a href="{{ url('announces') }}">Announces</a>
         <a href="#">Products</a>
         <a href="#">About us</a>
         <a href="#">Contact us</a>
