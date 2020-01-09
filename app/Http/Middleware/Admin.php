@@ -8,7 +8,7 @@ class Admin
 {
     private $auth;
 
-    private $user;
+    private $active_status;
     /**
      * Handle an incoming request.
      *
@@ -18,10 +18,10 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
-        $this->user = $request->session()->get('user');
+        $this->active_status = $request->session()->get('active_status');
         $this->auth =
-            $this->user ?
-                (preg_match('#admin#i',$this->user->status['status_user_label']))
+            $this->active_status ?
+                (preg_match('#admin#i',$this->active_status->status_user_label))
                 : 0;
 
         if($this->auth === 1){

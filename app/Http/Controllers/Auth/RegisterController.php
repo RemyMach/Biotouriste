@@ -62,19 +62,15 @@ class RegisterController extends Controller
             ]);
         $response = json_decode($query->getBody()->getContents());
 
-        if($response->status === "400")
+        if($response->status === '400')
         {
             return redirect($this->redirectTo);
         }
 
-        $User_attributes_array = json_decode(json_encode($response->user),true);
-        $user = new User($User_attributes_array);
-        $user->idUser = $response->user->idUser;
-
         session([
-            'user'          => $user,
-            'status'        => $status,
-            'active_status' => $active_status,
+            'user'          => $response->user,
+            'allStatus'     => $response->user_current_status,
+            'active_status' => $response->user_status,
         ]);
 
         //que $this->registered($request1, $user) soit vrai ou false on redirect
@@ -86,26 +82,34 @@ class RegisterController extends Controller
 
         $data['api_token'] = config('api.api_admin_token');
         $data['idUser'] = config('api.api_admin_id');
-        $data['seller_description'] = 'je suis un super vendeur de pomme';
-        $data['user_name'] = 'name';
+        //$data['seller_description'] = 'j\'aime les pommes surtout les 2';
+        $data['user_name'] = 'pomme1';
         $data['user_surname'] = 'surname';
         $data['user_adress'] = '12 rue bangbang';
         $data['user_postal_code'] = '95234';
-        $data['user_phone'] = '0634526776';
-        $data['email'] = 'test@testouille.fr';
-        $data['password'] = 'ouligandu29';
-        $data['password_confirmation'] = 'ouligandu29';
-        $data['status_user'] = 'seller';
+        $data['user_phone'] = '0646527876';
+        $data['email'] = 'pomme2@pomme2.fr';
+        $data['password'] = 'azertyuiop';
+        $data['password_confirmation'] = 'azertyuiop';
+        $data['status_user'] = 'Tourist';
 
         $query = $client->request('POST','http://localhost:8001/api/user/store',
             ['form_params' => $data
             ]);
         $response = json_decode($query->getBody()->getContents());
 
-        dd($response);
+        if($response->status === '400')
+        {
+            return redirect('login');
+        }
 
-        return $this->registered($request, $user)
-            ?: redirect($this->redirectTo);
+        session([
+            'user'          => $response->user,
+            'allStatus'     => $response->user_current_status,
+            'active_status' => $response->user_status,
+        ]);
+
+        return redirect($this->redirectTo);
     }
 
 

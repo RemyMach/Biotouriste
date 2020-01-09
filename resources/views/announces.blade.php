@@ -1,16 +1,6 @@
 @include('layouts.header')
-<head>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    {{-- CSS --}}
-    <link rel="stylesheet" href="{{ URL::asset('css/leaflet.css') }}" />
-    <link rel="stylesheet" href="{{ URL::asset('css/announces.css ') }}" />
-    {{--  JS  --}}
-    <script src="{{ URL::asset('js/leaflet.js') }}"></script>
-    <title>Announces</title>
-</head>
-
 <div id="content-1">
-      @include('layouts.navbar')
+      @include('layouts.navbar_default')
         <div class="row">
             <div class="col-md-12">
             <input type="text" name="cityZone" id="cityZone" value="paris">

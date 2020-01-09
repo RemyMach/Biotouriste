@@ -126,7 +126,25 @@ Route::post('report/show/user','ReportController@showAllMyReports');
 
 Route::get('report/show/admin','ReportController@showAllReportsForAdmin');
 
+//User_status_Correspondence
 
+Route::post('User_status/change','User_Status_CorrespondenceController@changeDefaultUserStatus');
+Route::get('User_status/change','User_Status_CorrespondenceController@testChangeDefaultUserStatus');
+
+Route::post('user/addStatus','User_Status_CorrespondenceController@addUserStatusTouristOrSeller');
+Route::get('User_status/addStatus','User_Status_CorrespondenceController@testaddUserStatusTouristOrSeller');
+
+Route::get('User_status/addStatusAdminController','User_Status_CorrespondenceController@testaddUserStatusAdminOrController');
+
+//Seller
+
+Route::post('seller/updateBio','SellerController@updateBioStatus');
+Route::get('seller/testupdateBio','SellerController@testupdateBioStatus');
+
+Route::post('seller/updateDescription','SellerController@updateDescription');
+Route::get('seller/testupdateDescription','SellerController@testupdateDescription');
+
+Route::get('seller/testSelect','SellerController@testSelectSellersByCommentsNotes');
 
 /********************************************** Route pour front test **********************************************/
 

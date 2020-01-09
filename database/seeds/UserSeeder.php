@@ -62,7 +62,7 @@ class UserSeeder extends Seeder
                 'user_phone' => '0246373829',
                 'email' => 'admin@admin.fr',
                 'password' => Hash::make('azertyuiop'),
-                'api_token' => Str::random(80),
+                'api_token' => 'XBxgy8DbH1Hbp1hQ12FDciR6QGit8wbMZdIGOYwU5R21hEdtaTwcYfiMoDAEycFHVBJ9j78kyz6QoQxw',
             ),
 
         ));
