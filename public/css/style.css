@@ -284,6 +284,9 @@ background-color: #677A70;
   margin-right: auto;
   background-color: #677A70;
 }
+.footer p {
+  opacity: .30;
+}
 .footer {
   padding: 2%;
 }
