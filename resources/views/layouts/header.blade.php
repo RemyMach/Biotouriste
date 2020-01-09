@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="{{ URL::asset('/css/navbar.css') }}">
   <link rel="stylesheet" href="{{ URL::asset('/css/overlay.css') }}">
   <link rel="stylesheet" href="https://use.typekit.net/vsp1spg.css">
+  <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.css">
+<link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
   <title>Healthy's</title>
 </head>
 <body>
