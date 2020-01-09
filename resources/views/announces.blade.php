@@ -64,6 +64,10 @@ $(function() {
     findCityData();
 });
 
+function showAnnounce(announce) {
+
+}
+
 function findByCity(cityData){
     $.ajax({
         url: '/filterByCity',
@@ -117,7 +121,7 @@ function remplirDivAnnonce(announces){
     var div = '';
     announces.forEach(function (announce) {
         div = div +
-        "<div class='post'>"+
+        "<div class='post' onclick='showAnnounce(announce)'>"+
             "<div class='row'>"+
                 "<div class='col-md-4'>"+
                     "<div class='icon'></div>"+
