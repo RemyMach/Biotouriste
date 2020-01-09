@@ -15,6 +15,7 @@ class CreateAnnouncesTable extends Migration {
 		Schema::create('Announces', function(Blueprint $table)
 		{
 			$table->integer('idAnnounce', true);
+			$table->integer('announce_quantity');
 			$table->string('announce_name', 45);
 			$table->boolean('announce_is_available');
             $table->decimal('announce_lat', 13, 10);

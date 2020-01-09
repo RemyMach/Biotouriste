@@ -6,118 +6,81 @@ use App\Announce;
 use App\Repositories\AnnounceRepository;
 use App\User;
 use App\Status_User;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class AnnounceController extends Controller
 {
-    /**
+        /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-//        $announces = Announce::all();
         return view('announces');
     }
-
-    /**
-     *
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Announce  $announce
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Announce $announce)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Announce  $announce
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Announce $announce)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Announce  $announce
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Announce $announce)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Announce  $announce
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Announce $announce)
-    {
-        //
-    }
+//    public function update(Request $request, Client $client){
+////        announce is available
+////        quantity
+//
+//    }
+//
+//    public function destroy(Request $request, Client $client){
+//        available
+//        //Apres annulation de la comande si il ya des commandes en cours , on envoie un mail pour lui dire de pas baiser le client et de lui donner son du
+//        //Si il n'y a pas de commande BAS ON envoie un mail au mec
+//    }
 
     public function filterByCategorie(Request $request){
-        $idCategorie = $request->get('categorie');
-        $cityData = $request->get('cityData');
-        $lng = $cityData['lng'];
-        $lat = $cityData['lat'];
-        $announces = AnnounceRepository::filterByLngAndLatOrAndCategorie($lng, $lat, $idCategorie);
-        $test= "";
-        $data = [
-            'success' => true,
-            'announces' => $announces,
-            'lng' => $lng,
-            'lat' => $lat
-        ];
-        return response()->json($data);
-//        return new Response(json_encode($data));
+        $data = request()->all();
+        $data['idUser'] = config('api.api_admin_id');
+        $data['api_token'] = config('api.api_admin_token');
+
+        $query = $client->request('POST', 'http://localhost/8001/api/filterByCategorie', ['form_params' => $data]);
+        $response = json_decode($query->getBody()->getContents());
+
+        if ($response->status === '400'){
+            return response()->json(['error' => $response->error]);
+        }
+        return response()->json([
+            'error' => $response
+        ]);
+
     }
 
-    public function filterByCity(Request $request){
-        $cityData = $request->get('cityData');
-        $lng = $cityData['lng'];
-        $lat = $cityData['lat'];
-        $announces = AnnounceRepository::filterByLngAndLatOrAndCategorie($lng, $lat);
+    public function filterByCity(Request $request, Client $client){
+        $data = request()->all();
+        $data['idUser'] = config('api.api_admin_id');
+        $data['api_token'] = config('api.api_admin_token');
+//        return response()->json([
+//            'response'    => $response
+//        ]);
+        $query = $client->request('POST', 'http://localhost/8001/api/filterByCity', ['form_params' => $data]);
+        $response = json_decode($query->getBody()->getContents());
+        if ($response->status === '400'){
+            return response()->json(['error' => $response->error]);
+        }
+        return response()->json([
+            'error' => $response
+        ]);
+    }
 
-        $data = [
-            'success' => true,
-            'announces' => $announces,
-            'lng' => $lng,
-            'lat' => $lat
-        ];
-        return response()->json($data);
+    public function testfilterByCity(Request $request, Client $client){
+        $data['idUser'] = config('api.api_admin_id');
+        $data['api_token'] = config('api.api_admin_token');
+
+        $data['lng'] = '2.3488';
+        $data['lat'] = '48.85341';
+
+        $query = $client->request('POST', 'http://localhost/8001/api/filterByCity', ['form_params' => $data]);
+        $response = json_decode($query->getBody()->getContents());
+        if ($response->status === '400'){
+            return response()->json(['error' => $response->error]);
+        }
+        return response()->json([
+            'error' => $response
+        ]);
     }
 }

@@ -167,4 +167,6 @@ Route::post('filterByCategorie','AnnounceController@filterByCategorie');
 
 Route::post('filterByCity','AnnounceController@filterByCity');
 
+Route::get('testfilterByCity','AnnounceController@testfilterByCity');
+
 /********************************************** Fin Routes Announces **********************************************/
