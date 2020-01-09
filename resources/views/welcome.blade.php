@@ -2,16 +2,14 @@
 <div id="content_1">
   @include('layouts.navbarDesktop')
   @include('layouts.navbarMobile')
-  @include('layouts.overlay_signup')
-  @include('layouts.overlay_cart')
   <div class="content_1_1">
     <div class="row" style="margin:0;">
-      <div class="col-md-8 col-sm-12" style="padding:0">
+      <div class="col-md-8 col-xs-4" style="padding:0">
         <div class="block_product">
           <div class="b_product"></div>
         </div>
       </div>
-      <div class="col-md-4 col-sm-12" style="padding:0">
+      <div class="col-md-4 col-xs-4" style="padding:0">
         <div class="block_map">
           <div class="b_map"></div>
         </div>
@@ -75,9 +73,9 @@
         <div class="navigation">
           <div class="row" style="margin:0;">
             <div class="col-md-12 text-center">
-              <button class="active" type="button" name="button" onclick="">Vendor</button>
-              <button class="" type="button" name="button" onclick="">Product</button>
-              <button class="" type="button" name="button" onclick="">Place</button>
+              <button class="active" type="button" name="button" onclick="">Vendors</button>
+              <button class="" type="button" name="button" onclick="">Products</button>
+              <button class="" type="button" name="button" onclick="">Places</button>
             </div>
           </div>
         </div>
@@ -236,5 +234,4 @@
     </div>
   </div>
 </div>
-
 @include('layouts.footer')

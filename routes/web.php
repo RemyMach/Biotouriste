@@ -74,6 +74,8 @@ Route::post('password/email','Auth\ResetPasswordController@reset')->name('passwo
 
 Route::get('announces','AnnounceController@index');
 
+Route::get('test/register1234','UserController@profil');
+
 Route::get('messages','MessageController@index');
 
 Route::get('aide',function(){

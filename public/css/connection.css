@@ -1,0 +1,55 @@
+#register {
+  padding-top: 20px;
+  height: 100%;
+  width: 100%;
+}
+#register .title {
+  padding: 20px;
+}
+#register  h3 {
+  font-size: 18px;
+  color: #677A70;
+  text-transform: uppercase;
+}
+#register  h2 {
+  font-size: 36px;
+  color: #677A70;
+  font-family: minerva-modern, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  text-transform: uppercase;
+}
+.register_container {
+  height: 900px;
+  width: 700px;
+  background-color: #c2cdc1;
+  margin: 5% auto;
+}
+.register_banner h3 {
+  text-transform: uppercase;
+  color: #677A70;
+  font-size: 24px;
+  font-weight: 500;
+  font-family: minerva-modern, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+.register_banner {
+  background-color: #f8f4ed;
+  height: auto;
+  width: 100%;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+.register_container input {
+  width: 60%;
+  height: 40px;
+  border: none;
+  margin-top: 20px;
+}
+.form_content_1 {
+  padding-top: 5%;
+}
+.form_content_2 {
+  padding-top: 5%;
+}
