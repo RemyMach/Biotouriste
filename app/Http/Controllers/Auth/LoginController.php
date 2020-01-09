@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\StatusUserRepository;
 use App\User;
 use GuzzleHttp\Client;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -53,20 +54,15 @@ class LoginController extends Controller
             ]);
         $response = json_decode($query->getBody()->getContents());
 
-        dd($response);
-        if($response->status === "400")
+        if($response->status === '400')
         {
             return redirect('login');
         }
 
-        $User_attributes_array = json_decode(json_encode($response->user),true);
-        $user = new User($User_attributes_array);
-        $user->idUser = $response->user->idUser;
-
         session([
-            'user'          => $user,
-            'status'        => $status,
-            'active_status' => $active_status,
+            'user'          => $response->user,
+            'allStatus'     => $response->user_status,
+            'active_status' => $response->user_current_status,
         ]);
 
         return redirect($this->redirectTo);
@@ -76,7 +72,7 @@ class LoginController extends Controller
 
         $data['idUser'] = config('api.api_admin_id');
         $data['api_token'] = config('api.api_admin_token');
-        $data['email'] = 'tourist@tourist.fr';
+        $data['email'] = 'touristSeller@touristSeller.fr';
         $data['password'] = 'azertyuiop';
 
         $query = $client->request('POST','http://localhost:8001/api/user/login', [
@@ -84,14 +80,31 @@ class LoginController extends Controller
         ]);
         $response = json_decode($query->getBody()->getContents());
 
-        dd($response);
+        if($response->status === '400')
+        {
+            return redirect('login');
+        }
 
+        session([
+            'user'          => $response->user,
+            'allStatus'     => $response->user_status,
+            'active_status' => $response->user_current_status,
+        ]);
+
+        return redirect($this->redirectTo);
     }
 
     public function logout(Request $request)
     {
         $request->session()->forget('user');
+        $request->session()->forget('allStatus');
+        $request->session()->forget('active_status');
 
         return $this->loggedOut($request) ?: redirect('/');
+    }
+
+    public function showLoginForm(Request $request)
+    {
+        return view('auth.login');
     }
 }

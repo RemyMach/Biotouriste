@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Resources\User as UserResource;
+use App\Repositories\StatusUserRepository;
 use App\User;
+use App\User_Status_Correspondence;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -14,14 +16,12 @@ class LoginController extends Controller
 {
     public function __construct()
     {
-        //$this->middleware('apiAdmin');
+        $this->middleware('apiAdmin');
     }
 
-    public function login(ApiTokenController $apiTokenController)
+    public function login(ApiTokenController $apiTokenController,User_Status_CorrespondenceController $User_status_correspondenceController)
     {
         $validator = $this->validateLogin(request()->all());
-
-
         if($validator->fails())
         {
             return response()->json([
@@ -32,7 +32,6 @@ class LoginController extends Controller
         }
 
         $user = $this->tryToAuthenticateByEmail();
-
         if(!$user)
         {
             return response()->json([
@@ -47,15 +46,24 @@ class LoginController extends Controller
             return response()->json([
                 'message'   => 'Your login or your password is not correct',
                 'error'     => $validator->errors(),
-                'status'    => "400"
+                'status'    => '400'
             ]);
-
         }
 
-            return response()->json([
-            'message'   => 'You are now login',
-            'status'    => '200',
-            'user'      => $user
+        $checkStatus = User_status_correspondenceController::getAllStatusFromAnUser($user->idUser);
+        if($checkStatus->original['status'] == '400'){
+
+            return $checkStatus;
+        }
+
+        $current_status = User_status_correspondenceController::getCurrentStatus($user->idUser, $checkStatus->original['allStatus']);
+
+        return response()->json([
+            'message'               => 'You are now login',
+            'status'                => '200',
+            'user'                  => $user,
+            'user_current_status'   => $current_status,
+            'user_status'           => $checkStatus->original['allStatus']
         ]);
 
     }

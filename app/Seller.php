@@ -27,7 +27,7 @@ class Seller extends Model
     /**
      * @var array
      */
-    protected $fillable = ['seller_product_bio', 'seller_description', 'Users_idUser'];
+    protected $fillable = ['seller_product_bio', 'seller_description', 'Users_idUser','seller_verify'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

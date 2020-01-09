@@ -24,7 +24,7 @@ class User_Status_Correspondence extends Model
     /**
      * @var array
      */
-    protected $fillable = ['Users_idUser','Status_User_idStatus_User'];
+    protected $fillable = ['Users_idUser','Status_User_idStatus_User','default_status'];
 
     public function status()
     {
