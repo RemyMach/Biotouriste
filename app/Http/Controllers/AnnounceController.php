@@ -3,16 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Announce;
+use App\Repositories\AnnounceRepository;
+use App\User;
+use App\Status_User;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AnnounceController extends Controller
 {
-    public function printMap()
-    {
-        return view('Openstreet');
-    }
-
-    /**
+        /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -21,71 +21,66 @@ class AnnounceController extends Controller
     {
         return view('announces');
     }
+//    public function update(Request $request, Client $client){
+////        announce is available
+////        quantity
+//
+//    }
+//
+//    public function destroy(Request $request, Client $client){
+//        available
+//        //Apres annulation de la comande si il ya des commandes en cours , on envoie un mail pour lui dire de pas baiser le client et de lui donner son du
+//        //Si il n'y a pas de commande BAS ON envoie un mail au mec
+//    }
 
-    /**
-     *
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function filterByCategorie(Request $request){
+        $data = request()->all();
+        $data['idUser'] = config('api.api_admin_id');
+        $data['api_token'] = config('api.api_admin_token');
+
+        $query = $client->request('POST', 'http://localhost/8001/api/filterByCategorie', ['form_params' => $data]);
+        $response = json_decode($query->getBody()->getContents());
+
+        if ($response->status === '400'){
+            return response()->json(['error' => $response->error]);
+        }
+        return response()->json([
+            'error' => $response
+        ]);
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function filterByCity(Request $request, Client $client){
+        $data = request()->all();
+        $data['idUser'] = config('api.api_admin_id');
+        $data['api_token'] = config('api.api_admin_token');
+//        return response()->json([
+//            'response'    => $response
+//        ]);
+        $query = $client->request('POST', 'http://localhost/8001/api/filterByCity', ['form_params' => $data]);
+        $response = json_decode($query->getBody()->getContents());
+        if ($response->status === '400'){
+            return response()->json(['error' => $response->error]);
+        }
+        return response()->json([
+            'error' => $response
+        ]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Announce  $announce
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Announce $announce)
-    {
-        //
-    }
+    public function testfilterByCity(Request $request, Client $client){
+        $data['idUser'] = config('api.api_admin_id');
+        $data['api_token'] = config('api.api_admin_token');
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Announce  $announce
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Announce $announce)
-    {
-        //
-    }
+        $data['lng'] = '2.3488';
+        $data['lat'] = '48.85341';
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Announce  $announce
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Announce $announce)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Announce  $announce
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Announce $announce)
-    {
-        //
+        $query = $client->request('POST', 'http://localhost/8001/api/filterByCity', ['form_params' => $data]);
+        $response = json_decode($query->getBody()->getContents());
+        if ($response->status === '400'){
+            return response()->json(['error' => $response->error]);
+        }
+        return response()->json([
+            'error' => $response
+        ]);
     }
 }

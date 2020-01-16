@@ -50,70 +50,68 @@ class RegisterController extends Controller
         return view('auth.register');
     }
 
-    public function register(Request $request1)
+    public function register(Request $request, Client $client)
     {
         $data = request()->all();
 
-        $data['api_token'] = config('api.api_admin_password');
+        $data['api_token'] = config('api.api_admin_token');
         $data['idUser'] = config('api.api_admin_id');
 
-
-        $client = new Client();
-        $request = $client->request('POST','http://localhost:8001/api/user/store',
+        $query = $client->request('POST','http://localhost:8001/api/user/store',
             ['form_params' => $data
             ]);
-        $response = json_decode($request->getBody()->getContents());
+        $response = json_decode($query->getBody()->getContents());
 
-
-        if($response->status === "400")
+        if($response->status === '400')
         {
             return redirect($this->redirectTo);
         }
 
-        $User_attributes_array = json_decode(json_encode($response->user),true);
-        $user = new User($User_attributes_array);
-        $user->idUser = $response->user->idUser;
-
-        session(['user' => $user]);
+        session([
+            'user'          => $response->user,
+            'allStatus'     => $response->user_current_status,
+            'active_status' => $response->user_status,
+        ]);
 
         //que $this->registered($request1, $user) soit vrai ou false on redirect
-        return $this->registered($request1, $user)
+        return $this->registered($request, $user)
             ?: redirect($this->redirectTo);
     }
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'user_name' => ['required', 'string', 'max:45'],
-            'user_surname' => ['required', 'string', 'max:45'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'user_postal_code' => ['integer'],
-            'user_phone' => ['unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'user_img' => ['string'],
+
+    public function testRegister(Request $request, Client $client){
+
+        $data['api_token'] = config('api.api_admin_token');
+        $data['idUser'] = config('api.api_admin_id');
+        //$data['seller_description'] = 'j\'aime les pommes surtout les 2';
+        $data['user_name'] = 'pomme1';
+        $data['user_surname'] = 'surname';
+        $data['user_adress'] = '12 rue bangbang';
+        $data['user_postal_code'] = '95234';
+        $data['user_phone'] = '0646527876';
+        $data['email'] = 'pomme2@pomme2.fr';
+        $data['password'] = 'azertyuiop';
+        $data['password_confirmation'] = 'azertyuiop';
+        $data['status_user'] = 'Tourist';
+
+        $query = $client->request('POST','http://localhost:8001/api/user/store',
+            ['form_params' => $data
+            ]);
+        $response = json_decode($query->getBody()->getContents());
+
+        if($response->status === '400')
+        {
+            return redirect('login');
+        }
+
+        session([
+            'user'          => $response->user,
+            'allStatus'     => $response->user_current_status,
+            'active_status' => $response->user_status,
         ]);
+
+        return redirect($this->redirectTo);
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\User
-     */
-    protected function create(array $data)
-    {
-        $data['Status_User_idStatus_User'] = 1;
-        $data['password'] = Hash::make($data['password']);
-        $data['api_token'] = Str::random(80);
-        unset($data['password_confirmation']);
-        unset($data['_token']);
-        return User::create($data);
-    }
 
     protected function registered(Request $request,User $user)
     {

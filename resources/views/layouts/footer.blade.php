@@ -1,5 +1,5 @@
 <div class="footer">
-  <div class="footer_title text-center">
+  <div class="footer-title text-center">
     <h1>Healthy's</h1>
   </div>
   <div class="row" style="margin:0;">
@@ -9,12 +9,12 @@
         <h2>to be part of the family</h2>
         <form class="" action="index.html" method="post">
           <input class="input col-md-12" type="text" name="" value="">
-          <input class="btn_send col-md-4" type="submit" name="" value="Submit">
+          <input class="btn-send col-md-4" type="submit" name="" value="Submit">
         </form>
       </div>
     </div>
   </div>
-  <div class="footer_social">
+  <div class="footer-social">
     <div class="row" style="margin:0;">
       <div class="col-md-4 offset-md-4 text-center col-sm-12">
         <ul>
@@ -25,9 +25,9 @@
       </div>
     </div>
   </div>
-  <div class="footer_link">
+  <div class="footer-link">
     <div class="col-md-12 text-center col-sm-12">
-      <div class="footer_line"></div>
+      <div class="footer-line"></div>
       <ul>
         <li><a href="#">Announces</a></li>
         <li><a href="#">Products</a></li>

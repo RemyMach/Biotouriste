@@ -10,9 +10,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $seller_description
  * @property int $Users_idUser
  * @property User $user
+ * @method static findOrFail($idSeller)
  */
 class Seller extends Model
 {
+    public $timestamps = false;
     /**
      * The primary key for the model.
      * 
@@ -20,10 +22,12 @@ class Seller extends Model
      */
     protected $primaryKey = 'idSeller';
 
+    protected $table = 'Sellers';
+
     /**
      * @var array
      */
-    protected $fillable = ['seller_product_bio', 'seller_description', 'Users_idUser'];
+    protected $fillable = ['seller_product_bio', 'seller_description', 'Users_idUser','seller_verify'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

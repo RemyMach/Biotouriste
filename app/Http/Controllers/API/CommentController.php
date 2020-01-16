@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Announce;
 use App\Comment;
 use App\Http\Controllers\API\ApiTokenController;
+use App\Http\Controllers\API\NoApiClass\UsefullController;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Support\Facades\Validator;
@@ -13,18 +14,15 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-    public function CommentsOfASeller(ApiTokenController $apiTokenController)
+    public function __construct()
     {
-        $requestParameters = $apiTokenController->verifyAdminCredentials();
+        $this->middleware('apiTokenAndIdUserExistAndMatch')->only(
+            'CommentsOfASeller', 'store','show','destroy'
+        );
+    }
 
-        if(!$requestParameters)
-        {
-            return response()->json([
-                'message'   => 'Your credentials are not valid',
-                'status'    => '400',
-            ]);
-        }
-
+    public function CommentsOfASeller()
+    {
         $data = request()->all();
 
         if(isset($data['idAnnounce'])){
@@ -41,7 +39,7 @@ class CommentController extends Controller
             $announces = $announce->user->announces;
         }else{
             //pour quand on est dans le profil pour que le vendeur voit tous ses comments
-            $user = User::findOrFail($requestParameters['idUser']);
+            $user = User::findOrFail($data['idUser']);
             //normalement ne sert à rien car findorfail sort une 404
             if(!$user)
             {
@@ -70,17 +68,8 @@ class CommentController extends Controller
             ]);
     }
 
-    public function store(Request $request,ApiTokenController $apiTokenController)
+    public function store(Request $request, UsefullController $usefullController)
     {
-        $requestParameters = $apiTokenController->verifyCredentials();
-
-        if(!$requestParameters)
-        {
-            return response()->json([
-                'message'   => 'Your credentials are not valid',
-                'status'    => '400',
-            ]);
-        }
 
         $data = request()->all();
 
@@ -90,10 +79,10 @@ class CommentController extends Controller
         {
             return $validator;
         }
-        $validData = $this->keepKeysThatWeNeed($data,['comment_subject','comment_note','comment_content']);
+        $validData = $usefullController->keepKeysThatWeNeed($data,['comment_subject','comment_note','comment_content']);
         $validData['Announces_idAnnounce'] = 1;
         $validData['Users_idUser'] = (int) $requestParameters['idUser'];
-        $validData['comment_note'] = intval($validData['comment_note']);
+        $validData['comment_note'] = (int) $validData['comment_note'];
         //return $validData;
         $comment = Comment::create($validData);
 
@@ -104,19 +93,10 @@ class CommentController extends Controller
         ]);
     }
 
-    public function show(Request $request,ApiTokenController $apiTokenController)
+    public function show(Request $request)
     {
-        $requestParameters = $apiTokenController->verifyCredentials();
-
-        if(!$requestParameters)
-        {
-            return response()->json([
-                'message'   => 'Your credentials are not valid',
-                'status'    => '400',
-            ]);
-        }
-
-        $idUser = $requestParameters['idUser'];
+        $data = request()->all();
+        $idUser = $data['idUser'];
 
         $user =  User::findorFail($idUser);
 
@@ -175,14 +155,6 @@ class CommentController extends Controller
 
     public function destroy(ApiTokenController $apiTokenController)
     {
-        $requestParameters = $apiTokenController->verifyCredentials();
-
-        if (!$requestParameters) {
-            return response()->json([
-                'message' => 'Your credentials are not valid',
-                'status' => '400',
-            ]);
-        }
         $data = request()->all();
 
         $comment = $this->compareSessionUserToCommentUser($data);
@@ -203,7 +175,7 @@ class CommentController extends Controller
         ]);
     }
 
-    protected function validateComment($data)
+    private function validateComment($data)
     {
         $validator = Validator::make($data, [
             'comment_subject'   => 'required|string|max:50',
@@ -216,16 +188,16 @@ class CommentController extends Controller
             return response()->json([
                 'message'   => 'The request is not good',
                 'error'     => $validator->errors(),
-                'status'    => "400"
+                'status'    => '400'
             ]);
         }
         return response()->json([
             'message'   => 'The request is good',
-            'status'    => "200"
+            'status'    => '200'
         ]);
     }
 
-    protected function collectCommentsFromAnnounces($announces)
+    private function collectCommentsFromAnnounces($announces)
     {
         $commentsFromAnnounces = [];
         $data = [];
@@ -240,7 +212,7 @@ class CommentController extends Controller
         return $data;
     }
 
-    protected function collectCommentsUser($comments)
+    private function collectCommentsUser($comments)
     {
         $UserFromComments = [];
         foreach ($comments as $comment)
@@ -250,7 +222,7 @@ class CommentController extends Controller
         return $UserFromComments;
     }
 
-    protected function compareSessionUserToCommentUser($data)
+    private function compareSessionUserToCommentUser($data)
     {
         $comment = Comment::findorFail($data['idComment']);
         if($comment->user->idUser != $data['idUser'])

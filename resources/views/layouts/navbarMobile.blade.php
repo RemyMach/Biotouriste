@@ -8,8 +8,11 @@
         <h1>Healthy's</h1>
       </div>
       <div class="col-4 text-center menu">
+<<<<<<< HEAD
         <button type="button" name="button" onclick="openFav()"><i class="fas fa-heart"></i></button>
         <button type="button" name="button" onclick="openSignup()"><i class="fas fa-user"></i></button>
+=======
+>>>>>>> Remy
         <button type="button" name="button" onclick="openCart()"><i class="fas fa-shopping-bag"></i></button>
       </div>
     </div>

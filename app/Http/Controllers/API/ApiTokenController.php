@@ -4,14 +4,41 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\User;
-use http\Env\Response;
-use Illuminate\Http\Request;
-use phpDocumentor\Reflection\Types\Boolean;
 
 class ApiTokenController extends Controller
 {
 
-    protected $user;
+    private $user;
+    private $currentStatus;
+    private $allStatus;
+
+    public function verifyRoleCredentials($role)
+    {
+        $parameters = $this->verifyCredentials();
+
+        if(!$parameters)
+        {
+            return false;
+        }
+
+        $this->allStatus = User_status_correspondenceController::getAllStatusFromAnUser($this->user->idUser);
+        if($this->allStatus->original['status'] == '400'){
+
+            return false;
+        }
+
+        $this->currentStatus = User_status_correspondenceController::getCurrentStatus(
+            $this->user->idUser, $this->allStatus->original['allStatus']
+        );
+
+
+        $method = 'verifyApiTokenRequestCorrespondTo' . $role;
+
+        if(!$this->$method()){
+            return false;
+        }
+        return $parameters;
+    }
 
     public function verifyCredentials()
     {
@@ -27,7 +54,7 @@ class ApiTokenController extends Controller
             return false;
         }
 
-        if(!$this->verifyApiTokenRequestCorrespondToTheIdUser($parameters['idUser'],$parameters['api_token']))
+        if(!$this->apiTokenRequestCorrespondToTheIdUser($parameters['idUser']))
         {
             return false;
         }
@@ -35,24 +62,7 @@ class ApiTokenController extends Controller
         return $parameters;
     }
 
-    public function verifyAdminCredentials()
-    {
-        $parameters = $this->verifyCredentials();
-
-        if(!$parameters)
-        {
-            return false;
-        }
-
-        return $this->verifyApiTokenRequestCorrespondToTheAdminUser($parameters['idUser']);
-
-        if(!$this->verifyApiTokenRequestCorrespondToTheAdminUser($parameters['idUser'])){
-            return false;
-        }
-        return $parameters;
-    }
-
-    public function verifyPresenceIdUserAndApiToken()
+    private function verifyPresenceIdUserAndApiToken()
     {
         $api_token = request('api_token');
         $idUser = request('idUser');
@@ -60,38 +70,69 @@ class ApiTokenController extends Controller
         {
             return false;
         }
-
         return ["api_token" => $api_token,"idUser" => $idUser];
 
     }
 
-    public function apiTokenCorrespondToAnyUser(string $api_token)
+    private function apiTokenCorrespondToAnyUser(string $api_token)
     {
         $user = User::where('api_token',$api_token)->first();
 
         if(!$user){
             return false;
         }
+        $this->user = $user;
 
         return true;
     }
 
-    public function verifyApiTokenRequestCorrespondToTheIdUser(string $idUser,string $api_token)
+    private function apiTokenRequestCorrespondToTheIdUser(string $idUser)
     {
-        $user = User::where('idUser', $idUser)->first();
+        if($idUser != $this->user->idUser){
+            return false;
+        }
+        return true;
+    }
 
-        if($api_token != $user->api_token){
+    private function verifyApiTokenRequestCorrespondToAdmin()
+    {
+        if(!preg_match('#admin#i',$this->currentStatus->status_user_label)){
             return false;
         }
 
         return true;
     }
 
-    public function verifyApiTokenRequestCorrespondToTheAdminUser(string $idUser)
+    private function verifyApiTokenRequestCorrespondToController()
     {
-        $user = User::where('idUser',$idUser)->first();
+        if(!preg_match('#(admin|controller)#i',$this->currentStatus->status_user_label)){
+            return false;
+        }
 
-        if(!preg_match('#admin#i',$user->status['status_user_label'])){
+        return true;
+    }
+
+    private function verifyApiTokenRequestCorrespondToSeller()
+    {
+        if(!preg_match('#seller#i',$this->currentStatus->status_user_label)){
+            return false;
+        }
+
+        return true;
+    }
+
+    private function verifyApiTokenRequestCorrespondToTourist()
+    {
+        if(!preg_match('#tourist#i',$this->currentStatus->status_user_label)){
+            return false;
+        }
+
+        return true;
+    }
+
+    private function verifyApiTokenRequestCorrespondToTouristController()
+    {
+        if(!preg_match('#(tourist|controller)#i',$this->currentStatus->status_user_label)){
             return false;
         }
 

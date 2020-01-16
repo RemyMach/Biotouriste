@@ -17,6 +17,7 @@ class CreateDiscountCodesTable extends Migration {
 			$table->integer('idDiscount_code', true);
 			$table->integer('discount_code_amount');
 			$table->boolean('is_use');
+			$table->dateTime('discount_code_expiration_date')->nullable();
 			$table->integer('Users_idUser')->index('fk_Discount_codes_Users1_idx');
 		});
 	}

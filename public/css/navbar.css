@@ -14,6 +14,7 @@ nav {
   padding: 0;
   width: 100%;
 }
+<<<<<<< HEAD
 .title a {
   padding: 0;
   margin: 0;
@@ -21,6 +22,8 @@ nav {
 .title a:hover {
   text-decoration: none;
 }
+=======
+>>>>>>> Remy
 h1 {
   font-family: minerva-modern, sans-serif;
   font-weight: 700;
@@ -43,7 +46,11 @@ h1 {
 .navigation button:hover {
   color: #c2cdc1;
 }
+<<<<<<< HEAD
 .menu a {
+=======
+.navigation a {
+>>>>>>> Remy
   text-transform: uppercase;
   color: #677A70;
   text-decoration: none;
@@ -55,7 +62,11 @@ h1 {
   margin-right: 10px;
   padding-bottom: 5px;
 }
+<<<<<<< HEAD
 .menu a:hover {
+=======
+.navigation a:hover {
+>>>>>>> Remy
   border-bottom: 2px solid #c2cdc1;
   color: #c2cdc1;
 }

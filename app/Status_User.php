@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Status_User extends Model
 {
+    public $timestamps = false;
     /**
      * The table associated with the model.
      *
@@ -23,10 +24,10 @@ class Status_User extends Model
     /**
      * @var array
      */
-    protected $fillable;
+    protected $fillable = ["idStatus_User"];
 
-    public function status()
-    {
-        return $this->hasMany(User::class);
-    }
+       public function UsersId()
+       {
+           return $this->hasMany('App\User_Status_Correspondence', 'Status_User_idStatus_User', 'idStatus_User');
+       }
 }
