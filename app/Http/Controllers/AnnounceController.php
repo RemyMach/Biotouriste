@@ -33,7 +33,11 @@ class AnnounceController extends Controller
 //        //Si il n'y a pas de commande BAS ON envoie un mail au mec
 //    }
 
-    public function filterByCategorie(Request $request){
+    public function insert(Request $request, Client $client){
+
+    }
+
+    public function filterByCategorie(Request $request, Client $client){
         $data = request()->all();
         $data['idUser'] = config('api.api_admin_id');
         $data['api_token'] = config('api.api_admin_token');
@@ -44,9 +48,8 @@ class AnnounceController extends Controller
         if ($response->status === '400'){
             return response()->json(['error' => $response->error]);
         }
-        return response()->json([
-            'error' => $response
-        ]);
+
+        return response()->json($response);
 
     }
 
@@ -55,16 +58,12 @@ class AnnounceController extends Controller
         $data = request()->all();
         $data['idUser'] = config('api.api_admin_id');
         $data['api_token'] = config('api.api_admin_token');
-//        return response()->json([
-//            'response'    => $response
-//        ]);
         $query = $client->request('POST', 'http://localhost:8001/api/filterByCity', ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
 
-
-//        if ($response->status === '400'){
-//            return response()->json(['error' => $response->error]);
-//        }
+        if ($response->status === '400'){
+            return response()->json(['error' => $response->error]);
+        }
 
         return response()->json($response);
     }
