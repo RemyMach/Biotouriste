@@ -15,11 +15,6 @@ class UserController extends Controller
     {
         $this->middleware('SessionAuth')->only('show','updateProfile','UpdatePassword','destroy');
         $this->middleware('admin')->only('destroy','index');
-<<<<<<< HEAD
-        $this->middleware('guest')->only('profil');
-=======
-
->>>>>>> develop
     }
 
     /**
