@@ -61,14 +61,12 @@ class AnnounceController extends Controller
         $query = $client->request('POST', 'http://localhost:8001/api/filterByCity', ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
 
-        return response()->json([
-            'error' => $response
-        ]);
 
         if ($response->status === '400'){
             return response()->json(['error' => $response->error]);
         }
 
+        return response()->json($response);
     }
 
     public function testfilterByCity(Request $request, Client $client)

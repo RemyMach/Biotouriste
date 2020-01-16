@@ -53,13 +53,38 @@ class AnnounceController extends Controller
         ]);
     }
 
+    public function selectByCity(Request $request)
+    {
+
+        $this->request = $request;
+
+        $validator = $this->validateCity();
+        if($validator->original['status'] == '400') {
+            return $validator;
+        }
+
+        $citydata = $this->request->input('cityData');
+        $announces = AnnounceRepository::filterByLngAndLatOrAndCategorie($citydata['lng'],$citydata['lat']);
+        if(!isset($announces[0])){
+            return response()->json([
+                'error'     => 'your city is not valid or you have no announces for this city',
+                'status'    => '400',
+            ]);
+        }
+
+        return response()->json([
+            'announces' => $announces,
+            'lng'    => $citydata['lng'],
+            'lat'    => $citydata['lat'],
+        ]);
+    }
+
     private function validateCity(){
 
         $validator = Validator::make($this->request->input('cityData'), [
-            'lng' => ['required','string'],
-            'lat' => ['required','string'],
+            'lng' => ['required','string','regex:/^[0-9]*.[0-9]*$/'],
+            'lat' => ['required','string','regex:/^[0-9]*.[0-9]*$/'],
         ]);
-
         return $this->resultValidator($validator);
     }
 
@@ -88,34 +113,4 @@ class AnnounceController extends Controller
         return $this->resultValidator($validator);
     }
 
-    public function selectByCity(Request $request)
-    {
-
-        $this->request = $request;
-
-
-        $validator = $this->validateCity();
-        if($validator->original['status'] == '400') {
-            return $validator;
-        }
-
-        return response()->json([
-            'error' => $citydata['lng']
-        ]);
-
-        $citydata = $this->request->input('cityData');
-        $announces = AnnounceRepository::filterByLngAndLatOrAndCategorie($citydata['lng'],$citydata['lat']);
-        if(!isset($anounces[0])){
-            return response()->json([
-                'error'     => 'your city is not valid or you have no announces for this city',
-                'status'    => '400'
-            ]);
-        }
-
-        return response()->json([
-            'announces' => $announces,
-            'lng'    => $citydata['lng'],
-            'lat'    => $citydata['lat'],
-        ]);
-    }
 }
