@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\DB;
 
 class AnnounceController extends Controller
 {
+    public function __construct(){
+        $this->middleware('seller')->only('store', 'update');
+    }
         /**
      * Display a listing of the resource.
      *
@@ -32,8 +35,41 @@ class AnnounceController extends Controller
 //        //Apres annulation de la comande si il ya des commandes en cours , on envoie un mail pour lui dire de pas baiser le client et de lui donner son du
 //        //Si il n'y a pas de commande BAS ON envoie un mail au mec
 //    }
+    public function store(Request $request, Client $client){
+        $data = request()->all();
+        $data['idUser'] = $this->sessionUser->idUser;
+        $data['api_token'] = $this->sessionUser->api_token;
+        $query = $client->request('POST', 'http://localhost:8001/api/store', ['form_params' => $data]);
+        $response = json_decode($query->getBody()->getContents());
 
-    public function insert(Request $request, Client $client){
+        if ($response->status === '400'){
+            return response()->json(['error' => $response->error]);
+        }
+    }
+
+    public function teststore(Request $request, Client $client){
+        $data = [
+            'announce_name' => 'TestSTORAGE',
+            'announce_price' => 8,
+            'announce_comment' => 'TestSTORAGE',
+            'announce_adresse' => 'TestSTORAGE',
+            'announce_date' => '2012-01-01 11:00:00',
+            'announce_city' => 'punta cana',
+            'announce_img' => '',
+            'products_idProduct' => 130,
+            'Users_idUser' => 4,
+            'announce_lat' => 18.582010,
+            'announce_lng' => -68.405472,
+            'announce_quantity' => 3
+        ];
+        $data['idUser'] = 3;
+        $data['api_token'] = 'P564KPoxtwCQIG53gdTz26oqesCcKUYr2ODZ4LfNneCOLeuTXyJAmjhp2pV6FFKiLQPWK3NzOYlmLaE0';
+        $query = $client->request('POST', 'http://localhost:8001/api/store', ['form_params' => $data]);
+        $response = json_decode($query->getBody()->getContents());
+
+        if ($response->status === '400'){
+            return response()->json(['error' => $response->error]);
+        }
 
     }
 
