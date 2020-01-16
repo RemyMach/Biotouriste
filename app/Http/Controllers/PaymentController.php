@@ -38,8 +38,8 @@ class PaymentController extends Controller
     public function store($status,$currency,$idUser,$idAnnouce,$amount)
     {
         $mytime = Carbon::now();
-        DB::table('Payment')->insert(
-            ['payment_status' => $status , 'payment_amount' => $amount, 'payment_currency' => $currency , 'payment_date' => $mytime , 'Users_idUser' => $idUser , 'Announces_idAnnouce' => $idAnnouce ]
+        DB::table('Payments')->insert(
+            ['payment_status' => $status , 'payment_amount' => $amount, 'payment_currency' => $currency , 'payment_date' => $mytime , 'Users_idUser' => $idUser , 'Announces_idAnnounce' => $idAnnouce ]
         );
         return view('payment');
     }
