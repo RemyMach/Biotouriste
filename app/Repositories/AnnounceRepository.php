@@ -32,6 +32,7 @@ class AnnounceRepository extends BaseRepository
                 ->where('announce_lat', '<=', $latmax)
                 ->where('announce_lng', '>=', $lngmin)
                 ->where('announce_lng', '<=', $lngmax)
+                ->where('announce_is_available', '=', true)
                 ->get();
         } else {
             return DB::table('announces')
@@ -42,6 +43,7 @@ class AnnounceRepository extends BaseRepository
                 ->where('announce_lat', '<=', $latmax)
                 ->where('announce_lng', '>=', $lngmin)
                 ->where('announce_lng', '<=', $lngmax)
+                ->where('announce_is_available', '=', true)
                 ->get();
         }
     }
