@@ -66,6 +66,7 @@ function findByCity(cityData){
         dataType: "json",
         success: function(result){
             mymap.removeLayer(this);
+            console.log(result)
             mymap.setView([result.lat, result.lng], 10, { animation: true });
             remplirDivAnnonce(result.announces);
         }

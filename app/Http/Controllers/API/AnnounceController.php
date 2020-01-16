@@ -82,8 +82,8 @@ class AnnounceController extends Controller
     private function validateCity(){
 
         $validator = Validator::make($this->request->input('cityData'), [
-            'lng' => ['required','string','regex:/^[0-9]*.[0-9]*$/'],
-            'lat' => ['required','string','regex:/^[0-9]*.[0-9]*$/'],
+            'lng' => ['required','string','regex:/^(-)?[0-9]*.[0-9]*$/'],
+            'lat' => ['required','string','regex:/^(-)?[0-9]*.[0-9]*$/'],
         ]);
         return $this->resultValidator($validator);
     }
