@@ -117,6 +117,12 @@ Route::post('seller/updateDescription','API\SellerController@updateSellerDescrip
 Route::post('seller/testSelect','API\SellerController@SelectSellersByCommentsNotes');
 
 
+// Announce
+
+Route::post('filterByCategorie','API\AnnounceController@selectByCategorie');
+Route::post('filterByCity','API\AnnounceController@selectByCategorie');
+
+
 
 /*Route::get('/users', function () {
     return UserResource::collection(User::paginate(2));

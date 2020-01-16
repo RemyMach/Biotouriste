@@ -6,7 +6,7 @@
         <div class="row">
           <div class="col-8">
             <a href="#" class="sp-10"><img class="header-brand-logo" src="../../storage/app/resources/BioTourist.png" alt=""></a>
-            <a href="#" class="sp-30">Mes Annonces</a>
+            <a href="{{ url('announces') }}" class="sp-30">Mes Annonces</a>
             <a href="#" class="sp-30">Message</a>
             <a href="#" class="sp-30">Map</a>
             <a href="#help" class="sp-30">Aide</a>
