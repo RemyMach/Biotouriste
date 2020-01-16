@@ -161,7 +161,6 @@ Route::get('aide',function(){
 /********************************************** Fin Route pour front test **********************************************/
 
 
-<<<<<<< HEAD
 
 /********************************************** Route pour front test **********************************************/
 
@@ -175,7 +174,6 @@ Route::post('payment/store','PaymentController@store');
 Route::get('allpay',function (){
    return view('test');
 });
-=======
 /********************************************** Debut Routes Announces **********************************************/
 
 Route::get('announces','AnnounceController@index');
@@ -187,4 +185,4 @@ Route::post('filterByCity','AnnounceController@filterByCity');
 Route::post('testfilterByCity','AnnounceController@testfilterByCity');
 
 /********************************************** Fin Routes Announces **********************************************/
->>>>>>> Remy
+
