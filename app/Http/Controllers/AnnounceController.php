@@ -62,9 +62,9 @@ class AnnounceController extends Controller
         $response = json_decode($query->getBody()->getContents());
 
 
-        if ($response->status === '400'){
-            return response()->json(['error' => $response->error]);
-        }
+//        if ($response->status === '400'){
+//            return response()->json(['error' => $response->error]);
+//        }
 
         return response()->json($response);
     }

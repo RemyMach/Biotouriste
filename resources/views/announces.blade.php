@@ -65,9 +65,6 @@ function findByCity(cityData){
         data: {cityData: cityData[0],  _token: '{{csrf_token()}}'},
         dataType: "json",
         success: function(result){
-            console.log(result);
-            console.log(result.lng);
-            console.log(result.lat);
             mymap.removeLayer(this);
             mymap.setView([result.lat, result.lng], 10, { animation: true });
             remplirDivAnnonce(result.announces);
