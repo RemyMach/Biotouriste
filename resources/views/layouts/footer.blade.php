@@ -1,5 +1,42 @@
-<footer>
-</footer>
+<div class="footer">
+  <div class="footer_title text-center">
+    <h1>Healthy's</h1>
+  </div>
+  <div class="row" style="margin:0;">
+    <div class="col-md-4 offset-md-4 text-center col-sm-12">
+      <div class="newsletter">
+        <h3>Subscribe to our newsletter</h3>
+        <h2>to be part of the family</h2>
+        <form class="" action="index.html" method="post">
+          <input class="input col-md-12" type="text" name="" value="">
+          <input class="btn_send col-md-4" type="submit" name="" value="Submit">
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="footer_social">
+    <div class="row" style="margin:0;">
+      <div class="col-md-4 offset-md-4 text-center col-sm-12">
+        <ul>
+          <li><i class="fab fa-twitter"></i></li>
+          <li><i class="fab fa-instagram"></i></li>
+          <li><i class="fab fa-facebook"></i></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer_link">
+    <div class="col-md-12 text-center col-sm-12">
+      <div class="footer_line"></div>
+      <ul>
+        <li><a href="#">Announces</a></li>
+        <li><a href="#">Products</a></li>
+        <li><a href="#">FAQ</a></li>
+      </ul>
+      <p>© HEALTHY'S</p>
+    </div>
+  </div>
+</div>
 <script src="{{ URL::asset('/js/script.js') }}" charset="utf-8"></script>
 <script src="https://kit.fontawesome.com/d9a2e4a111.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>

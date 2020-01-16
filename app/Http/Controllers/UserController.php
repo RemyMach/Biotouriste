@@ -14,6 +14,7 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('admin')->only('destroy','index');
+        $this->middleware('guest')->only('profil');
     }
 
     /**
@@ -198,5 +199,11 @@ class UserController extends Controller
         }
 
         return back()->with('success','The Profile has been destroy');
+    }
+
+    public function profil() {
+
+      return view('register');
+
     }
 }
