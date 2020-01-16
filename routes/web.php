@@ -89,8 +89,9 @@ Route::get('contact','ContactController@index');
 
 
 /********************************************** Route Anthony pour test stripe **********************************************/
-Route::get('addmoney/stripe', array('as' => 'addmoney.paystripe','uses' => 'StripeController@PaymentStripe'));
-Route::post('addmoney/stripe', array('as' => 'addmoney.stripe','uses' => 'StripeController@postPaymentStripe'));
-Route::get('pay',function(){
-    return view('PaymentStripe');
+Route::get('checkout',function(){
+    return view('checkout');
+});
+Route::post('create-payment-intent',function(){
+    return view('stripe');
 });
