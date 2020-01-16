@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="https://use.typekit.net/vsp1spg.css">
   {{-- CSS --}}
   <link rel="stylesheet" href="{{ URL::asset('/css/leaflet.css') }}" />
-  <link rel="stylesheet" href="{{ URL::asset('/css/announces.css ') }}" />
+  <link rel="stylesheet" href="{{ URL::asset('/css/announces.css') }}" />
 
   <title>Healthy's</title>
 

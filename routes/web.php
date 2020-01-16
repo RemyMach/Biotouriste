@@ -184,7 +184,7 @@ Route::post('filterByCategorie','AnnounceController@filterByCategorie');
 
 Route::post('filterByCity','AnnounceController@filterByCity');
 
-Route::get('testfilterByCity','AnnounceController@testfilterByCity');
+Route::post('testfilterByCity','AnnounceController@testfilterByCity');
 
 /********************************************** Fin Routes Announces **********************************************/
 >>>>>>> Remy

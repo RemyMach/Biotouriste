@@ -120,7 +120,7 @@ Route::post('seller/testSelect','API\SellerController@SelectSellersByCommentsNot
 // Announce
 
 Route::post('filterByCategorie','API\AnnounceController@selectByCategorie');
-Route::post('filterByCity','API\AnnounceController@selectByCategorie');
+Route::post('filterByCity','API\AnnounceController@selectByCity');
 
 
 

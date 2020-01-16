@@ -33,32 +33,53 @@ class AnnounceController extends Controller
 //        //Si il n'y a pas de commande BAS ON envoie un mail au mec
 //    }
 
-    public function filterByCategorie(Request $request){
+    public function insert(Request $request, Client $client){
+
+    }
+
+    public function filterByCategorie(Request $request, Client $client){
         $data = request()->all();
         $data['idUser'] = config('api.api_admin_id');
         $data['api_token'] = config('api.api_admin_token');
 
-        $query = $client->request('POST', 'http://localhost/8001/api/filterByCategorie', ['form_params' => $data]);
+        $query = $client->request('POST', 'http://localhost:8001/api/filterByCategorie', ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
 
         if ($response->status === '400'){
             return response()->json(['error' => $response->error]);
         }
-        return response()->json([
-            'error' => $response
-        ]);
+
+        return response()->json($response);
 
     }
 
     public function filterByCity(Request $request, Client $client){
+
         $data = request()->all();
         $data['idUser'] = config('api.api_admin_id');
         $data['api_token'] = config('api.api_admin_token');
-//        return response()->json([
-//            'response'    => $response
-//        ]);
-        $query = $client->request('POST', 'http://localhost/8001/api/filterByCity', ['form_params' => $data]);
+        $query = $client->request('POST', 'http://localhost:8001/api/filterByCity', ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
+
+        if ($response->status === '400'){
+            return response()->json(['error' => $response->error]);
+        }
+
+        return response()->json($response);
+    }
+
+    public function testfilterByCity(Request $request, Client $client)
+    {
+        $data['idUser'] = config('api.api_admin_id');
+        $data['api_token'] = config('api.api_admin_token');
+
+        $data['cityData']['lng'] = '2.3488';
+        $data['cityData']['lat'] = '48.85341';
+
+        $query = $client->request('POST', 'http://localhost:8001/api/filterByCity', ['form_params' => $data]);
+        $response = json_decode($query->getBody()->getContents());
+
+        dd($response);
         if ($response->status === '400'){
             return response()->json(['error' => $response->error]);
         }
@@ -67,20 +88,23 @@ class AnnounceController extends Controller
         ]);
     }
 
-    public function testfilterByCity(Request $request, Client $client){
-        $data['idUser'] = config('api.api_admin_id');
-        $data['api_token'] = config('api.api_admin_token');
+
+    public function testfilterByCity1(Request $request){
+        $cityData = $request->get('cityData');
+        $lng = $cityData['lng'];
+        $lat = $cityData['lat'];
 
         $data['lng'] = '2.3488';
         $data['lat'] = '48.85341';
 
-        $query = $client->request('POST', 'http://localhost/8001/api/filterByCity', ['form_params' => $data]);
-        $response = json_decode($query->getBody()->getContents());
-        if ($response->status === '400'){
-            return response()->json(['error' => $response->error]);
-        }
-        return response()->json([
-            'error' => $response
-        ]);
+        $announces = AnnounceRepository::filterByLngAndLatOrAndCategorie($lng, $lat);
+
+        $data = [
+            'success' => true,
+            'announces' => $announces,
+            'lng' => $lng,
+            'lat' => $lat
+        ];
+        return response()->json($data);
     }
 }
