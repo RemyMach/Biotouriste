@@ -43,7 +43,6 @@ class StripeController extends Controller
     }
 
     public function chargePaymentStripe($tokenfrompost,$amount){
-
         $stripe =$this->apikeystripe();
         if (!isset($tokenfrompost)) {
         return redirect()->route('addmoney.paymentstripe');
@@ -57,10 +56,13 @@ class StripeController extends Controller
 
 
             if ($charge['status'] == 'succeeded') {
-                echo "<pre>";
-                print_r($charge);
-                exit();
-                return redirect()->route('addmoney.paymentsSSStripe');
+                $status = "succeeded";
+                $currency = $charge['currency'];
+                $idUser = 1;
+                $idAnnouce = 25;
+                return app()->make(PaymentController::class)->callAction('store', [$status,$currency,$idUser,$idAnnouce,$amount]);
+                //return $this->app('App\Http\Controllers\PaymentController')->store($charge,$idUser,$idAnnouce,$amount);
+                //return view('payment');
                 }
             else {
                     echo "<pre>";

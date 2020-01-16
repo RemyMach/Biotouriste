@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use App\Payment;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class PaymentController extends Controller
 {
@@ -33,17 +35,16 @@ class PaymentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($status,$currency,$idUser,$idAnnouce,$amount)
     {
-        //
+        $mytime = Carbon::now();
+        DB::table('Payment')->insert(
+            ['payment_status' => $status , 'payment_amount' => $amount, 'payment_currency' => $currency , 'payment_date' => $mytime , 'Users_idUser' => $idUser , 'Announces_idAnnouce' => $idAnnouce ]
+        );
+        return view('payment');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Payment  $payment
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Payment $payment)
     {
         //

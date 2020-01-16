@@ -89,15 +89,8 @@ Route::get('contact','ContactController@index');
 
 
 /********************************************** Route Anthony pour test stripe **********************************************/
-<<<<<<< Updated upstream
-Route::get('checkout',function(){
-    return view('checkout');
-});
-Route::post('create-payment-intent',function(){
-    return view('stripe');
-=======
 Route::post('addmoney/stripe', array('as' => 'addmoney.stripe','uses' => 'StripeController@tokenPaymentStripe'));
 Route::get('pay', function (){
     return view('Payment');
->>>>>>> Stashed changes
 });
+Route::post('payment/store','PaymentController@store');
