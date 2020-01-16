@@ -74,6 +74,8 @@ Route::get('cart', 'CartController@index');
 
 // Profil
 Route::get('profil', 'ProfilController@index');
+Route::get('message', 'ProfilController@message');
+Route::get('favorite', 'ProfilController@favorite');
 
 /********************************************** Route pour front test **********************************************/
 

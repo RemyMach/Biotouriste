@@ -31,9 +31,27 @@
 .register_container {
   height: auto;
   padding: 50px 20px;
-  width: 700px;
+  width: 50%;
   background-color: #d0dad0;
   margin: 5% auto;
+}
+@media screen and (max-width: 1400px) {
+  .register_container {
+    height: auto;
+    padding: 50px 20px;
+    width: 80%;
+    background-color: #d0dad0;
+    margin: 5% auto;
+  }
+}
+@media screen and (max-width: 700px) {
+  .register_container {
+    height: auto;
+    padding: 50px 20px;
+    width: 100%;
+    background-color: #d0dad0;
+    margin: 5% auto;
+  }
 }
 .register_banner h3 {
   text-transform: uppercase;

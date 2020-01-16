@@ -17,9 +17,7 @@
           <div class="cart_item">
             <div class="row" style="margin:0;">
               <div class="col-md-4">
-                <div class="cart_pic">
-                  <img src="{{url('/img/home/block-3.png')}}" alt="">
-                </div>
+                <div class="cart_pic" style="background-image:url('/img/home/block-3.png')"></div>
               </div>
               <div class="col-md-4 text-left">
                 <div class="cart_name">
@@ -44,16 +42,12 @@
                   <button type="button" name="button">Remove</button>
                 </div>
               </div>
-
-
             </div>
           </div>
           <div class="cart_item">
             <div class="row" style="margin:0;">
               <div class="col-md-4">
-                <div class="cart_pic">
-                  <img src="{{url('/img/home/block-3.png')}}" alt="">
-                </div>
+                <div class="cart_pic" style="background-image:url('/img/home/block-3.png')"></div>
               </div>
               <div class="col-md-4 text-left">
                 <div class="cart_name">

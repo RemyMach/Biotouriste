@@ -26,4 +26,12 @@ class ProfilController extends Controller
     {
         return view('Profil');
     }
+    public function message(Request $request)
+    {
+        return view('Message');
+    }
+    public function favorite(Request $request)
+    {
+        return view('Favorite');
+    }
 }

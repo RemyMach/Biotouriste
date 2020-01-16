@@ -15,10 +15,10 @@
       </div>
       <div class="register_container text-center">
         <p>Already have an account ? <a href="#">I connect</a> </p>
-        <form class="" action="" method="post">
+        <form class="" action="register" method="post">
           <div class="form-group">
-            <input type="text" name="firstname" value="" placeholder="Firstname*">
-            <input type="text" name="lastname" value="" placeholder="Lastname*">
+            <input type="text" name="user_name" value="" placeholder="Firstname*">
+            <input type="text" name="user_surname" value="" placeholder="Lastname*">
             <input type="text" name="email" value="" placeholder="E-mail*">
           </div>
           <div class="form-group">
@@ -26,8 +26,8 @@
             <input type="text" name="confirm_password" value="" placeholder="Confirm password*">
           </div>
           <div class="form-group">
-            <input type="text" name="postal_code" value="" placeholder="Postal code*">
-            <input type="text" name="phone" value="" placeholder="Phone number*">
+            <input type="text" name="user_postal_code" value="" placeholder="Postal code*">
+            <input type="text" name="user_phone" value="" placeholder="Phone number*">
           </div>
           <p>* Field required</p>
           <div class="form-group">

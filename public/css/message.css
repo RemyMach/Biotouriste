@@ -1,17 +1,17 @@
-#cart {
+#message {
   padding-top: 20px;
   height: 100%;
   width: 100%;
 }
-#cart .title {
+#message .title {
   padding: 20px;
 }
-#cart h3 {
+#message h3 {
   font-size: 18px;
   color: #677A70;
   text-transform: uppercase;
 }
-#cart h2 {
+#message h2 {
   font-size: 36px;
   color: #677A70;
   font-family: minerva-modern, sans-serif;
@@ -19,7 +19,7 @@
   font-style: normal;
   text-transform: uppercase;
 }
-#cart .line {
+#message .line {
   width: 80px;
   height: 1px;
   border: 2px solid #677A70;
@@ -28,7 +28,7 @@
   margin-right: auto;
   background-color: #677A70;
 }
-.cart_container {
+.message_container {
   height: auto;
   padding: 50px 20px;
   width: 50%;
@@ -36,7 +36,7 @@
   margin: 5% auto;
 }
 @media screen and (max-width: 1400px) {
-  .cart_container {
+  .message_container {
     height: auto;
     padding: 50px 20px;
     width: 90%;
@@ -45,43 +45,43 @@
   }
 }
 @media screen and (max-width: 765px) {
-  .cart_item {
+  .message_item {
     margin-left: auto;
     margin-right: auto;
   }
-  .cart_pic {
+  .message_pic {
     margin-left: auto;
     margin-right: auto;
   }
-  .cart_name h2 {
+  .message_name h2 {
     text-align: center;
   }
-  .cart_desc p {
+  .message_desc p {
     text-align: center;
   }
-  .cart_price p {
+  .message_price p {
     text-align: center;
   }
-  .cart_quantity input[type=text] {
+  .message_quantity input[type=text] {
     width: 40%;
   }
-  .cart_quantity p{
+  .message_quantity p{
     display: inline-block;
   }
-  .cart_remove button[type=button]{
+  .message_remove button[type=button]{
     height: 20px;
     font-size: 10px;
     font-weight: normal;
     padding: 0;
     margin-top: 30px;
   }
-  .cart_quantity select {
+  .message_quantity select {
     height: 40px;
     border: none;
     background-color: white;
   }
 }
-.cart_banner h3 {
+.message_banner h3 {
   text-transform: uppercase;
   color: #677A70;
   font-size: 24px;
@@ -90,23 +90,23 @@
   font-weight: 700;
   font-style: normal;
 }
-.cart_banner {
+.message_banner {
   background-color: #f8f4ed;
   height: auto;
   width: 100%;
   padding-top: 40px;
   padding-bottom: 40px;
 }
-.cart_container input {
+.message_container input {
   width: 60%;
   height: 40px;
   border: none;
   margin-top: 20px;
 }
-.cart_container input[type=text] {
+.message_container input[type=text] {
   padding: 5px 10px;
 }
-.cart_container input[type=submit] {
+.message_container input[type=submit] {
   text-transform: uppercase;
   color: white;
   text-decoration: none;
@@ -121,10 +121,10 @@
   border: none;
   background-color: #677A70;
 }
-.cart_container input[type=submit]:hover {
+.message_container input[type=submit]:hover {
   background-color: black;
 }
-.cart_container button {
+.message_container button {
   text-transform: uppercase;
   color: white;
   height: 40px;
@@ -140,10 +140,10 @@
   border: none;
   background-color: #677A70;
 }
-.cart_container button:hover {
+.message_container button:hover {
   background-color: black;
 }
-.cart_item {
+.message_item {
   background-color: #F2F2F2;
   height: auto;
   width: auto;
@@ -151,44 +151,56 @@
   margin-bottom: 20px;
   transition: .5s;
 }
-.cart_item:hover {
+.message_item:hover {
   transform: scale(.98);
 }
-
-.cart_pic {
-  height: 130px;
-  width: 130px;
-  border-radius: 75px;
+.message_pic {
+  height: 50px;
+  width: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 25px;
   background-color: white;
-  background-position: center;
+  background-position: top;
   background-repeat: no-repeat;
   background-size: cover;
 }
-
-.cart_desc p {
+.message_desc p {
   font-size: 10px;
   font-weight: 500;
 }
-.cart_price p {
+.message_price p {
   font-size: 16px;
   font-weight: bold;
   color: #677A70;
 }
-.cart_quantity input[type=text] {
+.message_quantity input[type=text] {
   width: 40%;
 }
-.cart_quantity p{
+.message_quantity p {
   display: inline-block;
 }
-.cart_remove button[type=button]{
-  height: 20px;
-  font-size: 10px;
-  font-weight: normal;
-  padding: 0;
-  margin-top: 30px;
+.message_link {
+  margin-top: 20px;
 }
-.cart_quantity select {
-  height: 40px;
-  border: none;
-  background-color: white;
+.message_item i {
+  font-size: 16px;
+  font-weight: bold;
+  color: #677A70;
+}
+.message_item p {
+  font-size: 10px;
+  margin-top: 5px;
+  font-weight: bold;
+  color: #677A70;
+}
+.message_link a {
+  text-transform: uppercase;
+  color: #677A70;
+  text-decoration: underline;
+}
+.message_item a {
+  text-transform: uppercase;
+  color: #677A70;
+  text-decoration: underline;
 }

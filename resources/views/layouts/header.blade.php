@@ -8,8 +8,11 @@
   <link rel="stylesheet" href="https://use.typekit.net/vsp1spg.css">
   <link rel="stylesheet" href="{{ URL::asset('/css/style.css') }}">
   <link rel="stylesheet" href="{{ URL::asset('/css/navbar.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('/css/cart.css') }}">
-  <link rel="stylesheet" href="{{ URL::asset('/css/connection.css') }}">
+  <link rel="stylesheet" href="{{ URL::asset('/css/profil.css') }}">
+  <link rel="stylesheet" href="{{ URL::asset('/css/message.css') }}">
+  <link rel="stylesheet" href="{{ URL::asset('/css/cart.css') }}">
+  <link rel="stylesheet" href="{{ URL::asset('/css/favorite.css') }}">
+  <link rel="stylesheet" href="{{ URL::asset('/css/register.css') }}">
   <link rel="stylesheet" href="https://use.typekit.net/vsp1spg.css">
   <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.css">
   <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
