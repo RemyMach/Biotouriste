@@ -24,7 +24,8 @@ class DatabaseSeeder extends Seeder
             FavorisTableSeeder::class,
             MessagesTableSeeder::class,
             ReportCategoriesTableSeeder::class,
-            ReportsTableSeeder::class
+            ReportsTableSeeder::class,
+            User_Status_CorrespondencesTableSeeder::class
         ]);
     }
 }

@@ -18,7 +18,7 @@ class ContactController extends Controller
         );
 
         $this->middleware('admin')->only(
-                    'index','destroy'
+                    'index','destroy','ContactsWithAssociedUsers'
         );
     }
 
@@ -27,7 +27,7 @@ class ContactController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function ContactsWithAssociedUsers(Client $client)
+    public function ContactsWithAssociedUsers(Client $client, Request $request)
     {
         $data['idUser'] = config('api.api_admin_id');
         $data['api_token'] = config('api.api_admin_token');

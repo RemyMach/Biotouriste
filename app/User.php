@@ -45,9 +45,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function status()
+    public function statusId()
     {
-        return $this->belongsTo('App\Status_User',"Status_User_idStatus_User", "idStatus_User");
+        return $this->hasMany('App\User_Status_Correspondence',"Users_idUser", "idUser");
     }
 
     public function announces()

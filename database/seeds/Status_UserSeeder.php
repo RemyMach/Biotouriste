@@ -12,10 +12,9 @@ class Status_UserSeeder extends Seeder
     public function run()
     {
         DB::table('Status_User')->insert(array(
-            array('status_user_label' => 'TouristController'),
+            array('status_user_label' => 'Tourist'),
             array('status_user_label' => 'Controller'),
             array('status_user_label' => 'Seller'),
-            array('status_user_label' => 'TouristController,Seller'),
             array('status_user_label' => 'Admin'),
         ));
     }

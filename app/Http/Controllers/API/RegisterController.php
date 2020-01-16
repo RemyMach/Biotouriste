@@ -16,26 +16,80 @@ class RegisterController extends Controller
 {
 
     private $request;
+    private $seller;
+    private $status_User_idStatus_User;
 
     public function __construct()
     {
         $this->middleware('apiAdmin');
     }
 
-    public function store(Request $request, UsefullController $usefullController)
+    public function store(Request $request, UsefullController $usefullController, User_Status_CorrespondenceController $user_Status_CorrespondenceController)
     {
         $this->request = $request;
 
-        $validator = Validator::make($this->request->all(), [
+        $validator = $this->validateUser();
+        if($validator->original['status'] == '400') {
+            return $validator;
+        }
+
+        $validData = $this->setValidDateDependingOnTheUserStatus($usefullController);
+
+        $validData['password'] = Hash::make($validData['password']);
+        $validData['api_token'] = Str::random(80);
+
+        $user = User::create($validData);
+        $user_Status_CorrespondenceController->createUserStatusCorrespondence($this->status_User_idStatus_User, $user,true);
+        $this->createSellerIfUserHasSellerStatus($validData, $user);
+
+        $checkStatus = User_status_correspondenceController::getAllStatusFromAnUser($user->idUser);
+        if($checkStatus->original['status'] == '400'){
+
+            return $checkStatus;
+        }
+
+        $current_status = User_status_correspondenceController::getCurrentStatus($user->idUser, $checkStatus->original['allStatus']);
+
+        return response()->json([
+            'message'   => 'the User has been Register',
+            'status'    => '200',
+            'user'                  => $user,
+            'user_current_status'   => $current_status,
+            'user_status'           => $checkStatus->original['allStatus']
+        ]);
+    }
+
+    private function validateUser(){
+
+        $rules = $this->setRulesDependingOnUserStatus();
+
+        $validator = Validator::make($this->request->all(), $rules);
+
+        return $this->resultValidator($validator);
+    }
+
+    private function setRulesDependingOnUserStatus(){
+
+        $rules = [
             'user_name' => ['required', 'string', 'max:45'],
             'user_surname' => ['required', 'string', 'max:45'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'user_postal_code' => ['integer'],
-            'user_phone' => ['unique:users'],
+            'user_phone' => ['unique:users','regex:/^(\d\d(\s)?){4}(\d\d)$/'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'user_img' => ['string'],
-            'status_user' => 'required|integer'
-        ]);
+            'status_user' => ['required','string','regex:/^(Tourist|Seller)$/'],
+        ];
+
+        if($this->request->input('status_user') == 'Seller'){
+
+            $rules ['seller_description'] = 'required|string|max:255';
+        }
+
+        return $rules;
+    }
+
+    private function resultValidator($validator){
 
         if($validator->fails())
         {
@@ -46,34 +100,38 @@ class RegisterController extends Controller
             ]);
         }
 
-        $validData = $this->setValidDateDependingOnTheUserStatus($usefullController);
-
-        $validData['password'] = Hash::make($validData['password']);
-        $validData['api_token'] = Str::random(80);
-        $user = User::create($validData);
-
         return response()->json([
-            'message'   => 'the User has been Register',
-            'status'    => '200',
-            'user'      => $user
+            'message'   => 'The request is good',
+            'status'    => '200'
         ]);
     }
+
 
     private function setValidDateDependingOnTheUserStatus($usefullController){
 
         $validData = $usefullController->keepKeysThatWeNeed($this->request->all(),
-            'user_name','user_surname','email','user_postal_code','user_phone','password','user_img'
+            ['user_name','user_surname','email','user_postal_code','user_phone','password','user_img']
             );
 
-        if($this->request->input('status') == 1){
+        if($this->request->input('status_user') == 'Seller'){
 
-            $validData['Status_User_idStatus_User'] = 3;
+            $this->status_User_idStatus_User = 3;
+            //appel à une fonction qui crée dans User_Status_Correspondences une ligne avec le user et son statut
+            $validData['seller_description'] = $this->request->input('seller_description');
         }else{
 
-            $validData['Status_User_idStatus_User'] = 1;
+            $this->status_User_idStatus_User = 1;
         }
 
         return $validData;
 
+    }
+
+    private function createSellerIfUserHasSellerStatus($validData, $user){
+
+        if($this->status_User_idStatus_User === 3) {
+            //appel à la fonction pour store un Seller
+            $this->seller = SellerController::createSeller($validData, $user);
+        }
     }
 }
