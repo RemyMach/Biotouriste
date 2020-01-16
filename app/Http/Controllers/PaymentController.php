@@ -83,4 +83,14 @@ class PaymentController extends Controller
     {
         //
     }
+
+    public function showUserPayment($idUser){
+        echo '<pre>';
+        print_r($idUser);
+        $result = DB::select(DB::raw("SELECT   * FROM Payments where Users_idUser = $idUser" ));
+        print_r($result);
+        exit();
+    }
+
+
 }
