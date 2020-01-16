@@ -24,7 +24,6 @@ class CreateUsersTable extends Migration {
 			$table->string('email')->unique('email_UNIQUE');
 			$table->string('password');
 			$table->string('user_img', 45)->nullable();
-            $table->integer('Status_User_idStatus_User')->index('fk_Users_Status_User_idStatus_User1');
             $table->string('api_token', 80)->unique()->nullable()->default(null);
             $table->rememberToken();
             $table->timestamps();

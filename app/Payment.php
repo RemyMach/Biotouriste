@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Payment extends Model
 {
+    public $timestamps = false;
     /**
      * The primary key for the model.
      * 

@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Favori extends Model
 {
+    public $timestamps = false;
     /**
      * The table associated with the model.
      * 
@@ -25,7 +26,7 @@ class Favori extends Model
      * 
      * @var string
      */
-    protected $primaryKey = 'idFavoris';
+    protected $primaryKey = 'idFavori';
 
     /**
      * @var array

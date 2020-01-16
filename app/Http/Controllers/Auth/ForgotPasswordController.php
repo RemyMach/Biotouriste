@@ -50,11 +50,11 @@ class ForgotPasswordController extends Controller
 
         $client = new Client();
 
-        $request = $client->request('POST','http://localhost:8001/api/user/email', [
+        $query = $client->request('POST','http://localhost:8001/api/user/email', [
             'form_params' => $data
         ]);
 
-        $response = json_decode($request->getBody()->getContents());
+        $response = json_decode($query->getBody()->getContents());
 
         if($response->status == '400')
         {

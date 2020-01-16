@@ -4,8 +4,8 @@
   </div>
   <nav>
     <div class="row" style="margin: 0;">
-      <div class="col-md-3 menu"></div>
-      <div class="col-md-6 text-center menu">
+      <div class="col-md-4 menu"></div>
+      <div class="col-md-4 text-center menu">
         <a href="{{ url('announces') }}">Announces</a>
         <a href="#">Products</a>
         <a href="#">About us</a>

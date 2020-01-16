@@ -19,6 +19,13 @@ class DatabaseSeeder extends Seeder
             ProductTableSeeder::class,
             AnnouncesTableSeeder::class,
             CommentsTableSeeder::class,
+            SellersTableSeeder::class,
+            PaymentsTableSeeder::class,
+            FavorisTableSeeder::class,
+            MessagesTableSeeder::class,
+            ReportCategoriesTableSeeder::class,
+            ReportsTableSeeder::class,
+            User_Status_CorrespondencesTableSeeder::class
         ]);
     }
 }

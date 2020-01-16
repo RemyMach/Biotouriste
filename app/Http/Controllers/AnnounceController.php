@@ -3,15 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Announce;
+use App\Repositories\AnnounceRepository;
+use App\User;
+use App\Status_User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AnnounceController extends Controller
 {
-    public function printMap()
-    {
-        return view('Openstreet');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -19,6 +18,7 @@ class AnnounceController extends Controller
      */
     public function index()
     {
+//        $announces = Announce::all();
         return view('announces');
     }
 
@@ -87,5 +87,37 @@ class AnnounceController extends Controller
     public function destroy(Announce $announce)
     {
         //
+    }
+
+    public function filterByCategorie(Request $request){
+        $idCategorie = $request->get('categorie');
+        $cityData = $request->get('cityData');
+        $lng = $cityData['lng'];
+        $lat = $cityData['lat'];
+        $announces = AnnounceRepository::filterByLngAndLatOrAndCategorie($lng, $lat, $idCategorie);
+        $test= "";
+        $data = [
+            'success' => true,
+            'announces' => $announces,
+            'lng' => $lng,
+            'lat' => $lat
+        ];
+        return response()->json($data);
+//        return new Response(json_encode($data));
+    }
+
+    public function filterByCity(Request $request){
+        $cityData = $request->get('cityData');
+        $lng = $cityData['lng'];
+        $lat = $cityData['lat'];
+        $announces = AnnounceRepository::filterByLngAndLatOrAndCategorie($lng, $lat);
+
+        $data = [
+            'success' => true,
+            'announces' => $announces,
+            'lng' => $lng,
+            'lat' => $lat
+        ];
+        return response()->json($data);
     }
 }

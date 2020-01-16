@@ -45,9 +45,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function status()
+    public function statusId()
     {
-        return $this->belongsTo(Status_User::class,"Status_User_idStatus_User", "idStatus_User");
+        return $this->hasMany('App\User_Status_Correspondence',"Users_idUser", "idUser");
     }
 
     public function announces()
@@ -68,5 +68,15 @@ class User extends Authenticatable
     public function checks1()
     {
         return $this->hasMany('App\Check','Users_idUser1','idUser');
+    }
+
+    public function contacts()
+    {
+        return $this->hasMany('App\Contact','Users_idUser','idUser');
+    }
+
+    public function discount_codes()
+    {
+        return $this->hasMany('App\Discount_Code','Users_idUser','idUser');
     }
 }
