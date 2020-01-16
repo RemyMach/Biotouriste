@@ -9,7 +9,18 @@
   <link rel="stylesheet" href="https://use.typekit.net/vsp1spg.css">
   <link rel="stylesheet" href="{{ URL::asset('/css/style.css') }}">
   <link rel="stylesheet" href="{{ URL::asset('/css/navbar.css') }}">
+<<<<<<< HEAD
   <link rel="stylesheet" href="{{ URL::asset('/css/connection.css') }}">
+=======
+<<<<<<< HEAD
+  <link rel="stylesheet" href="{{ URL::asset('/css/connection.css') }}">
+  <link rel="stylesheet" href="https://use.typekit.net/vsp1spg.css">
+  <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.css">
+  <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
+  <title>Healthy's</title>
+=======
+  <link rel="stylesheet" href="{{ URL::asset('/css/overlay.css') }}">
+>>>>>>> 2bcde7156e7921ca0d5c15660b2e0f60b54cda82
   <link rel="stylesheet" href="https://use.typekit.net/vsp1spg.css">
   {{-- CSS --}}
   <link rel="stylesheet" href="{{ URL::asset('/css/leaflet.css') }}" />
@@ -19,5 +30,6 @@
 
   <script src="{{ URL::asset('js/leaflet.js') }}"></script>
 
+>>>>>>> Remy
 </head>
 <body>

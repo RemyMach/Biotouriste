@@ -161,6 +161,21 @@ Route::get('aide',function(){
 /********************************************** Fin Route pour front test **********************************************/
 
 
+<<<<<<< HEAD
+
+/********************************************** Route pour front test **********************************************/
+
+
+/********************************************** Route Anthony pour test stripe **********************************************/
+Route::post('addmoney/stripe', array('as' => 'addmoney.stripe','uses' => 'StripeController@tokenPaymentStripe'));
+Route::get('pay', function (){
+    return view('Payment');
+});
+Route::post('payment/store','PaymentController@store');
+Route::get('allpay',function (){
+   return view('test');
+});
+=======
 /********************************************** Debut Routes Announces **********************************************/
 
 Route::get('announces','AnnounceController@index');
@@ -172,3 +187,4 @@ Route::post('filterByCity','AnnounceController@filterByCity');
 Route::post('testfilterByCity','AnnounceController@testfilterByCity');
 
 /********************************************** Fin Routes Announces **********************************************/
+>>>>>>> Remy
