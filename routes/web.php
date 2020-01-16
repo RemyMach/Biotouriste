@@ -69,12 +69,19 @@ Route::get('myMap','AnnounceController@printMap');
 
 Route::post('password/email','Auth\ResetPasswordController@reset')->name('password.email');
 
+// Cart
+Route::get('cart', 'CartController@index')
+
+
+
 
 /********************************************** Route pour front test **********************************************/
 
 Route::get('announces','AnnounceController@index');
 
 Route::get('test/register1234','UserController@profil');
+
+
 
 Route::get('messages','MessageController@index');
 

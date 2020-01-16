@@ -20,9 +20,10 @@
   text-transform: uppercase;
 }
 .register_container {
-  height: 900px;
+  height: auto;
+  padding: 50px 20px;
   width: 700px;
-  background-color: #c2cdc1;
+  background-color: #d0dad0;
   margin: 5% auto;
 }
 .register_banner h3 {
@@ -47,9 +48,21 @@
   border: none;
   margin-top: 20px;
 }
-.form_content_1 {
-  padding-top: 5%;
+.register_container input[type=submit] {
+  text-transform: uppercase;
+  color: white;
+  text-decoration: none;
+  font-family: 'helvetica', sans-serif;
+  font-weight: bold;
+  font-size: 12px;
+  letter-spacing: 1px;
+  width: 20%;
+  transition: .2s;
+  margin-right: 10px;
+  padding-bottom: 5px;
+  border: none;
+  background-color: #677A70;
 }
-.form_content_2 {
-  padding-top: 5%;
+.register_container input[type=text] {
+  padding: 5px 10px;
 }
