@@ -70,10 +70,10 @@ Route::get('myMap','AnnounceController@printMap');
 Route::post('password/email','Auth\ResetPasswordController@reset')->name('password.email');
 
 // Cart
-Route::get('cart', 'CartController@index')
+Route::get('cart', 'CartController@index');
 
-
-
+// Profil
+Route::get('profil', 'ProfilController@index');
 
 /********************************************** Route pour front test **********************************************/
 

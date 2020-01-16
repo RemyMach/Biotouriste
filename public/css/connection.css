@@ -6,18 +6,27 @@
 #register .title {
   padding: 20px;
 }
-#register  h3 {
+#register h3 {
   font-size: 18px;
   color: #677A70;
   text-transform: uppercase;
 }
-#register  h2 {
+#register h2 {
   font-size: 36px;
   color: #677A70;
   font-family: minerva-modern, sans-serif;
   font-weight: 700;
   font-style: normal;
   text-transform: uppercase;
+}
+#register .line {
+  width: 80px;
+  height: 1px;
+  border: 2px solid #677A70;
+  margin-top: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #677A70;
 }
 .register_container {
   height: auto;
@@ -57,11 +66,14 @@
   font-size: 12px;
   letter-spacing: 1px;
   width: 20%;
-  transition: .2s;
+  transition: .5s;
   margin-right: 10px;
-  padding-bottom: 5px;
+  padding: 5px;
   border: none;
   background-color: #677A70;
+}
+.register_container input[type=submit]:hover {
+  background-color: black;
 }
 .register_container input[type=text] {
   padding: 5px 10px;
