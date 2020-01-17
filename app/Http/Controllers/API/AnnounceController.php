@@ -19,7 +19,8 @@ class AnnounceController extends Controller
 
     }
 
-    public function store(Request $request, Client $client){
+    public function store(Request $request){
+
         $this->request = $request;
 
         $validator = $this->validateAnnounce();

@@ -169,7 +169,7 @@ Route::post('filterByCity','AnnounceController@filterByCity');
 
 Route::post('announce/store','AnnounceController@store');
 
-Route::post('announce/teststore','AnnounceController@teststore');
+Route::get('announce/teststore','AnnounceController@teststore');
 
 
 /********************************************** Fin Routes Announces **********************************************/
