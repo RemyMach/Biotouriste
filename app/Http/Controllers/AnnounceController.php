@@ -64,12 +64,13 @@ class AnnounceController extends Controller
         ];
         $data['idUser'] = 3;
         $data['api_token'] = 'P564KPoxtwCQIG53gdTz26oqesCcKUYr2ODZ4LfNneCOLeuTXyJAmjhp2pV6FFKiLQPWK3NzOYlmLaE0';
-        $query = $client->request('POST', 'http://localhost:8001/api/store', ['form_params' => $data]);
+        $query = $client->request('POST', 'http://localhost:8001/api/anounce/store', ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
 
         if ($response->status === '400'){
             return response()->json(['error' => $response->error]);
         }
+        dd($response);
 
     }
 
