@@ -28,7 +28,6 @@ class AnnounceController extends Controller
             return $validator;
         }
 
-
         return response()->json([
             'message'   => 'Your Announce has been register',
             'status'    => '200',
@@ -37,7 +36,6 @@ class AnnounceController extends Controller
 
     public function update(Request $request){
         $this->request = $request;
-
     }
 
     public function selectByCategorie(Request $request){
@@ -121,8 +119,15 @@ class AnnounceController extends Controller
             'lat' => ['required','string','regex:/^(-)?[0-9]*.[0-9]*$/'],
             'categorie' => ['required', 'integer', 'max:6']
         ]);
-        $test;
         return $this->resultValidator($validator);
+    }
+
+    private function validateAnnounce(){
+        $test;
+        $validator = Validator::make($this->request->input('cityData'), [
+            'lng' => ['required','string','regex:/^(-)?[0-9]*.[0-9]*$/'],
+            'lat' => ['required','string','regex:/^(-)?[0-9]*.[0-9]*$/'],
+        ]);
     }
 
 }
