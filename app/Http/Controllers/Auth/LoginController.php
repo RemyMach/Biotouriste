@@ -75,7 +75,7 @@ class LoginController extends Controller
         $data['email'] = 'touristSeller@touristSeller.fr';
         $data['password'] = 'azertyuiop';
 
-        $query = $client->request('POST','http://localhost:8001/api/user/login', [
+        $query = $client->request('post','http://192.168.1.47:8001/api/user/login', [
             'form_params' => $data
         ]);
         $response = json_decode($query->getBody()->getContents());
