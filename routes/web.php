@@ -114,7 +114,7 @@ Route::post('favori/destroy','FavoriController@destroy');
 
 Route::post('message/store','MessageController@store');
 
-<<<<<<< HEAD
+
 // Cart
 Route::get('cart', 'CartController@index');
 
@@ -125,7 +125,7 @@ Route::get('favorite', 'ProfilController@favorite');
 
 // FAQ
 Route::get('faq', 'FaqController@index');
-=======
+
 Route::post('message/show/seller','MessageController@showMessagesOfASeller');
 
 Route::post('message/show/User','MessageController@showMessagesOfATouristController');
@@ -157,14 +157,10 @@ Route::post('seller/updateDescription','SellerController@updateDescription');
 Route::get('seller/testupdateDescription','SellerController@testupdateDescription');
 
 Route::get('seller/testSelect','SellerController@testSelectSellersByCommentsNotes');
->>>>>>> origin/Remy
 
 /********************************************** Route pour front test **********************************************/
 
-
 Route::get('test/register1234','UserController@profil');
-
-
 
 Route::get('messages','MessageController@index');
 
