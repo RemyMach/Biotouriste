@@ -125,7 +125,9 @@ Route::post('filterByCity','API\AnnounceController@selectByCity');
 
 Route::post('announce/store','API\AnnounceController@store');
 
+//Payment and stripe
 
+Route::post('payment/stripe','API\PaymentController@getidforcard');
 
 /*Route::get('/users', function () {
     return UserResource::collection(User::paginate(2));

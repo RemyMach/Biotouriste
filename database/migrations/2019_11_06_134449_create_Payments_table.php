@@ -19,6 +19,8 @@ class CreatePaymentsTable extends Migration {
 			$table->decimal('payment_amount', 6,2)->nullable();
 			$table->string('payment_currency', 45)->nullable();
 			$table->dateTime('payment_date')->nullable();
+			$table->integer('order_quantity');
+			$table->integer('id_order');
             $table->integer('Users_idUser')->index('fk_Orders_Users1_idx');
             $table->integer('Announces_idAnnounce')->index('fk_Orders_Announces1_idx');
 		});

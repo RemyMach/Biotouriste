@@ -130,6 +130,7 @@
     </div>
 </div>
     <button class='form-control btn btn-success submit-button' type='submit'>Pay</button>
+
 </form>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/imask/3.4.0/imask.min.js"></script>
 <script type="text/javascript" src="{{ asset('js/checkout.js') }}"></script>

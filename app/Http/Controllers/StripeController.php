@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use GuzzleHttp\Client;
 use Requests;
 use Illuminate\Http\Request;
 use Validator;
@@ -21,13 +22,37 @@ class StripeController extends Controller
         return view('Payment');
     }
 
-    public function apikeystripe(){
-      return Stripe\Stripe::make(env('STRIPE_SECRET'));
+    public function stripe(Request $Request, Client $client)
+    {
+        $data = request()->all();
+
+        $data['idUser'] = config('api.api_admin_id');
+        $data['api_token'] = config('api.api_admin_token');
+
+
+        $query = $client->request('POST','http://localhost:8001/api/payment/stripe', [
+            'form_params' => $data
+        ]);
+        $response = json_decode($query->getBody()->getContents());
+
+        dd($response);
+        if($response->status === '400')
+        {
+            return redirect('pay');
+        }
+        else {
+            echo "<pre>";
+            print_r($query);
+            exit();
+        }
+
+
+        return redirect($this->redirectTo);
     }
     public function tokenPaymentStripe(Request $request)
     {
-
-        $stripe =$this->apikeystripe();
+        $stripe = Stripe\Stripe::make(env('STRIPE_SECRET'));
+        dd($stripe->getConfig()->getVersion());
         $orderdate = explode('/', $request->get("ccExpiry"));
 
         $tokenfrompost = $stripe->tokens()->create([
@@ -38,12 +63,14 @@ class StripeController extends Controller
                 'cvc' => $request->get('cvvNumber'),
             ],
         ]);
-        $amount = 20.5;
-        return $this->chargePaymentStripe($tokenfrompost,$amount);
+                    echo "<pre>";
+                    print_r($tokenfrompost);
+                    exit();
+                    return redirect()->route('addmoney.paymentSstripe');
     }
 
     public function chargePaymentStripe($tokenfrompost,$amount){
-        $stripe =$this->apikeystripe();
+        $stripe = Stripe\Stripe::make(env('STRIPE_SECRET'));
         if (!isset($tokenfrompost)) {
         return redirect()->route('addmoney.paymentstripe');
         }
@@ -71,7 +98,7 @@ class StripeController extends Controller
                     return redirect()->route('addmoney.paymentSstripe');
             }
         }
-        catch (\Cartalyst\Stripe\Exception\CardErrorException $e) {
+        catch (\Cartalyst\Stripe\Exception\CardErrorException        $e) {
             echo "<pre>";
             print_r($e);
             exit();
