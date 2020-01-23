@@ -24,7 +24,7 @@ class CommentsTableSeeder extends Seeder
                 'comment_note'          => 2,
                 'comment_subject'       => 'je suis une contrex',
                 'Announces_idAnnounce'  => 2,
-                'Users_idUser'          => 1
+                'Users_idUser'          => 3
             ),
             array(
                 'comment_content'       => 'test1111',

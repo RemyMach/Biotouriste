@@ -17,8 +17,6 @@ class ApiToken
      */
     public function handle(Request $request, Closure $next)
     {
-        return 'pomme';
-        dd($request->route());
         $this->user = $request->session()->get('user');
 
         $api_token = request('api_token');

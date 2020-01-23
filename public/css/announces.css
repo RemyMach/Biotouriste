@@ -1,0 +1,16 @@
+.divAnnounces{
+    overflow-y: scroll;
+}
+.categories li{
+    text-align: center;
+    margin: 0 10px 0 0;
+    padding: 0 10px 0 10px;
+    color: darkgrey;
+    background-color: white;
+    border: 2px solid #1b1e21;
+    border-radius: 30%;
+}
+
+#mapid{
+    500 px;
+}

@@ -51,11 +51,17 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \App\Http\Middleware\Authentication::class,
+        'apiTokenAndIdUserExistAndMatch' => \App\Http\Middleware\API\Authentication::class,
+        'apiAdmin' => \App\Http\Middleware\API\Admin::class,
+        'apiController' => \App\Http\Middleware\API\Controller::class,
+        'apiSeller' => \App\Http\Middleware\API\Seller::class,
+        'apiTourist' => \App\Http\Middleware\API\Tourist::class,
+        'apiTouristController' => \App\Http\Middleware\API\TouristController::class,
+        'SessionAuth' => \App\Http\Middleware\SessionAuthentication::class,
         'admin' => \App\Http\Middleware\Admin::class,
-        'tourist' => \App\Http\Middleware\tourist::class,
-        'controller' => \App\Http\Middleware\controller::class,
-        'seller' => \App\Http\Middleware\seller::class,
+        'touristController' => \App\Http\Middleware\TouristController::class,
+        'controller' => \App\Http\Middleware\Controller::class,
+        'seller' => \App\Http\Middleware\Seller::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
