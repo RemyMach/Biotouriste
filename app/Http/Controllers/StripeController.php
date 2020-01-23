@@ -71,17 +71,24 @@ class StripeController extends Controller
                     return redirect()->route('addmoney.paymentSstripe');
             }
         }
-        catch (Exception $e) {
-            \Session::put('error',$e->getMessage());
-            return redirect()->route('addmoney.paymentsstripe');
-        } catch(\Cartalyst\Stripe\Exception\CardErrorException $e) {
-            \Session::put('error',$e->getMessage());
-            return view('payment');
-        } catch(\Cartalyst\Stripe\Exception\MissingParameterException $e) {
-            \Session::put('error',$e->getMessage());
+        catch (\Cartalyst\Stripe\Exception\CardErrorException $e) {
             echo "<pre>";
-            print_r($e);exit();
-            return redirect()->route('addmoney.paymentsssssstripe');
+            print_r($e);
+            exit();
+            //\Session::put('error',$e->getMessage());
+            //return redirect()->route('addmoney.paymentsstripe');
+        } catch(\Cartalyst\Stripe\Exception\CardErrorException $e) {
+            echo "<pre>";
+            print_r($e);
+            exit();
+            //\Session::put('error',$e->getMessage());
+            //return view('payment');
+        } catch(\Cartalyst\Stripe\Exception\MissingParameterException $e) {
+            //\Session::put('error',$e->getMessage());
+            echo "<pre>";
+            print_r($e);
+            exit();
+            //return redirect()->route('addmoney.paymentsssssstripe');
         }
     }
 }
