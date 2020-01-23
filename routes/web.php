@@ -77,6 +77,9 @@ Route::get('profil', 'ProfilController@index');
 Route::get('message', 'ProfilController@message');
 Route::get('favorite', 'ProfilController@favorite');
 
+// FAQ
+Route::get('faq', 'FaqController@index');
+
 /********************************************** Route pour front test **********************************************/
 
 Route::get('announces','AnnounceController@index');

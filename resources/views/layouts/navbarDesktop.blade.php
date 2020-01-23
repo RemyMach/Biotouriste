@@ -9,14 +9,17 @@
         <a href="{{ url('announces') }}">Announces</a>
         <a href="{{ url('product') }}">Products</a>
         <a href="{{ url('about') }}">About us</a>
-        <a href="{{ url('contact') }}">Contact us</a>
+        <a href="{{ url('contact') }}">Contact</a>
         <a href="{{ url('faq') }}">FAQ</a>
       </div>
       <div class="col-md-3 text-center menu">
         <button type="button" name="button" onclick="window.location.href='{{ url('favorite') }}'"><i class="fas fa-heart"></i></button>
-        <button type="button" name="button" onclick="window.location.href='{{ url('test/register1234') }}'"><i class="fas fa-user-plus"></i></button>
-        <button type="button" name="button" onclick="window.location.href='{{ url('test/register1234') }}'"><i class="fas fa-user"></i></button>
-        <button type="button" name="button" onclick="window.location.href='{{ url('cart') }}'"><i class="fas fa-shopping-bag"></i></button>
+        @if(\Auth::check())
+          <button type="button" name="button" onclick="window.location.href='{{ url('test/register1234') }}'"><i class="fas fa-user"></i></button>
+        @else
+          <button type="button" name="button" onclick="window.location.href='{{ url('test/register1234') }}'"><i class="fas fa-user"></i></button>
+        @endif
+          <button type="button" name="button" onclick="window.location.href='{{ url('cart') }}'"><i class="fas fa-shopping-bag"></i></button>
       </div>
     </div>
   </nav>

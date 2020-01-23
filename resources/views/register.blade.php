@@ -13,28 +13,32 @@
           </div>
         </div>
       </div>
-      <div class="register_container text-center">
-        <p>Already have an account ? <a href="#">I connect</a> </p>
-        <form class="" action="register" method="post">
+      <form action="register" method="post">
+        <div class="register_container text-center">
+          <h3>Identifiers</h3>
+          <p>Already have an account ? <a href="login">I connect</a> </p>
+          <p><span style="color:red;">*</span><i>Champs obligatoires</i></p>
           <div class="form-group">
-            <input type="text" name="user_name" value="" placeholder="Firstname*">
-            <input type="text" name="user_surname" value="" placeholder="Lastname*">
-            <input type="text" name="email" value="" placeholder="E-mail*">
+            <input type="text" name="email" value="" placeholder="Email address *">
+            <input type="password" name="password" value="" placeholder="Password *">
+            <input type="password" name="confirm_password" value="" placeholder="Confirm password *">
+          </div>
+        </div>
+        <div class="register_container text-center">
+          <h3>Personnals informations</h3>
+          <div class="form-group">
+            <input type="text" name="user_name" value="" placeholder="Firstname *">
+            <input type="text" name="user_surname" value="" placeholder="Lastname *">
           </div>
           <div class="form-group">
-            <input type="text" name="password" value="" placeholder="Password*">
-            <input type="text" name="confirm_password" value="" placeholder="Confirm password*">
+            <input type="text" name="user_postal_code" value="" placeholder="Postal code">
+            <input type="text" name="user_phone" value="" placeholder="Phone number">
           </div>
-          <div class="form-group">
-            <input type="text" name="user_postal_code" value="" placeholder="Postal code*">
-            <input type="text" name="user_phone" value="" placeholder="Phone number*">
-          </div>
-          <p>* Field required</p>
-          <div class="form-group">
-            <input type="submit" name="" value="Submit">
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="form-group text-center">
+          <input type="submit" name="" value="Submit">
+        </div>
+      </form>
     </div>
   </div>
 </div>

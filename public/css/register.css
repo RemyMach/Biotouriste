@@ -33,7 +33,7 @@
   padding: 50px 20px;
   width: 50%;
   background-color: #d0dad0;
-  margin: 5% auto;
+  margin: 2% auto;
 }
 @media screen and (max-width: 1400px) {
   .register_container {
@@ -70,12 +70,9 @@
   padding-bottom: 40px;
 }
 .register_container input {
-  width: 60%;
-  height: 40px;
-  border: none;
   margin-top: 20px;
 }
-.register_container input[type=submit] {
+input[type=submit] {
   text-transform: uppercase;
   color: white;
   text-decoration: none;
@@ -86,13 +83,26 @@
   width: 20%;
   transition: .5s;
   margin-right: 10px;
+  margin-bottom: 2%;
   padding: 5px;
   border: none;
   background-color: #677A70;
 }
-.register_container input[type=submit]:hover {
+input[type=submit]:hover {
   background-color: black;
 }
 .register_container input[type=text] {
   padding: 5px 10px;
+  width: 60%;
+  height: 40px;
+  border: none;
+}
+.register_container input[type=password] {
+  padding: 5px 10px;
+  width: 60%;
+  height: 40px;
+  border: none;
+}
+.register_container select {
+  width: 60%;
 }

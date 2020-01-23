@@ -276,11 +276,11 @@ background-color: #677A70;
   background-color: inherit;
 }
 #content_4 .navigation button:hover {
-  background-color: black;
+  color: black;
 }
 #content_4 .navigation .active {
-  border-bottom: 2px solid #c2cdc1;
-  color: #c2cdc1;
+  border-bottom: 2px solid black;
+  color: black;
 }
 #content_4 .block_vendor {
   background-color: #F2F2F2;
@@ -513,8 +513,8 @@ background-color: #677A70;
   padding-bottom: 5px;
 }
 .footer_link ul li a:hover {
-  border-bottom: 2px solid #d0dad0;
-  color: #d0dad0;
+  border-bottom: 2px solid black;
+  color: black;
 }
 .footer_line {
   width: 180px;
