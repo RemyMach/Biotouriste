@@ -21,6 +21,18 @@ class AnnounceController extends Controller
 
     public function store(Request $request){
 
+        $this->request = $request;
+
+        $validator = $this->validateAnnounce();
+        if($validator->original['status'] == '400') {
+            return $validator;
+        }
+
+
+        return response()->json([
+            'message'   => 'Your Announce has been register',
+            'status'    => '200',
+        ]);
     }
 
     public function update(Request $request){

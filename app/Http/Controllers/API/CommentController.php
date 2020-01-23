@@ -16,6 +16,7 @@ class CommentController extends Controller
 {
     public function __construct()
     {
+        $this->middleware('apiMergeJsonInRequest');
         $this->middleware('apiTokenAndIdUserExistAndMatch')->only(
             'CommentsOfASeller', 'store','show','destroy'
         );
