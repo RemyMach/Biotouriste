@@ -59,7 +59,7 @@ class StripeController extends Controller
                 $status = "succeeded";
                 $currency = $charge['currency'];
                 $idUser = 1;
-                $idAnnouce = 25;
+                $idAnnouce = 5;
                 return app()->make(PaymentController::class)->callAction('store', [$status,$currency,$idUser,$idAnnouce,$amount]);
                 //return $this->app('App\Http\Controllers\PaymentController')->store($charge,$idUser,$idAnnouce,$amount);
                 //return view('payment');
