@@ -22,6 +22,8 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
+        $this->request = $request;
+
 
         $validator = $this->validateLogin(request()->all());
         if($validator->fails())
@@ -38,8 +40,7 @@ class LoginController extends Controller
         {
             return response()->json([
                 'message'   => 'Your login or your password is not correct',
-                'error'     => $validator->errors(),
-                'status'    => "400"
+                'status'    => '400'
             ]);
         }
 
@@ -47,7 +48,6 @@ class LoginController extends Controller
         {
             return response()->json([
                 'message'   => 'Your login or your password is not correct',
-                'error'     => $validator->errors(),
                 'status'    => '400'
             ]);
         }
