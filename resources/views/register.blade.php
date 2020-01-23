@@ -7,19 +7,17 @@
       <div class="register_banner">
         <div class="row" style="margin:0;">
           <div class="col-md-12 text-center">
-            <h3>Welcome in, please</h3>
-            <h2>Register</h2>
+            <h3>Welcome to</h3>
+            <h2>Healthy's</h2>
             <div class="line"></div>
           </div>
         </div>
       </div>
       <div class="row" style="margin:0;">
         <div class="col-md-6" style="border-right: 2px solid #677A70;margin: 2% 0;">
-          <form action="/register" method="post">
+          <form action="/login" method="post">
             <h2 class="text-center">Login</h2>
-            <div id="register_error" class="register_error text-center">
-              <p></p>
-            </div>
+            @foreach
             @csrf
             <div class="register_container text-center">
               <h3>Identifiers</h3>
