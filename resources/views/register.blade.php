@@ -13,15 +13,19 @@
           </div>
         </div>
       </div>
-      <form action="register" method="post">
+      <div class="register_error text-center">
+        <p></p>
+      </div>
+      <form action="/register" method="post">
+        @csrf
         <div class="register_container text-center">
           <h3>Identifiers</h3>
           <p>Already have an account ? <a href="login">I connect</a> </p>
           <p><span style="color:red;">*</span><i>Champs obligatoires</i></p>
           <div class="form-group">
-            <input type="text" name="email" value="" placeholder="Email address *">
+            <input type="email" name="email" value="" placeholder="Email address *">
             <input type="password" name="password" value="" placeholder="Password *">
-            <input type="password" name="confirm_password" value="" placeholder="Confirm password *">
+            <input type="password" name="password_confirmation" value="" placeholder="Confirm password *">
           </div>
         </div>
         <div class="register_container text-center">

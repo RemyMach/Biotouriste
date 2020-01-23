@@ -80,7 +80,7 @@ input[type=submit] {
   font-weight: bold;
   font-size: 12px;
   letter-spacing: 1px;
-  width: 20%;
+  width: 10%;
   transition: .5s;
   margin-right: 10px;
   margin-bottom: 2%;
@@ -97,12 +97,22 @@ input[type=submit]:hover {
   height: 40px;
   border: none;
 }
+.register_container input[type=email] {
+  padding: 5px 10px;
+  width: 60%;
+  height: 40px;
+  border: none;
+}
 .register_container input[type=password] {
   padding: 5px 10px;
   width: 60%;
   height: 40px;
   border: none;
 }
-.register_container select {
-  width: 60%;
+.register_error {
+  width: 50%;
+  height: auto;
+  padding: 10px 20px;
+  background-color: #ff6961;
+  margin: 20px auto;
 }

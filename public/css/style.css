@@ -532,3 +532,6 @@ background-color: #677A70;
 .footer {
   padding: 2%;
 }
+.footer input[type=submit] {
+  width: 50%;
+}

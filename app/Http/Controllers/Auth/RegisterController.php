@@ -52,6 +52,7 @@ class RegisterController extends Controller
 
     public function register(Request $request1)
     {
+
         $data = request()->all();
 
         $data['api_token'] = config('api.api_admin_password');
@@ -63,7 +64,7 @@ class RegisterController extends Controller
             ['form_params' => $data
             ]);
         $response = json_decode($request->getBody()->getContents());
-
+        dd($response);
 
         if($response->status === "400")
         {
@@ -71,6 +72,7 @@ class RegisterController extends Controller
         }
 
         $User_attributes_array = json_decode(json_encode($response->user),true);
+
         $user = new User($User_attributes_array);
         $user->idUser = $response->user->idUser;
 
