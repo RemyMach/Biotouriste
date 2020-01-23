@@ -16,6 +16,7 @@ class UserController extends Controller
 {
 
     public function __construct(){
+        $this->middleware('apiMergeJsonInRequest');
 
         $this->middleware('apiTokenAndIdUserExistAndMatch')->only(
             'show','updateProfile','updatePassword','destroy'
