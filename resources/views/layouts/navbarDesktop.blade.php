@@ -17,7 +17,7 @@
         @if(\Auth::check())
           <button type="button" name="button" onclick="window.location.href='{{ url('test/register1234') }}'"><i class="fas fa-user"></i></button>
         @else
-          <button type="button" name="button" onclick="window.location.href='{{ url('test/register1234') }}'"><i class="fas fa-user"></i></button>
+          <button type="button" name="button" onclick="window.location.href='{{ url('test/register1234') }}'"><i class="fas fa-user-plus"></i></button>
         @endif
           <button type="button" name="button" onclick="window.location.href='{{ url('cart') }}'"><i class="fas fa-shopping-bag"></i></button>
       </div>
