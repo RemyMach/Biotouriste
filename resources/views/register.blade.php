@@ -13,7 +13,17 @@
           </div>
         </div>
       </div>
-      <form action="register" method="post">
+      @if(isset($response))
+        <div class="alert-danger">
+        @foreach($response->error as $errors)
+          @foreach($errors as $error)
+            <p>{{ $error }}</p>
+            @endforeach
+        @endforeach
+        </div>
+      @endif
+      <form action="/register" method="post">
+        @csrf
         <div class="register_container text-center">
           <h3>Identifiers</h3>
           <p>Already have an account ? <a href="login">I connect</a> </p>
