@@ -14,20 +14,24 @@ use Illuminate\Support\Str;
 
 class LoginController extends Controller
 {
+    private $request;
     public function __construct()
     {
-        $this->middleware('apiAdmin');
+        $this->middleware('apiMergeJsonInRequest');
     }
 
-    public function login(ApiTokenController $apiTokenController,User_Status_CorrespondenceController $User_status_correspondenceController)
+    public function login(Request $request)
     {
+        $this->request = $request;
+
+
         $validator = $this->validateLogin(request()->all());
         if($validator->fails())
         {
             return response()->json([
                 'message'   => 'The request is not good',
                 'error'     => $validator->errors(),
-                'status'    => "400"
+                'status'    => '400'
             ]);
         }
 
@@ -36,8 +40,7 @@ class LoginController extends Controller
         {
             return response()->json([
                 'message'   => 'Your login or your password is not correct',
-                'error'     => $validator->errors(),
-                'status'    => "400"
+                'status'    => '400'
             ]);
         }
 
@@ -45,7 +48,6 @@ class LoginController extends Controller
         {
             return response()->json([
                 'message'   => 'Your login or your password is not correct',
-                'error'     => $validator->errors(),
                 'status'    => '400'
             ]);
         }

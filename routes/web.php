@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 //Auth::routes();
+
 Route::get('home', 'HomeController@index')->name('home');
 
 Route::get('users','UserController@index')->name('users');
@@ -136,6 +137,16 @@ Route::post('report/store','ReportController@store');
 
 Route::post('report/show/user','ReportController@showAllMyReports');
 
+// Cart
+Route::get('cart', 'CartController@index');
+
+// Profil
+Route::get('profil', 'ProfilController@index');
+Route::get('message', 'ProfilController@message');
+Route::get('favorite', 'ProfilController@favorite');
+
+// FAQ
+Route::get('faq', 'FaqController@index');
 Route::get('report/show/admin','ReportController@showAllReportsForAdmin');
 
 //User_status_Correspondence
@@ -180,6 +191,9 @@ Route::post('filterByCategorie','AnnounceController@filterByCategorie');
 
 Route::post('filterByCity','AnnounceController@filterByCity');
 
-Route::get('testfilterByCity','AnnounceController@testfilterByCity');
+Route::post('announce/store','AnnounceController@store');
+
+Route::get('announce/teststore','AnnounceController@teststore');
+
 
 /********************************************** Fin Routes Announces **********************************************/

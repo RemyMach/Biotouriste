@@ -11,6 +11,12 @@ use Illuminate\Support\Facades\Validator;
 
 class ResetPasswordController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('apiMergeJsonInRequest');
+    }
+
     public function showResetForm(ApiTokenController $apiTokenController)
     {
         $requestParameters = $apiTokenController->verifyAdminCredentials();

@@ -3,7 +3,6 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="csrf-token" content="{{ csrf_token() }}">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://use.typekit.net/vsp1spg.css">
@@ -15,7 +14,8 @@
   <link rel="stylesheet" href="{{ URL::asset('/css/favorite.css') }}">
   <link rel="stylesheet" href="{{ URL::asset('/css/register.css') }}">
   <link rel="stylesheet" href="https://use.typekit.net/vsp1spg.css">
+  <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.css">
+  <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
   <title>Healthy's</title>
-  <script src="{{ URL::asset('js/leaflet.js') }}"></script>
 </head>
 <body>

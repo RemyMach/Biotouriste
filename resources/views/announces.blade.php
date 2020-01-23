@@ -19,7 +19,7 @@
         </div>
         <div class="row">
             <div id="divAnnounces" class="col-md-6 divAnnounces"></div>
-            <div class="col-md-6" id="mapid" style="height: 500px"></div>
+            <div class="col-md-6" id="mapid"></div>
         </div>
 </div>
 @include('layouts.footer')
@@ -65,8 +65,6 @@ function findByCity(cityData){
         data: {cityData: cityData[0],  _token: '{{csrf_token()}}'},
         dataType: "json",
         success: function(result){
-            debugger;
-            console.log(result);
             mymap.removeLayer(this);
             mymap.setView([result.lat, result.lng], 10, { animation: true });
             remplirDivAnnonce(result.announces);
@@ -93,14 +91,15 @@ function filterByCategorieProduct(categorie){
         data: {q : $('#cityZone').val(), maxRows: 1, username: 'biotouriste'},
         dataType: "json",
         success: function (result){
+            result.geonames[0]['categorie'] = categorie;
             $.ajax({
                 url: "/filterByCategorie",
                 type: 'POST',
-                data: {cityData: result.geonames[0], categorie: categorie, _token: '{{csrf_token()}}'},
+                data: {cityData: result.geonames[0], _token: '{{csrf_token()}}'},
                 success: function (retour, statut) {
                     remplirDivAnnonce(retour.announces);
                 },
-                error: function (resultat, statut, erreur) {
+                error: function (resultat) {
                     console.log('marche pas frero')
                 }});
         }
@@ -111,30 +110,34 @@ function remplirDivAnnonce(announces){
     lgMarkers.clearLayers();
     $('#divAnnounces').empty();
     var div = '';
-    announces.forEach(function (announce) {
-        div = div +
-        "<div class='post' onclick='showAnnounce(announce)'>"+
-            "<div class='row'>"+
-                "<div class='col-md-4'>"+
-                    "<div class='icon'></div>"+
-                "</div>"+
-                "<div class='col-md-4'>"+
-                    "<div class='text'>"+
-                        "<h3>"+announce['announce_name']+"</h3>"+
-                        "<h5>"+announce['announce_comment']+"</h5>"+
-                        "<h6>"+announce['announce_adresse']+"</h6>"+
+    if( typeof announces !== 'undefined'){
+        announces.forEach(function (announce) {
+            div = div +
+            "<div class='post' onclick='showAnnounce(announce)'>"+
+                "<div class='row'>"+
+                    "<div class='col-md-4'>"+
+                        "<div class='icon'></div>"+
+                    "</div>"+
+                    "<div class='col-md-4'>"+
+                        "<div class='text'>"+
+                            "<h3>"+announce['announce_name']+"</h3>"+
+                            "<h5>"+announce['announce_comment']+"</h5>"+
+                            "<h6>"+announce['announce_adresse']+"</h6>"+
+                        "</div>"+
+                    "</div>"+
+                    "<div class='col-md-4'>"+
+                        "<div class='text'>"+
+                            "<h6>"+announce['announce_price']+"€</h6>"+
+                        "</div>"+
                     "</div>"+
                 "</div>"+
-                "<div class='col-md-4'>"+
-                    "<div class='text'>"+
-                        "<h6>"+announce['announce_price']+"€</h6>"+
-                    "</div>"+
-                "</div>"+
-            "</div>"+
-        "</div>";
-        var marker = new L.marker([announce['announce_lat'], announce['announce_lng']], {icon: icone}).addTo(lgMarkers);
-        marker.bindPopup(announce['announce_name']);
-    });
-    $('#divAnnounces').append(div);
+            "</div>";
+            var marker = new L.marker([announce['announce_lat'], announce['announce_lng']], {icon: icone}).addTo(lgMarkers);
+            marker.bindPopup(announce['announce_name']);
+        });
+        $('#divAnnounces').append(div);
+    } else {
+       // faire un toast ici
+    }
 }
 </script>
