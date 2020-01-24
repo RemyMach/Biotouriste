@@ -105,7 +105,7 @@ Route::post('discountCode/show','Discount_CodeController@showDiscountCodeOfAUser
 
 //Favoris
 
-Route::post('favori/show','FavoriController@showFavorisOfAUser');
+Route::get('favori/show','FavoriController@showFavorisOfAUser');
 
 Route::post('favori/store','FavoriController@store');
 
@@ -134,19 +134,7 @@ Route::post('message/show/User','MessageController@showMessagesOfATouristControl
 //Report
 
 Route::post('report/store','ReportController@store');
-
 Route::post('report/show/user','ReportController@showAllMyReports');
-
-// Cart
-Route::get('cart', 'CartController@index');
-
-// Profil
-Route::get('profil', 'ProfilController@index');
-Route::get('message', 'ProfilController@message');
-Route::get('favorite', 'ProfilController@favorite');
-
-// FAQ
-Route::get('faq', 'FaqController@index');
 Route::get('report/show/admin','ReportController@showAllReportsForAdmin');
 
 //User_status_Correspondence
@@ -171,7 +159,7 @@ Route::get('seller/testSelect','SellerController@testSelectSellersByCommentsNote
 
 /********************************************** Route pour front test **********************************************/
 
-Route::get('test/register1234','UserController@profil');
+Route::get('register','UserController@profil');
 
 Route::get('messages','MessageController@index');
 
