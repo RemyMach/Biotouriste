@@ -57,14 +57,14 @@ class RegisterController extends Controller
 
         $data['api_token'] = config('api.api_admin_token');
         $data['idUser'] = config('api.api_admin_id');
-
         $query = $client->request('POST','http://localhost:8001/api/user/store',
             ['form_params' => $data
             ]);
         $response = json_decode($query->getBody()->getContents());
+
         if($response->status === '400')
         {
-            return view('register')->with('response', $response);
+            return view('register')->with('response_register', $response);
         }
 
         session([
@@ -74,8 +74,7 @@ class RegisterController extends Controller
         ]);
 
         //que $this->registered($request1, $user) soit vrai ou false on redirect
-        return $this->registered($request, $user)
-            ?: redirect($this->redirectTo);
+        return redirect('/');
     }
 
     public function testRegister(Request $request, Client $client){

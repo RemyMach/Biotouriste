@@ -15,20 +15,20 @@
       <div class="profil_container text-center">
         <div class="row" style="margin:0;">
           <div class="col-md-12 text-center">
-            <div class="profil_pic" style="background-image: url(../img/home/jakob-owens-lkMJcGDZLVs-unsplash.jpg);"></div>
+            <div class="profil_pic" style="background-image: url({{$profil['active_status']->user_img}});"></div>
             <div class="profil_name">
-              <h2>Jakob Owens</h2>
+              <h2>{{$profil['active_status']->user_name}} {{$profil['active_status']->user_surname}}</h2>
             </div>
             <div class="profil_desc">
-              <p>User</p>
+              <p>{{$profil['active_status']->status_user_label}}</p>
+              <p>{{$profil['active_status']->email}}</p>
             </div>
             <div class="profil_info">
-              <form class="" action="index.html" method="post">
-                <input type="text" name="" value="jakob.owens@gmail.com">
-              </form>
+              <p>{{$profil['active_status']->user_postal_code}}</p>
+              <p>{{$profil['active_status']->user_phone}}</p>
             </div>
             <div class="profil_message">
-              <a href="{{ url('message') }}">My messages</a>  
+              <a href="{{ url('message') }}">My messages</a>
             </div>
           </div>
         </div>
@@ -82,6 +82,12 @@
           </div>
         </div>
       </div>
+      <form class="" action="logout" method="post">
+        @csrf
+        <div class="form-group text-center">
+          <input type="submit" name="" value="Disconnect">
+        </div>
+      </form>
     </div>
   </div>
 </div>

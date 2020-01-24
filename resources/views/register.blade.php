@@ -13,12 +13,19 @@
           </div>
         </div>
       </div>
-<<<<<<< HEAD
       <div class="row" style="margin:0;">
-        <div class="col-md-6" style="border-right: 2px solid #677A70;margin: 2% 0;">
+        <div id="login" class="col-md-6" style="border-right: 2px solid #677A70;margin: 2% 0;">
           <form action="/login" method="post">
             <h2 class="text-center">Login</h2>
-            @foreach
+            @if(isset($respsonse_login))
+            <div id="register_error" class="register_error text-center">
+              @foreach($response->error as $errors)
+                @foreach($errors as $error)
+                  <p>{{ $error }}</p>
+                @endforeach
+              @endforeach
+            </div>
+            @endif
             @csrf
             <div class="register_container text-center">
               <h3>Identifiers</h3>
@@ -32,39 +39,30 @@
               <input type="submit" name="" value="Submit">
             </div>
           </form>
-=======
-      @if(isset($response))
-        <div class="alert-danger">
-        @foreach($response->error as $errors)
-          @foreach($errors as $error)
-            <p>{{ $error }}</p>
-            @endforeach
-        @endforeach
         </div>
-      @endif
-      <form action="/register" method="post">
-        @csrf
-        <div class="register_container text-center">
-          <h3>Identifiers</h3>
-          <p>Already have an account ? <a href="login">I connect</a> </p>
-          <p><span style="color:red;">*</span><i>Champs obligatoires</i></p>
-          <div class="form-group">
-            <input type="text" name="email" value="" placeholder="Email address *">
-            <input type="password" name="password" value="" placeholder="Password *">
-            <input type="password" name="confirm_password" value="" placeholder="Confirm password *">
-          </div>
->>>>>>> remy
-        </div>
-        <div class="col-md-6" style="border-left: 2px solid #677A70;margin: 2% 0;">
+        <div id="register" class="col-md-6" style="border-left: 2px solid #677A70;margin: 2% 0;">
           <form action="/register" method="post">
             <h2 class="text-center">Register</h2>
+            @if(isset($response_register))
             <div id="register_error" class="register_error text-center">
-              <p></p>
+              @foreach($response_register->error as $errors)
+                @foreach($errors as $error)
+                  <p>{{ $error }}</p>
+                @endforeach
+              @endforeach
             </div>
+            @endif
             @csrf
             <div class="register_container text-center">
               <h3>Identifiers</h3>
               <p><span style="color:red;">*</span><i>Required field</i></p>
+              <div class="form-group">
+                <label for="">I'm a</label>
+                <input type="radio" name="status_user" value="Tourist" checked="checked" onclick="click(0)" >
+                <label for="tourist">Tourist</label>
+                <input type="radio" name="status_user" value="Seller" onclick="click(1)" >
+                <label for="seller">Seller</label>
+              </div>
               <div class="form-group">
                 <input type="email" name="email" value="" placeholder="Email address *" required>
                 <input type="password" name="password" value="" placeholder="Password *" required>
@@ -87,11 +85,6 @@
             </div>
           </form>
         </div>
-
-
-
-
-
       </div>
     </div>
   </div>

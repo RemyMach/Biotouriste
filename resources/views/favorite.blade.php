@@ -1,7 +1,7 @@
 @include('layouts.header')
 @include('layouts.navbarDesktop')
 @include('layouts.navbarMobile')
-@if(\Auth::check())
+@if(session()->has('user'))
 <div id="favorite">
   <div class="row" style="margin:0;">
     <div class="col-md-12" style="padding:0;">
@@ -54,8 +54,8 @@
       <div class="favorite_container text-center">
         <h3>Please login to access your favorites</h3>
         <p>Go to login page</p>
-        <button type="button" name="button" onclick="window.location.href='{{ url('test/register1234') }}'">Login</button>
-        <p>Or create an account <a href="{{ url('test/register1234')}}">here</a> </p>
+        <button type="button" name="button" onclick="window.location.href='{{ url('test/register1234#login') }}'">Login</button>
+        <p>Or create an account <a href="{{ url('test/register1234#register')}}">here</a> </p>
       </div>
     </div>
   </div>
