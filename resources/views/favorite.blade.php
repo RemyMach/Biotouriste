@@ -29,7 +29,7 @@
             </div>
             <div class="col-md-4">
               <div class="favorite_remove">
-                <button type="button" name="button" onclick="">Buy</button>
+                <button type="button" name="button" onclick="window.location.href='{{ url('test/register1234#login') }}">Buy</button>
                 <button type="button" name="button" onclick="">Remove</button>
               </div>
             </div>
@@ -54,8 +54,8 @@
       <div class="favorite_container text-center">
         <h3>Please login to access your favorites</h3>
         <p>Go to login page</p>
-        <button type="button" name="button" onclick="window.location.href='{{ url('test/register1234#login') }}'">Login</button>
-        <p>Or create an account <a href="{{ url('test/register1234#register')}}">here</a> </p>
+        <button type="button" name="button" onclick="window.location.href='{{ url('register#login') }}'">Login</button>
+        <p>Or create an account <a href="{{ url('register#register')}}">here</a> </p>
       </div>
     </div>
   </div>
