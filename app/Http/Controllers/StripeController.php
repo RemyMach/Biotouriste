@@ -24,10 +24,29 @@ class StripeController extends Controller
 
     public function stripe(Request $Request, Client $client)
     {
-        $data = request()->all();
+        $data = $Request->all();
 
-        $data['idUser'] = config('api.api_admin_id');
-        $data['api_token'] = config('api.api_admin_token');
+
+        /*$data['idUser'] = $this->sessionUser->idUser;
+        $data['api_token'] = $this->sessionUser->api_token;
+        $data['nbannouncesorder'] = $this->sessionUser->nbannouncesorder;
+        $data['idAnnounces1'] = $this->sessionUser->idAnnounces;
+        $data['quantityorderannounce1'] = $this->sessionUser->idAnnounces;
+        $data['announcesammount1'] = $this->sessionUser->idAnnounces;
+        $data['idAnnounces2'] = $this->sessionUser->idAnnounces;
+        $data['quantityorderannounce2'] = $this->sessionUser->idAnnounces;
+        $data['announcesammount2'] = $this->sessionUser->idAnnounces;
+        */
+        $data['idUser'] = 1;
+        $data['api_token'] = '4zUV8HQIW8ChZym9BZjWmqLPCzeoVbJPIMbMn52vJ7HFfGC88agKMJThZ3AUFkJL1ywhTcFDCq5NVmIr';
+        $data['nbannouncesorder'] = 2;
+        $data['idAnnounces1'] = 4;
+        $data['quantityorderannounce1'] = 1;
+        $data['announcesammount1'] = 5.99;
+        $data['idAnnounces2'] = 4;
+        $data['quantityorderannounce2'] = 4;
+        $data['announcesammount2'] = 10;
+
 
 
         $query = $client->request('POST','http://localhost:8001/api/payment/stripe', [
@@ -48,74 +67,5 @@ class StripeController extends Controller
 
 
         return redirect($this->redirectTo);
-    }
-    public function tokenPaymentStripe(Request $request)
-    {
-        $stripe = Stripe\Stripe::make(env('STRIPE_SECRET'));
-        dd($stripe->getConfig()->getVersion());
-        $orderdate = explode('/', $request->get("ccExpiry"));
-
-        $tokenfrompost = $stripe->tokens()->create([
-            'card' => [
-                'number' => $request->get('card_no'),
-                'exp_month' => $orderdate[0],
-                'exp_year' => $orderdate[1],
-                'cvc' => $request->get('cvvNumber'),
-            ],
-        ]);
-                    echo "<pre>";
-                    print_r($tokenfrompost);
-                    exit();
-                    return redirect()->route('addmoney.paymentSstripe');
-    }
-
-    public function chargePaymentStripe($tokenfrompost,$amount){
-        $stripe = Stripe\Stripe::make(env('STRIPE_SECRET'));
-        if (!isset($tokenfrompost)) {
-        return redirect()->route('addmoney.paymentstripe');
-        }
-        try {
-            $charge = $stripe->charges()->create([
-                'card' => $tokenfrompost['id'],
-                'currency' => 'EUR',
-                'amount' => $amount,
-            ]);
-
-
-            if ($charge['status'] == 'succeeded') {
-                $status = "succeeded";
-                $currency = $charge['currency'];
-                $idUser = 1;
-                $idAnnouce = 5;
-                return app()->make(PaymentController::class)->callAction('store', [$status,$currency,$idUser,$idAnnouce,$amount]);
-                //return $this->app('App\Http\Controllers\PaymentController')->store($charge,$idUser,$idAnnouce,$amount);
-                //return view('payment');
-                }
-            else {
-                    echo "<pre>";
-                    print_r($charge);
-                    exit();
-                    return redirect()->route('addmoney.paymentSstripe');
-            }
-        }
-        catch (\Cartalyst\Stripe\Exception\CardErrorException        $e) {
-            echo "<pre>";
-            print_r($e);
-            exit();
-            //\Session::put('error',$e->getMessage());
-            //return redirect()->route('addmoney.paymentsstripe');
-        } catch(\Cartalyst\Stripe\Exception\CardErrorException $e) {
-            echo "<pre>";
-            print_r($e);
-            exit();
-            //\Session::put('error',$e->getMessage());
-            //return view('payment');
-        } catch(\Cartalyst\Stripe\Exception\MissingParameterException $e) {
-            //\Session::put('error',$e->getMessage());
-            echo "<pre>";
-            print_r($e);
-            exit();
-            //return redirect()->route('addmoney.paymentsssssstripe');
-        }
     }
 }

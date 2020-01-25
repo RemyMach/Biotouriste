@@ -35,8 +35,6 @@ class PaymentController extends Controller
 
     public function getidforcard(Request $request)
     {
-
-
         //$stripe = $request->get('api_key_stripe');
         $strip = Stripe::make(env('STRIPE_SECRET'));
         /*$stripe = response()->json(['version' => $strip->getVersion(),
@@ -72,7 +70,7 @@ class PaymentController extends Controller
     }
     public function chargePaymentStripe($request,$tokenfrompost)
     {
-
+        $ordervalue = $request->get('announcesammount1') + $request->get('announcesammount2') + $request->get('announcesammount3');
 
         $strip = Stripe::make(env('STRIPE_SECRET'));
 
@@ -84,16 +82,16 @@ class PaymentController extends Controller
             $charge = $strip->charges()->create([
                 'card' => $tokenfrompost['id'],
                 'currency' => 'eur',
-                'amount' => 20.00,
+                'amount' => $ordervalue,
             ]);
 
 
-            return response()->json([
+            /*return response()->json([
                 'message' => 'Validate',
                 'status' => '200',
-                'user' => $charge,
-            ]);
-            //return addpaymentindb($request,$charge);
+                'user' => $request->get('ordervalue'),
+            ]);*/
+            return $this->addpaymentindb($request,$charge);
         }
         catch(CardErrorException $e){
             return response()->json([
@@ -141,19 +139,37 @@ class PaymentController extends Controller
     }
 
     public function addpaymentindb($request,$charge){
-        $mytime = Carbon::now();
-        dd($request);
-        return response()->json([
-            'message' => 'Validate',
-            'status' => '200',
-            'user' => $charge,
-            'date' => $mytime,
 
+        $mytime = Carbon::now();
+        $i = 1;
+        $id_orderunique = preg_replace("/[^0-9,.]/", "", $mytime);
+        $id_user = $request->get('idUser');
+        $id_order = "$id_user$id_orderunique";
+        $nbannounces = $request->get('nbannouncesorder');
+
+        while ($i != $nbannounces+1 ){
+            $payment_status = $charge['status'];
+            $payment_amount = $request->get( "announcesammount$i" );
+            $payment_currency = $charge['currency'];
+            $order_quantity = $request->get("quantityorderannounce$i");
+            $Announces_idAnnounce = $request->get("idAnnounces$i");
+            DB::table('Payments')->insert(
+                [   'payment_status' => $payment_status,
+                    'payment_amount' => $payment_amount,
+                    'payment_currency' => $payment_currency,
+                    'payment_date' => $mytime,
+                    'order_quantity' => $order_quantity,
+                    'id_order' => $id_order,
+                    'Users_idUser' => $id_user,
+                    'Announces_idAnnounce' => $Announces_idAnnounce
+                ]);
+            $i = $i + 1;
+        }
+        return response()->json([
+            'message' => 'Error',
+            'status' => '400',
+            'error' => 'enfinnnnn',
         ]);
-        DB::table('Payments')->insert(
-            ['payment_status' => $charge->get('status') , 'payment_amount' => $request->get('amount'), 'payment_currency' => $charge->get('') , 'payment_date' => $mytime , 'Users_idUser' => $idUser , 'Announces_idAnnounce' => $idAnnouce ]
-        );
-        return view('payment');
     }
 
 
