@@ -54,7 +54,6 @@ class AnnounceController extends Controller
         $announce->products_idProduct = (int)$newAnnounce['products_idProduct'];
         $announce->Users_idUser = (int)$newAnnounce['Users_idUser'];
 
-$test;
         $announce->save();
         return response()->json([
             'message'   => 'Your Announce has been register',
