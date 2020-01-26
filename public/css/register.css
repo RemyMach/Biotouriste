@@ -1,0 +1,108 @@
+#register {
+  padding-top: 20px;
+  height: 100%;
+  width: 100%;
+}
+#register .title {
+  padding: 20px;
+}
+#register h3 {
+  font-size: 18px;
+  color: #677A70;
+  text-transform: uppercase;
+}
+#register h2 {
+  font-size: 36px;
+  color: #677A70;
+  font-family: minerva-modern, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  text-transform: uppercase;
+}
+#register .line {
+  width: 80px;
+  height: 1px;
+  border: 2px solid #677A70;
+  margin-top: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #677A70;
+}
+.register_container {
+  height: auto;
+  padding: 50px 20px;
+  width: 50%;
+  background-color: #d0dad0;
+  margin: 2% auto;
+}
+@media screen and (max-width: 1400px) {
+  .register_container {
+    height: auto;
+    padding: 50px 20px;
+    width: 80%;
+    background-color: #d0dad0;
+    margin: 5% auto;
+  }
+}
+@media screen and (max-width: 700px) {
+  .register_container {
+    height: auto;
+    padding: 50px 20px;
+    width: 100%;
+    background-color: #d0dad0;
+    margin: 5% auto;
+  }
+}
+.register_banner h3 {
+  text-transform: uppercase;
+  color: #677A70;
+  font-size: 24px;
+  font-weight: 500;
+  font-family: minerva-modern, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+.register_banner {
+  background-color: #f8f4ed;
+  height: auto;
+  width: 100%;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+.register_container input {
+  margin-top: 20px;
+}
+input[type=submit] {
+  text-transform: uppercase;
+  color: white;
+  text-decoration: none;
+  font-family: 'helvetica', sans-serif;
+  font-weight: bold;
+  font-size: 12px;
+  letter-spacing: 1px;
+  width: 20%;
+  transition: .5s;
+  margin-right: 10px;
+  margin-bottom: 2%;
+  padding: 5px;
+  border: none;
+  background-color: #677A70;
+}
+input[type=submit]:hover {
+  background-color: black;
+}
+.register_container input[type=text] {
+  padding: 5px 10px;
+  width: 60%;
+  height: 40px;
+  border: none;
+}
+.register_container input[type=password] {
+  padding: 5px 10px;
+  width: 60%;
+  height: 40px;
+  border: none;
+}
+.register_container select {
+  width: 60%;
+}

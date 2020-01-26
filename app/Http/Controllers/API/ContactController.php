@@ -22,6 +22,7 @@ class ContactController extends Controller
 
     public function __construct()
     {
+        $this->middleware('apiMergeJsonInRequest');
         $this->middleware('apiTokenAndIdUserExistAndMatch')->only(
             'store'
         );

@@ -15,7 +15,6 @@ class UserController extends Controller
     {
         $this->middleware('SessionAuth')->only('show','updateProfile','UpdatePassword','destroy');
         $this->middleware('admin')->only('destroy','index');
-
     }
 
     /**
@@ -69,6 +68,7 @@ class UserController extends Controller
             return redirect('home');
         }
 
+        $client = new Client();
         $query = $client->request('POST','http://localhost:8001/api/user/show', [
             'form_params' => [
                 "api_token"=>$api_token,"idUser"=>$this->user->idUser]
@@ -76,6 +76,7 @@ class UserController extends Controller
         $response = json_decode($query->getBody()->getContents());
 
         dd($response);
+        $user = $response->user;
 
         return view('users.profile',['user' => $response->user]);
     }
@@ -178,5 +179,11 @@ class UserController extends Controller
         }
 
         return back()->with('success','The Profile has been destroy');
+    }
+
+    public function profil() {
+
+      return view('register');
+
     }
 }

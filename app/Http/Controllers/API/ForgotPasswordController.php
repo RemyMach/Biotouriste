@@ -17,6 +17,10 @@ use Illuminate\Support\Str;
 class ForgotPasswordController extends Controller
 {
 
+    public function __construct(){
+        $this->middleware('apiMergeJsonInRequest');
+    }
+
     public function sendResetLinkEmail(Mail $mail,ApiTokenController $apiTokenController)
     {
 

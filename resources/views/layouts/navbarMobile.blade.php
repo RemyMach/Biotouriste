@@ -8,7 +8,9 @@
         <h1>Healthy's</h1>
       </div>
       <div class="col-4 text-center menu">
-        <button type="button" name="button" onclick="openCart()"><i class="fas fa-shopping-bag"></i></button>
+        <button type="button" name="button" onclick="openFav()"><i class="fas fa-heart"></i></button>
+        <button type="button" name="button" onclick="window.location.href='{{ url('test/register1234') }}'"><i class="fas fa-user"></i></button>
+        <button type="button" name="button" onclick="window.location.href='{{ url('cart') }}'"><i class="fas fa-shopping-bag"></i></button>
       </div>
     </div>
   </nav>

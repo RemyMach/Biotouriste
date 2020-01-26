@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 //Auth::routes();
+
 Route::get('home', 'HomeController@index')->name('home');
 
 Route::get('users','UserController@index')->name('users');
@@ -124,6 +125,16 @@ Route::post('report/store','ReportController@store');
 
 Route::post('report/show/user','ReportController@showAllMyReports');
 
+// Cart
+Route::get('cart', 'CartController@index');
+
+// Profil
+Route::get('profil', 'ProfilController@index');
+Route::get('message', 'ProfilController@message');
+Route::get('favorite', 'ProfilController@favorite');
+
+// FAQ
+Route::get('faq', 'FaqController@index');
 Route::get('report/show/admin','ReportController@showAllReportsForAdmin');
 
 //User_status_Correspondence
@@ -147,6 +158,10 @@ Route::get('seller/testupdateDescription','SellerController@testupdateDescriptio
 Route::get('seller/testSelect','SellerController@testSelectSellersByCommentsNotes');
 
 /********************************************** Route pour front test **********************************************/
+
+
+Route::get('test/register1234','UserController@profil');
+
 
 
 Route::get('messages','MessageController@index');

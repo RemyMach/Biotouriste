@@ -14,6 +14,7 @@ class ApiTokenController extends Controller
 
     public function verifyRoleCredentials($role)
     {
+
         $parameters = $this->verifyCredentials();
 
         if(!$parameters)
