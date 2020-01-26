@@ -16,6 +16,12 @@
   <link rel="stylesheet" href="https://use.typekit.net/vsp1spg.css">
   <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.css">
   <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
+
+{{-- Link for announce --}}
+  <link rel="stylesheet" href="{{ URL::asset('/css/leaflet.css') }}" />
+  <link rel="stylesheet" href="{{ URL::asset('/css/announces.css') }}" />
+  <script src="{{ URL::asset('js/leaflet.js') }}"></script>
+
   <title>Healthy's</title>
 </head>
 <body>

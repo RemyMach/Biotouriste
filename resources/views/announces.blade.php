@@ -1,6 +1,6 @@
 @include('layouts.header')
 <div id="content-1">
-      @include('layouts.navbar_default')
+      @include('layouts.navbarDesktop')
         <div class="row">
             <div class="col-md-12">
             <input type="text" name="cityZone" id="cityZone" value="paris">
