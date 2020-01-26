@@ -15,6 +15,27 @@ class AnnounceController extends Controller
 {
     private $request;
 
+    public function update(Request $request){
+        $this->request = $request;
+        $data = $request->all();
+        $announce = Announce::find($data['idAnnounce']);
+        if($announce === null){
+            return response()->json([
+                'error'   => 'The announce does not exist, we cant delete it',
+                'status'    => '400']);
+        }
+        $validator = $this->validateNewQuantity();
+        if($validator->original['status'] == '400') {
+            return $validator;
+        }
+        $announce->announce_quantity = $announce->announce_quantity + $data['newQuantityToAdd'];
+        $announce->save();
+        return response()->json([
+            'announce' => $announce,
+            'status' => '200'
+        ]);
+    }
+
     public function delete(Request $request){
         $this->request = $request;
         $data = $request->all();
@@ -155,6 +176,13 @@ class AnnounceController extends Controller
             'products_idProduct' => ['required','int'],
             'Users_idUser' => ['required','int'],
             'announce_quantity' => ['required','string'],
+        ]);
+        return $this->resultValidator($validator);
+    }
+
+    private function validateNewQuantity(){
+        $validator = Validator::make($this->request->all(), [
+            'newQuantityToAdd' => ['required','int']
         ]);
         return $this->resultValidator($validator);
     }

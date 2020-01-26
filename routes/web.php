@@ -186,5 +186,7 @@ Route::get('announce/store','AnnounceController@store');
 
 Route::get('announce/delete','AnnounceController@delete');
 
+Route::get('announce/update','AnnounceController@update');
+
 
 /********************************************** Fin Routes Announces **********************************************/

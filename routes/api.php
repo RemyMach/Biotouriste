@@ -127,6 +127,8 @@ Route::post('announce/store','API\AnnounceController@store');
 
 Route::post('announce/delete','API\AnnounceController@delete');
 
+Route::post('announce/update','API\AnnounceController@update');
+
 
 
 /*Route::get('/users', function () {
