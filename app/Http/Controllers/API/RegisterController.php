@@ -21,6 +21,7 @@ class RegisterController extends Controller
 
     public function __construct()
     {
+        $this->middleware('apiMergeJsonInRequest');
         $this->middleware('apiAdmin');
     }
 
@@ -96,7 +97,7 @@ class RegisterController extends Controller
             return response()->json([
                 'message'   => 'The request is not good',
                 'error'     => $validator->errors(),
-                'status'    => "400"
+                'status'    => '400'
             ]);
         }
 

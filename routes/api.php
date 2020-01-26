@@ -13,9 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+/*Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
-});
+});*/
 
 //list users
 Route::get('user/users','API\UserController@index');
@@ -115,6 +115,21 @@ Route::post('seller/updateBio','API\SellerController@updateReverseBioStatus');
 Route::post('seller/updateDescription','API\SellerController@updateSellerDescription');
 
 Route::post('seller/testSelect','API\SellerController@SelectSellersByCommentsNotes');
+
+
+// Announce
+
+Route::post('filterByCategorie','API\AnnounceController@selectByCategorie');
+
+Route::post('filterByCity','API\AnnounceController@selectByCity');
+
+Route::post('announce/store','API\AnnounceController@store');
+
+Route::post('announce/delete','API\AnnounceController@delete');
+
+Route::post('announce/update','API\AnnounceController@update');
+
+Route::post('announce/historySeller','API\AnnounceController@selectHistorySeller');
 
 
 

@@ -51,6 +51,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
+        'apiMergeJsonInRequest' => \App\Http\Middleware\API\JsonInRequest::class,
         'apiTokenAndIdUserExistAndMatch' => \App\Http\Middleware\API\Authentication::class,
         'apiAdmin' => \App\Http\Middleware\API\Admin::class,
         'apiController' => \App\Http\Middleware\API\Controller::class,

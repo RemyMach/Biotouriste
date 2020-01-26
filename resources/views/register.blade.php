@@ -3,7 +3,7 @@
 @include('layouts.navbarMobile')
 <div id="register">
   <div class="row" style="margin:0;">
-    <div class="col-md-12">
+    <div class="col-md-12" style="padding:0;">
       <div class="register_banner">
         <div class="row" style="margin:0;">
           <div class="col-md-12 text-center">
@@ -13,20 +13,42 @@
           </div>
         </div>
       </div>
-      <div class="register_container text-center">
-        <p>Already have an account ? <a href="#">I connect</a> </p>
-        <form class="" action="" method="post">
-          <div class="form_content_1">
-            <input type="text" name="" value="" placeholder="Firstname">
-            <input type="text" name="" value="" placeholder="Lastname">
-            <input type="text" name="" value="" placeholder="E-mail">
+      @if(isset($response))
+        <div class="alert-danger">
+        @foreach($response->error as $errors)
+          @foreach($errors as $error)
+            <p>{{ $error }}</p>
+            @endforeach
+        @endforeach
+        </div>
+      @endif
+      <form action="/register" method="post">
+        @csrf
+        <div class="register_container text-center">
+          <h3>Identifiers</h3>
+          <p>Already have an account ? <a href="login">I connect</a> </p>
+          <p><span style="color:red;">*</span><i>Champs obligatoires</i></p>
+          <div class="form-group">
+            <input type="text" name="email" value="" placeholder="Email address *">
+            <input type="password" name="password" value="" placeholder="Password *">
+            <input type="password" name="confirm_password" value="" placeholder="Confirm password *">
           </div>
-          <div class="form_content_2">
-            <input type="text" name="" value="" placeholder="Password">
-            <input type="text" name="" value="" placeholder="Confirm password">
+        </div>
+        <div class="register_container text-center">
+          <h3>Personnals informations</h3>
+          <div class="form-group">
+            <input type="text" name="user_name" value="" placeholder="Firstname *">
+            <input type="text" name="user_surname" value="" placeholder="Lastname *">
           </div>
-        </form>
-      </div>
+          <div class="form-group">
+            <input type="text" name="user_postal_code" value="" placeholder="Postal code">
+            <input type="text" name="user_phone" value="" placeholder="Phone number">
+          </div>
+        </div>
+        <div class="form-group text-center">
+          <input type="submit" name="" value="Submit">
+        </div>
+      </form>
     </div>
   </div>
 </div>

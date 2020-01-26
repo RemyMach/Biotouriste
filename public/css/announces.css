@@ -1,5 +1,6 @@
 .divAnnounces{
     overflow-y: scroll;
+    height: 650px;
 }
 .categories li{
     text-align: center;
@@ -12,5 +13,5 @@
 }
 
 #mapid{
-    500 px;
+    height: 600px;
 }
