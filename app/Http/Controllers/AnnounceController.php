@@ -25,6 +25,19 @@ class AnnounceController extends Controller
         return view('announces');
     }
 
+    public function selectHistorySeller(Request $request, Client $client){
+        $data['idUser'] = 3;
+        $data['api_token'] = '2dBsSqcw4U3kCaFKg7ZDlfcJ6zRf0Czn0Pjypsw2GVuzG5ZjLwDVninGYKG3ARKvdFhbcitqMmZVgVCo';
+
+        $query = $client->request('POST', 'http://localhost:8001/api/announce/historySeller', ['form_params' => $data]);
+        $response = json_decode($query->getBody()->getContents());
+
+        if ($response->status === '400'){
+            return response()->json(['error' => $response->error]);
+        }
+        return response()->json($response);
+    }
+
     public function update(Request $request, Client $client){
         $data['idAnnounce'] = 1;
         $data['newQuantityToAdd'] = 30;

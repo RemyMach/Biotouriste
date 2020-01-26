@@ -15,6 +15,17 @@ class AnnounceController extends Controller
 {
     private $request;
 
+    public function selectHistorySeller(Request $request){
+        $this->request = $request;
+        $data = $request->all();
+        $announces = Announce::where('Users_idUser', $data['idUser'])->get();
+        return response()->json([
+            'announces' => $announces,
+            'totalAnnounces' => count($announces),
+            'status' => '200'
+        ]);
+    }
+
     public function update(Request $request){
         $this->request = $request;
         $data = $request->all();
