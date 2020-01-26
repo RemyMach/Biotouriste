@@ -51,19 +51,22 @@ class AnnounceController extends Controller
         $data = [
             'announce_name' => 'TestSTORAGE',
             'announce_price' => 8,
-            'announce_comment' => 'TestSTORAGE',
-            'announce_adresse' => 'TestSTORAGE',
+            'announce_comment' => 'TestSTORAGEComment',
+            'announce_adresse' => 'TestSTORAGEADRESSE',
             'announce_date' => '2012-01-01 11:00:00',
             'announce_city' => 'punta cana',
-            'announce_img' => '',
+            'announce_img' => null,
             'products_idProduct' => 130,
-            'Users_idUser' => 4,
+            'Users_idUser' => 3,
             'announce_lat' => 18.582010,
             'announce_lng' => -68.405472,
-            'announce_quantity' => 3
+            'announce_quantity' => 3,
+            'announce_measure' => 'Kilo',
+            'announce_is_available' => true
         ];
+
         $data['idUser'] = 3;
-        $data['api_token'] = 'Up8uzXkdLEBQ766VEpJBBgimf6AaKfsoQaamitbObWy6Y8VBXwzab8vkI9PMEGm7PccNy0SE8gbtgCFv';
+        $data['api_token'] = '2dBsSqcw4U3kCaFKg7ZDlfcJ6zRf0Czn0Pjypsw2GVuzG5ZjLwDVninGYKG3ARKvdFhbcitqMmZVgVCo';
         $query = $client->request('POST', 'http://localhost:8001/api/announce/store', ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
 
