@@ -66,7 +66,6 @@ function findByCity(cityData){
         dataType: "json",
         success: function(result){
             mymap.removeLayer(this);
-            mymap.setView([result.lat, result.lng], 10, { animation: true });
             remplirDivAnnonce(result.announces);
         }
     });
@@ -79,6 +78,8 @@ function findCityData(){
         data: {q : $('#cityZone').val(), maxRows: 1, username: 'biotouriste'},
         dataType: "json",
         success: function (result){
+            console.log(result.geonames);
+            mymap.setView([result.geonames[0].lat, result.geonames[0].lng], 10, { animation: true });
             findByCity(result.geonames);
         }
     });
