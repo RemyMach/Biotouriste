@@ -53,7 +53,6 @@ class AnnounceController extends Controller
             'announce_price' => 8,
             'announce_comment' => 'TestSTORAGEComment',
             'announce_adresse' => 'TestSTORAGEADRESSE',
-            'announce_date' => '2012-01-01 11:00:00',
             'announce_city' => 'punta cana',
             'announce_img' => null,
             'products_idProduct' => 130,
