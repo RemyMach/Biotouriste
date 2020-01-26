@@ -24,30 +24,29 @@ class AnnounceController extends Controller
     {
         return view('announces');
     }
-//    public function update(Request $request, Client $client){
-////        announce is available
-////        quantity
-//
-//    }
-//
-//    public function destroy(Request $request, Client $client){
-//        available
-//        //Apres annulation de la comande si il ya des commandes en cours , on envoie un mail pour lui dire de pas baiser le client et de lui donner son du
-//        //Si il n'y a pas de commande BAS ON envoie un mail au mec
-//    }
-    public function store(Request $request, Client $client){
-        $data = request()->all();
-        $data['idUser'] = $this->sessionUser->idUser;
-        $data['api_token'] = $this->sessionUser->api_token;
-        $query = $client->request('POST', 'http://localhost:8001/api/store', ['form_params' => $data]);
+    public function delete(Request $request, Client $client){
+        $data['idAnnounce'] = 4;
+        $data['idUser'] = 3;
+        $data['api_token'] = '2dBsSqcw4U3kCaFKg7ZDlfcJ6zRf0Czn0Pjypsw2GVuzG5ZjLwDVninGYKG3ARKvdFhbcitqMmZVgVCo';
+        $query = $client->request('POST', 'http://localhost:8001/api/announce/delete', ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
 
         if ($response->status === '400'){
             return response()->json(['error' => $response->error]);
         }
+        return response()->json($response);
     }
+//    public function store(Request $request, Client $client){
+//        $data = request()->all();
+//        $query = $client->request('POST', 'http://localhost:8001/api/store', ['form_params' => $data]);
+//        $response = json_decode($query->getBody()->getContents());
+//
+//        if ($response->status === '400'){
+//            return response()->json(['error' => $response->error]);
+//        }
+//    }
 
-    public function teststore(Request $request, Client $client){
+    public function store(Request $request, Client $client){
         $data = [
             'announce_name' => 'TestSTORAGE',
             'announce_price' => 8,
@@ -66,6 +65,8 @@ class AnnounceController extends Controller
 
         $data['idUser'] = 3;
         $data['api_token'] = '2dBsSqcw4U3kCaFKg7ZDlfcJ6zRf0Czn0Pjypsw2GVuzG5ZjLwDVninGYKG3ARKvdFhbcitqMmZVgVCo';
+//        $data['idUser'] = $this->sessionUser->idUser;
+//        $data['api_token'] = $this->sessionUser->api_token;
         $query = $client->request('POST', 'http://localhost:8001/api/announce/store', ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
 

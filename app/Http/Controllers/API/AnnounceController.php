@@ -15,9 +15,22 @@ class AnnounceController extends Controller
 {
     private $request;
 
-
     public function delete(Request $request){
+        $this->request = $request;
+        $data = $request->all();
+        $announce = Announce::find($data['idAnnounce']);
+        if($announce === null){
+            return response()->json([
+            'error'   => 'The announce does not exist, we cant delete it',
+            'status'    => '400']);
+        }
 
+        $announce->announce_is_available = false;
+        $announce->save();
+        return response()->json([
+            'message'    => 'Announce has been deleted',
+            'status' => '200'
+        ]);
     }
 
     public function store(Request $request){
@@ -43,10 +56,6 @@ class AnnounceController extends Controller
             'status'    => '200',
             'announce'  => $announce
         ]);
-    }
-
-    public function update(Request $request){
-        $this->request = $request;
     }
 
     public function selectByCategorie(Request $request){
@@ -148,7 +157,6 @@ class AnnounceController extends Controller
             'announce_quantity' => ['required','string'],
         ]);
         return $this->resultValidator($validator);
-
     }
 
 }
