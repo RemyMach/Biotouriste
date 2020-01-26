@@ -67,10 +67,10 @@ class AnnounceController extends Controller
         $query = $client->request('POST', 'http://localhost:8001/api/announce/store', ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
 
-        dd($response);
         if ($response->status === '400'){
             return response()->json(['error' => $response->error]);
         }
+        return response()->json($response);
 
     }
 

@@ -4,9 +4,10 @@
 namespace App\Http\Controllers\API;
 
 
+use App\Announce;
 use App\Http\Controllers\Controller;
 use App\Repositories\AnnounceRepository;
-use http\Env\Response;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -23,14 +24,37 @@ class AnnounceController extends Controller
 
         $this->request = $request;
 
-        $validator = $this->validateAnnounce();
-        if($validator->original['status'] == '400') {
-            return $validator;
-        }
+//        $validator = $this->validateAnnounce();
+//        if($validator->original['status'] == '400') {
+//            return $validator;
+//        }
+        $data = $request->all();
+        $col =[
+            'announce_name' => 0,'announce_price' => 0,'announce_comment' => 0,'announce_adresse' => 0,'announce_date' => 0,'announce_city' => 0,
+            'announce_img' => 0,'products_idProduct' => 0,'Users_idUser' => 0,'announce_lat' => 0,'announce_lng' => 0,'announce_quantity' => 0
+        ];
+        // fusionne tab1 et tab2 si les key dans le tab 1 exist dans le 2 avec les value du tab 2
+        $newAnnounce = array_merge($col, array_intersect_key($data, $col));
+        $newAnnounce['announce_date'] = DateTime::createFromFormat('Y-m-d H:i:s', $newAnnounce['announce_date']);
+        $newAnnounce['announce_is_available'] = true;
+        $announce = Announce::create($newAnnounce);
+
+        $table->string('announce_measure', 25);
+        $table->decimal('announce_lat', 13, 10);
+        $table->decimal('announce_lng', 13, 10);
+        $table->string('announce_city', 30);
+        $table->decimal('announce_price', 6, 2);
+        $table->text('announce_comment');
+        $table->string('announce_adresse', 45);
+        $table->dateTime('announce_date');
+        $table->string('announce_img', 45)->nullable();
+        $table->integer('products_idProduct')->index('fk_Announces_products1_idx');
+        $table->integer('Users_idUser')->index('fk_Announces_Users1_idx');
 
         return response()->json([
             'message'   => 'Your Announce has been register',
             'status'    => '200',
+            'announce'  => $newAnnounce
         ]);
     }
 
@@ -123,11 +147,12 @@ class AnnounceController extends Controller
     }
 
     private function validateAnnounce(){
-        $test;
         $validator = Validator::make($this->request->input('cityData'), [
             'lng' => ['required','string','regex:/^(-)?[0-9]*.[0-9]*$/'],
             'lat' => ['required','string','regex:/^(-)?[0-9]*.[0-9]*$/'],
         ]);
+        return $this->resultValidator($validator);
+
     }
 
 }
