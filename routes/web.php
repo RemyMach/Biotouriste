@@ -105,7 +105,9 @@ Route::post('discountCode/show','Discount_CodeController@showDiscountCodeOfAUser
 
 //Favoris
 
-Route::post('favori/show','FavoriController@showFavorisOfAUser');
+Route::get('favori/show','FavoriController@showFavorisOfAUser');
+
+Route::get('favori/testShow','FavoriController@testShowFavorisOfAUser');
 
 Route::post('favori/store','FavoriController@store');
 
