@@ -7,6 +7,9 @@
 <div class="payment-title">
     <h1>Payment Information</h1>
 </div>
+<div class="errorcard">
+    
+</div>
 <div class="container preload">
     <div class="creditcard">
         <div class="front">

@@ -11,7 +11,6 @@ use Redirect;
 use Input;
 use App\User;
 use Stripe\Error\Card;
-use Cartalyst\Stripe;
 
 class StripeController extends Controller
 {
@@ -56,7 +55,7 @@ class StripeController extends Controller
 
         if($response->status === '400')
         {
-            return redirect('pay');
+            return redirect()->route('pay', [$response->error]);
         }
         else{
 
