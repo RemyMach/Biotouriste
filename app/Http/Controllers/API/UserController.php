@@ -7,6 +7,7 @@ use App\Http\Resources\User as UserResource;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -60,6 +61,9 @@ class UserController extends Controller
     public function updateProfile()
     {
         $data = request()->all();
+
+
+        return $this->checkIfEmailAndPasswordExisting($data);
 
         $validator = Validator::make($data, [
             'user_name' => ['required','string', 'max:45'],
@@ -162,5 +166,23 @@ class UserController extends Controller
         }
 
         return true;
+    }
+
+    private function checkIfEmailAndPasswordExisting($data){
+
+        $emails = DB::table('Users')->select('email')->get();
+        $email = DB::table('Users')->select('email')->where('idUser','=',$data['idUser']);
+        $phones = DB::table('Users')->select('user_phone')->get();
+        $phone = DB::table('Users')->select('user_phone')->where('user_phone','=',$data['user_phone']);
+
+
+        if (($key = array_search($email, $emails)) !== false) {
+            unset($emails[$key]);
+        }
+
+        if (($key = array_search($phone, $phones)) !== false) {
+            unset($phones[$key]);
+        }
+
     }
 }

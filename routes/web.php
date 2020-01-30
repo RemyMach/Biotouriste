@@ -45,7 +45,7 @@ Route::post('password/email','Auth\ForgotPasswordController@sendResetLinkEmail')
 
 Route::get('user/{token}','UserController@show');
 
-Route::get('user/update/{user}','UserController@updateProfile');
+Route::get('user/update','UserController@updateProfile');
 
 Route::get('admin/user/{user}','UserController@destroy');
 

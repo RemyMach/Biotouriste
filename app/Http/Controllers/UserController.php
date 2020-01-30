@@ -99,14 +99,11 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function updateProfile(Request $request,User $user, Client $client)
+    public function updateProfile(Request $request, Client $client)
     {
 
         $this->sessionUser = $request->session()->get('user');
 
-        if($user->idUser != $this->user->idUser){
-            return redirect('home');
-        }
 
         $data = request()->all();
         $data['api_token'] = $this->sessionUser->api_token;
@@ -142,7 +139,7 @@ class UserController extends Controller
 
         $response = json_decode($query->getBody()->getContents());
 
-        if($response->status === "400")
+        if($response->status === '400')
         {
             return back()->with('fail','The request is not good');;
         }
