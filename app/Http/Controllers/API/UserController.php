@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\API\ApiTokenController;
+use App\Http\Controllers\API\NoApiClass\UsefullController;
 use App\Http\Resources\User as UserResource;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
@@ -14,6 +16,9 @@ use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
+
+    private $user;
+    private $request;
 
     public function __construct(){
         $this->middleware('apiMergeJsonInRequest');
@@ -25,8 +30,6 @@ class UserController extends Controller
             'destroy','index'
         );
     }
-
-    private $user;
 
     public function index(ApiTokenController $apiTokenController)
     {
@@ -43,12 +46,10 @@ class UserController extends Controller
         return response()->json($response, 200);*/
     }
 
-    public function show()
+    public function show(Request $request)
     {
-        $data = request()->all();
-        $idUser = $data['idUser'];
-        $api_token = $data['api_token'];
-
+        $this->request = $request;
+        $idUser = $this->request->get('idUser');
 
         $user =  User::findorFail($idUser);
 
@@ -58,23 +59,17 @@ class UserController extends Controller
             ]);
     }
 
-    public function updateProfile()
+    public function updateProfile(Request $request, UsefullController $usefullController)
     {
-        $data = request()->all();
-
-        return $this->checkEmailAndPasswordExist($data);
+        $this->request = $request;
 
 
-        return response()->json([
-          $emails
-        ]);
-
-        $validator = Validator::make($data, [
+        $validator = Validator::make($this->request->all(), [
             'user_name' => ['required', 'string', 'max:45'],
             'user_surname' => ['required', 'string', 'max:45'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255'],
             'user_postal_code' => ['required', 'integer'],
-            'user_phone' => ['required', 'unique:users'],
+            'user_phone' => ['required'],
             'user_img' => ['string'],
         ]);
 
@@ -83,20 +78,29 @@ class UserController extends Controller
             return response()->json([
                 'message'   => 'The request is not good',
                 'error'     => $validator->errors(),
-                'status'    => "400"
+                'status'    => '400'
             ]);
         }
 
-        if(isset($data['password']) || ($data['remember_token']) || $data['Status_User_idStatus_User'] || $data['api_token'])
-        {
-            unset($data['password']);
-            unset($data['remember_token']);
-            unset($data['Status_User_idStatus_User']);
-            unset($data['api_token']);
+        $data = $this->checkIfEmailAndPasswordExisting($this->request->all());
+
+        if(!$data){
+
+            return response()->json([
+                'message'   => 'The Email of Phone exist',
+                'status'    => '400',
+            ]);
         }
 
-        $user = User::findorFail('idUser',$data['idUser'])->first();
 
+        $data = $usefullController->keepKeysThatWeNeed($data,[
+            'user_name','user_surname','email','user_postal_code','user_phone','user_img'
+        ]);
+
+
+        $user = User::find($this->request->input('idUser'))->first();
+
+        
         $user->update($data);
 
         return response()->json([
@@ -108,12 +112,12 @@ class UserController extends Controller
 
     }
 
-    public function updatePassword()
+    public function updatePassword(Request $request)
     {
 
-        $data = request()->all();
+        $this->request = $request;
 
-        $validator = Validator::make($data, [
+        $validator = Validator::make($this->request->all(), [
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
@@ -122,20 +126,19 @@ class UserController extends Controller
             return response()->json([
                 'message'   => 'The request is not good',
                 'error'     => $validator->errors(),
-                'status'    => "400"
+                'status'    => '400'
             ]);
         }
 
-        $validArray = $data['password'];
 
-        $user = User::findorFail('idUser',$requestParameters['idUser'])->first();
+        $user = User::find($this->request->input('idUser'))->first();
 
-        $user->update($validArray);
+        $user->update(['password' => $this->request->get('password')]);
 
         return response()->json([
             'message'   => 'The informations are update',
             'status'    => '200',
-            'user'      => $validArray
+            'user'      => $user
         ]);
 
     }
@@ -175,18 +178,29 @@ class UserController extends Controller
     private function checkIfEmailAndPasswordExisting($data){
 
         $emails = DB::table('Users')->select('email')->get();
-        $email = DB::table('Users')->select('email')->where('idUser','=',$data['idUser']);
+        $email = DB::table('Users')->select('email')->where('idUser','=',$data['idUser'])->get();
         $phones = DB::table('Users')->select('user_phone')->get();
-        $phone = DB::table('Users')->select('user_phone')->where('user_phone','=',$data['user_phone']);
+        $phone = DB::table('Users')->select('user_phone')->where('user_phone','=',$data['user_phone'])->get();
 
-
-        if (($key = array_search($email, $emails)) !== false) {
-            unset($emails[$key]);
+        foreach($emails as $key => $value){
+            if($value->email === $email[0]->email){
+                unset($data['email']);
+                break;
+            }elseif($value->email === $data['email']){
+                return false;
+            }
         }
 
-        if (($key = array_search($phone, $phones)) !== false) {
-            unset($phones[$key]);
+        foreach($phones as $key => $value){
+            if($value->user_phone === $phone[0]->user_phone){
+                unset($data['user_phone']);
+                break;
+            }elseif($value->user_phone === $data['user_phone']){
+                return false;
+            }
         }
+
+        return $data;
 
     }
 }
