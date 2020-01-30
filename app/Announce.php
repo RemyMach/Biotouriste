@@ -22,11 +22,18 @@ use Illuminate\Database\Eloquent\Model;
  * @property Message[] $messages
  * @property Order[] $orders
  * @property Report[] $reports
- * @property string $latLong
-
+ * @property int $announce_quantity
+ * @property boolean $announce_is_available
+ * @property float $announce_price
+ * @property string $announce_measure
+ * @property string $announce_city
+ * @property float $announce_lat
+ * @property float $announce_lng
  */
 class Announce extends Model
 {
+    public $timestamps = false;
+
     /**
      * The table associated with the model.
      * 
@@ -43,8 +50,7 @@ class Announce extends Model
     /**
      * @var array
      */
-    protected $fillable = ['announce_quantity', 'announce_name', 'announce_status', 'announce_price', 'announce_comment', 'announce_adresse', 'announce_date', 'announce_img', 'products_idProduct', 'Users_idUser','announce_latLong', 'announce_city'];
-
+    protected $fillable =['announce_city', 'announce_measure', 'announce_name', 'announce_price', 'products_idProduct', 'Users_idUser', 'announce_comment', 'announce_img', 'announce_lat', 'announce_lng', 'announce_adresse', 'announce_date', 'announce_is_available', 'announce_quantity'];
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

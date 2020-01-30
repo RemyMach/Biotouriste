@@ -209,29 +209,4 @@
     </div>
   </div>
 </div>
-<div id="content_5">
-  <div class="content_5_1">
-    <div class="block_banner">
-      <div class="row" style="margin:0;">
-        <div class="col-md-12 text-center">
-          <h3>Your guarantees</h3>
-          <div class="row" style="margin:0;">
-            <div class="col-md-4 text-center">
-              <i class="fas fa-comments"></i>
-              <p>Free Advices</p>
-            </div>
-            <div class="col-md-4 text-center">
-              <i class="fas fa-envelope-open-text"></i>
-              <p>Support plateform</p>
-            </div>
-            <div class="col-md-4 text-center">
-              <i class="fas fa-medal"></i>
-              <p>Quality Above All</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 @include('layouts.footer')

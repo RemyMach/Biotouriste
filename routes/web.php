@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 //Auth::routes();
+
 Route::get('home', 'HomeController@index')->name('home');
 
 Route::get('users','UserController@index')->name('users');
@@ -104,7 +105,9 @@ Route::post('discountCode/show','Discount_CodeController@showDiscountCodeOfAUser
 
 //Favoris
 
-Route::post('favori/show','FavoriController@showFavorisOfAUser');
+Route::get('favori/show','FavoriController@showFavorisOfAUser');
+
+Route::get('favori/testShow','FavoriController@testShowFavorisOfAUser');
 
 Route::post('favori/store','FavoriController@store');
 
@@ -124,6 +127,16 @@ Route::post('report/store','ReportController@store');
 
 Route::post('report/show/user','ReportController@showAllMyReports');
 
+// Cart
+Route::get('cart', 'CartController@index');
+
+// Profil
+Route::get('profil', 'ProfilController@index');
+Route::get('message', 'ProfilController@message');
+Route::get('favorite', 'ProfilController@favorite');
+
+// FAQ
+Route::get('faq', 'FaqController@index');
 Route::get('report/show/admin','ReportController@showAllReportsForAdmin');
 
 //User_status_Correspondence
@@ -150,6 +163,8 @@ Route::get('seller/testSelect','SellerController@testSelectSellersByCommentsNote
 
 
 Route::get('test/register1234','UserController@profil');
+
+
 
 Route::get('messages','MessageController@index');
 
@@ -180,9 +195,13 @@ Route::post('filterByCategorie','AnnounceController@filterByCategorie');
 
 Route::post('filterByCity','AnnounceController@filterByCity');
 
-Route::post('announce/store','AnnounceController@store');
+Route::get('announce/store','AnnounceController@store');
 
-Route::get('announce/teststore','AnnounceController@teststore');
+Route::get('announce/delete','AnnounceController@delete');
+
+Route::get('announce/update','AnnounceController@update');
+
+Route::get('announce/historySeller','AnnounceController@selectHistorySeller');
 
 
 /********************************************** Fin Routes Announces **********************************************/

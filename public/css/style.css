@@ -276,11 +276,11 @@ background-color: #677A70;
   background-color: inherit;
 }
 #content_4 .navigation button:hover {
-  color: #c2cdc1;
+  color: black;
 }
 #content_4 .navigation .active {
-  border-bottom: 2px solid #c2cdc1;
-  color: #c2cdc1;
+  border-bottom: 2px solid black;
+  color: black;
 }
 #content_4 .block_vendor {
   background-color: #F2F2F2;
@@ -448,13 +448,24 @@ background-color: #677A70;
   background-color: #F2F2F2;
 }
 .btn_send {
-  width: auto;
-  height: 30px;
-  margin-top: 10px;
-  border: none;
-  color: #F2F2F2;
-  background-color: #677A70;
   text-transform: uppercase;
+  color: white;
+  height: 40px;
+  text-decoration: none;
+  font-family: 'helvetica', sans-serif;
+  font-weight: bold;
+  font-size: 12px;
+  letter-spacing: 1px;
+  width: 40%;
+  transition: .5s;
+  margin-right: 10px;
+  padding: 5px;
+  border: none;
+  background-color: #677A70;
+  margin-top: 10px;
+}
+.btn_send:hover {
+  background-color: black;
 }
 .footer  h3 {
   font-size: 18px;
@@ -502,8 +513,8 @@ background-color: #677A70;
   padding-bottom: 5px;
 }
 .footer_link ul li a:hover {
-  border-bottom: 2px solid #d0dad0;
-  color: #d0dad0;
+  border-bottom: 2px solid black;
+  color: black;
 }
 .footer_line {
   width: 180px;

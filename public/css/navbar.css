@@ -39,9 +39,26 @@ h1 {
   background-color: inherit;
   border: none;
   margin-right: 20px;
+  transition: .5s;
 }
 .navigation button:hover {
-  color: #c2cdc1;
+  color: black;
+}
+.menu_register {
+  text-transform: uppercase;
+  color: white;
+  text-decoration: none;
+  font-family: 'helvetica', sans-serif;
+  font-weight: bold;
+  font-size: 12px;
+  letter-spacing: 1px;
+  width: 20%;
+  transition: .5s;
+  margin-right: 10px;
+  margin-bottom: 2%;
+  padding: 5px;
+  border: none;
+  background-color: #677A70;
 }
 .menu a {
   text-transform: uppercase;
@@ -56,8 +73,8 @@ h1 {
   padding-bottom: 5px;
 }
 .menu a:hover {
-  border-bottom: 2px solid #c2cdc1;
-  color: #c2cdc1;
+  border-bottom: 2px solid black;
+  color: black;
 }
 @media screen and (max-width: 1150px) {
   #navbar-desktop {
