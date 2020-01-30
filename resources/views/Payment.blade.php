@@ -101,7 +101,7 @@
                     <rect x="58.1" y="405.6" class="st11" width="421.7" height="13.5" />
                     <text transform="matrix(1 0 0 1 59.5073 228.6099)" id="svgnameback" class="st12 st13">John Doe</text>
                 </g>
-                </svg>6
+                </svg>
         </div>
     </div>
 </div>
@@ -129,7 +129,7 @@
         <input id="securitycode" type="text"  inputmode="numeric" name="cvvNumber" required>
     </div>
 </div>
-    <button class='form-control btn btn-success submit-button' type='submit'>Pay</button>
+
 </form>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/imask/3.4.0/imask.min.js"></script>
 <script type="text/javascript" src="{{ asset('js/checkout.js') }}"></script>

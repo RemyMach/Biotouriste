@@ -54,18 +54,33 @@ class StripeController extends Controller
         ]);
         $response = json_decode($query->getBody()->getContents());
 
-        dd($response);
         if($response->status === '400')
         {
             return redirect('pay');
         }
-        else {
-            echo "<pre>";
-            print_r($query);
-            exit();
+        else{
+
+
         }
 
 
         return redirect($this->redirectTo);
     }
+    public function showpayments(Request $Request, Client $client){
+
+        $data = $Request->all();
+
+        //$data['idUser'] = $this->sessionUser->idUser;
+
+        $data['idUser'] = 1;
+
+        $query = $client->request('POST','http://localhost:8001/api/payment/showUserPayment', [
+            'form_params' => $data
+        ]);
+        $response = json_decode($query->getBody()->getContents());
+
+        dd($response);
+
+    }
+
 }

@@ -8,26 +8,11 @@
   <link rel="stylesheet" href="https://use.typekit.net/vsp1spg.css">
   <link rel="stylesheet" href="{{ URL::asset('/css/style.css') }}">
   <link rel="stylesheet" href="{{ URL::asset('/css/navbar.css') }}">
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
   <link rel="stylesheet" href="{{ URL::asset('/css/connection.css') }}">
   <link rel="stylesheet" href="https://use.typekit.net/vsp1spg.css">
   <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.css">
   <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
   <title>Healthy's</title>
-<<<<<<< Updated upstream
-=======
-  <link rel="stylesheet" href="{{ URL::asset('/css/overlay.css') }}">
-  <link rel="stylesheet" href="https://use.typekit.net/vsp1spg.css">
-  {{-- CSS --}}
-  <link rel="stylesheet" href="{{ URL::asset('/css/leaflet.css') }}" />
-  <link rel="stylesheet" href="{{ URL::asset('/css/announces.css') }}" />
 
-  <title>Healthy's</title>
-
-  <script src="{{ URL::asset('js/leaflet.js') }}"></script>
->>>>>>> Stashed changes
 </head>
 <body>

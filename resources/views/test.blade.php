@@ -4,5 +4,4 @@
 <?php
 
 
-  $idUser = 1 ;
- return app()->make(\App\Http\Controllers\PaymentController::class)->callAction('showUserPayment', [$idUser]);
+ return app()->make(\App\Http\Controllers\PaymentController::class)->callAction('showUserPayment');

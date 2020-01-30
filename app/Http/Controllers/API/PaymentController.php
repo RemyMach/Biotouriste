@@ -72,7 +72,13 @@ class PaymentController extends Controller
 
     public function chargePaymentStripe($request, $tokenfrompost)
     {
-        $ordervalue = $request->get('announcesammount1') + $request->get('announcesammount2') + $request->get('announcesammount3');
+        $i = 2;
+        $nbannounces = $request->get('nbannouncesorder');
+        $ordervalue = $request->get('announcesammount1');
+        while ($i != $nbannounces + 1) {
+            $ordervalue =  $ordervalue + $request->get("announcesammount$i");
+            $i++;
+        }
 
         $strip = Stripe::make(env('STRIPE_SECRET'));
 
@@ -93,52 +99,39 @@ class PaymentController extends Controller
                 'status' => '200',
                 'user' => $request->get('ordervalue'),
             ]);*/
-            return $this->addpaymentindb($request, $charge);
+            $e = 'No error';
+            return $this->addpaymentindb($request, $charge ,$e);
         } catch (CardErrorException $e) {
-            return response()->json([
-                'message' => 'Error',
-                'status' => '400',
-                'error' => $e->getMessage(),
-            ]);
+            $charge['status'] = 'failed';
+            $charge['currency'] = 'eur';
+            return $this->addpaymentindb($request, $charge ,$e);
         } catch (InvalidRequestException $e) {
-            return response()->json([
-                'message' => 'Error',
-                'status' => '400',
-                'error' => $e->getMessage(),
-            ]);
+            $charge['status'] = 'failed';
+            $charge['currency'] = 'eur';
+            return $this->addpaymentindb($request, $charge ,$e);
         } catch (UnauthorizedException $e) {
-            return response()->json([
-                'message' => 'Error',
-                'status' => '400',
-                'error' => $e->getMessage(),
-            ]);
-
+            $charge['status'] = 'failed';
+            $charge['currency'] = 'eur';
+            return $this->addpaymentindb($request, $charge ,$e);
         } catch (BadRequestException $e) {
-            return response()->json([
-                'message' => 'Error',
-                'status' => '400',
-                'error' => $e->getMessage(),
-            ]);
-
+            $charge['status'] = 'failed';
+            $charge['currency'] = 'eur';
+            return $this->addpaymentindb($request, $charge ,$e);
         } catch (NotFoundException $e) {
-            return response()->json([
-                'message' => 'Error',
-                'status' => '400',
-                'error' => $e->getMessage(),
-            ]);
-
+            $charge['status'] = 'failed';
+            $charge['currency'] = 'eur';
+            return $this->addpaymentindb($request, $charge ,$e);
         } catch (ServerErrorException $e) {
-            return response()->json([
-                'message' => 'Error',
-                'status' => '400',
-                'error' => $e->getMessage(),
-            ]);
-
+            $charge['status'] = 'failed';
+            $charge['currency'] = 'eur';
+            return $this->addpaymentindb($request, $charge ,$e);
         }
+
     }
 
-    public function addpaymentindb($request, $charge)
+    public function addpaymentindb($request, $charge, $e)
     {
+
 
         $mytime = Carbon::now();
         $i = 1;
@@ -146,7 +139,6 @@ class PaymentController extends Controller
         $id_user = $request->get('idUser');
         $id_order = "$id_user$id_orderunique";
         $nbannounces = $request->get('nbannouncesorder');
-
         while ($i != $nbannounces + 1) {
             $payment_status = $charge['status'];
             $payment_amount = $request->get("announcesammount$i");
@@ -165,16 +157,30 @@ class PaymentController extends Controller
                 ]);
             $i = $i + 1;
         }
-        return response()->json([
-            'message' => 'Error',
-            'status' => '400',
-            'error' => 'enfinnnnn',
-        ]);
+        if($charge['status'] == 'succeeded'){
+            return response()->json([
+                'message' => 'Bien ajouté a la db et le paiment est bien passé',
+                'status' => '200',
+                'request' => $request
+            ]);
+        }
+        else {
+            return response()->json([
+                'message' => 'Bien ajouté a la db mais le paiment n est pas passé',
+                'status' => '400',
+                'error' => $e,
+            ]);
+        }
     }
 
     public function showUserPayment(Request $request){
 
-        $idUser = $request->get('idUser');
-        $result = DB::select(DB::raw("SELECT   * FROM Payments,Announces  where Payments.Users_idUser = $idUser and Annouces.idAnnouces"));
+        //$idUser = $request->get('idUser');
+        $idUser = 1;
+        $result = DB::select(DB::raw("SELECT  * FROM Payments , Announces  where Payments.Users_idUser = $idUser and Announces.idAnnounce = Payments.Announces_idAnnounce"));
+        return response()->json([
+            'message' => 'Recuperations des valeurs dans la db',
+            'error' => $result,
+        ]);
     }
 }
