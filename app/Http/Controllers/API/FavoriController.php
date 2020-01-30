@@ -17,9 +17,9 @@ class FavoriController extends Controller
     public function __construct()
     {
         $this->middleware('apiMergeJsonInRequest');
-        $this->middleware('apiTouristController')->only(
-          'showFavorisOfAUser','apiTouristController','destroy'
-        );
+        //$this->middleware('apiTouristController')->only(
+        //  'showFavorisOfAUser','apiTouristController','destroy'
+        //);
     }
 
     public function showFavorisOfAUser(Request $request){
@@ -40,7 +40,7 @@ class FavoriController extends Controller
         return response()->json([
             'message'           => 'There are your favoris Announces',
             'status'            => '200',
-            'discount_codes'    => $favoris,
+            'favoris'    => $favoris,
         ]);
     }
 

@@ -24,7 +24,7 @@ class FavoriRepository extends BaseRepository
 
         return DB::table('Favoris')
             ->join('Announces','Favoris.Announces_idAnnounce','=','Announces.idAnnounce')
-            ->select('Announces.*','Favoris.idFavoris','Favoris.Users_idUser as favoriUser')
+            ->select('Announces.*','Favoris.idFavori','Favoris.Users_idUser as favoriUser')
             ->where('Favoris.Users_idUser','=',$idUser)
             ->where('Announces.announce_is_available','=',true)
             ->get();
