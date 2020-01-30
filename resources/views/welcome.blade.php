@@ -1,6 +1,7 @@
 @include('layouts.header')
 @include('layouts.navbarDesktop')
 @include('layouts.navbarMobile')
+<script src="{{ URL::asset('js/map.js') }}"></script>
 <div id="content_1">
   <div class="content_1_1">
     <div class="menu_container">
@@ -38,7 +39,7 @@
           </div>
         </div>
         <div class="col-md-6" style="padding:0;">
-          <div class="m_right"></div>
+          <div id="mapid" class="m_right"></div>
         </div>
       </div>
     </div>

@@ -158,12 +158,8 @@ input:focus {
   outline: inherit;
 }
 .m_right {
-    height: 100%;
+    height: 305px;
     width: 100%;
-    background-image: url(../img/home/announces.png);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
 }
 .menu_announces {
   display: block;
