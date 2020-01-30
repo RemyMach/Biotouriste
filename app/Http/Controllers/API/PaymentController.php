@@ -174,10 +174,7 @@ class PaymentController extends Controller
 
     public function showUserPayment(Request $request){
 
-        
-        $result = DB::select(DB::raw("SELECT   * FROM Payments,Announces  where Users_idUser = $idUser"));
-        $result = DB::table('Payments , Announces')
-            ->select(DB::raw("* where Users_idUser = $idUser"))
-            ->get();
+        $idUser = $request->get('idUser');
+        $result = DB::select(DB::raw("SELECT   * FROM Payments,Announces  where Payments.Users_idUser = $idUser and Annouces.idAnnouces"));
     }
 }
