@@ -8,12 +8,13 @@
             </div>
             <div class="col-md-12 navbar navbar-expand-lg">
                   <ul class="navbar-nav inline categories">
+                      <li class="col-md-2"><a onClick="filterByCategorieProduct(0)">All</a></li>
                       <li class="col-md-2"><a onClick="filterByCategorieProduct(1)">Fruits</a></li>
-                      <li class="col-md-2"><a onClick="filterByCategorieProduct(2)">Légumes</a></li>
-                      <li class="col-md-2"><a onClick="filterByCategorieProduct(3)">Céréales</a></li>
-                      <li class="col-md-2"><a onClick="filterByCategorieProduct(4)">Boissons</a></li>
-                      <li class="col-md-2"><a onClick="filterByCategorieProduct(5)">Gateaux</a></li>
-                      <li class="col-md-2"><a onClick="filterByCategorieProduct(6)">Epices</a></li>
+                      <li class="col-md-2"><a onClick="filterByCategorieProduct(2)">Vegetables</a></li>
+                      <li class="col-md-2"><a onClick="filterByCategorieProduct(3)">Cereals</a></li>
+                      <li class="col-md-2"><a onClick="filterByCategorieProduct(4)">Drinks</a></li>
+                      <li class="col-md-2"><a onClick="filterByCategorieProduct(5)">Cakes</a></li>
+                      <li class="col-md-2"><a onClick="filterByCategorieProduct(6)">Spices</a></li>
                   </ul>
             </div>
         </div>
