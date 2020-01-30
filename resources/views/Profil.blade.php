@@ -14,22 +14,50 @@
       </div>
       <div class="profil_container text-center">
         <div class="row" style="margin:0;">
-          <div class="col-md-12 text-center">
+          <div class="col-xs-12 col-sm-12 col-md-12 text-center">
             <div class="profil_pic" style="background-image: url({{$profil['active_status']->user_img}});"></div>
-            <div class="profil_name">
-              <h2>{{$profil['active_status']->user_name}} {{$profil['active_status']->user_surname}}</h2>
+            <div id="info">
+              <div class="profil_name">
+                <h2>{{$profil['active_status']->user_name}} {{$profil['active_status']->user_surname}}</h2>
+              </div>
+              <div class="profil_desc">
+                <p>{{$profil['active_status']->status_user_label}}</p>
+                <p>{{$profil['active_status']->email}}</p>
+              </div>
+              <div class="profil_info">
+                <p>{{$profil['active_status']->user_postal_code}}</p>
+                <p>{{$profil['active_status']->user_phone}}</p>
+              </div>
             </div>
-            <div class="profil_desc">
-              <p>{{$profil['active_status']->status_user_label}}</p>
-              <p>{{$profil['active_status']->email}}</p>
-            </div>
-            <div class="profil_info">
-              <p>{{$profil['active_status']->user_postal_code}}</p>
-              <p>{{$profil['active_status']->user_phone}}</p>
-            </div>
+            <div id="edit">
+              <form action="user/update" method="post">
+                  @csrf
+                <div class="profil_name">
+                  <input type="text" name="" value="{{$profil['active_status']->user_name}}">
+                  <input type="text" name="" value="{{$profil['active_status']->user_surname}}">
+                </div>
+                <div class="profil_desc">
+                  <input type="text" name="" value="{{$profil['active_status']->email}}">
+                </div>
+                <div class="profil_info">
+                  @if ($profil['active_status']->user_phone == null)
+                  <input type="text" name="" value="" placeholder="Postal code">
+                  @else
+                  <input type="text" name="" value="{{$profil['active_status']->user_postal_code}}">
+                  @endif
+                  @if ($profil['active_status']->user_phone == null)
+                  <input type="text" name="" value="" placeholder="Phone">
+                  @else
+                  <input type="text" name="" value="{{$profil['active_status']->user_phone}}">
+                  @endif
+                </div>
+                <input type="submit" name="" value="Save" style="width:15%;margin-right:0;">
+              </form>
+              </div>
             <div class="profil_message">
               <a href="{{ url('message') }}">My messages</a>
             </div>
+            <button type="button" name="button" onclick="btnEdit()">Edit</button>
           </div>
         </div>
       </div>
@@ -91,4 +119,11 @@
     </div>
   </div>
 </div>
+<script type="text/javascript">
+  const x = document.getElementById("edit");
+  const y = document.getElementById("info");
+    function btnEdit() {
+      x.style.display = (x.style.display === 'block') ? 'none':'block';
+    }
+</script>
 @include('layouts.footer')

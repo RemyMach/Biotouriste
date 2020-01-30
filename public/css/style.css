@@ -115,7 +115,7 @@ body {
 }
 .n_left {
   width: 100%;
-  height: 100%;
+  min-height: 305px;
   padding: 50px 30px;
   text-align: left;
 }
@@ -167,13 +167,15 @@ input:focus {
 }
 .menu_announces {
   display: block;
+  min-height: 305px;
 }
 .menu_message {
-  background-color: white;
+  background-color: #F2F2F2;
   width: 70%;
   height: auto;
   margin: -20px auto;
   display: none;
+  min-height: 305px;
 }
 .menu_product {
   background-color: white;
@@ -181,6 +183,7 @@ input:focus {
   height: auto;
   margin: -20px auto;
   display: none;
+  min-height: 305px;
 }
 .menu_message .n_left {
   background-color: #F2F2F2;
@@ -192,6 +195,23 @@ input:focus {
   background-color: white;
 }
 .menu_message .n_left button {
+  text-transform: uppercase;
+  color: white;
+  height: 40px;
+  text-decoration: none;
+  font-family: 'helvetica', sans-serif;
+  font-weight: bold;
+  font-size: 12px;
+  letter-spacing: 1px;
+  width: 40%;
+  transition: .5s;
+  margin-right: 10px;
+  padding: 5px;
+  border: none;
+  background-color: #677A70;
+  margin-top: 10px;
+}
+.menu_product .n_left button {
   text-transform: uppercase;
   color: white;
   height: 40px;

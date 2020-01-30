@@ -106,10 +106,6 @@ class UserController extends Controller
 
         $this->sessionUser = $request->session()->get('user');
 
-        if($user->idUser != $this->user->idUser){
-            return redirect('home');
-        }
-
         $data = request()->all();
         $data['api_token'] = $this->sessionUser->api_token;
         $data['idUser'] = $this->sessionUser->idUser;

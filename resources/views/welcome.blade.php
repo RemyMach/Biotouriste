@@ -48,9 +48,12 @@
           <div class="n_left">
             @if(session()->has('user'))
             <h3>Messages</h3>
-            <p>Last exchange</p>
-            <button type="button" name="button" onclick="window.location.href='{{ url('message') }}'">Go to messages</button>
+            <p>Here you can see all your converrsation with other users !</p>
+            <button type="button" name="button" onclick="window.location.href='{{ url('message') }}'">View message</button>
             @else
+            <h3>Messages</h3>
+            <p>You're not logged in !</p>
+            <button type="button" name="button" onclick="window.location.href='{{ url('register#login') }}'">Go to login page</button>
             @endif
           </div>
         </div>
@@ -61,18 +64,12 @@
     </div>
     <div id="products" class="menu_product">
       <div class="row" style="margin:0;">
-        <div class="col-md-6" style="padding:0;">
+        <div class="col-md-12" style="padding:0;">
           <div class="n_left">
-            @if(session()->has('user'))
             <h3>Products</h3>
-            <p>Last exchange</p>
-            <button type="button" name="button" onclick="window.location.href='{{ url('message') }}'">Go to messages</button>
-            @else
-            @endif
+            <p>Here's a look of the best products of the moment !</p>
+            <button type="button" name="button" onclick="window.location.href='{{ url('message') }}'">Buy products</button>
           </div>
-        </div>
-        <div class="col-md-6" style="padding:0;">
-          <div class="n_right"></div>
         </div>
       </div>
     </div>
@@ -268,33 +265,32 @@
   </div>
 </div>
 <script type="text/javascript">
+  function announces() {
+    document.getElementById('announces').style.display = "block";
+    document.getElementById('messages').style.display = "none";
+    document.getElementById('products').style.display = "none";
 
-function announces() {
-  document.getElementById('announces').style.display = "block";
-  document.getElementById('messages').style.display = "none";
-  document.getElementById('products').style.display = "none";
+    document.getElementById('btn_a').parentElement.classList.add("active");
+    document.getElementById('btn_m').parentElement.classList.remove("active");
+    document.getElementById('btn_p').parentElement.classList.remove("active");
+  }
+  function messages() {
+    document.getElementById('announces').style.display = "none";
+    document.getElementById('messages').style.display = "block";
+    document.getElementById('products').style.display = "none";
 
-  document.getElementById('btn_a').parentElement.classList.add("active");
-  document.getElementById('btn_m').parentElement.classList.remove("active");
-  document.getElementById('btn_p').parentElement.classList.remove("active");
-}
-function messages() {
-  document.getElementById('announces').style.display = "none";
-  document.getElementById('messages').style.display = "block";
-  document.getElementById('products').style.display = "none";
+    document.getElementById('btn_a').parentElement.classList.remove("active");
+    document.getElementById('btn_m').parentElement.classList.add("active");
+    document.getElementById('btn_p').parentElement.classList.remove("active");
+  }
+  function products() {
+    document.getElementById('announces').style.display = "none";
+    document.getElementById('messages').style.display = "none";
+    document.getElementById('products').style.display = "block";
 
-  document.getElementById('btn_a').parentElement.classList.remove("active");
-  document.getElementById('btn_m').parentElement.classList.add("active");
-  document.getElementById('btn_p').parentElement.classList.remove("active");
-}
-function products() {
-  document.getElementById('announces').style.display = "none";
-  document.getElementById('messages').style.display = "none";
-  document.getElementById('products').style.display = "block";
-
-  document.getElementById('btn_a').parentElement.classList.remove("active");
-  document.getElementById('btn_m').parentElement.classList.remove("active");
-  document.getElementById('btn_p').parentElement.classList.add("active");
-}
+    document.getElementById('btn_a').parentElement.classList.remove("active");
+    document.getElementById('btn_m').parentElement.classList.remove("active");
+    document.getElementById('btn_p').parentElement.classList.add("active");
+  }
 </script>
 @include('layouts.footer')

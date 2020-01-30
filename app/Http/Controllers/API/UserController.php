@@ -63,11 +63,11 @@ class UserController extends Controller
         $data = request()->all();
 
         $validator = Validator::make($data, [
-            'user_name' => ['string', 'max:45'],
-            'user_surname' => [ 'string', 'max:45'],
-            'email' => ['string', 'email', 'max:255', 'unique:users'],
-            'user_postal_code' => ['integer'],
-            'user_phone' => ['unique:users'],
+            'user_name' => ['required', 'string', 'max:45'],
+            'user_surname' => ['required', 'string', 'max:45'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'user_postal_code' => ['required', 'integer'],
+            'user_phone' => ['required', 'unique:users'],
             'user_img' => ['string'],
         ]);
 

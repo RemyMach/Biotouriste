@@ -28,10 +28,15 @@
   margin-right: auto;
   background-color: #677A70;
 }
+@media screen and (max-width: 700px) {
+  .profil_container {
+    width: 70%;
+  }
+}
 .profil_container {
   height: auto;
   padding: 50px 20px;
-  width: 700px;
+  width: 50%;
   background-color: #d0dad0;
   margin: 5% auto;
 }
@@ -129,15 +134,6 @@
   margin: 0;
   margin-bottom: 10px;
 }
-.profil_info input[type=text] {
-  background-color: inherit;
-  border: none;
-  text-align: center;
-  font-size: 13px;
-  color: #677A70;
-  margin: 0;
-  text-transform: uppercase;
-}
 .profil_info p {
   font-size: 10px;
   font-weight: bold;
@@ -189,4 +185,14 @@
 }
 .logout input[type=button]:hover {
   background-color: black;
+}
+.profil_container button {
+  margin: 20px 0 0 0;
+  width: 15%;
+}
+#info {
+  display: block;
+}
+#edit {
+  display: none;
 }
