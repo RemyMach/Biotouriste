@@ -1,20 +1,78 @@
 @include('layouts.header')
+@include('layouts.navbarDesktop')
+@include('layouts.navbarMobile')
 <div id="content_1">
-  @include('layouts.navbarDesktop')
-  @include('layouts.navbarMobile')
   <div class="content_1_1">
-    <div class="row" style="margin:0;">
-      <div class="col-md-8 col-xs-4" style="padding:0">
-        <div class="block_product">
-          <div class="b_product"></div>
+    <div class="menu_container">
+      <div class="row text-center" style="margin:0;">
+        <div class="col-xs-1 col-sm-4 col-md-4 m active">
+          <button id="btn_a" type="button" name="button" onclick="announce()">
+            <i class="fas fa-map-marker-alt"></i>
+            <p>Announces</p>
+          </button>
+        </div>
+        <div class="col-xs-1 col-sm-4 col-md-4 m">
+          <button id="btn_m" type="button" name="button" onclick="message()">
+            <i class="fas fa-comments"></i>
+            <p>Messages</p>
+          </button>
+        </div>
+        <div class="col-xs-1 col-sm-4 col-md-4 m">
+          <button id="btn_p" type="button" name="button" onclick="product()">
+            <i class="fas fa-apple-alt"></i>
+            <p>Products</p>
+          </button>
         </div>
       </div>
-      <div class="col-md-4 col-xs-4" style="padding:0">
-        <div class="block_map">
-          <div class="b_map"></div>
+    </div>
+    <div id="announces" class="menu_map">
+      <div class="row" style="margin:0;">
+        <div class="col-md-6" style="padding:0;">
+          <div class="m_left">
+            <h3>Find Sellers</h3>
+            <form class="" action="index.html" method="post">
+              <input type="text" name="" value="" placeholder="Indicate the place">
+              <input type="text" name="" value="" placeholder="Locate me"><button type="button" name="button"><i class="fas fa-location-arrow"></i></button>
+              <input type="submit" name="" value="Find Now">
+            </form>
+          </div>
         </div>
-        <div class="block_faq">
-          <div class="b_faq"></div>
+        <div class="col-md-6" style="padding:0;">
+          <div class="m_right"></div>
+        </div>
+      </div>
+    </div>
+    <div id="messages" class="menu_message">
+      <div class="row" style="margin:0;">
+        <div class="col-md-6" style="padding:0;">
+          <div class="n_left">
+            @if(session()->has('user'))
+            <h3>Messages</h3>
+            <p>Last exchange</p>
+            <button type="button" name="button" onclick="window.location.href='{{ url('message') }}'">Go to messages</button>
+            @else
+            @endif
+          </div>
+        </div>
+        <div class="col-md-6" style="padding:0;">
+          <div class="n_right"></div>
+        </div>
+      </div>
+    </div>
+    <div id="products" class="menu_product">
+      <div class="row" style="margin:0;">
+        <div class="col-md-6" style="padding:0;">
+          <div class="n_left">
+            @if(session()->has('user'))
+            <h3>Products</h3>
+            <p>Last exchange</p>
+            <button type="button" name="button" onclick="window.location.href='{{ url('message') }}'">Go to messages</button>
+            @else
+            @endif
+          </div>
+        </div>
+        <div class="col-md-6" style="padding:0;">
+          <div class="n_right"></div>
         </div>
       </div>
     </div>
@@ -209,4 +267,7 @@
     </div>
   </div>
 </div>
+<script type="text/javascript">
+
+</script>
 @include('layouts.footer')

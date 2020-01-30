@@ -105,7 +105,7 @@ Route::post('discountCode/show','Discount_CodeController@showDiscountCodeOfAUser
 
 //Favoris
 
-Route::get('favori/show','FavoriController@showFavorisOfAUser');
+Route::get('favorite','FavoriController@showFavorisOfAUser');
 
 Route::post('favori/store','FavoriController@store');
 
@@ -122,7 +122,6 @@ Route::get('cart', 'CartController@index');
 // Profil
 Route::get('profil', 'ProfilController@index');
 Route::get('message', 'ProfilController@message');
-Route::get('favorite', 'ProfilController@favorite');
 
 // FAQ
 Route::get('faq', 'FaqController@index');
