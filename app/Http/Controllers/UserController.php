@@ -113,6 +113,7 @@ class UserController extends Controller
         $query = $client->request('POST','http://localhost:8001/api/user/updateProfile', [
             'form_params' => $data
         ]);
+        
         $response = json_decode($query->getBody()->getContents());
 
         dd($response);

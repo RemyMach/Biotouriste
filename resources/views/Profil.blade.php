@@ -33,22 +33,22 @@
               <form action="user/update" method="post">
                   @csrf
                 <div class="profil_name">
-                  <input type="text" name="" value="{{$profil['active_status']->user_name}}">
-                  <input type="text" name="" value="{{$profil['active_status']->user_surname}}">
+                  <input type="text" name="user_name" value="{{$profil['active_status']->user_name}}">
+                  <input type="text" name="user_surname" value="{{$profil['active_status']->user_surname}}">
                 </div>
                 <div class="profil_desc">
-                  <input type="text" name="" value="{{$profil['active_status']->email}}">
+                  <input type="text" name="email" value="{{$profil['active_status']->email}}">
                 </div>
                 <div class="profil_info">
-                  @if ($profil['active_status']->user_phone == null)
-                  <input type="text" name="" value="" placeholder="Postal code">
+                  @if ($profil['active_status']->user_postal_code == null)
+                  <input type="text" name="user_postal_code" value="" placeholder="Postal code">
                   @else
-                  <input type="text" name="" value="{{$profil['active_status']->user_postal_code}}">
+                  <input type="text" name="user_postal_code" value="{{$profil['active_status']->user_postal_code}}">
                   @endif
                   @if ($profil['active_status']->user_phone == null)
-                  <input type="text" name="" value="" placeholder="Phone">
+                  <input type="text" name="user_phone" value="" placeholder="Phone">
                   @else
-                  <input type="text" name="" value="{{$profil['active_status']->user_phone}}">
+                  <input type="text" name="user_phone" value="{{$profil['active_status']->user_phone}}">
                   @endif
                 </div>
                 <input type="submit" name="" value="Save" style="width:15%;margin-right:0;">

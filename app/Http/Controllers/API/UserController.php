@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -62,6 +63,13 @@ class UserController extends Controller
     {
         $data = request()->all();
 
+        return $this->checkEmailAndPasswordExist($data);
+
+
+        return response()->json([
+          $emails
+        ]);
+
         $validator = Validator::make($data, [
             'user_name' => ['required', 'string', 'max:45'],
             'user_surname' => ['required', 'string', 'max:45'],
@@ -79,6 +87,7 @@ class UserController extends Controller
                 'status'    => "400"
             ]);
         }
+
 
         if(isset($data['password']) || ($data['remember_token']) || $data['Status_User_idStatus_User'] || $data['api_token'])
         {
@@ -163,5 +172,26 @@ class UserController extends Controller
         }
 
         return true;
+    }
+
+    private function checkEmailAndPasswordExist($data){
+
+      $emails = DB::table('Users')->select('email')->get();
+      $email = DB::table('Users')->select('email')->where('idUser', '=',$data['idUser'])->get();
+      //$phones = DB::table('Users')->select('user_phone')->get();
+      //$phone = DB::table('Users')->select('user_phone')->where('user_phone', '=',$data['user_phone'])->get();
+
+      return response()->json([
+          $emails,
+          $email,
+      ]);
+      if (($key = array_search($email, $emails)) !== false) {
+        unset($emails[$key]);
+      }
+
+      if (($key = array_search($phone, $phones)) !== false) {
+        unset($phones[$key]);
+      }
+
     }
 }
