@@ -17,9 +17,9 @@ class FavoriController extends Controller
     public function __construct()
     {
         $this->middleware('apiMergeJsonInRequest');
-        $this->middleware('apiTouristController')->only(
-          'showFavorisOfAUser','apiTouristController','destroy'
-        );
+        //$this->middleware('apiTouristController')->only(
+        //  'showFavorisOfAUser','apiTouristController','destroy'
+        //);
     }
 
     public function showFavorisOfAUser(Request $request){

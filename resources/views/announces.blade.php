@@ -1,5 +1,6 @@
 @include('layouts.header')
 <div id="content-1">
+      @include('layouts.navbarDesktop')
         <div class="row">
             <div class="col-md-12">
             <input type="text" name="cityZone" id="cityZone" value="paris">
@@ -7,12 +8,13 @@
             </div>
             <div class="col-md-12 navbar navbar-expand-lg">
                   <ul class="navbar-nav inline categories">
+                      <li class="col-md-2"><a onClick="filterByCategorieProduct(0)">All</a></li>
                       <li class="col-md-2"><a onClick="filterByCategorieProduct(1)">Fruits</a></li>
-                      <li class="col-md-2"><a onClick="filterByCategorieProduct(2)">Légumes</a></li>
-                      <li class="col-md-2"><a onClick="filterByCategorieProduct(3)">Céréales</a></li>
-                      <li class="col-md-2"><a onClick="filterByCategorieProduct(4)">Boissons</a></li>
-                      <li class="col-md-2"><a onClick="filterByCategorieProduct(5)">Gateaux</a></li>
-                      <li class="col-md-2"><a onClick="filterByCategorieProduct(6)">Epices</a></li>
+                      <li class="col-md-2"><a onClick="filterByCategorieProduct(2)">Vegetables</a></li>
+                      <li class="col-md-2"><a onClick="filterByCategorieProduct(3)">Cereals</a></li>
+                      <li class="col-md-2"><a onClick="filterByCategorieProduct(4)">Drinks</a></li>
+                      <li class="col-md-2"><a onClick="filterByCategorieProduct(5)">Cakes</a></li>
+                      <li class="col-md-2"><a onClick="filterByCategorieProduct(6)">Spices</a></li>
                   </ul>
             </div>
         </div>
@@ -21,41 +23,21 @@
             <div class="col-md-6" id="mapid"></div>
         </div>
 </div>
+
+@include('modal-announce')
 @include('layouts.footer')
 {{-- Jquery --}}
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 {{-- Map --}}
-<script>
-// on set la position sur la carte
-var mymap = L.map('mapid');
-// Ajout de la tuile pour la map
-L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-maxZoom: 18,
-id: 'mapbox/streets-v11',
-accessToken: 'pk.eyJ1IjoiYmlvdG91cmlzdGUiLCJhIjoiY2s0MnRjMW1uMDBxZTNlczVueXk1OXRwbyJ9.6HEfIagqNQob01cRbFVpzQ'
-}).addTo(mymap);
-//ajout de l'icone du marker
-var icone = L.icon({
-iconUrl: 'img/marker.png',
-iconSize: [60, 60]
-});
-// creation d'un groupe pour les marker que que je peux vider et remplir comme je veux.
-lgMarkers = new L.LayerGroup();
-mymap.addLayer(lgMarkers);
-</script>
-
+<script src="{{ URL::asset('js/map.js') }}"></script>
 
 {{-- Announces --}}
 <script>
 $(function() {
     findCityData();
 });
-
-function showAnnounce(announce) {
-
-}
 
 function findByCity(cityData){
     $.ajax({
@@ -65,7 +47,6 @@ function findByCity(cityData){
         dataType: "json",
         success: function(result){
             mymap.removeLayer(this);
-            mymap.setView([result.lat, result.lng], 10, { animation: true });
             remplirDivAnnonce(result.announces);
         }
     });
@@ -78,6 +59,7 @@ function findCityData(){
         data: {q : $('#cityZone').val(), maxRows: 1, username: 'biotouriste'},
         dataType: "json",
         success: function (result){
+            mymap.setView([result.geonames[0].lat, result.geonames[0].lng], 10, { animation: true });
             findByCity(result.geonames);
         }
     });
@@ -112,7 +94,7 @@ function remplirDivAnnonce(announces){
     if( typeof announces !== 'undefined'){
         announces.forEach(function (announce) {
             div = div +
-            "<div class='post' onclick='showAnnounce(announce)'>"+
+            "<div id="+announce['idAnnounce']+" class='post' onclick='showAnnounce("+JSON.stringify(announce)+")'>"+
                 "<div class='row'>"+
                     "<div class='col-md-4'>"+
                         "<div class='icon'></div>"+
@@ -126,7 +108,7 @@ function remplirDivAnnonce(announces){
                     "</div>"+
                     "<div class='col-md-4'>"+
                         "<div class='text'>"+
-                            "<h6>"+announce['announce_price']+"€</h6>"+
+                            "<h6>"+announce['announce_price']+"$</h6>"+
                         "</div>"+
                     "</div>"+
                 "</div>"+
@@ -138,5 +120,17 @@ function remplirDivAnnonce(announces){
     } else {
        // faire un toast ici
     }
+}
+
+function showAnnounce(announce) {
+    $('#titleAnnounce').html(announce['announce_name']);
+    $('#imgAnnounce').html(announce['imgAnnounce']);
+    $('#announceComment').html(announce['announce_comment']);
+    $('#announceAdresse').html(announce['announce_adresse']);
+    $('#announcePrice').html(announce['announce_price']+'$');
+    $('#idAnnounce').val(announce['idAnnounce']);
+
+    // $('#titlePrice').html('Modification du tarif n°' + announce['announce_name']);
+    jQuery('#modal-announce').modal('show');
 }
 </script>
