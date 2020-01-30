@@ -91,4 +91,30 @@ h1 {
     text-transform: uppercase;
     color: #677A70;
   }
+  .menu a {
+    text-transform: uppercase;
+    color: #677A70;
+    text-decoration: none;
+    font-family: 'helvetica', sans-serif;
+    font-weight: bold;
+    font-size: 9px;
+    letter-spacing: 1px;
+    transition: .2s;
+    margin-right: 10px;
+    padding-bottom: 5px;
+  }
+  .menu a:hover {
+    border-bottom: 2px solid black;
+    color: black;
+  }
+  .navigation button {
+    color: #677A70;
+    background-color: inherit;
+    border: none;
+    margin-right: 5px;
+    transition: .5s;
+  }
+  .navigation button:hover {
+    color: black;
+  }
 }

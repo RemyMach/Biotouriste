@@ -23,109 +23,215 @@ body {
 .content_1_1 {
   padding: 10px;
 }
-.block_product {
+.content_1_1 .menu_container {
+  background-color: #c2cdc1;
+  width: 70%;
+  height: 100px;
+  margin: 20px auto;
+}
+.content_1_1 .menu_announces {
+  background-color: #F2F2F2;
+  width: 70%;
+  height: auto;
+  margin: -20px auto;
+}
+.menu_container .m {
+  margin-top: 25px;
+  height: 100%;
+  transition: .5s;
+}
+@media screen and (max-width: 830px) {
+  .content_1_1 {
+    min-width: 400px;
+  }
+  .menu_container .m {
+    margin-top: 23px;
+    height: 100%;
+    width: 33%;
+  }
+  .content_1_1 .menu_container {
+    background-color: #c2cdc1;
+    width: 70%;
+    height: 80px;
+    margin: 20px auto;
+  }
+  .content_1_1 .menu_announces {
+    background-color: #F2F2F2;
+    width: 70%;
+    height: auto;
+    margin: -20px auto;
+  }
+  .menu_container .m button {
+    background-color: inherit;
+    border: none;
+    color: #677A70;
+    font-size: 12px;
+    text-transform: uppercase;
+    width: 100%;
+    height: 100%;
+  }
+  .menu_container .active button {
+    color: black;
+  }
+  .menu_announces .m_left {
+    text-align: center;
+  }
+
+}
+@media screen and (max-width: 770px) {
+.m_right {
+    display: none;
+}
+}
+.menu_container button {
+  background-color: inherit;
+  border: none;
+  color: #677A70;
+  font-size: 18px;
+  text-transform: uppercase;
   width: 100%;
   height: 100%;
-  padding: 5px;
+  transition: .5s;
 }
-.b_product {
-  background-image: url(../img/home/product.png);
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
+.menu_container a {
+  text-decoration: none;
+  color: #677A70;
+}
+.active {
+  border-bottom: 4px solid black;
+  z-index: 999;
+}
+.active button {
+  color: black;
+}
+.menu_container .m button:hover {
+  color: black;
+}
+.m_left {
+  width: 100%;
+  height: 100%;
+  padding: 50px 30px;
+  text-align: left;
+}
+.n_left {
+  width: 100%;
+  min-height: 305px;
+  padding: 50px 30px;
+  text-align: left;
+}
+.m_left input[type=text] {
+  width: 80%;
+  padding: 7px 15px;
+  border: none;
+  margin: 10px 0;
+}
+.m_left input:nth-child(2n+0) {
+  width: 74%;
+}
+.m_left button {
+  background-color: white;
+  border: none;
+  width: 6%;
+  padding: 7px 0;
+  color: #677A70;
+}
+.m_left h3 {
+  text-transform: uppercase;
+}
+.n_left h3 {
+  text-transform: uppercase;
+}
+.n_left p {
+  text-transform: uppercase;
+}
+.m_left button:hover {
+  color: black;
+}
+.m_left input[type=submit] {
+  width: 50%;
+  padding: 5px 10px;
+  border: none;
+  margin: 10px auto;
+  height: 40px;
+}
+input:focus {
+  outline: inherit;
+}
+.m_right {
+    height: 100%;
+    width: 100%;
+    background-image: url(../img/home/announces.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.menu_announces {
+  display: block;
+  min-height: 305px;
+}
+.menu_message {
   background-color: #F2F2F2;
-  width: 100%;
-  height: 810px;
-  transition: .5s;
+  width: 70%;
+  height: auto;
+  margin: -20px auto;
+  display: none;
+  min-height: 305px;
 }
-.b_product:hover {
-  transform: scale(0.98);
+.menu_product {
+  background-color: white;
+  width: 70%;
+  height: auto;
+  margin: -20px auto;
+  display: none;
+  min-height: 305px;
 }
-.block_map {
-  width: 100%;
-  padding: 5px;
-}
-.b_map {
-  background-image: url(../img/home/map.png);
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-color: #c2cdc1;
-  width: 100%;
-  height: 400px;
-  transition: .5s;
-}
-.b_map:hover {
-  transform: scale(0.98);
-}
-.block_faq {
-  width: 100%;
-  padding: 5px;
-
-}
-.b_faq {
-  background-image: url(../img/home/message.png);
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
+.menu_message .n_left {
   background-color: #F2F2F2;
-  width: 100%;
-  height: 400px;
+}
+.menu_product .n_left {
+  background-color: #F2F2F2;
+}
+.menu_message .n_right {
+  background-color: white;
+}
+.menu_message .n_left button {
+  text-transform: uppercase;
+  color: white;
+  height: 40px;
+  text-decoration: none;
+  font-family: 'helvetica', sans-serif;
+  font-weight: bold;
+  font-size: 12px;
+  letter-spacing: 1px;
+  width: 40%;
   transition: .5s;
+  margin-right: 10px;
+  padding: 5px;
+  border: none;
+  background-color: #677A70;
+  margin-top: 10px;
 }
-.b_faq:hover {
-  transform: scale(0.98);
+.menu_product .n_left button {
+  text-transform: uppercase;
+  color: white;
+  height: 40px;
+  text-decoration: none;
+  font-family: 'helvetica', sans-serif;
+  font-weight: bold;
+  font-size: 12px;
+  letter-spacing: 1px;
+  width: 40%;
+  transition: .5s;
+  margin-right: 10px;
+  padding: 5px;
+  border: none;
+  background-color: #677A70;
+  margin-top: 10px;
 }
-@media screen and (max-width: 750px) {
-  .b_product {
-    background-image: url(../img/home/product.png);
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-color: #F2F2F2;
-    width: 100%;
-    height: 405px;
-    transition: .5s;
-  }
-  .b_product:hover {
-    transform: scale(0.98);
-  }
-  .block_map {
-    width: 100%;
-    padding: 5px;
-  }
-  .b_map {
-    background-image: url(../img/home/map.png);
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-color: #c2cdc1;
-    width: 100%;
-    height: 400px;
-    transition: .5s;
-  }
-  .b_map:hover {
-    transform: scale(0.98);
-  }
-  .block_faq {
-    width: 100%;
-    padding: 5px;
+.menu_message .n_left button:hover {
+  background-color: black;
+}
 
-  }
-  .b_faq {
-    background-image: url(../img/home/message.png);
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-color: #F2F2F2;
-    width: 100%;
-    height: 400px;
-    transition: .5s;
-  }
-  .b_faq:hover {
-    transform: scale(0.98);
-  }
-}
 /********** content_2 **********/
 #content_2 {
   margin: 2% 0%;
@@ -531,4 +637,7 @@ background-color: #677A70;
 }
 .footer {
   padding: 2%;
+}
+.footer input[type=submit] {
+  width: 50%;
 }

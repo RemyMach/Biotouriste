@@ -7,7 +7,7 @@ use App\Http\Resources\User as UserResource;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -62,15 +62,19 @@ class UserController extends Controller
     {
         $data = request()->all();
 
+        return $this->checkEmailAndPasswordExist($data);
 
-        return $this->checkIfEmailAndPasswordExisting($data);
+
+        return response()->json([
+          $emails
+        ]);
 
         $validator = Validator::make($data, [
-            'user_name' => ['required','string', 'max:45'],
-            'user_surname' => [ 'required','string', 'max:45'],
-            'email' => ['required','string', 'email', 'max:255', 'unique:users'],
-            'user_postal_code' => ['required','integer'],
-            'user_phone' => ['required','unique:users'],
+            'user_name' => ['required', 'string', 'max:45'],
+            'user_surname' => ['required', 'string', 'max:45'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'user_postal_code' => ['required', 'integer'],
+            'user_phone' => ['required', 'unique:users'],
             'user_img' => ['string'],
         ]);
 

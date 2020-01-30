@@ -1,20 +1,75 @@
 @include('layouts.header')
+@include('layouts.navbarDesktop')
+@include('layouts.navbarMobile')
 <div id="content_1">
-  @include('layouts.navbarDesktop')
-  @include('layouts.navbarMobile')
   <div class="content_1_1">
-    <div class="row" style="margin:0;">
-      <div class="col-md-8 col-xs-4" style="padding:0">
-        <div class="block_product">
-          <div class="b_product"></div>
+    <div class="menu_container">
+      <div class="row text-center" style="margin:0;">
+        <div class="col-xs-1 col-sm-4 col-md-4 m active">
+          <button id="btn_a" type="button" name="button" onclick="announces()">
+            <i class="fas fa-map-marker-alt"></i>
+            <p>Announces</p>
+          </button>
+        </div>
+        <div class="col-xs-1 col-sm-4 col-md-4 m">
+          <button id="btn_m" type="button" name="button" onclick="messages()">
+            <i class="fas fa-comments"></i>
+            <p>Messages</p>
+          </button>
+        </div>
+        <div class="col-xs-1 col-sm-4 col-md-4 m">
+          <button id="btn_p" type="button" name="button" onclick="products()">
+            <i class="fas fa-apple-alt"></i>
+            <p>Products</p>
+          </button>
         </div>
       </div>
-      <div class="col-md-4 col-xs-4" style="padding:0">
-        <div class="block_map">
-          <div class="b_map"></div>
+    </div>
+    <div id="announces" class="menu_announces">
+      <div class="row" style="margin:0;">
+        <div class="col-md-6" style="padding:0;">
+          <div class="m_left">
+            <h3>Find Sellers</h3>
+            <form class="" action="index.html" method="post">
+              <input type="text" name="" value="" placeholder="Indicate the place">
+              <input type="text" name="" value="" placeholder="Locate me"><button type="button" name="button"><i class="fas fa-location-arrow"></i></button>
+              <input type="submit" name="" value="Find Now">
+            </form>
+          </div>
         </div>
-        <div class="block_faq">
-          <div class="b_faq"></div>
+        <div class="col-md-6" style="padding:0;">
+          <div class="m_right"></div>
+        </div>
+      </div>
+    </div>
+    <div id="messages" class="menu_message">
+      <div class="row" style="margin:0;">
+        <div class="col-md-6" style="padding:0;">
+          <div class="n_left">
+            @if(session()->has('user'))
+            <h3>Messages</h3>
+            <p>Here you can see all your converrsation with other users !</p>
+            <button type="button" name="button" onclick="window.location.href='{{ url('message') }}'">View message</button>
+            @else
+            <h3>Messages</h3>
+            <p>You're not logged in !</p>
+            <button type="button" name="button" onclick="window.location.href='{{ url('register#login') }}'">Go to login page</button>
+            @endif
+          </div>
+        </div>
+        <div class="col-md-6" style="padding:0;">
+          <div class="n_right"></div>
+        </div>
+      </div>
+    </div>
+    <div id="products" class="menu_product">
+      <div class="row" style="margin:0;">
+        <div class="col-md-12" style="padding:0;">
+          <div class="n_left">
+            <h3>Products</h3>
+            <p>Here's a look of the best products of the moment !</p>
+            <button type="button" name="button" onclick="window.location.href='{{ url('message') }}'">Buy products</button>
+          </div>
         </div>
       </div>
     </div>
@@ -209,4 +264,33 @@
     </div>
   </div>
 </div>
+<script type="text/javascript">
+  function announces() {
+    document.getElementById('announces').style.display = "block";
+    document.getElementById('messages').style.display = "none";
+    document.getElementById('products').style.display = "none";
+
+    document.getElementById('btn_a').parentElement.classList.add("active");
+    document.getElementById('btn_m').parentElement.classList.remove("active");
+    document.getElementById('btn_p').parentElement.classList.remove("active");
+  }
+  function messages() {
+    document.getElementById('announces').style.display = "none";
+    document.getElementById('messages').style.display = "block";
+    document.getElementById('products').style.display = "none";
+
+    document.getElementById('btn_a').parentElement.classList.remove("active");
+    document.getElementById('btn_m').parentElement.classList.add("active");
+    document.getElementById('btn_p').parentElement.classList.remove("active");
+  }
+  function products() {
+    document.getElementById('announces').style.display = "none";
+    document.getElementById('messages').style.display = "none";
+    document.getElementById('products').style.display = "block";
+
+    document.getElementById('btn_a').parentElement.classList.remove("active");
+    document.getElementById('btn_m').parentElement.classList.remove("active");
+    document.getElementById('btn_p').parentElement.classList.add("active");
+  }
+</script>
 @include('layouts.footer')
