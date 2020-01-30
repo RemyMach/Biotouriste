@@ -119,6 +119,6 @@ input[type=submit]:hover {
 form h2 {
   margin: 2% auto;:
 }
-.vertical_line {
-  
+.favorite_container button {
+  margin: 20px 0;
 }

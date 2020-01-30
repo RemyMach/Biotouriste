@@ -34,6 +34,7 @@
                 <input type="email" name="email" value="" placeholder="Email address *" required>
                 <input type="password" name="password" value="" placeholder="Password *" required>
               </div>
+              <a href="password/email">Forgot your password ?</a>
             </div>
             <div class="form-group text-center">
               <input type="submit" name="" value="Submit">

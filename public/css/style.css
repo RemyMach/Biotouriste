@@ -29,7 +29,7 @@ body {
   height: 100px;
   margin: 20px auto;
 }
-.content_1_1 .menu_map {
+.content_1_1 .menu_announces {
   background-color: #F2F2F2;
   width: 70%;
   height: auto;
@@ -55,7 +55,7 @@ body {
     height: 80px;
     margin: 20px auto;
   }
-  .content_1_1 .menu_map {
+  .content_1_1 .menu_announces {
     background-color: #F2F2F2;
     width: 70%;
     height: auto;
@@ -73,7 +73,7 @@ body {
   .menu_container .active button {
     color: black;
   }
-  .menu_map .m_left {
+  .menu_announces .m_left {
     text-align: center;
   }
 
@@ -165,7 +165,7 @@ input:focus {
     background-position: center;
     background-repeat: no-repeat;
 }
-.menu_map {
+.menu_announces {
   display: block;
 }
 .menu_message {
@@ -183,6 +183,9 @@ input:focus {
   display: none;
 }
 .menu_message .n_left {
+  background-color: #F2F2F2;
+}
+.menu_product .n_left {
   background-color: #F2F2F2;
 }
 .menu_message .n_right {

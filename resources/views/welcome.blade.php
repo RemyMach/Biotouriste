@@ -6,26 +6,26 @@
     <div class="menu_container">
       <div class="row text-center" style="margin:0;">
         <div class="col-xs-1 col-sm-4 col-md-4 m active">
-          <button id="btn_a" type="button" name="button" onclick="announce()">
+          <button id="btn_a" type="button" name="button" onclick="announces()">
             <i class="fas fa-map-marker-alt"></i>
             <p>Announces</p>
           </button>
         </div>
         <div class="col-xs-1 col-sm-4 col-md-4 m">
-          <button id="btn_m" type="button" name="button" onclick="message()">
+          <button id="btn_m" type="button" name="button" onclick="messages()">
             <i class="fas fa-comments"></i>
             <p>Messages</p>
           </button>
         </div>
         <div class="col-xs-1 col-sm-4 col-md-4 m">
-          <button id="btn_p" type="button" name="button" onclick="product()">
+          <button id="btn_p" type="button" name="button" onclick="products()">
             <i class="fas fa-apple-alt"></i>
             <p>Products</p>
           </button>
         </div>
       </div>
     </div>
-    <div id="announces" class="menu_map">
+    <div id="announces" class="menu_announces">
       <div class="row" style="margin:0;">
         <div class="col-md-6" style="padding:0;">
           <div class="m_left">
@@ -269,5 +269,32 @@
 </div>
 <script type="text/javascript">
 
+function announces() {
+  document.getElementById('announces').style.display = "block";
+  document.getElementById('messages').style.display = "none";
+  document.getElementById('products').style.display = "none";
+
+  document.getElementById('btn_a').parentElement.classList.add("active");
+  document.getElementById('btn_m').parentElement.classList.remove("active");
+  document.getElementById('btn_p').parentElement.classList.remove("active");
+}
+function messages() {
+  document.getElementById('announces').style.display = "none";
+  document.getElementById('messages').style.display = "block";
+  document.getElementById('products').style.display = "none";
+
+  document.getElementById('btn_a').parentElement.classList.remove("active");
+  document.getElementById('btn_m').parentElement.classList.add("active");
+  document.getElementById('btn_p').parentElement.classList.remove("active");
+}
+function products() {
+  document.getElementById('announces').style.display = "none";
+  document.getElementById('messages').style.display = "none";
+  document.getElementById('products').style.display = "block";
+
+  document.getElementById('btn_a').parentElement.classList.remove("active");
+  document.getElementById('btn_m').parentElement.classList.remove("active");
+  document.getElementById('btn_p').parentElement.classList.add("active");
+}
 </script>
 @include('layouts.footer')
