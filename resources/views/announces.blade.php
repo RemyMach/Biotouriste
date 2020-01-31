@@ -8,13 +8,10 @@
             </div>
             <div class="col-md-12 navbar navbar-expand-lg">
                   <ul class="navbar-nav inline categories">
-                      <li class="col-md-2"><a onClick="filterByCategorieProduct(0)">All</a></li>
-                      <li class="col-md-2"><a onClick="filterByCategorieProduct(1)">Fruits</a></li>
-                      <li class="col-md-2"><a onClick="filterByCategorieProduct(2)">Vegetables</a></li>
-                      <li class="col-md-2"><a onClick="filterByCategorieProduct(3)">Cereals</a></li>
-                      <li class="col-md-2"><a onClick="filterByCategorieProduct(4)">Drinks</a></li>
-                      <li class="col-md-2"><a onClick="filterByCategorieProduct(5)">Cakes</a></li>
-                      <li class="col-md-2"><a onClick="filterByCategorieProduct(6)">Spices</a></li>
+                      @php ($categories = ['All','Fruits','Vegetables','Cereals','Drinks','Cakes','Spices'])
+                      @for ($i = 0; $i < 7; $i++)
+                          <li class="col-md-2"><a onClick="filterByCategorieProduct({{ $i }})">{{ $categories[$i] }}</a></li>
+                      @endfor
                   </ul>
             </div>
         </div>
