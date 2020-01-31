@@ -26,6 +26,21 @@ body {
 input:focus {
   outline: inherit;
 }
+#top {
+  display: none;
+}
+#top button {
+  height: 50px;
+  width: 50px;
+  border-radius: 25px;
+  background-color: white;
+  border: none;
+  font-size: 13px;
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 999;
+}
 /********** content_1 **********/
 #cta #content_1 {
   padding: 25% 0;
@@ -116,10 +131,12 @@ input:focus {
   padding: 0 0 15% 0;
 }
 #seller #content_3 h3 {
+  text-transform: uppercase;
   font-size: 19px;
 }
 #seller #content_3 h2 {
   font-size: 23px;
+  text-transform: uppercase;
 }
 #seller #content_3 .line {
   width: 7%;
@@ -127,7 +144,7 @@ input:focus {
   background-color: black;
   margin: 10px auto 2% auto;
 }
-#seller #content_3 .card {
+#content_3 .card {
   background-color: rgba(255, 255, 255, 0.9);
   border: none;
   padding: 15% 15% 10% 15%;
@@ -175,8 +192,37 @@ input:focus {
 #seller #content_3 .cta {
   padding: 5% 0;
 }
+@media screen and (max-width: 1350px) {
+  #content_3 .card {
+    width: 100%;
+    height: auto;
+  }
+   #content_3 .bottom {
+    margin-top: 40px;
+  }
+  #content_3 .top {
+   margin-top: 40px;
+ }
+}
 /********** content_4 **********/
-#content_4 {
+#article {
+  padding: 0 0 15% 0;
+}
+#article #content_4 h2 {
+  font-size: 23px;
+  text-transform: uppercase;
+}
+#article #content_4 .line {
+  width: 7%;
+  height: 1px;
+  background-color: black;
+  margin: 10px auto 2% auto;
+}
+
+
+
+
+/* #content_4 {
   margin: 2% 0%;
 }
 #content_4 .content_4_1 {
@@ -328,4 +374,4 @@ input:focus {
   color: white;
   border: none;
   text-transform: uppercase;
-}
+} */

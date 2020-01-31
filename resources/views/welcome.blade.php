@@ -34,13 +34,15 @@
   <div class="row" style="margin:0;">
     <div class="col-xs-12 col-sm-12 col-md-12 text-center">
       <div id="content_3">
-        <h3>THE BEST WE KNOW</h3>
-        <h2>TO DISCOVER</h2>
-        <div class="line"></div>
+        <div data-aos="fade-up">
+          <h3>THE BEST WE KNOW</h3>
+          <h2>TO DISCOVER</h2>
+          <div class="line"></div>
+        </div>
         <div class="col-xs-12 col-sm-12 col-md-12">
           <div class="row" style="margin:0;">
             <div class="column">
-              <div class="card top">
+              <div class="card top" data-aos="fade-down">
                 <div class="review">
                   <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                 </div>
@@ -64,7 +66,7 @@
               </div>
             </div>
             <div class="column">
-              <div class="card bottom">
+              <div class="card bottom" data-aos="fade-up">
                 <div class="review">
                   <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                 </div>
@@ -88,7 +90,7 @@
               </div>
             </div>
             <div class="column">
-              <div class="card top">
+              <div class="card top" data-aos="fade-down">
                 <div class="review">
                   <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                 </div>
@@ -112,7 +114,7 @@
               </div>
             </div>
             <div class="column">
-              <div class="card bottom">
+              <div class="card bottom" data-aos="fade-up">
                 <div class="review">
                   <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                 </div>
@@ -136,7 +138,7 @@
               </div>
             </div>
             <div class="column">
-              <div class="card top">
+              <div class="card top" data-aos="fade-down">
                 <div class="review">
                   <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                 </div>
@@ -176,7 +178,10 @@
   <div class="row" style="margin:0;">
     <div class="col-xs-12 col-sm-12 col-md-8 offset-md-2 text-center">
       <div id="content_4">
-
+        <div data-aos="fade-up">
+          <h2>Lastest articles</h2>
+          <div class="line"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -190,7 +195,11 @@
     </div>
   </div>
 </div>
-
+<div id="top">
+  <div class="round">
+    <button type="button" name="button" onclick="window.location.href='{{ url('#navbar_desktop') }}'"><i class="fas fa-chevron-up"></i></button>
+  </div>
+</div>
 
 
 

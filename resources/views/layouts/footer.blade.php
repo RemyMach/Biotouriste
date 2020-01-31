@@ -56,6 +56,7 @@
     </div>
   </div>
 </div>
+<script src="https://unpkg.com/scrollreveal"></script>
 <script src="https://kit.fontawesome.com/d9a2e4a111.js" crossorigin="anonymous"></script>
 <script src="{{ URL::asset('js/leaflet.js') }}"></script>
 <script src="{{ URL::asset('/js/script.js') }}" charset="utf-8"></script>
@@ -65,6 +66,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script>
+  window.onscroll = function() {myFunction()};
+
+  function myFunction() {
+    if (document.body.scrollTop > 1000 || document.documentElement.scrollTop > 1000) {
+      document.getElementById("top").style.display = "block";
+    } else {
+      document.getElementById("top").style.display = "none";
+    }
+  }
+
   AOS.init({
   disable: false,
   startEvent: 'DOMContentLoaded',
@@ -75,7 +86,7 @@
   debounceDelay: 50,
   throttleDelay: 99,
   offset: 0,
-  delay: 0,
+  delay: 600,
   duration: 1200,
   easing: 'ease',
   once: false,
