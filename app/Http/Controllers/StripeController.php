@@ -55,15 +55,15 @@ class StripeController extends Controller
 
         if($response->status === '400')
         {
-            return redirect()->route('pay', [$response->error]);
+            return view('Payment')->with('response' , $response);
         }
         else{
 
+            return view('ValidatePayment')->with('response' , $response);
 
         }
 
 
-        return redirect($this->redirectTo);
     }
     public function showpayments(Request $Request, Client $client){
 

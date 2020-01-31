@@ -161,14 +161,15 @@ class PaymentController extends Controller
             return response()->json([
                 'message' => 'Bien ajouté a la db et le paiment est bien passé',
                 'status' => '200',
-                'request' => $request
+                'request' => $request,
+                'amount' => $charge['amount']
             ]);
         }
         else {
             return response()->json([
                 'message' => 'Bien ajouté a la db mais le paiment n est pas passé',
                 'status' => '400',
-                'error' => $e,
+                'error' => $e->getMessage(),
             ]);
         }
     }

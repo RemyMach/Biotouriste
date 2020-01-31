@@ -125,16 +125,13 @@ Route::post('filterByCity','API\AnnounceController@selectByCity');
 
 Route::post('announce/store','API\AnnounceController@store');
 
-<<<<<<< HEAD
-//Payment and stripe
-=======
+
 Route::post('announce/delete','API\AnnounceController@delete');
 
 Route::post('announce/update','API\AnnounceController@update');
 
 Route::post('announce/historySeller','API\AnnounceController@selectHistorySeller');
 
->>>>>>> views/homepage
 
 Route::post('payment/stripe','API\PaymentController@getidforcard');
 

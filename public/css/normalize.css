@@ -354,3 +354,7 @@ input {
     -webkit-transform: rotateY(180deg);
     transform: rotateY(180deg);
 }
+
+.paymentError {
+    color: #d32f2f;
+}

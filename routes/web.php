@@ -182,10 +182,10 @@ Route::get('aide',function(){
 
 /********************************************** Route Anthony pour test stripe **********************************************/
 Route::post('addmoney/stripe', array('as' => 'addmoney.stripe','uses' => 'StripeController@stripe'));
-Route::get('pay', function (){
+Route::get('pay', function () {
     return view('Payment');
 });
-Route::post('payment/store','PaymentController@store');
+
 Route::get('allpay','StripeController@showpayments');
 /********************************************** Debut Routes Announces **********************************************/
 

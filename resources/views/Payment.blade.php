@@ -6,10 +6,16 @@
 <body>
 <div class="payment-title">
     <h1>Payment Information</h1>
+
+@if(isset($response))
+    <div class="paymentError">
+        <h2>{{ $response->error }}</h2>
+    </div>
 </div>
-<div class="errorcard">
-    
-</div>
+    @endif
+
+
+    </div>
 <div class="container preload">
     <div class="creditcard">
         <div class="front">
