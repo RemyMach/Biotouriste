@@ -13,7 +13,7 @@ class ProfilController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->only('index');
+        $this->middleware('SessionAuth')->only('index');
 
     }
 
@@ -22,14 +22,18 @@ class ProfilController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+
     public function index(Request $request)
     {
-        return view('Profil');
+        $data = $request->session()->all();
+        return view('profil')->with('profil', $data);
     }
+
     public function message(Request $request)
     {
         return view('Message');
     }
+    
     public function favorite(Request $request)
     {
         return view('Favorite');

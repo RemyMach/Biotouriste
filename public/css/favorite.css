@@ -192,3 +192,12 @@
   border: none;
   background-color: white;
 }
+.favorite_empty i {
+  font-size: 68px;
+  color: #677A70;
+  margin: 20px 0;
+}
+.favorite_empty p {
+  font-size: 13px;
+  color: #677A70;
+}

@@ -14,7 +14,6 @@ class ApiTokenController extends Controller
 
     public function verifyRoleCredentials($role)
     {
-
         $parameters = $this->verifyCredentials();
 
         if(!$parameters)
@@ -22,12 +21,13 @@ class ApiTokenController extends Controller
             return false;
         }
 
+
         $this->allStatus = User_status_correspondenceController::getAllStatusFromAnUser($this->user->idUser);
         if($this->allStatus->original['status'] == '400'){
 
             return false;
         }
-
+        return $role;
         $this->currentStatus = User_status_correspondenceController::getCurrentStatus(
             $this->user->idUser, $this->allStatus->original['allStatus']
         );

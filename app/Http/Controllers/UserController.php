@@ -15,6 +15,8 @@ class UserController extends Controller
     {
         $this->middleware('SessionAuth')->only('show','updateProfile','UpdatePassword','destroy');
         $this->middleware('admin')->only('destroy','index');
+
+        $this->middleware('guest')->only('profil');
     }
 
     /**
@@ -104,10 +106,6 @@ class UserController extends Controller
 
         $this->sessionUser = $request->session()->get('user');
 
-        if($user->idUser != $this->user->idUser){
-            return redirect('home');
-        }
-
         $data = request()->all();
         $data['api_token'] = $this->sessionUser->api_token;
         $data['idUser'] = $this->sessionUser->idUser;
@@ -115,6 +113,7 @@ class UserController extends Controller
         $query = $client->request('POST','http://localhost:8001/api/user/updateProfile', [
             'form_params' => $data
         ]);
+        
         $response = json_decode($query->getBody()->getContents());
 
         dd($response);

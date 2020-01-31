@@ -54,11 +54,9 @@ class FavoriController extends Controller
 
 
     public function store(Request $request, Client $client){
-
         $this->sessionUser = $request->session()->get('user');
 
         $data = request()->all();
-        //$data['idAnnounce'] = 5;
         $data['idUser']     = $this->sessionUser->idUser;
         $data['api_token']  = $this->sessionUser->api_token;
 
@@ -66,9 +64,8 @@ class FavoriController extends Controller
             ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
 
-        dd($response);
+        return response()->json($response);
 
-        return view('testFavori',["response" => $response]);
     }
 
     public function destroy(Request $request, Client $client)

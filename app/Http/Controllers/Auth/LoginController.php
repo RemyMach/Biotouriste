@@ -16,7 +16,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
     /*
     |--------------------------------------------------------------------------
     | Login Controller
@@ -56,7 +56,7 @@ class LoginController extends Controller
 
         if($response->status === '400')
         {
-            return redirect('login');
+            return view('register')->with('response_login', $response);
         }
 
         session([

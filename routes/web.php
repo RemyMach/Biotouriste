@@ -162,7 +162,7 @@ Route::get('seller/testSelect','SellerController@testSelectSellersByCommentsNote
 /********************************************** Route pour front test **********************************************/
 
 
-Route::get('test/register1234','UserController@profil');
+Route::get('register','UserController@profil');
 
 
 
@@ -205,4 +205,3 @@ Route::get('announce/historySeller','AnnounceController@selectHistorySeller');
 
 
 /********************************************** Fin Routes Announces **********************************************/
-
