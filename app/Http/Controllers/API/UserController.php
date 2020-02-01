@@ -121,6 +121,7 @@ class UserController extends Controller
 
         $validator = Validator::make($this->request->all(), [
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'oldPassword' => ['required', 'string']
         ]);
 
         if($validator->fails())
@@ -133,12 +134,22 @@ class UserController extends Controller
         }
 
 
-        $user = User::find($this->request->input('idUser'))->first();
+        $user = User::findOrFail($this->request->input('idUser'));
 
-        $user->update(['password' => $this->request->get('password')]);
+        if(!$this->verifyPassword($user,$this->request->get('oldPassword')))
+        {
+            return response()->json([
+                'message'   => 'Your password is not correct',
+                'status'    => '400'
+            ]);
+        }
+
+        $newPassword = Hash::make($this->request->get('password'));
+
+        $user->update(['password' => $newPassword]);
 
         return response()->json([
-            'message'   => 'The informations are update',
+            'message'   => 'The password has been update',
             'status'    => '200',
             'user'      => $user
         ]);
@@ -204,5 +215,16 @@ class UserController extends Controller
         }
 
         return $data;
+    }
+
+    private function verifyPassword($user,$requestPassword)
+    {
+        $validateCredentials = Hash::check($requestPassword,$user->password);
+
+        if(!$validateCredentials)
+        {
+            return false;
+        }
+        return true;
     }
 }
