@@ -98,15 +98,17 @@ class UserController extends Controller
         ]);
 
 
-        $user = User::find($this->request->input('idUser'))->first();
+        $user = User::find($this->request->input('idUser'));
 
         
         $user->update($data);
 
+        $userUpdate = User::find($this->request->input('idUser'));
+
         return response()->json([
             'message'   => 'The informations are update',
             'status'    => '200',
-            'user'      => $data
+            'user'      => $userUpdate
         ]);
 
 
@@ -182,25 +184,25 @@ class UserController extends Controller
         $phones = DB::table('Users')->select('user_phone')->get();
         $phone = DB::table('Users')->select('user_phone')->where('user_phone','=',$data['user_phone'])->get();
 
+
         foreach($emails as $key => $value){
-            if($value->email === $email[0]->email){
+            if($data['email'] === $email[0]->email){
                 unset($data['email']);
                 break;
-            }elseif($value->email === $data['email']){
+            }elseif($data['email'] === $value->email ){
                 return false;
             }
         }
 
         foreach($phones as $key => $value){
-            if($value->user_phone === $phone[0]->user_phone){
+            if($data['user_phone'] === $phone[0]->user_phone){
                 unset($data['user_phone']);
                 break;
-            }elseif($value->user_phone === $data['user_phone']){
+            }elseif($data['user_phone'] === $value->user_phone ){
                 return false;
             }
         }
 
         return $data;
-
     }
 }
