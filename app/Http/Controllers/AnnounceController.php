@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Announce;
-use App\Repositories\AnnounceRepository;
-use App\User;
-use App\Status_User;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class AnnounceController extends Controller
 {
+    private $sessionUser;
+
     public function __construct(){
         $this->middleware('seller')->only('store', 'update');
     }
@@ -26,8 +23,10 @@ class AnnounceController extends Controller
     }
 
     public function selectHistorySeller(Request $request, Client $client){
-        $data['idUser'] = 3;
-        $data['api_token'] = '2dBsSqcw4U3kCaFKg7ZDlfcJ6zRf0Czn0Pjypsw2GVuzG5ZjLwDVninGYKG3ARKvdFhbcitqMmZVgVCo';
+        $this->sessionUser = $request->session()->get('user');
+
+        $data['idUser'] = $this->sessionUser->idUser;
+        $data['api_token'] = $this->sessionUser->api_token;
 
         $query = $client->request('POST', 'http://localhost:8001/api/announce/historySeller', ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
@@ -39,10 +38,12 @@ class AnnounceController extends Controller
     }
 
     public function update(Request $request, Client $client){
+        $this->sessionUser = $request->session()->get('user');
+
         $data['idAnnounce'] = 1;
         $data['newQuantityToAdd'] = 30;
-        $data['idUser'] = 3;
-        $data['api_token'] = '2dBsSqcw4U3kCaFKg7ZDlfcJ6zRf0Czn0Pjypsw2GVuzG5ZjLwDVninGYKG3ARKvdFhbcitqMmZVgVCo';
+        $data['idUser'] = $this->sessionUser->idUser;
+        $data['api_token'] = $this->sessionUser->api_token;
 
         $query = $client->request('POST', 'http://localhost:8001/api/announce/update', ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
@@ -54,9 +55,11 @@ class AnnounceController extends Controller
     }
 
     public function delete(Request $request, Client $client){
+        $this->sessionUser = $request->session()->get('user');
+
+        $data['idUser'] = $this->sessionUser->idUser;
+        $data['api_token'] = $this->sessionUser->api_token;
         $data['idAnnounce'] = 4;
-        $data['idUser'] = 3;
-        $data['api_token'] = '2dBsSqcw4U3kCaFKg7ZDlfcJ6zRf0Czn0Pjypsw2GVuzG5ZjLwDVninGYKG3ARKvdFhbcitqMmZVgVCo';
         $query = $client->request('POST', 'http://localhost:8001/api/announce/delete', ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
 
@@ -67,6 +70,8 @@ class AnnounceController extends Controller
     }
 
     public function store(Request $request, Client $client){
+        $this->sessionUser = $request->session()->get('user');
+
         $data = [
             'announce_name' => 'TestSTORAGE',
             'announce_price' => 8,
@@ -83,10 +88,8 @@ class AnnounceController extends Controller
             'announce_is_available' => true
         ];
 
-        $data['idUser'] = 3;
-        $data['api_token'] = '2dBsSqcw4U3kCaFKg7ZDlfcJ6zRf0Czn0Pjypsw2GVuzG5ZjLwDVninGYKG3ARKvdFhbcitqMmZVgVCo';
-//        $data['idUser'] = $this->sessionUser->idUser;
-//        $data['api_token'] = $this->sessionUser->api_token;
+        $data['idUser'] = $this->sessionUser->idUser;
+        $data['api_token'] = $this->sessionUser->api_token;
         $query = $client->request('POST', 'http://localhost:8001/api/announce/store', ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
 

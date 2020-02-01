@@ -1,207 +1,170 @@
 @include('layouts.header')
-<div id="content_1">
-  @include('layouts.navbarDesktop')
-  @include('layouts.navbarMobile')
-  <div class="content_1_1">
-    <div class="row" style="margin:0;">
-      <div class="col-md-8 col-xs-4" style="padding:0">
-        <div class="block_product">
-          <div class="b_product"></div>
-        </div>
-      </div>
-      <div class="col-md-4 col-xs-4" style="padding:0">
-        <div class="block_map">
-          <div class="b_map"></div>
-        </div>
-        <div class="block_faq">
-          <div class="b_faq"></div>
-        </div>
+@include('layouts.navbarDesktop')
+@include('layouts.navbarMobile')
+<div id="cta">
+  <div class="row" style="margin:0;">
+    <div class="col-xs-12 col-sm-12 col-md-8 offset-md-2 text-center">
+      <div id="content_1" class="animated slideInUp">
+        <h3>From now</h3>
+        <h2>Eating healthy has never been so simple</h2>
+        <p>Find the best organic producers in your area who are selected and certified by our care.</p>
+        <button type="button" name="button" onclick="window.location.href='{{ url('announces') }}'">Explore</button>
       </div>
     </div>
   </div>
 </div>
-<div id="content_2">
-  <div class="content_2_1">
-    <div class="row" style="margin:0;">
-      <div class="col-md-12 text-center">
-        <h3>WHAT'S NEW IN</h3>
-        <h2>HEALTHY'S</h2>
+<div id="about">
+  <div class="row" style="margin:0;">
+    <div class="col-xs-12 col-sm-12 col-md-10 offset-md-1 text-center">
+      <div id="content_2" data-aos="fade-right">
+        <h3>About Us</h3>
         <div class="line"></div>
-      </div>
-    </div>
-    <div class="content_2_2">
-      <div class="row" style="margin:0;">
-        <div class="col-md-4 col-sm-12 text-right">
-          <div class="block_left">
-            <img src="{{url('/img/home/block-1.png')}}" alt="">
-          </div>
-        </div>
-        <div class="col-md-4 col-sm-12 text-center">
-          <div class="block_center">
-            <img src="{{url('/img/home/block-2.png')}}" alt="">
-          </div>
-        </div>
-        <div class="col-md-4 col-sm-12 text-left">
-          <div class="block_right">
-            <img src="{{url('/img/home/block-3.png')}}" alt="">
-          </div>
+        <h2>What is Healthy's ?</h2>
+        <div class="col-md-6 offset-md-3 text-center">
+          <p>No matter where you are, in travel or home, you will be able to access to the best selection of organic producers. You will be able to buy your products from the plateform, also from our application available <a href="#">here</a>.</p>
+          <p>The first step is to reference your adress to have access to our listed producers in the area. Then you will be able to select your list of product in different type of unit.</p>
+          <p>Eating healthy has never been so simple !</p>
+          <button type="button" name="button" onclick="window.location.href='{{ url('about') }}'">Read more</button>
         </div>
       </div>
     </div>
   </div>
 </div>
-<div id="content_3">
-  <div class="content_3_1">
-    <div class="block_banner">
-      <div class="row" style="margin:0;">
-        <div class="col-md-12 text-center">
-          <h3>Healthy's is ...</h3>
-          <p>An e-shop offering you real traders delivering natural and organic products from around the world. <br>You deserve the best!</p>
-          <img src="" alt="">
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div id="content_4">
-  <div class="content_4_1">
-    <div class="row" style="margin:0;">
-      <div class="col-md-12 text-center">
+<div id="seller">
+  <div class="row" style="margin:0;">
+    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+      <div id="content_3">
         <h3>THE BEST WE KNOW</h3>
         <h2>TO DISCOVER</h2>
         <div class="line"></div>
-        <div class="navigation">
+        <div class="col-xs-12 col-sm-12 col-md-12">
           <div class="row" style="margin:0;">
-            <div class="col-md-12 text-center">
-              <button class="active" type="button" name="button" onclick="">Vendors</button>
-              <button class="" type="button" name="button" onclick="">Products</button>
-              <button class="" type="button" name="button" onclick="">Places</button>
+            <div class="column">
+              <div class="card top">
+                <div class="review">
+                  <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <div class="pic"></div>
+                <div class="name">
+                  <h3>Jakob</h3>
+                </div>
+                <div class="desc">
+                  <p>"Farmer from father to son"</p>
+                </div>
+                <div class="pos">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <p>Wyoming</p>
+                </div>
+                <div class="comment">
+                  <p>Comments : (34)</p>
+                </div>
+                <div class="view">
+                  <button class="btn_top_vendor" type="button" name="button">View Profil</button>
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div class="card bottom">
+                <div class="review">
+                  <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <div class="pic"></div>
+                <div class="name">
+                  <h3>Jakob</h3>
+                </div>
+                <div class="desc">
+                  <p>"Farmer from father to son"</p>
+                </div>
+                <div class="pos">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <p>Wyoming</p>
+                </div>
+                <div class="comment">
+                  <p>Comments : (34)</p>
+                </div>
+                <div class="view">
+                  <button class="btn_top_vendor" type="button" name="button">View Profil</button>
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div class="card top">
+                <div class="review">
+                  <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <div class="pic"></div>
+                <div class="name">
+                  <h3>Jakob</h3>
+                </div>
+                <div class="desc">
+                  <p>"Farmer from father to son"</p>
+                </div>
+                <div class="pos">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <p>Wyoming</p>
+                </div>
+                <div class="comment">
+                  <p>Comments : (34)</p>
+                </div>
+                <div class="view">
+                  <button class="btn_top_vendor" type="button" name="button">View Profil</button>
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div class="card bottom">
+                <div class="review">
+                  <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <div class="pic"></div>
+                <div class="name">
+                  <h3>Jakob</h3>
+                </div>
+                <div class="desc">
+                  <p>"Farmer from father to son"</p>
+                </div>
+                <div class="pos">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <p>Wyoming</p>
+                </div>
+                <div class="comment">
+                  <p>Comments : (34)</p>
+                </div>
+                <div class="view">
+                  <button class="btn_top_vendor" type="button" name="button">View Profil</button>
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div class="card top">
+                <div class="review">
+                  <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <div class="pic"></div>
+                <div class="name">
+                  <h3>Jakob</h3>
+                </div>
+                <div class="desc">
+                  <p>"Farmer from father to son"</p>
+                </div>
+                <div class="pos">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <p>Wyoming</p>
+                </div>
+                <div class="comment">
+                  <p>Comments : (34)</p>
+                </div>
+                <div class="view">
+                  <button class="btn_top_vendor" type="button" name="button">View Profil</button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="content_4_2">
-      <div class="col-md-12 col-sm-12">
-        <div class="row" style="margin:0;">
-          <div class="column">
-            <div class="block_vendor top">
-              <div class="review">
-                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-              </div>
-              <div class="pic"></div>
-              <div class="name">
-                <h3>Jakob</h3>
-              </div>
-              <div class="desc">
-                <p>"Farmer from father to son"</p>
-              </div>
-              <div class="pos">
-                <i class="fas fa-map-marker-alt"></i>
-                <p>Wyoming</p>
-              </div>
-              <div class="comment">
-                <p>Comments : (34)</p>
-              </div>
-              <div class="view">
-                <button class="btn_top_vendor" type="button" name="button">View Profil</button>
-              </div>
-            </div>
-          </div>
-          <div class="column">
-            <div class="block_vendor bottom">
-              <div class="review">
-                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-              </div>
-              <div class="pic"></div>
-              <div class="name">
-                <h3>Marc</h3>
-              </div>
-              <div class="desc">
-                <p>"Farmer from father to son"</p>
-              </div>
-              <div class="pos">
-                <i class="fas fa-map-marker-alt"></i>
-                <p>Wyoming</p>
-              </div>
-              <div class="comment">
-                <p>Comments : (34)</p>
-              </div>
-              <div class="view">
-                <button class="btn_top_vendor" type="button" name="button">View Profil</button>
-              </div>
-            </div>
-          </div>
-          <div class="column">
-            <div class="block_vendor top">
-              <div class="review">
-                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half"></i>
-              </div>
-              <div class="pic"></div>
-              <div class="name">
-                <h3>James</h3>
-              </div>
-              <div class="desc">
-                <p>"Farmer from father to son"</p>
-              </div>
-              <div class="pos">
-                <i class="fas fa-map-marker-alt"></i>
-                <p>Wyoming</p>
-              </div>
-              <div class="comment">
-                <p>Comments : (34)</p>
-              </div>
-              <div class="view">
-                <button class="btn_top_vendor" type="button" name="button">View Profil</button>
-              </div>
-            </div>
-          </div>
-          <div class="column">
-            <div class="block_vendor bottom">
-              <div class="review">
-                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half"></i>
-              </div>
-              <div class="pic"></div>
-              <div class="name">
-                <h3>Lucas</h3>
-              </div>
-              <div class="desc">
-                <p>"Farmer from father to son"</p>
-              </div>
-              <div class="pos">
-                <i class="fas fa-map-marker-alt"></i>
-                <p>Wyoming</p>
-              </div>
-              <div class="comment">
-                <p>Comments : (34)</p>
-              </div>
-              <div class="view">
-                <button class="btn_top_vendor" type="button" name="button">View Profil</button>
-              </div>
-            </div>
-          </div>
-          <div class="column">
-            <div class="block_vendor top">
-              <div class="review">
-                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-              </div>
-              <div class="pic"></div>
-              <div class="name">
-                <h3>Steve</h3>
-              </div>
-              <div class="desc">
-                <p>"Farmer from father to son"</p>
-              </div>
-              <div class="pos">
-                <i class="fas fa-map-marker-alt"></i>
-                <p>Wyoming</p>
-              </div>
-              <div class="comment">
-                <p>Comments : (34)</p>
-              </div>
-              <div class="view">
-                <button class="btn_top_vendor" type="button" name="button">View Profil</button>
-              </div>
+        <div class="cta">
+          <div class="row" style="margin:0;">
+            <div class="col-xs-12 col-sm-12 col-md-2 offset-md-5 text-center">
+              <button type="button" name="button">View all</button>
             </div>
           </div>
         </div>
@@ -209,4 +172,55 @@
     </div>
   </div>
 </div>
+<div id="article">
+  <div class="row" style="margin:0;">
+    <div class="col-xs-12 col-sm-12 col-md-8 offset-md-2 text-center">
+      <div id="content_4">
+
+      </div>
+    </div>
+  </div>
+</div>
+<div id="content_5">
+  <div class="row" style="margin:0;">
+    <div class="col-xs-12 col-sm-12 col-md-8 offset-md-2 text-center">
+      <div id="contact">
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<script type="text/javascript">
+  function announces() {
+    document.getElementById('announces').style.display = "block";
+    document.getElementById('messages').style.display = "none";
+    document.getElementById('products').style.display = "none";
+
+    document.getElementById('btn_a').parentElement.classList.add("active");
+    document.getElementById('btn_m').parentElement.classList.remove("active");
+    document.getElementById('btn_p').parentElement.classList.remove("active");
+  }
+  function messages() {
+    document.getElementById('announces').style.display = "none";
+    document.getElementById('messages').style.display = "block";
+    document.getElementById('products').style.display = "none";
+
+    document.getElementById('btn_a').parentElement.classList.remove("active");
+    document.getElementById('btn_m').parentElement.classList.add("active");
+    document.getElementById('btn_p').parentElement.classList.remove("active");
+  }
+  function products() {
+    document.getElementById('announces').style.display = "none";
+    document.getElementById('messages').style.display = "none";
+    document.getElementById('products').style.display = "block";
+
+    document.getElementById('btn_a').parentElement.classList.remove("active");
+    document.getElementById('btn_m').parentElement.classList.remove("active");
+    document.getElementById('btn_p').parentElement.classList.add("active");
+  }
+</script>
 @include('layouts.footer')

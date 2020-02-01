@@ -105,7 +105,9 @@ Route::post('discountCode/show','Discount_CodeController@showDiscountCodeOfAUser
 
 //Favoris
 
-Route::post('favori/show','FavoriController@showFavorisOfAUser');
+Route::get('favori/show','FavoriController@showFavorisOfAUser');
+
+Route::get('favori/testShow','FavoriController@testShowFavorisOfAUser');
 
 Route::post('favori/store','FavoriController@store');
 
@@ -160,7 +162,7 @@ Route::get('seller/testSelect','SellerController@testSelectSellersByCommentsNote
 /********************************************** Route pour front test **********************************************/
 
 
-Route::get('test/register1234','UserController@profil');
+Route::get('register','UserController@profil');
 
 
 
@@ -174,6 +176,17 @@ Route::get('aide',function(){
 /********************************************** Fin Route pour front test **********************************************/
 
 
+
+/********************************************** Route pour front test **********************************************/
+
+
+/********************************************** Route Anthony pour test stripe **********************************************/
+Route::post('addmoney/stripe', array('as' => 'addmoney.stripe','uses' => 'StripeController@stripe'));
+Route::get('pay', function () {
+    return view('Payment');
+});
+
+Route::get('allpay','StripeController@showpayments');
 /********************************************** Debut Routes Announces **********************************************/
 
 Route::get('announces','AnnounceController@index');

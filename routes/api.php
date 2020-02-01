@@ -34,6 +34,8 @@ Route::post('user/showResetForm','API\ResetPasswordController@showResetForm');
 
 Route::post('user/reset','API\ResetPasswordController@reset');
 
+Route::post('user/updateProfile','API\UserController@updateProfile');
+
 //comment
 Route::post('comment/store','API\CommentController@store');
 
@@ -125,6 +127,7 @@ Route::post('filterByCity','API\AnnounceController@selectByCity');
 
 Route::post('announce/store','API\AnnounceController@store');
 
+
 Route::post('announce/delete','API\AnnounceController@delete');
 
 Route::post('announce/update','API\AnnounceController@update');
@@ -132,6 +135,9 @@ Route::post('announce/update','API\AnnounceController@update');
 Route::post('announce/historySeller','API\AnnounceController@selectHistorySeller');
 
 
+Route::post('payment/stripe','API\PaymentController@getidforcard');
+
+Route::post('payment/showUserPayment','API\PaymentController@showUserPayment');
 
 /*Route::get('/users', function () {
     return UserResource::collection(User::paginate(2));

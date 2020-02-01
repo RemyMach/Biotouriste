@@ -28,10 +28,15 @@
   margin-right: auto;
   background-color: #677A70;
 }
+@media screen and (max-width: 700px) {
+  .profil_container {
+    width: 70%;
+  }
+}
 .profil_container {
   height: auto;
   padding: 50px 20px;
-  width: 700px;
+  width: 50%;
   background-color: #d0dad0;
   margin: 5% auto;
 }
@@ -122,21 +127,20 @@
   margin-bottom: 20px;
 }
 .profil_desc p {
-  font-size: 10px;
+  font-size: 13px;
   font-weight: bold;
   text-transform: uppercase;
   color: #677A70;
   margin: 0;
   margin-bottom: 10px;
 }
-.profil_info input[type=text] {
-  background-color: inherit;
-  border: none;
-  text-align: center;
-  font-size: 13px;
+.profil_info p {
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
   color: #677A70;
   margin: 0;
-  text-transform: uppercase;
+  margin-bottom: 10px;
 }
 .profil_message {
   margin-top: 20px;
@@ -163,4 +167,32 @@
 }
 .order_history p {
   margin: 0;
+}
+.logout input[type=button] {
+  text-transform: uppercase;
+  color: white;
+  text-decoration: none;
+  font-family: 'helvetica', sans-serif;
+  font-weight: bold;
+  font-size: 12px;
+  letter-spacing: 1px;
+  width: 10%;
+  transition: .5s;
+  margin-right: 10px;
+  padding: 5px;
+  border: none;
+  background-color: #677A70;
+}
+.logout input[type=button]:hover {
+  background-color: black;
+}
+.profil_container button {
+  margin: 20px 0 0 0;
+  width: 15%;
+}
+#info {
+  display: block;
+}
+#edit {
+  display: none;
 }
