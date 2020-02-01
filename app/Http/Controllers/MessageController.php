@@ -86,7 +86,7 @@ class MessageController extends Controller
         $this->sessionUser = $request->session()->get('user');
 
         $data = request()->all();
-        $data['idAnnounce'] = 2;
+        //$data['idAnnounce'] = 2;
         $data['idUser']     = $this->sessionUser->idUser;
         $data['api_token']  = $this->sessionUser->api_token;
 

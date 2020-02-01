@@ -110,10 +110,10 @@ class MessageController extends Controller
 
         $this->request = $request;
 
-        $validator = $this->validateIdAnnounce();
+        /*$validator = $this->validateIdAnnounce();
         if($validator->original['status'] == '400') {
             return $validator;
-        }
+        }*/
 
         $provisionalAnnounces = MessageRepository::getAllAnnouncesWithMessagesFromASeller($this->request->input('idUser'));
         if(!isset($provisionalAnnounces[0])){
@@ -135,7 +135,6 @@ class MessageController extends Controller
         $arraymessages = $this->filterByConversationBetweenTouristControllerSeller($messages);
 
         return response()->json([
-            'message'   => 'Your receive your messages',
             'status'    => '200',
             'messages'  => $arraymessages,
         ]);
