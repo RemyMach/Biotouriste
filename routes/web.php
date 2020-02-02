@@ -115,7 +115,7 @@ Route::post('favori/destroy','FavoriController@destroy');
 
 //Messages
 
-Route::post('message/store','MessageController@store');
+Route::get('message/store','MessageController@store');
 
 Route::get('message/show/seller','MessageController@showMessagesOfASeller');
 

@@ -1,11 +1,9 @@
 @component('mail::message')
     # Introduction
     Hi {{ $receiver->user_name }}
-    Your have receive a message from {{ $sender->user_name }} {{ $sender->email }}
+    Your have receive a message from {{ $sender->user_name }}
     about the announce {{ $announce->announce_name }}
 
-    The subject of the message is:
-    {{ $message['message_subject'] }}
 
     The content is:
     {{ $message['message_content'] }}

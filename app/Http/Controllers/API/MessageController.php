@@ -49,6 +49,7 @@ class MessageController extends Controller
             ]);
         }
 
+        //return $this->setValidDataDependingOfTheAnnounceOwner();
         if(!$this->setValidDataDependingOfTheAnnounceOwner()){
 
             return response()->json([
@@ -56,7 +57,6 @@ class MessageController extends Controller
                 'status' => '400'
             ]);
         }
-
 
         $this->message = Message::create($this->validData);
 
@@ -74,12 +74,9 @@ class MessageController extends Controller
 
         $this->request = $request;
 
-        $validator = $this->validateIdAnnounce();
-        if($validator->original['status'] == '400') {
-            return $validator;
-        }
 
         $provisionalAnnounces = MessageRepository::getAllAnnouncesWhereUserSendAMessage($this->request->input('idUser'));
+
         if(!isset($provisionalAnnounces[0])){
             return response()->json([
                 'message'   => 'No Announces with Messages for this User',
@@ -96,24 +93,19 @@ class MessageController extends Controller
             ]);
         }
 
+        //return $this->filterByConversationBetweenTouristControllerSeller($messages);
         //trié par annnonce puis par TouristController et Seller
         $arraymessages = $this->filterByConversationBetweenTouristControllerSeller($messages);
 
         return response()->json([
-            'message'   => 'Your receive your messages',
             'status'    => '200',
-            'messages'     => $arraymessages,
+            'conversations'     => $arraymessages,
         ]);
     }
 
     public function showMessagesOfASeller(Request $request){
 
         $this->request = $request;
-
-        /*$validator = $this->validateIdAnnounce();
-        if($validator->original['status'] == '400') {
-            return $validator;
-        }*/
 
         $provisionalAnnounces = MessageRepository::getAllAnnouncesWithMessagesFromASeller($this->request->input('idUser'));
         if(!isset($provisionalAnnounces[0])){
@@ -136,7 +128,7 @@ class MessageController extends Controller
 
         return response()->json([
             'status'    => '200',
-            'messages'  => $arraymessages,
+            'conversations'  => $arraymessages,
         ]);
     }
 
@@ -145,7 +137,7 @@ class MessageController extends Controller
     private function validateMessage(){
 
         $validator = Validator::make($this->request->all(), [
-            'message_subject'           => 'required|string|max:255',
+            'message_subject'           => 'string|max:255',
             'message_content'           => 'required|string|max:500',
             'idAnnounce'                => 'required|integer',
         ]);
@@ -166,8 +158,10 @@ class MessageController extends Controller
 
         if($this->announce->user->idUser == $this->request->input('idUser')){
 
+
             return $this->setValidDataForTheAnnounceOwner();
         }
+
 
         return $this->setValidDataForTouristController();
     }
@@ -180,7 +174,7 @@ class MessageController extends Controller
             return false;
         }
 
-        $this->validData['Users_idUser'] = $this->request->input('idSender');
+        $this->validData['Users_idUser'] = $this->request->input('idInterlocutor');
         $this->validData['message_idSender'] = $this->request->input('idUser');
 
         return true;
@@ -200,7 +194,7 @@ class MessageController extends Controller
     private function checkIdSenderHasAMessageForThisAnnounce(){
 
         $messages = MessageRepository::getAllMessagesOfATouristControllerForAnAnnounce(
-            $this->request->input('idAnnounce'), $this->request->input('idSender')
+            $this->request->input('idAnnounce'), $this->request->input('idInterlocutor')
         );
         @$AnExistingConversation = $messages[0];
         if(!isset($AnExistingConversation)){
@@ -213,7 +207,7 @@ class MessageController extends Controller
     private function validateIdSenderFormat(){
 
         $validator = Validator::make($this->request->all(), [
-            'idSender'           => 'required|integer',
+            'idInterlocutor'           => 'required|integer',
         ]);
 
         return $this->resultValidator($validator);
@@ -246,27 +240,31 @@ class MessageController extends Controller
 
     private function sendCreatedEmail($mail){
 
-        if($this->request->has('idSender') === true){
-            $this->sendWhenSenderIsAnnounceOwner($mail);
+        if($this->announce->user->idUser == $this->request->input('idUser')){
+
+            return $this->sendWhenSenderIsAnnounceOwner($mail);
         }else{
+
             $this->sendWhenSenderIsTouristController($mail);
         }
     }
 
     private function sendWhenSenderIsAnnounceOwner($mail){
 
-        $TouristControllerUser = User::findorFail($this->request->input('idSender'));
+        $TouristControllerUser = User::findorFail($this->request->input('idInterlocutor'));
+
         $mail->send($TouristControllerUser->email,'MessageCreatedForTheReceiver',[
-            'receiver' => $TouristControllerUser->email,'sender' => $this->announce->user,'message' => $this->validData, 'announce' => $this->announce
+            'receiver' => $TouristControllerUser,'sender' => $this->announce->user,'message' => $this->validData, 'announce' => $this->announce
         ]);
         $mail->send($this->announce->user->email,'MessageCreatedForTheSender', [
-            'receiver' => $TouristControllerUser->email,'sender' => $this->announce->user,'message' => $this->validData, 'announce' => $this->announce
+            'receiver' => $TouristControllerUser,'sender' => $this->announce->user,'message' => $this->validData, 'announce' => $this->announce
         ]);
     }
 
     private function sendWhenSenderIsTouristController($mail){
 
         $TouristControllerUser = User::findorFail($this->request->input('idUser'));
+
         $mail->send($this->announce->user->email,'MessageCreatedForTheReceiver',[
             'receiver' => $this->announce->user,'sender' => $TouristControllerUser,'message' => $this->validData, 'announce' => $this->announce
         ]);
@@ -275,14 +273,6 @@ class MessageController extends Controller
         ]);
     }
 
-    private function validateIdAnnounce(){
-
-        $validator = Validator::make($this->request->all(), [
-            'idAnnounce'  => 'required|integer',
-        ]);
-
-        return $this->resultValidator($validator);
-    }
 
     private function getArrayIdAnnouncesFromprovisionalAnnounces($provisionalAnnounces){
 
@@ -300,7 +290,7 @@ class MessageController extends Controller
         foreach($messages as $message){
             $arrayMessages[$message->Announces_idAnnounce][$message->Users_idUser][] = $message;
         }
-
+        //return $arrayMessages;
         foreach($arrayMessages as $arrayMessage){
             foreach($arrayMessage as $message){
                 $conversations[] = $message;
