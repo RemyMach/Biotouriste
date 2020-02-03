@@ -3,8 +3,9 @@
       @include('layouts.navbarDesktop')
         <div class="row">
             <div class="col-md-12">
-            <input type="text" name="cityZone" id="cityZone" value="paris">
+                <input type="text" name="cityZone" id="cityZone" value="paris"><button onclick="getLocation()">try it<i class="fas fa-search-location"></i></button>
                 <button type="submit" onclick="findCityData()">Find</button>
+                <p id="demo">ef</p>
             </div>
             <div class="col-md-12 navbar navbar-expand-lg">
                   <ul class="navbar-nav inline categories">
@@ -129,5 +130,37 @@ function showAnnounce(announce) {
 
     // $('#titlePrice').html('Modification du tarif n°' + announce['announce_name']);
     jQuery('#modal-announce').modal('show');
+}
+
+var x = document.getElementById("demo");
+
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+    } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+
+function showPosition(position) {
+    x.innerHTML = "Latitude: " + position.coords.latitude +
+        "<br>Longitude: " + position.coords.longitude;
+}
+
+function showError(error) {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            x.innerHTML = "User denied the request for Geolocation.";
+            break;
+        case error.POSITION_UNAVAILABLE:
+            x.innerHTML = "Location information is unavailable.";
+            break;
+        case error.TIMEOUT:
+            x.innerHTML = "The request to get user location timed out.";
+            break;
+        case error.UNKNOWN_ERROR:
+            x.innerHTML = "An unknown error occurred.";
+            break;
+    }
 }
 </script>
