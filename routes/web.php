@@ -185,7 +185,9 @@ Route::post('addmoney/stripe', array('as' => 'addmoney.stripe','uses' => 'Stripe
 Route::get('pay', function () {
     return view('Payment');
 });
-
+Route::get('payed', function () {
+    return view('ValidatePayment');
+});
 Route::get('allpay','StripeController@showpayments');
 /********************************************** Debut Routes Announces **********************************************/
 
