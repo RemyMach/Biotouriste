@@ -25,7 +25,7 @@
           <h3>Subscribe to our newsletter</h3>
           <h2>to be part of the family</h2>
           <form action="" method="post">
-            <input type="email" name="" value="" required>
+            <input type="email" name="" value="" placeholder="Email address *" required>
             <input type="submit" name="" value="Submit">
           </form>
         </div>
