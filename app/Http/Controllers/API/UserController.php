@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -31,8 +30,6 @@ class UserController extends Controller
             'destroy','index'
         );
     }
-
-    private $user;
 
     public function index(ApiTokenController $apiTokenController)
     {
