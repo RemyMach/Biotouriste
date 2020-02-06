@@ -84,13 +84,15 @@ Route::post('contact/storeForAnAnonymous','ContactController@storeForAnAnonymous
 
 Route::post('contact/storeForAnAuthentifiedUser','ContactController@storeForAnAnonymous');
 
-Route::post('contact/destroy','ContactController@destroy');
+Route::get('contact/destroy/{idContact}','ContactController@destroy');
 
 Route::post('contact/user','ContactController@ContactsOfAUser');
+
 
 //Discount_code
 
 Route::get('discountCode','Discount_CodeController@store');
+Route::post('discountCode','Discount_CodeController@store');
 
 Route::post('discountCode/updateStatus','Discount_CodeController@updateStatus');
 
@@ -190,3 +192,7 @@ Route::get('announce/historySeller','AnnounceController@selectHistorySeller');
 //Admin
 
 Route::get('admin','AdminController@index');
+
+Route::get('admin/checks','AdminController@showChecks');
+
+//Route::post('admin','AdminController@index');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Check;
 use App\Http\Controllers\API\NoApiClass\UsefullController;
 use App\Http\Controllers\Controller;
+use App\Repositories\CheckRepository;
 use App\Seller;
 use App\User;
 use DateTime;
@@ -64,6 +65,18 @@ class CheckController extends Controller
             'check'     => $check,
         ]);
 
+    }
+
+    public function showAllUnDoneChekcs(Request $request){
+
+        $this->request = $request;
+
+        $checksUnDone = CheckRepository::selectCheckUndone();
+
+        return response()->json([
+            'status'    => '200',
+            'checks'     => $checksUnDone,
+        ]);
     }
 
     public function showChecksOfAController()

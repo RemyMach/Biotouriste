@@ -160,21 +160,30 @@ class ContactController extends Controller
      * @param  \App\Contact  $contact
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, Client $client)
+    public function destroy(Request $request, Client $client, $idContact)
     {
         $this->sessionUser = $request->session()->get('user');
 
         $data = request()->all();
         $data['idUser']     = $this->sessionUser->idUser;
         $data['api_token']  = $this->sessionUser->api_token;
+        $data['idContactDelete'] = $idContact;
 
-        $query = $client->request('POST','http://localhost:8001/api/contact/delete',
+        $query = $client->request('POST','http://localhost:8001/api/contact/destroy',
             ['form_params' => $data]);
 
-        $response = json_decode($query->getBody()->getContents());
+        $response1 = json_decode($query->getBody()->getContents());
 
-        dd($response);
+        $query = $client->request('POST','http://localhost:8001/api/contact/admin/all',
+            ['form_params' => $data]);
 
-        return view('testContact',["response" => $response]);
+        $responseContact = json_decode($query->getBody()->getContents());
+
+        if($response1->status == '400'){
+
+            return view('admin.admin',['error' => 'the Contact id doesn\'t exist'])->with('contacts',$responseContact->contacts);
+        }
+
+        return view('admin.admin')->with('contacts',$responseContact->contacts);
     }
 }

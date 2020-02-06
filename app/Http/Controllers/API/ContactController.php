@@ -84,6 +84,19 @@ class ContactController extends Controller
         ]);
     }
 
+    public function listAllContacts(Request $request){
+
+        $this->request = $request;
+
+        $contacts = Contact::all();
+
+        return response()->json([
+            'message'   => 'There is all the contacts',
+            'status'    => '200',
+            'contacts'    => $contacts
+        ]);
+    }
+
     public function ContactsOfAUser(Request $request){
 
         $this->request = $request;
@@ -201,7 +214,7 @@ class ContactController extends Controller
 
     private function verifyIfContactExist(){
 
-        $this->contact = Contact::findOrFail($this->request->input('idContactDelete'));
+        $this->contact = Contact::find($this->request->input('idContactDelete'));
         if(!$this->contact){
 
             return false;
