@@ -115,9 +115,13 @@ class UserController extends Controller
         ]);
         $response = json_decode($query->getBody()->getContents());
 
-        dd($response);
+        if($response->status == '400'){
+            dd('erreur');
+        }
 
-        $this->sessionUser->update($response);
+        session([
+            'user' => $response->user,
+        ]);
 
         return back()->with('success','The Profile has been updated');
     }
