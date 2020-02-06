@@ -28,7 +28,7 @@ class AnnounceController extends Controller
         $data['idUser'] = $this->sessionUser->idUser;
         $data['api_token'] = $this->sessionUser->api_token;
 
-        $query = $client->request('POST', 'http://127.0.0.1::80/api/announce/historySeller', ['form_params' => $data]);
+        $query = $client->request('POST', 'http://localhost:8001/api/announce/historySeller', ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
 
         if ($response->status === '400'){
@@ -45,7 +45,7 @@ class AnnounceController extends Controller
         $data['idUser'] = $this->sessionUser->idUser;
         $data['api_token'] = $this->sessionUser->api_token;
 
-        $query = $client->request('POST', 'http://127.0.0.1::80/api/announce/update', ['form_params' => $data]);
+        $query = $client->request('POST', 'http://localhost:8001/api/announce/update', ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
 
         if ($response->status === '400'){
@@ -60,7 +60,7 @@ class AnnounceController extends Controller
         $data['idUser'] = $this->sessionUser->idUser;
         $data['api_token'] = $this->sessionUser->api_token;
         $data['idAnnounce'] = 4;
-        $query = $client->request('POST', 'http://127.0.0.1::80/api/announce/delete', ['form_params' => $data]);
+        $query = $client->request('POST', 'http://localhost:8001/api/announce/delete', ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
 
         if ($response->status === '400'){
@@ -90,7 +90,7 @@ class AnnounceController extends Controller
 
         $data['idUser'] = $this->sessionUser->idUser;
         $data['api_token'] = $this->sessionUser->api_token;
-        $query = $client->request('POST', 'http://127.0.0.1::80/api/announce/store', ['form_params' => $data]);
+        $query = $client->request('POST', 'http://localhost:8001/api/announce/store', ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
 
         if ($response->status === '400'){
@@ -105,7 +105,7 @@ class AnnounceController extends Controller
         $data['idUser'] = config('api.api_admin_id');
         $data['api_token'] = config('api.api_admin_token');
 
-        $query = $client->request('POST', 'http://127.0.0.1::80/api/filterByCategorie', ['form_params' => $data]);
+        $query = $client->request('POST', 'http://localhost:8001/api/filterByCategorie', ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
 
         if ($response->status === '400'){
@@ -121,7 +121,7 @@ class AnnounceController extends Controller
         $data = request()->all();
         $data['idUser'] = config('api.api_admin_id');
         $data['api_token'] = config('api.api_admin_token');
-        $query = $client->request('POST', 'http://127.0.0.1::80/api/filterByCity', ['form_params' => $data]);
+        $query = $client->request('POST', 'http://localhost:8001/api/filterByCity', ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
 
         if ($response->status === '400'){
