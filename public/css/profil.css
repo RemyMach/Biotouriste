@@ -3,6 +3,12 @@
   width: 100%;
   padding: 5% 15%;
 }
+#profil .card {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 5% 0;
+  border: none;
+  border-radius: 0;
+}
 #info {
   display: block;
 }
@@ -12,8 +18,70 @@
 #profil .pic {
   height: 200px;
   width: 200px;
-  background-color: white;
+  background-color: rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+  border-radius: 100px;
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
+#profil .name,.desc,.info {
+  margin: 20px 0;
+}
+#profil h2,p {
+  text-transform: uppercase;
+}
+#edit input[type=text] {
+  padding: 5px 10px;
+  width: 60%;
+  height: 40px;
+  border: none;
+  background-color: inherit;
+  border-bottom: 1px solid black;
+}
+#edit input[type=submit] {
+  width: 40%;
+  margin: 20px auto;
+  padding: 10px 15px;
+  background-color: white;
+  border: none;
+  border-radius: 40px;
+  color: black;
+  text-transform: uppercase;
+  -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
+  -moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
+  box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
+  transition: .5s;
+}
+#edit input[type=submit]:hover {
+  transform: scale(1.1);
+}
+#profil button {
+  width: 40%;
+  margin: 20px auto;
+  padding: 10px 15px;
+  background-color: white;
+  border: none;
+  border-radius: 40px;
+  color: black;
+  text-transform: uppercase;
+  -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
+  -moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
+  box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
+  transition: .5s;
+}
+#profil button:hover {
+  transform: scale(1.1);
+}
+
+
+
+
+
+
+
+
+
 
 /* #profil {
   padding-top: 20px;

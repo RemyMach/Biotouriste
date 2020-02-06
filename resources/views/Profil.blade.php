@@ -5,12 +5,44 @@
   <div class="col-md-12 text-center">
     <div class="row" style="margin:0;">
       <div class="col-xs-12 col-sm-12 col-md-6 offset-md-3 text-center">
-        <div class="pic" style="background-image: url({{$profil['user']->user_img}});"></div>
-        <div id="info">
-
-        </div>
-        <div id="edit">
-
+        <div class="card">
+          <div class="pic" style="background-image: url(../img/img.jpg);"></div>
+          <div id="info">
+            <div class="name">
+              <h2>{{$profil['user']->user_name}} {{$profil['user']->user_surname}}</h2>
+            </div>
+            <div class="desc">
+              <p>{{$profil['active_status']->status_user_label}}</p>
+              <p>{{$profil['user']->email}}</p>
+            </div>
+            <div class="info">
+              <p>{{$profil['user']->user_postal_code}}</p>
+              <p>{{$profil['user']->user_phone}}</p>
+            </div>
+          </div>
+          <div id="edit">
+            <form action="user/update" method="post">
+                @csrf
+                <input type="text" name="user_name" value="{{$profil['user']->user_name}}">
+                <input type="text" name="user_surname" value="{{$profil['user']->user_surname}}">
+                <input type="text" name="email" value="{{$profil['user']->email}}">
+                @if ($profil['user']->user_postal_code == null)
+                <input type="text" name="user_postal_code" value="" placeholder="Postal code">
+                @else
+                <input type="text" name="user_postal_code" value="{{$profil['user']->user_postal_code}}">
+                @endif
+                @if ($profil['user']->user_phone == null)
+                <input type="text" name="user_phone" value="" placeholder="Phone">
+                @else
+                <input type="text" name="user_phone" value="{{$profil['user']->user_phone}}">
+                @endif
+              <input type="submit" name="" value="Save">
+            </form>
+          </div>
+          <div class="message">
+            <a href="{{ url('message') }}">My messages</a>
+          </div>
+          <button type="button" name="button" onclick="btnEdit()">Edit</button>
         </div>
       </div>
     </div>
@@ -31,45 +63,8 @@
       <div class="profil_container text-center">
         <div class="row" style="margin:0;">
           <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-            <div class="profil_pic" style="background-image: url({{$profil['user']->user_img}});"></div>
-            <div id="info">
-              <div class="profil_name">
-                <h2>{{$profil['user']->user_name}} {{$profil['user']->user_surname}}</h2>
-              </div>
-              <div class="profil_desc">
-                <p>{{$profil['active_status']->status_user_label}}</p>
-                <p>{{$profil['user']->email}}</p>
-              </div>
-              <div class="profil_info">
-                <p>{{$profil['user']->user_postal_code}}</p>
-                <p>{{$profil['user']->user_phone}}</p>
-              </div>
-            </div>
-            <div id="edit">
-              <form action="user/update" method="post">
-                  @csrf
-                <div class="profil_name">
-                  <input type="text" name="user_name" value="{{$profil['user']->user_name}}">
-                  <input type="text" name="user_surname" value="{{$profil['user']->user_surname}}">
-                </div>
-                <div class="profil_desc">
-                  <input type="text" name="email" value="{{$profil['user']->email}}">
-                </div>
-                <div class="profil_info">
-                  @if ($profil['user']->user_postal_code == null)
-                  <input type="text" name="user_postal_code" value="" placeholder="Postal code">
-                  @else
-                  <input type="text" name="user_postal_code" value="{{$profil['user']->user_postal_code}}">
-                  @endif
-                  @if ($profil['user']->user_phone == null)
-                  <input type="text" name="user_phone" value="" placeholder="Phone">
-                  @else
-                  <input type="text" name="user_phone" value="{{$profil['user']->user_phone}}">
-                  @endif
-                </div>
-                <input type="submit" name="" value="Save" style="width:15%;margin-right:0;">
-              </form>
-              </div>
+            <div class="profil_pic" style="background-image: url();"></div>
+
             <div class="profil_message">
               <a href="{{ url('message') }}">My messages</a>
             </div>

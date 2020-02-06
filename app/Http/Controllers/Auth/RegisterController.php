@@ -69,8 +69,8 @@ class RegisterController extends Controller
 
         session([
             'user'          => $response->user,
-            'allStatus'     => $response->user_current_status,
-            'active_status' => $response->user_status,
+            'allStatus'     => $response->user_status,
+            'active_status' => $response->user_current_status,
         ]);
 
         //que $this->registered($request1, $user) soit vrai ou false on redirect
