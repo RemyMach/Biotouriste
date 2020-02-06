@@ -36,8 +36,7 @@ class PaymentRepository extends BaseRepository
         return DB::table('payments')
             ->join('Users','payments.Users_idUser','=','Users.idUser')
             ->select('payments.Users_idUser')
-            ->where('payment_date','>',$limitDate)
-            ->where('payment_status','=','valid')
+            ->where('payment_status','=','succeeded')
             ->groupBy('Users.idUser')
             ->get();
     }

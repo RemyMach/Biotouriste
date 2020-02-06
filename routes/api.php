@@ -36,6 +36,9 @@ Route::post('user/reset','API\ResetPasswordController@reset');
 
 Route::post('user/updateProfile','API\UserController@updateProfile');
 
+Route::post('user/updatePassword','API\UserController@updatePassword');
+
+
 //comment
 Route::post('comment/store','API\CommentController@store');
 

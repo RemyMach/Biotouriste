@@ -40,7 +40,7 @@ Route::post('password/email','Auth\ForgotPasswordController@sendResetLinkEmail')
 
 Route::get('user/{token}','UserController@show');
 
-Route::get('user/update/{user}','UserController@updateProfile');
+Route::post('user/update','UserController@updateProfile');
 
 Route::get('admin/user/{user}','UserController@destroy');
 
@@ -110,11 +110,11 @@ Route::post('favori/destroy','FavoriController@destroy');
 
 //Messages
 
-Route::post('message/store','MessageController@store');
+Route::get('message/store','MessageController@store');
 
-Route::post('message/show/seller','MessageController@showMessagesOfASeller');
+Route::get('message/show/seller','MessageController@showMessagesOfASeller');
 
-Route::post('message/show/User','MessageController@showMessagesOfATouristController');
+Route::get('message/show/User','MessageController@showMessagesOfATouristController');
 
 //Report
 
@@ -156,10 +156,7 @@ Route::get('seller/testSelect','SellerController@testSelectSellersByCommentsNote
 
 /********************************************** Route pour front test **********************************************/
 
-
 Route::get('register','UserController@profil');
-
-
 
 Route::get('messages','MessageController@index');
 
@@ -189,3 +186,7 @@ Route::get('announce/historySeller','AnnounceController@selectHistorySeller');
 
 
 /********************************************** Fin Routes Announces **********************************************/
+
+//Admin
+
+Route::get('admin','AdminController@index');

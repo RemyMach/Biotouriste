@@ -1,6 +1,12 @@
 html {
   scroll-behavior: smooth;
 }
+input {
+  outline: none;
+}
+button {
+  outline: none;
+}
 body {
   height: auto;
   width: 100%;

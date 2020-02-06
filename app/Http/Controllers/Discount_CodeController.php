@@ -14,9 +14,9 @@ class Discount_CodeController extends Controller
     private $sessionUser;
 
     public function __construct(){
-        $this->middleware('admin')->only(
+        /*$this->middleware('admin')->only(
            'store'
-        );
+        );*/
 
         $this->middleware('SessionAuth')->only(
             'checkDiscountCodeIsValid','updateStatus','showDiscountCodeOfAUser'
@@ -58,7 +58,7 @@ class Discount_CodeController extends Controller
         $data['idUserDiscount_codeBeneficiary'] = 1;
         $data['minimum_amount'] = 20;
 
-        $UserIdAndSumPaymentAmount = PaymentRepository::filterPaymentDateAndPaymentAmountByUser('2019-11-24',30);
+        $UserIdAndSumPaymentAmount = PaymentRepository::filterPaymentDateAndPaymentAmountByUser('2019-09-24',30);
 
         dd($UserIdAndSumPaymentAmount);
         $data['idUser'] = config('api.api_admin_id');
