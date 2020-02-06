@@ -26,7 +26,7 @@ class ProfilController extends Controller
     public function index(Request $request)
     {
         $data = $request->session()->all();
-        dd($data);
+
         return view('profil')->with('profil', $data);
     }
 

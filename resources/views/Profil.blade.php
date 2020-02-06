@@ -4,8 +4,12 @@
 <div id="profil">
   <div class="col-md-12 text-center">
     <div class="row" style="margin:0;">
-      <div class="col-md-6 offset-md-3">
-        <div class="profil">
+      <div class="col-xs-12 col-sm-12 col-md-6 offset-md-3 text-center">
+        <div class="pic" style="background-image: url({{$profil['user']->user_img}});"></div>
+        <div id="info">
+
+        </div>
+        <div id="edit">
 
         </div>
       </div>
@@ -27,40 +31,40 @@
       <div class="profil_container text-center">
         <div class="row" style="margin:0;">
           <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-            <div class="profil_pic" style="background-image: url({{$profil['allStatus']->user_img}});"></div>
+            <div class="profil_pic" style="background-image: url({{$profil['user']->user_img}});"></div>
             <div id="info">
               <div class="profil_name">
-                <h2>{{$profil['allStatus']->user_name}} {{$profil['allStatus']->user_surname}}</h2>
+                <h2>{{$profil['user']->user_name}} {{$profil['user']->user_surname}}</h2>
               </div>
               <div class="profil_desc">
-                <p>{{$profil['allStatus']->status_user_label}}</p>
-                <p>{{$profil['allStatus']->email}}</p>
+                <p>{{$profil['active_status']->status_user_label}}</p>
+                <p>{{$profil['user']->email}}</p>
               </div>
               <div class="profil_info">
-                <p>{{$profil['allStatus']->user_postal_code}}</p>
-                <p>{{$profil['allStatus']->user_phone}}</p>
+                <p>{{$profil['user']->user_postal_code}}</p>
+                <p>{{$profil['user']->user_phone}}</p>
               </div>
             </div>
             <div id="edit">
               <form action="user/update" method="post">
                   @csrf
                 <div class="profil_name">
-                  <input type="text" name="user_name" value="{{$profil['allStatus']->user_name}}">
-                  <input type="text" name="user_surname" value="{{$profil['allStatus']->user_surname}}">
+                  <input type="text" name="user_name" value="{{$profil['user']->user_name}}">
+                  <input type="text" name="user_surname" value="{{$profil['user']->user_surname}}">
                 </div>
                 <div class="profil_desc">
-                  <input type="text" name="email" value="{{$profil['allStatus']->email}}">
+                  <input type="text" name="email" value="{{$profil['user']->email}}">
                 </div>
                 <div class="profil_info">
-                  @if ($profil['allStatus']->user_postal_code == null)
+                  @if ($profil['user']->user_postal_code == null)
                   <input type="text" name="user_postal_code" value="" placeholder="Postal code">
                   @else
-                  <input type="text" name="user_postal_code" value="{{$profil['allStatus']->user_postal_code}}">
+                  <input type="text" name="user_postal_code" value="{{$profil['user']->user_postal_code}}">
                   @endif
-                  @if ($profil['allStatus']->user_phone == null)
+                  @if ($profil['user']->user_phone == null)
                   <input type="text" name="user_phone" value="" placeholder="Phone">
                   @else
-                  <input type="text" name="user_phone" value="{{$profil['allStatus']->user_phone}}">
+                  <input type="text" name="user_phone" value="{{$profil['user']->user_phone}}">
                   @endif
                 </div>
                 <input type="submit" name="" value="Save" style="width:15%;margin-right:0;">

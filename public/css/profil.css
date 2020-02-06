@@ -1,4 +1,21 @@
 #profil {
+  height: auto;
+  width: 100%;
+  padding: 5% 15%;
+}
+#info {
+  display: block;
+}
+#edit {
+  display: none;
+}
+#profil .pic {
+  height: 200px;
+  width: 200px;
+  background-color: white;
+}
+
+/* #profil {
   padding-top: 20px;
   height: 100%;
   width: 100%;
@@ -195,4 +212,4 @@
 }
 #edit {
   display: none;
-}
+} */
