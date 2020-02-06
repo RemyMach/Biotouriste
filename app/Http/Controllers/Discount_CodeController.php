@@ -52,15 +52,14 @@ class Discount_CodeController extends Controller
     {
         //$data = request()->all();
         $data['discount_code_amount'] = 20;
+        $data['minimum_amount'] = 20;
         $data['expiration_time'] = '30days';
-        $data['periode_minimum_amount'] = '30days';
+        $data['periode_minimum_amount'] = '20days';
         $data['OneOrMultipleUser'] = 'multiple';
         $data['idUserDiscount_codeBeneficiary'] = 1;
-        $data['minimum_amount'] = 20;
 
         $UserIdAndSumPaymentAmount = PaymentRepository::filterPaymentDateAndPaymentAmountByUser('2019-09-24',30);
 
-        dd($UserIdAndSumPaymentAmount);
         $data['idUser'] = config('api.api_admin_id');
         $data['api_token'] = config('api.api_admin_token');
 
