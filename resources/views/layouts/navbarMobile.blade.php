@@ -21,7 +21,6 @@
 </div>
 <div id="overlay" class="overlay text-center menu" style="display:none;" id="sidebar">
   <a href="{{ url('announces') }}">Announces</a>
-  <a href="{{ url('product') }}">Products</a>
   <a href="{{ url('about') }}">About us</a>
   <a href="{{ url('contact') }}">Contact</a>
   <a href="{{ url('faq') }}">FAQ</a>

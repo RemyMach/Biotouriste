@@ -72,12 +72,11 @@
 .register_container input {
   margin-top: 20px;
 }
-input[type=submit] {
+/* input[type=submit] {
   text-transform: uppercase;
   color: white;
   text-decoration: none;
   font-family: 'helvetica', sans-serif;
-  font-weight: bold;
   font-size: 12px;
   letter-spacing: 1px;
   width: 10%;
@@ -90,7 +89,7 @@ input[type=submit] {
 }
 input[type=submit]:hover {
   background-color: black;
-}
+} */
 .register_container input[type=text] {
   padding: 5px 10px;
   width: 60%;
