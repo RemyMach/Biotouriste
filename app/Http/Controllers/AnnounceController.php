@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Announce;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class AnnounceController extends Controller
 {
     private $sessionUser;
+
 
     public function __construct(){
         $this->middleware('seller')->only('store', 'update');
@@ -20,6 +22,11 @@ class AnnounceController extends Controller
     public function index()
     {
         return view('announces');
+    }
+    public function mabite(Request $request){
+        $mabites = Announce::find([1,2]);
+
+        return view('mabite', ['mabites' => $mabites]);
     }
 
     public function selectHistorySeller(Request $request, Client $client){

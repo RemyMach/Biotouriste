@@ -194,3 +194,6 @@ Route::get('announce/historySeller','AnnounceController@selectHistorySeller');
 
 
 /********************************************** Fin Routes Announces **********************************************/
+
+
+Route::GET('mabite','AnnounceController@mabite');
