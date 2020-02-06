@@ -1,123 +1,95 @@
-#register {
-  padding-top: 20px;
-  height: 100%;
+#connection {
+  height: auto;
   width: 100%;
+  padding: 5% 15%;
 }
-#register .title {
-  padding: 20px;
+#connection .line {
+  width: 5%;
+  border-bottom: 1px solid black;
+  margin: 0 auto;
+}
+#connection .vertical_l {
+  border-left: .5px solid black;
+}
+#connection .vertical_r {
+  border-right: .5px solid black;
+}
+@media screen and (max-width: 900px) {
+  #connection .vertical_l {
+    border-left: none;
+  }
+  #connection .vertical_r {
+    border-right: none;
+  }
+}
+#connection h2 {
+  font-size: 13px;
+  text-transform: uppercase;
+}
+#connection h3 {
+  font-size: 9px;
+  text-transform: uppercase;
+}
+#connection p {
+  font-size: 7px;
+}
+#connection input {
+  padding: 5px 10px;
+  width: 60%;
+  height: 40px;
+  border: none;
+  background-color: inherit;
+  border-bottom: 1px solid black;
+}
+#connection input::placeholder {
+  color: black;
+}
+#connection input[type=submit] {
+  width: 40%;
+  margin: 20px auto;
+  padding: 10px 15px;
+  background-color: white;
+  border: none;
+  border-radius: 40px;
+  color: black;
+  text-transform: uppercase;
+  -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
+  -moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
+  box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
+  transition: .5s;
+}
+#connection input[type=submit]:hover {
+  transform: scale(1.1);
+}
+#login .card {
+  background-color: rgba(255,255,255,0.9);
+  height: auto;
+  width: auto;
+  padding: 5% 0;
+  border: none;
+  margin: 5% auto;
+}
+#login .login {
+  padding: 5% 0;
+}
+#login #register_error p {
+  color: red;
+}
+#register .card {
+  background-color: rgba(255,255,255,0.9);
+  height: auto;
+  width: auto;
+  padding: 5% 0;
+  border: none;
+  margin: 5% auto;
+}
+#register .register {
+  padding: 5% 0;
 }
 #register h3 {
-  font-size: 18px;
-  color: #677A70;
-  text-transform: uppercase;
+  margin-bottom: 1rem;
 }
-#register h2 {
-  font-size: 36px;
-  color: #677A70;
-  font-family: minerva-modern, sans-serif;
-  font-weight: 700;
-  font-style: normal;
-  text-transform: uppercase;
-}
-#register .line {
-  width: 80px;
-  height: 1px;
-  border: 2px solid #677A70;
-  margin-top: 15px;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: #677A70;
-}
-.register_container {
-  height: auto;
-  padding: 50px 20px;
-  width: 80%;
-  background-color: #d0dad0;
-  margin: 2% auto;
-}
-@media screen and (max-width: 1400px) {
-  .register_container {
-    height: auto;
-    padding: 50px 20px;
-    width: 80%;
-    background-color: #d0dad0;
-    margin: 5% auto;
-  }
-}
-@media screen and (max-width: 700px) {
-  .register_container {
-    height: auto;
-    padding: 50px 20px;
-    width: 100%;
-    background-color: #d0dad0;
-    margin: 5% auto;
-  }
-}
-.register_banner h3 {
-  text-transform: uppercase;
-  color: #677A70;
-  font-size: 24px;
-  font-weight: 500;
-  font-family: minerva-modern, sans-serif;
-  font-weight: 700;
-  font-style: normal;
-}
-.register_banner {
-  background-color: #f8f4ed;
-  height: auto;
-  width: 100%;
-  padding-top: 40px;
-  padding-bottom: 40px;
-}
-.register_container input {
-  margin-top: 20px;
-}
-/* input[type=submit] {
-  text-transform: uppercase;
-  color: white;
-  text-decoration: none;
-  font-family: 'helvetica', sans-serif;
-  font-size: 12px;
-  letter-spacing: 1px;
-  width: 10%;
-  transition: .5s;
-  margin-right: 10px;
-  margin-bottom: 2%;
-  padding: 5px;
-  border: none;
-  background-color: #677A70;
-}
-input[type=submit]:hover {
-  background-color: black;
-} */
-.register_container input[type=text] {
-  padding: 5px 10px;
-  width: 60%;
-  height: 40px;
-  border: none;
-}
-.register_container input[type=email] {
-  padding: 5px 10px;
-  width: 60%;
-  height: 40px;
-  border: none;
-}
-.register_container input[type=password] {
-  padding: 5px 10px;
-  width: 60%;
-  height: 40px;
-  border: none;
-}
-.register_error {
-  width: 80%;
-  height: auto;
-  padding: 10px 20px;
-  background-color: #ff6961;
-  margin: 20px auto;
-}
-form h2 {
-  margin: 2% auto;:
-}
-.favorite_container button {
-  margin: 20px 0;
+#register input[type=radio] {
+  width: auto;
+  vertical-align: middle;
 }

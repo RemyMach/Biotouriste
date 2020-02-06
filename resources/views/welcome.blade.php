@@ -254,7 +254,7 @@
 <div id="contact">
   <div class="row" style="margin:0;">
     <div class="col-xs-12 col-sm-12 col-md-10 offset-md-1 text-center">
-      <div id="content_5" data-aos="fade-right">
+      <div id="content_5" data-aos="fade-left">
         <h3>Contact Us</h3>
         <div class="line"></div>
         <div class="row" style="margin:0;">
@@ -264,10 +264,19 @@
             <p>HQ address line : 35 bowery street, New York NY 10012 </p>
           </div>
           <div class="col-xs-12 col-sm-12 col-md-6 text-center vertical_l">
-            <form class="" action="" method="post">
+            @if(isset($success))
+            <p>{{$success}}</p>
+            @elseif(isset($fail))
+            <p>There is an error please try later !</p>
+            @endif
+            @if(isset($session['user']))
+            <form class="" action="/contact/storeForAnAuthentifiedUser" method="post">              <p>lol</p>
+            @else
+            <form class="" action="/contact/storeForAnAnonymous" method="post">
+            @endif
               @csrf
-              <input type="email" name="contact_email" value="" placeholder="Email address *" required>
-              <input type="text" name="contact_subject" value="" placeholder="Subject *" required>
+              <input type="email" name="contact_email" value placeholder="Email address *" required>
+              <input type="text" name="contact_subject" value placeholder="Subject *" required>
               <textarea name="contact_content" rows="8" cols="80" required placeholder="Message *"></textarea>
               <input type="submit" name="" value="Send message">
             </form>

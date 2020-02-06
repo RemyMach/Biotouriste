@@ -26,6 +26,7 @@ class ProfilController extends Controller
     public function index(Request $request)
     {
         $data = $request->session()->all();
+        dd($data);
         return view('profil')->with('profil', $data);
     }
 
@@ -33,7 +34,7 @@ class ProfilController extends Controller
     {
         return view('Message');
     }
-    
+
     public function favorite(Request $request)
     {
         return view('Favorite');

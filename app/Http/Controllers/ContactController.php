@@ -63,9 +63,20 @@ class ContactController extends Controller
 
         $response = json_decode($query->getBody()->getContents());
 
-        dd($response);
+        $session = $request->session()->all();
 
-        return view('testContact',["response" => $response]);
+        if (isset($session['user'])) {
+          if ($response->status == '400') {
+            return view('welcome',["fail" => "There is an error please try later !"])->with('session', $session);
+          }
+          return view('welcome',["success" => "Your message has been sent !"])->with('session', $session);
+        }
+
+
+        if ($response->status == '400') {
+          return view('welcome',["fail" => "There is an error please try later !"]);
+        }
+        return view('welcome',["success" => "Your message has been sent !"]);
     }
 
     /**

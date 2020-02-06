@@ -2,53 +2,65 @@
 @include('layouts.navbarDesktop')
 @include('layouts.navbarMobile')
 <div id="profil">
-  <div class="row" style="margin:0;">
-    <div class="col-md-12" style="padding:0;">
-      <div class="profil_banner">
-        <div class="row" style="margin:0;">
-          <div class="col-md-12 text-center">
-            <h2>Profil</h2>
-            <div class="line"></div>
-          </div>
+  <div class="col-md-12 text-center">
+    <div class="row" style="margin:0;">
+      <div class="col-md-6 offset-md-3">
+        <div class="profil">
+
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<div id="profil">
+  <div class="row" style="margin:0;">
+    <div class="col-md-12" style="padding:0;">
       <div class="profil_container text-center">
         <div class="row" style="margin:0;">
           <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-            <div class="profil_pic" style="background-image: url({{$profil['active_status']->user_img}});"></div>
+            <div class="profil_pic" style="background-image: url({{$profil['allStatus']->user_img}});"></div>
             <div id="info">
               <div class="profil_name">
-                <h2>{{$profil['active_status']->user_name}} {{$profil['active_status']->user_surname}}</h2>
+                <h2>{{$profil['allStatus']->user_name}} {{$profil['allStatus']->user_surname}}</h2>
               </div>
               <div class="profil_desc">
-                <p>{{$profil['active_status']->status_user_label}}</p>
-                <p>{{$profil['active_status']->email}}</p>
+                <p>{{$profil['allStatus']->status_user_label}}</p>
+                <p>{{$profil['allStatus']->email}}</p>
               </div>
               <div class="profil_info">
-                <p>{{$profil['active_status']->user_postal_code}}</p>
-                <p>{{$profil['active_status']->user_phone}}</p>
+                <p>{{$profil['allStatus']->user_postal_code}}</p>
+                <p>{{$profil['allStatus']->user_phone}}</p>
               </div>
             </div>
             <div id="edit">
               <form action="user/update" method="post">
                   @csrf
                 <div class="profil_name">
-                  <input type="text" name="user_name" value="{{$profil['active_status']->user_name}}">
-                  <input type="text" name="user_surname" value="{{$profil['active_status']->user_surname}}">
+                  <input type="text" name="user_name" value="{{$profil['allStatus']->user_name}}">
+                  <input type="text" name="user_surname" value="{{$profil['allStatus']->user_surname}}">
                 </div>
                 <div class="profil_desc">
-                  <input type="text" name="email" value="{{$profil['active_status']->email}}">
+                  <input type="text" name="email" value="{{$profil['allStatus']->email}}">
                 </div>
                 <div class="profil_info">
-                  @if ($profil['active_status']->user_postal_code == null)
+                  @if ($profil['allStatus']->user_postal_code == null)
                   <input type="text" name="user_postal_code" value="" placeholder="Postal code">
                   @else
-                  <input type="text" name="user_postal_code" value="{{$profil['active_status']->user_postal_code}}">
+                  <input type="text" name="user_postal_code" value="{{$profil['allStatus']->user_postal_code}}">
                   @endif
-                  @if ($profil['active_status']->user_phone == null)
+                  @if ($profil['allStatus']->user_phone == null)
                   <input type="text" name="user_phone" value="" placeholder="Phone">
                   @else
-                  <input type="text" name="user_phone" value="{{$profil['active_status']->user_phone}}">
+                  <input type="text" name="user_phone" value="{{$profil['allStatus']->user_phone}}">
                   @endif
                 </div>
                 <input type="submit" name="" value="Save" style="width:15%;margin-right:0;">

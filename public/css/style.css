@@ -111,8 +111,7 @@ input:focus {
 }
 #about #content_2  .line {
   width: 5%;
-  height: 1px;
-  background-color: black;
+  border-bottom: 1px solid black;
   margin: 10px auto 2% auto;
 }
 #content_2 button {
@@ -146,8 +145,7 @@ input:focus {
 }
 #seller #content_3 .line {
   width: 7%;
-  height: 1px;
-  background-color: black;
+  border-bottom: 1px solid black;
   margin: 10px auto 2% auto;
 }
 #content_3 .card {
@@ -220,8 +218,7 @@ input:focus {
 }
 #article #content_4 .line {
   width: 7%;
-  height: 1px;
-  background-color: black;
+  border-bottom: 1px solid black;
   margin: 10px auto 2% auto;
 }
 #content_4 .article {
@@ -309,12 +306,11 @@ input:focus {
 }
 #contact #content_5  .line {
   width: 5%;
-  height: 1px;
-  background-color: black;
+  border-bottom: 1px solid black;
   margin: 10px auto 2% auto;
 }
 #contact .vertical_l {
-  border-left: .5px solid black
+  border-left: .5px solid black;
 }
 #contact .vertical_r {
   padding: 2% 5%; border-right: .5px solid black;

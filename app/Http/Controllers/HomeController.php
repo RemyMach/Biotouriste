@@ -15,7 +15,7 @@ class HomeController extends Controller
     public function __construct()
     {
 
-        $this->middleware('SessionAuth');
+        // $this->middleware('SessionAuth');
         //$this->middleware('apiAdmin');
     }
 
@@ -26,6 +26,14 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        return view('home');
+      $session = $request->session()->all();
+      if (isset($session['user'])) {
+        return view('welcome')->with('session', $session);
+
+      }
+
+      //récupération des 5 sellers les mieux noté
+      //récupération des 3 dernier articles
+        return view('welcome');
     }
 }

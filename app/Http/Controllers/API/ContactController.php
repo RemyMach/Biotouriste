@@ -50,7 +50,7 @@ class ContactController extends Controller
         $this->sendCreatedEmail($mail);
 
         return response()->json([
-            'message'   => 'Your Contact has been register',
+            'message'   => 'Your message has been sent !',
             'status'    => '200',
             'check'     => $this->contact,
         ]);
