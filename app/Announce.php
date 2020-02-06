@@ -39,7 +39,7 @@ class Announce extends Model
      * 
      * @var string
      */
-    protected $table = 'Announces';
+    protected $table = 'announces';
 
     /**
      * The primary key for the model.
