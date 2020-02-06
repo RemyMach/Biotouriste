@@ -41,13 +41,8 @@
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12">
           <div class="row" style="margin:0;">
-
             <div class="column">
-
               <div class="card top" data-aos="fade-down">
-
-              <div class="card bottom" data-aos="fade-up">
-
                 <div class="review">
                   <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                 </div>
@@ -70,7 +65,102 @@
                 </div>
               </div>
             </div>
-            
+            <div class="column">
+              <div class="card bottom" data-aos="fade-up">
+                <div class="review">
+                  <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <div class="pic"></div>
+                <div class="name">
+                  <h3>Jakob</h3>
+                </div>
+                <div class="desc">
+                  <p>"Farmer from father to son"</p>
+                </div>
+                <div class="pos">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <p>Wyoming</p>
+                </div>
+                <div class="comment">
+                  <p>Comments : (34)</p>
+                </div>
+                <div class="view">
+                  <button class="btn_top_vendor" type="button" name="button" onclick="">View Profil</button>
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div class="card top" data-aos="fade-down">
+                <div class="review">
+                  <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <div class="pic"></div>
+                <div class="name">
+                  <h3>Jakob</h3>
+                </div>
+                <div class="desc">
+                  <p>"Farmer from father to son"</p>
+                </div>
+                <div class="pos">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <p>Wyoming</p>
+                </div>
+                <div class="comment">
+                  <p>Comments : (34)</p>
+                </div>
+                <div class="view">
+                  <button class="btn_top_vendor" type="button" name="button" onclick="">View Profil</button>
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div class="card bottom" data-aos="fade-up">
+                <div class="review">
+                  <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <div class="pic"></div>
+                <div class="name">
+                  <h3>Jakob</h3>
+                </div>
+                <div class="desc">
+                  <p>"Farmer from father to son"</p>
+                </div>
+                <div class="pos">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <p>Wyoming</p>
+                </div>
+                <div class="comment">
+                  <p>Comments : (34)</p>
+                </div>
+                <div class="view">
+                  <button class="btn_top_vendor" type="button" name="button" onclick="">View Profil</button>
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div class="card top" data-aos="fade-down">
+                <div class="review">
+                  <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <div class="pic"></div>
+                <div class="name">
+                  <h3>Jakob</h3>
+                </div>
+                <div class="desc">
+                  <p>"Farmer from father to son"</p>
+                </div>
+                <div class="pos">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <p>Wyoming</p>
+                </div>
+                <div class="comment">
+                  <p>Comments : (34)</p>
+                </div>
+                <div class="view">
+                  <button class="btn_top_vendor" type="button" name="button" onclick="">View Profil</button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="cta">
