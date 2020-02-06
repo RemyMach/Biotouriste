@@ -187,3 +187,7 @@ Route::get('announce/teststore','AnnounceController@teststore');
 
 
 /********************************************** Fin Routes Announces **********************************************/
+
+//Admin
+
+Route::get('admin','AdminController@index');
