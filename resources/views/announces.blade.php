@@ -51,6 +51,7 @@ function findByCity(cityData){
 }
 
 function findCityData(){
+    console.log('https://secure.geonames.org/searchJSON?&'+$('#cityZone').val()+'maxRows=11username=biotouriste');
     $.ajax({
         url: 'https://secure.geonames.org/searchJSON?&',
         type: 'GET',
