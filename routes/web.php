@@ -128,7 +128,10 @@ Route::post('report/store','ReportController@store');
 Route::post('report/show/user','ReportController@showAllMyReports');
 
 // Cart
-Route::get('cart', 'CartController@index');
+Route::get('cart', 'CartController@show');
+
+//Route::get('cart','CartController@add');
+
 
 // Profil
 Route::get('profil', 'ProfilController@index');
@@ -179,7 +182,6 @@ Route::get('aide',function(){
 
 /********************************************** Route pour front test **********************************************/
 
-
 /********************************************** Route Anthony pour test stripe **********************************************/
 Route::post('addmoney/stripe', array('as' => 'addmoney.stripe','uses' => 'StripeController@stripe'));
 Route::get('pay', function () {
@@ -187,6 +189,9 @@ Route::get('pay', function () {
 });
 Route::get('payed', function () {
     return view('ValidatePayment');
+});
+Route::get('add', function(){
+    return view('test');
 });
 Route::get('allpay','StripeController@showpayments');
 /********************************************** Debut Routes Announces **********************************************/

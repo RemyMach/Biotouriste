@@ -2,6 +2,7 @@
 @include('layouts.navbarDesktop')
 @include('layouts.navbarMobile')
 @if(session()->has('user'))
+
 <div id="cart">
   <div class="row" style="margin:0;">
     <div class="col-md-12" style="padding:0;">
@@ -14,6 +15,7 @@
         </div>
       </div>
       <div class="cart_container text-center">
+        @foreach($announces as $announce)
         <div class="cart_item">
           <form class="" action="" method="post">
           <div class="row" style="margin:0;">
@@ -22,23 +24,16 @@
             </div>
             <div class="col-md-4 text-left">
               <div class="cart_name">
-                <h2></h2>
+                <h2>{{ $announce->announce_name }}</h2>
               </div>
               <div class="cart_desc">
-                <p></p>
+                <p>{{ $announce->announce_comment }}</p>
               </div>
               <div class="cart_price">
-                <p></p>
+                <p>{{ $announce->announce_price }}€</p>
               </div>
             </div>
             <div class="col-md-4">
-              <div class="cart_quantity">
-                <input type="text" name="" value="150">
-                <select class="" name="">
-                  <option value="gm">GM</option>
-                  <option value="kg">KG</option>
-                </select>
-              </div>
               <div class="cart_remove">
                 <button type="button" name="button">Remove</button>
               </div>
@@ -46,6 +41,7 @@
           </div>
         </form>
         </div>
+        @endforeach
         <div class="form-group">
           <button type="button" name="button" onclick="">Continue shopping</button>
           <input type="submit" name="" value="Proceed to payment">
