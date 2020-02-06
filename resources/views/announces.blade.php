@@ -52,7 +52,7 @@ function findByCity(cityData){
 
 function findCityData(){
     $.ajax({
-        url: 'http://api.geonames.org/searchJSON?&',
+        url: 'https://api.geonames.org/searchJSON?&',
         type: 'GET',
         data: {q : $('#cityZone').val(), maxRows: 1, username: 'biotouriste'},
         dataType: "json",
@@ -65,7 +65,7 @@ function findCityData(){
 
 function filterByCategorieProduct(categorie){
     $.ajax({
-        url: 'http://api.geonames.org/searchJSON?&',
+        url: 'https://api.geonames.org/searchJSON?&',
         type: 'GET',
         data: {q : $('#cityZone').val(), maxRows: 1, username: 'biotouriste'},
         dataType: "json",
