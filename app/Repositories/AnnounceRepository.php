@@ -35,11 +35,15 @@ class AnnounceRepository extends BaseRepository
                 ->where('announce_is_available', '=', true)
                 ->get();
         } else {
-            return DB::table('announces')
+            $qb = DB::table('announces')
                 ->select('announces.*')
-                ->join('products', 'announces.products_idproduct', '=', 'products.idproduct')
-                ->where('product_categories_idproduct_category', $idCategorie)
-                ->where('announce_lat', '>=', $latmin)
+                ->join('products', 'announces.products_idproduct', '=', 'products.idproduct');
+                if($idCategorie == 0){
+                    $qb->where('product_categories_idproduct_category', [1,2,3,4,5,6]);
+                }else{
+                    $qb->where('product_categories_idproduct_category', $idCategorie);
+                }
+                return $qb->where('announce_lat', '>=', $latmin)
                 ->where('announce_lat', '<=', $latmax)
                 ->where('announce_lng', '>=', $lngmin)
                 ->where('announce_lng', '<=', $lngmax)

@@ -181,9 +181,13 @@ Route::post('filterByCategorie','AnnounceController@filterByCategorie');
 
 Route::post('filterByCity','AnnounceController@filterByCity');
 
-Route::post('announce/store','AnnounceController@store');
+Route::get('announce/store','AnnounceController@store');
 
-Route::get('announce/teststore','AnnounceController@teststore');
+Route::get('announce/delete','AnnounceController@delete');
+
+Route::get('announce/update','AnnounceController@update');
+
+Route::get('announce/historySeller','AnnounceController@selectHistorySeller');
 
 
 /********************************************** Fin Routes Announces **********************************************/

@@ -130,6 +130,12 @@ Route::post('filterByCity','API\AnnounceController@selectByCity');
 
 Route::post('announce/store','API\AnnounceController@store');
 
+Route::post('announce/delete','API\AnnounceController@delete');
+
+Route::post('announce/update','API\AnnounceController@update');
+
+Route::post('announce/historySeller','API\AnnounceController@selectHistorySeller');
+
 
 
 /*Route::get('/users', function () {

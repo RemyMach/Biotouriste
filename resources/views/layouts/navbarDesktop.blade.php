@@ -1,6 +1,6 @@
-<div id="navbar-desktop" class="navigation">
+<div id="navbar_desktop">
   <div class="title col-md-12 text-center">
-    <a href="{{ url('/') }}"><h1>Healthy's</h1></a>
+    <a href="{{ url('/') }}"><img src="../img/nav/logo.png" alt="Healthy's"></a>
   </div>
   <nav>
     <div class="row" style="margin: 0;">
@@ -8,7 +8,7 @@
       <div class="col-md-6 text-center menu">
         <a href="{{ url('announces') }}">Announces</a>
         <a href="{{ url('product') }}">Products</a>
-        <a href="{{ url('about') }}">About us</a>
+        <a href="{{ url('#about') }}">About us</a>
         <a href="{{ url('contact') }}">Contact</a>
         <a href="{{ url('faq') }}">FAQ</a>
       </div>

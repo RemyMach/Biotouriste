@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -30,6 +31,8 @@ class UserController extends Controller
             'destroy','index'
         );
     }
+
+    private $user;
 
     public function index(ApiTokenController $apiTokenController)
     {
@@ -100,7 +103,7 @@ class UserController extends Controller
 
         $user = User::find($this->request->input('idUser'));
 
-        
+
         $user->update($data);
 
         $userUpdate = User::find($this->request->input('idUser'));
@@ -117,7 +120,7 @@ class UserController extends Controller
     public function updatePassword(Request $request)
     {
 
-        $this->request = $request;
+        $data = request()->all();
 
         $validator = Validator::make($this->request->all(), [
             'password' => ['required', 'string', 'min:8', 'confirmed'],
