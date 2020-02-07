@@ -37,7 +37,7 @@ class AnnounceRepository extends BaseRepository
         } else {
             $qb = DB::table('Announces')
                 ->select('Announces.*')
-                ->join('products', 'announces.products_idproduct', '=', 'products.idproduct');
+                ->join('Products', 'announces.products_idproduct', '=', 'products.idproduct');
                 if($idCategorie == 0){
                     $qb->where('product_categories_idproduct_category', [1,2,3,4,5,6]);
                 }else{
