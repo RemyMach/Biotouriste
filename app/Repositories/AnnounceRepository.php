@@ -26,7 +26,7 @@ class AnnounceRepository extends BaseRepository
         $lngmax = (float)$lng +1;
         $lngmin = (float)$lng -1;
         if ($idCategorie == 0){
-            return DB::table('announces')
+            return DB::table('Announces')
                 ->select('announces.*')
                 ->where('announce_lat', '>=', $latmin)
                 ->where('announce_lat', '<=', $latmax)
@@ -35,8 +35,8 @@ class AnnounceRepository extends BaseRepository
                 ->where('announce_is_available', '=', true)
                 ->get();
         } else {
-            $qb = DB::table('announces')
-                ->select('announces.*')
+            $qb = DB::table('Announces')
+                ->select('Announces.*')
                 ->join('products', 'announces.products_idproduct', '=', 'products.idproduct');
                 if($idCategorie == 0){
                     $qb->where('product_categories_idproduct_category', [1,2,3,4,5,6]);
@@ -54,7 +54,7 @@ class AnnounceRepository extends BaseRepository
 
     public static function AnnounceThatIsAvailable($idAnnounce){
 
-        return DB::table('announces')
+        return DB::table('Announces')
             ->where('announce_is_available','=',true)
             ->where('idAnnounce','=',$idAnnounce)
             ->get();
@@ -62,7 +62,7 @@ class AnnounceRepository extends BaseRepository
 
     public static function determineIfUserOwnTheAnnounce($idAnnounce, $idUser){
 
-        return DB::table('announces')
+        return DB::table('Announces')
             ->where('idAnnounce','=',$idAnnounce)
             ->where('Users_idUser','=',$idUser)
             ->get();
