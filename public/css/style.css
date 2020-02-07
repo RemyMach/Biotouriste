@@ -55,7 +55,7 @@ input:focus {
 }
 /********** CTA **********/
 #cta #content_1 {
-  padding: 25% 0;
+  padding: 25% 0 15% 0;
   height: auto;
 }
 #content_1 h3 {
@@ -91,7 +91,7 @@ input:focus {
 
 /********** ABOUT **********/
 #about {
-  padding: 5% 0 15% 0;
+  padding: 5% 0 10% 0;
   height: 100%;
   width: 100%;
 }
@@ -139,7 +139,7 @@ input:focus {
 }
 /********** SELLER **********/
 #seller {
-  padding: 0 0 15% 0;
+  padding: 0 0 10% 0;
 }
 #seller #content_3 h3 {
   text-transform: uppercase;
@@ -292,7 +292,7 @@ input:focus {
 }
 /********** CONTACT **********/
 #contact {
-  padding: 5% 0 15% 0;
+  padding: 5% 0 10% 0;
   height: 100%;
   width: 100%;
 }
