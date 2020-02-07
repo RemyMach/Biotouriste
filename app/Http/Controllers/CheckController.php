@@ -30,8 +30,7 @@ class CheckController extends Controller
     {
         //
         $user = User::find(1);
-        dd($user->announces);
-    }
+@    }
 
     /**
      * Show the form for creating a new resource.

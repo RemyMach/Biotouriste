@@ -11,13 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 //Auth::routes();
-
-Route::get('home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index');
 
 Route::get('users','UserController@index')->name('users');
 
@@ -27,6 +22,7 @@ Route::get('testLogin','Auth\LoginController@testLogin');
 Route::get('login','Auth\LoginController@showLoginForm')->name('login');
 
 Route::post('logout','Auth\LoginController@logout')->name('logout');
+Route::get('logout','Auth\LoginController@logout')->name('logout');
 
 Route::get('register','Auth\RegisterController@showRegistrationForm')->name('register');
 
@@ -45,7 +41,7 @@ Route::post('password/email','Auth\ForgotPasswordController@sendResetLinkEmail')
 
 Route::get('user/{token}','UserController@show');
 
-Route::get('user/update/{user}','UserController@updateProfile');
+Route::post('user/update','UserController@updateProfile');
 
 Route::get('admin/user/{user}','UserController@destroy');
 
@@ -105,7 +101,9 @@ Route::post('discountCode/show','Discount_CodeController@showDiscountCodeOfAUser
 
 //Favoris
 
-Route::post('favori/show','FavoriController@showFavorisOfAUser');
+Route::get('favori/show','FavoriController@showFavorisOfAUser');
+
+Route::get('favori/testShow','FavoriController@testShowFavorisOfAUser');
 
 Route::post('favori/store','FavoriController@store');
 
@@ -113,11 +111,11 @@ Route::post('favori/destroy','FavoriController@destroy');
 
 //Messages
 
-Route::post('message/store','MessageController@store');
+Route::get('message/store','MessageController@store');
 
-Route::post('message/show/seller','MessageController@showMessagesOfASeller');
+Route::get('message/show/seller','MessageController@showMessagesOfASeller');
 
-Route::post('message/show/User','MessageController@showMessagesOfATouristController');
+Route::get('message/show/User','MessageController@showMessagesOfATouristController');
 
 //Report
 
@@ -159,10 +157,7 @@ Route::get('seller/testSelect','SellerController@testSelectSellersByCommentsNote
 
 /********************************************** Route pour front test **********************************************/
 
-
-Route::get('test/register1234','UserController@profil');
-
-
+Route::get('register','UserController@profil');
 
 Route::get('messages','MessageController@index');
 
@@ -192,3 +187,7 @@ Route::get('announce/historySeller','AnnounceController@selectHistorySeller');
 
 
 /********************************************** Fin Routes Announces **********************************************/
+
+//Admin
+
+Route::get('admin','AdminController@index');

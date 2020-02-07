@@ -21,31 +21,21 @@ class ForgotPasswordController extends Controller
         $this->middleware('apiMergeJsonInRequest');
     }
 
-    public function sendResetLinkEmail(Mail $mail,ApiTokenController $apiTokenController)
+    public function sendResetLinkEmail(Mail $mail,Request $request)
     {
 
-        //on vérifie que c'est bien l'admin user qui demande l'envoi
-        $requestParameters = $apiTokenController->verifyAdminCredentials();
-
-        if(!$requestParameters)
-        {
-            return response()->json([
-                'message'   => 'Your credentials are not valid',
-                'status'    => '400',
-            ]);
-        }
+        $data = $request->all();
         //on valide l'email
-        $email = request('email');
-        $validator = $this->validateEmail(['email' => $email]);
+        $validator = $this->validateEmail(['email' => $data['email']]);
 
         if($validator->original['status'] == '400') {
             return $validator;
         }
 
-        $idAdmin = $requestParameters['idUser'];
-        $admin_api_token = $requestParameters['api_token'];
+        $idAdmin = $data['idUser'];
+        $admin_api_token = $data['api_token'];
 
-        $user = $this->verifyEmailExist($email);
+        $user = $this->verifyEmailExist($data['email']);
 
         if(!$user){
             return response()->json([

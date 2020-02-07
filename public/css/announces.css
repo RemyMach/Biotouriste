@@ -1,3 +1,60 @@
+#announces {
+  height: auto;
+  width: 100%;
+  padding: 5% 5%;
+  height: 200vh;
+}
+#announces .card {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 5% 0;
+  border: none;
+  border-radius: 0;
+  margin: 5% auto;
+}
+#announces .p {
+  padding: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* #announces .left_container {
+  background-color: black;
+  height: 200px;
+  width: 700px;
+  transition: .5s;
+}
+#announces .left_container:hover {
+  -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.3);
+  -moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.3);
+  box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.3);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .divAnnounces{
     overflow-y: scroll;
     height: 650px;
@@ -11,7 +68,202 @@
     border: 2px solid #1b1e21;
     border-radius: 30%;
 }
-
-#mapid{
-    height: 600px;
+#announces #content_1 {
+  height: 800px;
 }
+#content_1 #mapid{
+    height: 600px;
+    width: 100%;
+}
+#announces {
+  height: 100%;
+}
+#announces .title {
+  padding: 20px;
+}
+#announces h3 {
+  font-size: 18px;
+  color: #677A70;
+  text-transform: uppercase;
+}
+#announces h2 {
+  font-size: 36px;
+  color: #677A70;
+  font-family: minerva-modern, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  text-transform: uppercase;
+}
+#announces .line {
+  width: 80px;
+  height: 1px;
+  border: 2px solid #677A70;
+  margin-top: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #677A70;
+}
+.announces_container {
+  height: auto;
+  padding: 50px 20px;
+  width: 50%;
+  background-color: #d0dad0;
+  margin: 5% auto;
+}
+@media screen and (max-width: 1400px) {
+  .announces_container {
+    height: auto;
+    padding: 50px 20px;
+    width: 90%;
+    background-color: #d0dad0;
+    margin: 5% auto;
+  }
+}
+@media screen and (max-width: 765px) {
+  .announces_item {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .announces_pic {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .announces_name h2 {
+    text-align: center;
+  }
+  .announces_desc p {
+    text-align: center;
+  }
+  .announces_price p {
+    text-align: center;
+  }
+  .announces_quantity input[type=text] {
+    width: 40%;
+  }
+  .announces_quantity p{
+    display: inline-block;
+  }
+  .announces_remove button[type=button]{
+    height: 20px;
+    font-size: 10px;
+    font-weight: normal;
+    padding: 0;
+    margin-top: 30px;
+  }
+  .announces_quantity select {
+    height: 40px;
+    border: none;
+    background-color: white;
+  }
+}
+.announces_banner h3 {
+  text-transform: uppercase;
+  color: #677A70;
+  font-size: 24px;
+  font-weight: 500;
+  font-family: minerva-modern, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+.announces_banner {
+  background-color: #f8f4ed;
+  height: auto;
+  width: 100%;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+.announces_container input {
+  width: 60%;
+  height: 40px;
+  border: none;
+  margin-top: 20px;
+}
+.announces_container input[type=text] {
+  padding: 5px 10px;
+}
+.announces_container input[type=submit] {
+  text-transform: uppercase;
+  color: white;
+  text-decoration: none;
+  font-family: 'helvetica', sans-serif;
+  font-weight: bold;
+  font-size: 12px;
+  letter-spacing: 1px;
+  width: 40%;
+  transition: .5s;
+  margin-right: 10px;
+  padding: 5px;
+  border: none;
+  background-color: #677A70;
+}
+.announces_container input[type=submit]:hover {
+  background-color: black;
+}
+.announces_container button {
+  text-transform: uppercase;
+  color: white;
+  height: 40px;
+  text-decoration: none;
+  font-family: 'helvetica', sans-serif;
+  font-weight: bold;
+  font-size: 12px;
+  letter-spacing: 1px;
+  width: 40%;
+  transition: .5s;
+  margin-right: 10px;
+  padding: 5px;
+  border: none;
+  background-color: #677A70;
+}
+.announces_container button:hover {
+  background-color: black;
+}
+.announces_item {
+  background-color: #F2F2F2;
+  height: auto;
+  width: auto;
+  padding: 10px;
+  margin-bottom: 20px;
+  transition: .5s;
+}
+.announces_item:hover {
+  transform: scale(.98);
+}
+
+.announces_pic {
+  height: 130px;
+  width: 130px;
+  border-radius: 75px;
+  background-color: white;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.announces_desc p {
+  font-size: 10px;
+  font-weight: 500;
+}
+.announces_price p {
+  font-size: 16px;
+  font-weight: bold;
+  color: #677A70;
+}
+.announces_quantity input[type=text] {
+  width: 40%;
+}
+.announces_quantity p{
+  display: inline-block;
+}
+.announces_remove button[type=button]{
+  height: 20px;
+  font-size: 10px;
+  font-weight: normal;
+  padding: 0;
+  margin-top: 30px;
+}
+.announces_quantity select {
+  height: 40px;
+  border: none;
+  background-color: white;
+} */
