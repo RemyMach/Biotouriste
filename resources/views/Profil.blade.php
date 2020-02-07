@@ -88,6 +88,7 @@
                 </div>
               </div>
             </div>
+            <!-- fin  -->
           </div>
         </div>
 {{--        fin--}}
@@ -102,10 +103,18 @@
   </div>
 </div>
 <script type="text/javascript">
-  const x = document.getElementById("edit");
-  const y = document.getElementById("info");
-    function btnEdit() {
-      x.style.display = (x.style.display === 'block') ? 'none':'block';
-    }
+const x = document.getElementById("edit");
+const y = document.getElementById("info");
+function btnEdit() {
+  x.style.display = (x.style.display === 'block') ? 'none':'block';
+}
+
+const orderTop = document.getElementById('orderTop');
+const orderBottom = document.getElementById('orderBottom');
+orderTop.addEventListener('click',function(){
+  orderBottom.style.display = (orderBottom.style.display === 'block') ? 'none':'block';
+});
+
+
 </script>
 @include('layouts.footer')
