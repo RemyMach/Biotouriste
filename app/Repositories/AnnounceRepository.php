@@ -27,7 +27,7 @@ class AnnounceRepository extends BaseRepository
         $lngmin = (float)$lng -1;
         if ($idCategorie == 0){
             return DB::table('Announces')
-                ->select('announces.*')
+                ->select('Announces.*')
                 ->where('announce_lat', '>=', $latmin)
                 ->where('announce_lat', '<=', $latmax)
                 ->where('announce_lng', '>=', $lngmin)
