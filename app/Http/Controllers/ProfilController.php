@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Payment;
+use App\Repositories\PaymentRepository;
 use Illuminate\Http\Request;
 
 class ProfilController extends Controller
@@ -26,8 +28,12 @@ class ProfilController extends Controller
     public function index(Request $request)
     {
         $data = $request->session()->all();
-
-        return view('profil')->with('profil', $data);
+        $user = $request->session()->get('user');
+        $payments = PaymentRepository::findPaymentsForProfil($user->idUser);
+        return view('profil', [
+            'payments' => $payments,
+            'data' =>$data,
+        ]);
     }
 
     public function message(Request $request)

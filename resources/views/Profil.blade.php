@@ -9,35 +9,35 @@
           <div class="pic" style="background-image: url(../img/img.jpg);"></div>
           <div id="info">
             <div class="name">
-              <h2>{{$profil['user']->user_name}} {{$profil['user']->user_surname}}</h2>
+{{--              <h2>{{$profil['user']->user_name}} {{$profil['user']->user_surname}}</h2>--}}
             </div>
             <div class="desc">
-              <p>{{$profil['active_status']->status_user_label}}</p>
-              <p>{{$profil['user']->email}}</p>
+{{--              <p>{{$profil['active_status']->status_user_label}}</p>--}}
+{{--              <p>{{$profil['user']->email}}</p>--}}
             </div>
             <div class="info">
-              <p>{{$profil['user']->user_postal_code}}</p>
-              <p>{{$profil['user']->user_phone}}</p>
+{{--              <p>{{$profil['user']->user_postal_code}}</p>--}}
+{{--              <p>{{$profil['user']->user_phone}}</p>--}}
             </div>
           </div>
           <div id="edit">
-            <form action="user/update" method="post">
-                @csrf
-                <input type="text" name="user_name" value="{{$profil['user']->user_name}}">
-                <input type="text" name="user_surname" value="{{$profil['user']->user_surname}}">
-                <input type="text" name="email" value="{{$profil['user']->email}}">
-                @if ($profil['user']->user_postal_code == null)
-                <input type="text" name="user_postal_code" value="" placeholder="Postal code">
-                @else
-                <input type="text" name="user_postal_code" value="{{$profil['user']->user_postal_code}}">
-                @endif
-                @if ($profil['user']->user_phone == null)
-                <input type="text" name="user_phone" value="" placeholder="Phone">
-                @else
-                <input type="text" name="user_phone" value="{{$profil['user']->user_phone}}">
-                @endif
-              <input type="submit" name="" value="Save">
-            </form>
+{{--            <form action="user/update" method="post">--}}
+{{--                @csrf--}}
+{{--                <input type="text" name="user_name" value="{{$profil['user']->user_name}}">--}}
+{{--                <input type="text" name="user_surname" value="{{$profil['user']->user_surname}}">--}}
+{{--                <input type="text" name="email" value="{{$profil['user']->email}}">--}}
+{{--                @if ($profil['user']->user_postal_code == null)--}}
+{{--                <input type="text" name="user_postal_code" value="" placeholder="Postal code">--}}
+{{--                @else--}}
+{{--                <input type="text" name="user_postal_code" value="{{$profil['user']->user_postal_code}}">--}}
+{{--                @endif--}}
+{{--                @if ($profil['user']->user_phone == null)--}}
+{{--                <input type="text" name="user_phone" value="" placeholder="Phone">--}}
+{{--                @else--}}
+{{--                <input type="text" name="user_phone" value="{{$profil['user']->user_phone}}">--}}
+{{--                @endif--}}
+{{--              <input type="submit" name="" value="Save">--}}
+{{--            </form>--}}
           </div>
           <div class="message">
             <a href="{{ url('message') }}">My messages</a>
@@ -56,13 +56,15 @@
             </form>
           </div>
         </div>
+{{--        debut--}}
         <div class="card">
           <div id="order">
             <h3>Order history</h3>
+            @foreach($payments as $payment)
             <div class="order">
               <div class="row" style="margin:0;">
                 <div class="col-md-4 text-left">
-                  <p>Order 0001</p>
+                  <p>{{ $payment->announce_name }}</p>
                 </div>
                 <div class="col-md-4 text-center">
                   <p>Tomatoes</p>
@@ -72,6 +74,7 @@
                 </div>
               </div>
             </div>
+            @endforeach
             <div class="order">
               <div class="row" style="margin:0;">
                 <div class="col-md-4 text-left">
@@ -87,6 +90,7 @@
             </div>
           </div>
         </div>
+{{--        fin--}}
         <form action="logout" method="post">
           @csrf
           <div class="form-group text-center">
