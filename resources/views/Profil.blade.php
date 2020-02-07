@@ -45,6 +45,13 @@
           <button type="button" name="button" onclick="btnEdit()">Edit</button>
         </div>
         <div class="card">
+          <div id="status">
+            <h3>Change status</h3>
+            <p>Actual status : {{$profil['active_status']->status_user_label}}</p>
+            <button type="button" name="button">Switch to seller</button>
+          </div>
+        </div>
+        <div class="card">
           <div id="password">
             <h3>Change password</h3>
             <p><span style="color:red;">*</span><i>Required field</i></p>

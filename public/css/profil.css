@@ -78,6 +78,10 @@
   text-transform: uppercase;
   font-size: 13px;
 }
+#status h3 {
+  text-transform: uppercase;
+  font-size: 13px;
+}
 #password input[type=password] {
   padding: 5px 10px;
   width: 60%;
