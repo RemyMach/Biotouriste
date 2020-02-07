@@ -140,7 +140,6 @@ function getLocation() {
 }
 
 function showPosition(position) {
-    // cityData = {cityData['lat']: position.coords.latitude, cityData['lng']};
     var cityData = { 'lat': position.coords.latitude, 'lng': position.coords.longitude};
 
     $.ajax({
@@ -150,6 +149,7 @@ function showPosition(position) {
         dataType: "json",
         success: function(result){
             mymap.removeLayer(this);
+            mymap.setView([result.geonames[0].lat, result.geonames[0].lng], 10, { animation: true });
             remplirDivAnnonce(result.announces);
         }
     });
