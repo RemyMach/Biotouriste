@@ -128,7 +128,6 @@ function showAnnounce(announce) {
     $('#announcePrice').html(announce['announce_price']+'$');
     $('#idAnnounce').val(announce['idAnnounce']);
 
-    // $('#titlePrice').html('Modification du tarif n°' + announce['announce_name']);
     jQuery('#modal-announce').modal('show');
 }
 
@@ -143,8 +142,16 @@ function getLocation() {
 }
 
 function showPosition(position) {
-    x.innerHTML = "Latitude: " + position.coords.latitude +
-        "<br>Longitude: " + position.coords.longitude;
+    $.ajax({
+        url: '/filterByCity',
+        type: 'POST',
+        data: {lat: position.coords.latitude, long: position.coords.longitude,  _token: '{{csrf_token()}}'},
+        dataType: "json",
+        success: function(result){
+            mymap.removeLayer(this);
+            remplirDivAnnonce(result.announces);
+        }
+    });
 }
 
 function showError(error) {
