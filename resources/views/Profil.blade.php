@@ -74,10 +74,10 @@
                   <p>{{ $payment->announce_name }}</p>
                 </div>
                 <div class="col-md-4 text-center">
-                  <p>Tomatoes</p>
+                  <p>{{ $payment->product_name }}</p>
                 </div>
                 <div class="col-md-4 text-right">
-                  <p>$15</p>
+                  <p>{{ $payment->payment_amount }}  {{ $payment->payment_currency }}</p>
                 </div>
               </div>
             </div>
