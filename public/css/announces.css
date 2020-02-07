@@ -1,4 +1,36 @@
-#announces .left_container {
+#announces {
+  height: auto;
+  width: 100%;
+  padding: 5% 5%;
+  height: 200vh;
+}
+#announces .card {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 5% 0;
+  border: none;
+  border-radius: 0;
+  margin: 5% auto;
+}
+#announces .p {
+  padding: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* #announces .left_container {
   background-color: black;
   height: 200px;
   width: 700px;
@@ -234,4 +266,4 @@
   height: 40px;
   border: none;
   background-color: white;
-}
+} */
