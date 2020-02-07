@@ -32,7 +32,7 @@ class ProfilController extends Controller
         $payments = PaymentRepository::findPaymentsForProfil($user->idUser);
         return view('profil', [
             'payments' => $payments,
-            'data' =>$data,
+            'profil' =>$data,
         ]);
     }
 

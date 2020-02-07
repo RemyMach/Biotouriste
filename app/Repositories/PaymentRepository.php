@@ -24,6 +24,7 @@ class PaymentRepository extends BaseRepository
     public static function findPaymentsForProfil($idUser){
 
         return DB::table('Payments')
+            ->select('Payments.*', 'Users.*', 'Announces.*', 'Products.*', DB::raw('SUM(Payments.payment_amount) as totalAmount'))
             ->where('Payments.Users_idUser','=',$idUser)
             ->join('Users','Users.idUser','=','Payments.Users_idUser')
             ->join('Announces','Announces.idAnnounce','=','Payments.Announces_idAnnounce')
