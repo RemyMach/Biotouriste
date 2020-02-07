@@ -14,7 +14,7 @@ body {
   padding: 0px;
   /* background-color: #F2F2F2; */
   background-image: url(../img/background.jpg);
-  background-position: center;
+  background-position: bottom;
   background-size: cover;
   background-repeat: no-repeat;
   font-family: 'Montserrat', sans-serif;
@@ -203,7 +203,7 @@ input:focus {
 #seller #content_3 .cta {
   padding: 5% 0;
 }
-@media screen and (max-width: 1350px) {
+@media screen and (max-width: 1550px) {
   #content_3 .card {
     width: 100%;
     height: auto;

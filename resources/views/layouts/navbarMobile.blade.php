@@ -10,11 +10,15 @@
       <div class="col-4 text-center menu">
         <button type="button" name="button" onclick="window.location.href='{{ url('favorite') }}'"><i class="fas fa-heart"></i></button>
         @if(Session::has('user'))
+          <button type="button" name="button" onclick="window.location.href='{{ url('favorite') }}'"><i class="fas fa-heart"></i></button>
           <button type="button" name="button" onclick="window.location.href='{{ url('profil') }}'"><i class="fas fa-user"></i></button>
-        @else
-          <button type="button" name="button" onclick="window.location.href='{{ url('register') }}'"><i class="fas fa-user-plus"></i></button>
-        @endif
           <button type="button" name="button" onclick="window.location.href='{{ url('cart') }}'"><i class="fas fa-shopping-bag"></i></button>
+          <button type="submit" name="button" onclick="window.location.href='{{ url('logout') }}'"><i class="fas fa-sign-out-alt"></i></button>
+        @else
+          <button type="button" name="button" onclick="window.location.href='{{ url('favorite') }}'"><i class="fas fa-heart"></i></button>
+          <button type="button" name="button" onclick="window.location.href='{{ url('register') }}'"><i class="fas fa-user-plus"></i></button>
+          <button type="button" name="button" onclick="window.location.href='{{ url('cart') }}'"><i class="fas fa-shopping-bag"></i></button>
+        @endif
       </div>
     </div>
   </nav>
