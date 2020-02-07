@@ -5,7 +5,6 @@
             <div class="col-md-12">
                 <input type="text" name="cityZone" id="cityZone" value="paris"><button onclick="getLocation()">try it<i class="fas fa-search-location"></i></button>
                 <button type="submit" onclick="findCityData()">Find</button>
-                <p id="demo">ef</p>
             </div>
             <div class="col-md-12 navbar navbar-expand-lg">
                   <ul class="navbar-nav inline categories">
@@ -38,6 +37,7 @@ $(function() {
 });
 
 function findByCity(cityData){
+    console.log(cityData);
     $.ajax({
         url: '/filterByCity',
         type: 'POST',
@@ -131,8 +131,6 @@ function showAnnounce(announce) {
     jQuery('#modal-announce').modal('show');
 }
 
-var x = document.getElementById("demo");
-
 function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition, showError);
@@ -142,10 +140,13 @@ function getLocation() {
 }
 
 function showPosition(position) {
+    // cityData = {cityData['lat']: position.coords.latitude, cityData['lng']};
+    var cityData = { 'lat': position.coords.latitude, 'lng': position.coords.longitude};
+
     $.ajax({
         url: '/filterByCity',
         type: 'POST',
-        data: {lat: position.coords.latitude, lng: position.coords.longitude,  _token: '{{csrf_token()}}'},
+        data: {cityData: cityData,  _token: '{{csrf_token()}}'},
         dataType: "json",
         success: function(result){
             mymap.removeLayer(this);
