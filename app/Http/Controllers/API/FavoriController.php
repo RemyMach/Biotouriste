@@ -26,6 +26,7 @@ class FavoriController extends Controller
 
         $this->request = $request;
 
+
         $favoris = FavoriRepository::allFavorisAnnounceOfAUser($this->request->input('idUser'));
         @$firstFavori = $favoris[0];
 

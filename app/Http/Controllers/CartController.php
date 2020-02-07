@@ -13,7 +13,6 @@ class CartController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->only('index');
 
     }
 
@@ -24,6 +23,6 @@ class CartController extends Controller
      */
     public function index(Request $request)
     {
-        return view('Cart');
+        return view('cart');
     }
 }

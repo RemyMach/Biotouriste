@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Payment;
+use App\Repositories\PaymentRepository;
 use Illuminate\Http\Request;
 
 class ProfilController extends Controller
@@ -13,7 +15,7 @@ class ProfilController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->only('index');
+        $this->middleware('SessionAuth')->only('index');
 
     }
 
@@ -22,14 +24,23 @@ class ProfilController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+
     public function index(Request $request)
     {
-        return view('Profil');
+        $data = $request->session()->all();
+        $user = $request->session()->get('user');
+        $payments = PaymentRepository::findPaymentsForProfil($user->idUser);
+        return view('profil', [
+            'payments' => $payments,
+            'profil' =>$data,
+        ]);
     }
+
     public function message(Request $request)
     {
         return view('Message');
     }
+
     public function favorite(Request $request)
     {
         return view('Favorite');

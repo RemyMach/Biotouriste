@@ -20,7 +20,6 @@
             <div class="col-md-6" id="mapid"></div>
         </div>
 </div>
-
 @include('modal-announce')
 @include('layouts.footer')
 {{-- Jquery --}}
