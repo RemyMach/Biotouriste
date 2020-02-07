@@ -66,7 +66,6 @@
         <div class="card">
           <div id="order">
             <h3>Order history</h3>
-            <!-- debut facture et factureligne -->
             <div class="order">
               <div id="orderTop">
                 <div class="row" style="margin:0;">
@@ -109,7 +108,6 @@
                 </div>
               </div>
             </div>
-            <!-- fin  -->
           </div>
         </div>
         <form action="logout" method="post">

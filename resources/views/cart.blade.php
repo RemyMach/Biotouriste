@@ -47,7 +47,7 @@
         <div class="cta">
           <div class="row">
             <div class="col-md-12">
-              <button type="button" name="button" onclick="window.location('welcome')">Continue shopping</button>
+              <button type="button" name="button" onclick="window.location.href='{{ url('announces') }}'">Continue shopping</button>
               <button type="submit" name="button" formmethod="post">Proceed to payment</button>
             </div>
           </div>
