@@ -47,7 +47,7 @@
         <div class="card">
           <div id="status">
             <h3>Change status</h3>
-            <p>Actual status : {{$profil['active_status']->status_user_label}}</p>
+{{--            <p>Actual status : {{ $profil['active_status']->status_user_label }}</p>--}}
             <button type="button" name="button">Switch to seller</button>
           </div>
         </div>
@@ -95,6 +95,7 @@
                 </div>
               </div>
             </div>
+            <!-- fin  -->
           </div>
         </div>
 {{--        fin--}}
