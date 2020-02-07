@@ -22,20 +22,20 @@
           </div>
           <div id="edit">
             <form action="user/update" method="post">
-                @csrf
-                <input type="text" name="user_name" value="{{$profil['user']->user_name}}">
-                <input type="text" name="user_surname" value="{{$profil['user']->user_surname}}">
-                <input type="text" name="email" value="{{$profil['user']->email}}">
-                @if ($profil['user']->user_postal_code == null)
-                <input type="text" name="user_postal_code" value="" placeholder="Postal code">
-                @else
-                <input type="text" name="user_postal_code" value="{{$profil['user']->user_postal_code}}">
-                @endif
-                @if ($profil['user']->user_phone == null)
-                <input type="text" name="user_phone" value="" placeholder="Phone">
-                @else
-                <input type="text" name="user_phone" value="{{$profil['user']->user_phone}}">
-                @endif
+              @csrf
+              <input type="text" name="user_name" value="{{$profil['user']->user_name}}">
+              <input type="text" name="user_surname" value="{{$profil['user']->user_surname}}">
+              <input type="text" name="email" value="{{$profil['user']->email}}">
+              @if ($profil['user']->user_postal_code == null)
+              <input type="text" name="user_postal_code" value="" placeholder="Postal code">
+              @else
+              <input type="text" name="user_postal_code" value="{{$profil['user']->user_postal_code}}">
+              @endif
+              @if ($profil['user']->user_phone == null)
+              <input type="text" name="user_phone" value="" placeholder="Phone">
+              @else
+              <input type="text" name="user_phone" value="{{$profil['user']->user_phone}}">
+              @endif
               <input type="submit" name="" value="Save">
             </form>
           </div>
@@ -59,32 +59,50 @@
         <div class="card">
           <div id="order">
             <h3>Order history</h3>
+            <!-- debut facture et factureligne -->
             <div class="order">
-              <div class="row" style="margin:0;">
-                <div class="col-md-4 text-left">
-                  <p>Order 0001</p>
+              <div id="orderTop">
+                <div class="row" style="margin:0;">
+                  <div class="col-md-4 text-left">
+                    <p>Order 0001</p>
+                  </div>
+                  <div class="col-md-4 text-center">
+                    <p>01/12/2020</p>
+                  </div>
+                  <div class="col-md-4 text-right">
+                    <p>$15</p>
+                  </div>
                 </div>
-                <div class="col-md-4 text-center">
-                  <p>Tomatoes</p>
-                </div>
-                <div class="col-md-4 text-right">
-                  <p>$15</p>
+              </div>
+              <div id="orderBottom">
+                <div class="row" style="margin:0;">
+                  <div class="col-md-12">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th colspan="2">Order details</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="text-left">Sweat potatoes</td>
+                          <td class="text-right">$15</td>
+                        </tr>
+                        <tr>
+                          <td class="text-left">Sweat potatoes</td>
+                          <td class="text-right">$9</td>
+                        </tr>
+                        <tr>
+                          <td class="text-left">Sweat potatoes</td>
+                          <td class="text-right">$25</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="order">
-              <div class="row" style="margin:0;">
-                <div class="col-md-4 text-left">
-                  <p>Order 0001</p>
-                </div>
-                <div class="col-md-4 text-center">
-                  <p>Tomatoes</p>
-                </div>
-                <div class="col-md-4 text-right">
-                  <p>$15</p>
-                </div>
-              </div>
-            </div>
+            <!-- fin  -->
           </div>
         </div>
         <form action="logout" method="post">
@@ -98,10 +116,18 @@
   </div>
 </div>
 <script type="text/javascript">
-  const x = document.getElementById("edit");
-  const y = document.getElementById("info");
-    function btnEdit() {
-      x.style.display = (x.style.display === 'block') ? 'none':'block';
-    }
+const x = document.getElementById("edit");
+const y = document.getElementById("info");
+function btnEdit() {
+  x.style.display = (x.style.display === 'block') ? 'none':'block';
+}
+
+const orderTop = document.getElementById('orderTop');
+const orderBottom = document.getElementById('orderBottom');
+orderTop.addEventListener('click',function(){
+  orderBottom.style.display = (orderBottom.style.display === 'block') ? 'none':'block';
+});
+
+
 </script>
 @include('layouts.footer')
