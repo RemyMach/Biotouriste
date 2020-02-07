@@ -145,7 +145,7 @@ function showPosition(position) {
     $.ajax({
         url: '/filterByCity',
         type: 'POST',
-        data: {lat: position.coords.latitude, long: position.coords.longitude,  _token: '{{csrf_token()}}'},
+        data: {lat: position.coords.latitude, lng: position.coords.longitude,  _token: '{{csrf_token()}}'},
         dataType: "json",
         success: function(result){
             mymap.removeLayer(this);
