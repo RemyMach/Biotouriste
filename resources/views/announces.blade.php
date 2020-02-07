@@ -17,7 +17,7 @@
         </div>
         <div class="row">
             <div id="divAnnounces" class="col-md-6 divAnnounces"></div>
-            <div class="col-md-6" id="mapid"></div>
+            <div class="col-md-6" id="mapid" style="height: 600px;"></div>
         </div>
 </div>
 @include('modal-announce')
