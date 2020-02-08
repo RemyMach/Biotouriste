@@ -63,15 +63,19 @@ Route::get('check','CheckController@create');
 
 Route::get('check/status/{check}/{status}','CheckController@updateStatus');
 
-Route::post('check/storeForAnAdmin','CheckController@storeForAnAdmin');
+Route::get('check/showForm/{idCheck}/{nameSeller}','CheckController@displayFormCheckregister');
+
+Route::post('check/statusVerification/{idCheck}','CheckController@UpdateStatusVerification');
 
 Route::post('check/storeForAController','CheckController@storeForAController');
 
 Route::post('check/showChecksOfAController','CheckController@showChecksOfAController');
 
+Route::post('admin/checks','CheckController@storeForAnAdmin');
+
 Route::post('check/controllerSendACompleteCheck','CheckController@controllerSendACompleteCheck');
 
-Route::post('check/destroy','CheckController@destroy');
+Route::post('check/destroy/{idCheck}','CheckController@destroy');
 
 Route::get('myMap','AnnounceController@printMap');
 
@@ -85,13 +89,15 @@ Route::post('contact/storeForAnAnonymous','ContactController@storeForAnAnonymous
 
 Route::post('contact/storeForAnAuthentifiedUser','ContactController@storeForAnAnonymous');
 
-Route::post('contact/destroy','ContactController@destroy');
+Route::get('contact/destroy/{idContact}','ContactController@destroy');
 
 Route::post('contact/user','ContactController@ContactsOfAUser');
+
 
 //Discount_code
 
 Route::get('discountCode','Discount_CodeController@store');
+Route::post('discountCode','Discount_CodeController@store');
 
 Route::post('discountCode/updateStatus','Discount_CodeController@updateStatus');
 
@@ -189,3 +195,14 @@ Route::get('announce/historySeller','AnnounceController@selectHistorySeller');
 //Admin
 
 Route::get('admin','AdminController@index');
+
+Route::get('admin/checks','AdminController@showChecks');
+
+//Controller
+
+Route::get('controller','ControllerController@index');
+
+
+
+
+//Route::post('admin','AdminController@index');

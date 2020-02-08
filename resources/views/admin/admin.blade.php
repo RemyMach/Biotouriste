@@ -16,11 +16,17 @@
             <div class="profil_container text-center">
                 <div class="row" style="margin:0;">
                     <div class="col-md-12 text-center">
-                        <h3>Create a discount Code</h3>
-                        <form class="" action="index.html" method="post">
-                            <input type="password" name="password" value="" placeholder="New password">
-                            <input type="password" name="confirm_password" value="" placeholder="Confirm new password">
-                            <input type="submit" name="" value="Submit">
+                        <h3>Create a discount Code For multiple User</h3>
+                        <form class="" action="/discountCode" method="post">
+                            @csrf
+                            <input type="integer" name="discount_code_amount" value="" placeholder="reduction amount %" >
+                            <input type="integer" name="expiration_time" value="" placeholder="expiration time">
+                            <select class="form-control" name="OneOrMultipleUser">
+                                <option>Multiple</option>
+                            </select>
+                            <input type="integer" name="minimum_amount" placeholder="minimum amount">
+                            <input type="text" name="periode_minimum_amount" placeholder="range minimum amount calcul">
+                            <input type="submit" value="Submit">
                         </form>
                     </div>
                 </div>
@@ -28,12 +34,53 @@
             <div class="profil_container text-center">
                 <div class="row" style="margin:0;">
                     <div class="col-md-12 text-center">
-                        <h3>Change password</h3>
-                        <form class="" action="index.html" method="post">
-                            <input type="password" name="password" value="" placeholder="New password">
-                            <input type="password" name="confirm_password" value="" placeholder="Confirm new password">
-                            <input type="submit" name="" value="Submit">
+                        <h3>Create a discount Code For one user by its IdUser</h3>
+                        <form class="" action="/discountCode" method="post">
+                            @csrf
+                            <input type="integer" name="discount_code_amount" value="" placeholder="reduction amount %" >
+                            <input type="integer" name="expiration_time" value="" placeholder="expiration time">
+                            <select class="form-control" name="OneOrMultipleUser">
+                                <option>One</option>
+                            </select>
+                            <input type="integer" name="idUserDiscount_codeBeneficiary" placeholder="id beneficiary">
+                            <input type="submit" value="Submit">
                         </form>
+                    </div>
+                </div>
+            </div>
+            <div class="profil_container text-center">
+                <div class="row" style="margin:0;">
+                    <div class="col-md-12 text-center">
+                        <h3>CONTACTS</h3>
+                        @if(isset($error))
+                            <div class="alert alert-danger" role="alert">
+                                {{ $error }}
+                            </div>
+                        @endif
+                        @if(isset($contacts))
+                            <table class="table">
+                                <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">mail</th>
+                                    <th scope="col">subject</th>
+                                    <th scope="col">content</th>
+                                    <th scope="col">Delete the contact</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                            @foreach($contacts as $contact)
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>{{ $contact->contact_email }}</td>
+                                        <td>{{ $contact->contact_subject }}</td>
+                                        <td>{{ $contact->contact_content }}</td>
+                                        <td><form action="/contact/destroy/{{$contact->idContact}}" method="get"><button style="margin: 0" type="submit">Suppression</button></form></td>
+                                    </tr>
+                            @endforeach
+                                </tbody>
+                                </table>
+                        @endif
                     </div>
                 </div>
             </div>

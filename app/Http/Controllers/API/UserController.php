@@ -75,7 +75,7 @@ class UserController extends Controller
             'user_surname' => ['required', 'string', 'max:45'],
             'email' => ['required', 'string', 'email', 'max:255'],
             'user_postal_code' => ['required', 'integer'],
-            'user_phone' => ['required'],
+            'user_phone' => ['required','regex:/^(\d\d(\s)?){4}(\d\d)$/'],
             'user_img' => ['string'],
         ]);
 
@@ -199,8 +199,7 @@ class UserController extends Controller
         $emails = DB::table('Users')->select('email')->get();
         $email = DB::table('Users')->select('email')->where('idUser','=',$data['idUser'])->get();
         $phones = DB::table('Users')->select('user_phone')->get();
-        $phone = DB::table('Users')->select('user_phone')->where('user_phone','=',$data['user_phone'])->get();
-
+        $phone = DB::table('Users')->select('user_phone')->where('idUser','=',$data['idUser'])->get();
 
         foreach($emails as $key => $value){
             if($data['email'] === $email[0]->email){

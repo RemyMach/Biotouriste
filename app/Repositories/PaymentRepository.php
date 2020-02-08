@@ -21,6 +21,28 @@ class PaymentRepository extends BaseRepository
         return Payment::class;
     }
 
+    /*public static function filterPaymentDateAndPaymentAmountByUser($limitDate, $minimum_amount){
+
+        return DB::table('payments')
+            ->join('Users','payments.Users_idUser','=','Users.idUser')
+            ->select('payments.Users_idUser',DB::raw('SUM(payment_amount) as total'))
+            ->where('payment_date','>',$limitDate)
+            ->where('payment_status','=','valid')
+            ->groupBy('Users.idUser')
+            ->havingRaw('total > ?', [$minimum_amount])
+            ->get();
+    }*/
+    public static function filterPaymentDateAndPaymentAmountByUser($limitDate, $minimum_amount){
+
+        return DB::table('Payments')
+            ->join('Users','payments.Users_idUse','=','Users.idUser')
+            ->select('payments.Users_idUser')
+            ->where('payment_date','>',$limitDate)
+            ->where('payment_status','=','succeeded')
+            ->groupBy('Users.idUser')
+            ->get();
+    }
+
     public static function findPaymentsForProfil($idUser){
 
         return DB::table('Payments')
@@ -33,6 +55,4 @@ class PaymentRepository extends BaseRepository
             ->orderBy('Payments.payment_date')
             ->get();
     }
-
-
 }

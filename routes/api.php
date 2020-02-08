@@ -60,6 +60,8 @@ Route::post('check/controllerSendACompleteCheck','API\CheckController@controller
 
 Route::post('check/showChecksOfAController','API\CheckController@showChecksOfAController');
 
+Route::post('check/allUnDone','API\CheckController@showAllUnDoneChekcs');
+
 Route::post('check/destroy','API\CheckController@destroy');
 
 //Contact
@@ -71,6 +73,8 @@ Route::post('contact/ContactsWithAssociedUsers','API\ContactController@ContactsW
 Route::post('contact/destroy','API\ContactController@destroy');
 
 Route::post('contact/ContactsOfAUser','API\ContactController@ContactsOfAUser');
+
+Route::post('contact/admin/all','API\ContactController@listAllContacts');
 
 //Discount_code
 

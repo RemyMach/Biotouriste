@@ -2,7 +2,6 @@
 
 namespace App\Repositories;
 
-use App\Status_User;
 use Illuminate\Support\Facades\DB;
 use JasonGuru\LaravelMakeRepository\Repository\BaseRepository;
 //use Your Model
