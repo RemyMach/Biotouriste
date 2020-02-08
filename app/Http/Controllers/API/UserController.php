@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\API\ApiTokenController;
 use App\Http\Controllers\API\NoApiClass\UsefullController;
 use App\Http\Resources\User as UserResource;
+use App\Repositories\PaymentRepository;
+use App\Repositories\StatusUserRepository;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -22,13 +21,21 @@ class UserController extends Controller
 
     public function __construct(){
         $this->middleware('apiMergeJsonInRequest');
+        $this->middleware('apiTokenAndIdUserExistAndMatch')->only('show','updateProfile','updatePassword','destroy','profil');
+        $this->middleware('apiAdmin')->only('destroy','index');
+        $this->middleware('apiTouristController')->only('profil');
+    }
 
-        $this->middleware('apiTokenAndIdUserExistAndMatch')->only(
-            'show','updateProfile','updatePassword','destroy'
-        );
-        $this->middleware('apiAdmin')->only(
-            'destroy','index'
-        );
+    public function profil(Request $request){
+        $this->request = $request;
+        $data = $request->all();
+        $profil = StatusUserRepository::getUserAndAlldata($data['idUser']);
+        $payments = PaymentRepository::findPaymentsForProfil($data['idUser']);
+        return response()->json([
+            'payments'   => $payments,
+            'profil'     => $profil,
+            'status'    => '200',
+        ]);
     }
 
     public function index(ApiTokenController $apiTokenController)

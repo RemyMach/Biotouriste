@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Status_User;
 use Illuminate\Support\Facades\DB;
 use JasonGuru\LaravelMakeRepository\Repository\BaseRepository;
 //use Your Model
@@ -17,7 +18,15 @@ class StatusUserRepository extends BaseRepository
      */
     public function model()
     {
-        //return YourModel::class;
+        return Status_User::class;
+    }
+
+    public static function getUserAndAlldata($idUser){
+        return DB::table('Users')
+            ->where('Users.idUser','=',$idUser)
+            ->join('User_Status_Correspondences','User_Status_Correspondences.Users_idUser','=','Users.idUser')
+            ->join('Status_User','Status_User.idStatus_User','=','User_Status_Correspondences.Status_User_idStatus_User')
+            ->get();
     }
 
     public static function getAllStatusUserLabelFromAnUser($idUser){
