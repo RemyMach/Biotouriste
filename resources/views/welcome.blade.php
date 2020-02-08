@@ -270,7 +270,7 @@
             <p>There is an error please try later !</p>
             @endif
             @if(isset($session['user']))
-            <form class="" action="/contact/storeForAnAuthentifiedUser" method="post">              <p>lol</p>
+            <form class="" action="/contact/storeForAnAuthentifiedUser" method="post">
             @else
             <form class="" action="/contact/storeForAnAnonymous" method="post">
             @endif

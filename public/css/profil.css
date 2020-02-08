@@ -8,6 +8,7 @@
   padding: 5% 0;
   border: none;
   border-radius: 0;
+  margin: 5% auto;
 }
 #info {
   display: block;
@@ -73,211 +74,73 @@
 #profil button:hover {
   transform: scale(1.1);
 }
-
-
-
-
-
-
-
-
-
-
-/* #profil {
-  padding-top: 20px;
-  height: 100%;
-  width: 100%;
-}
-#profil .title {
-  padding: 20px;
-}
-#profil h3 {
-  font-size: 18px;
-  color: #677A70;
+#password h3 {
   text-transform: uppercase;
+  font-size: 13px;
 }
-#profil h2 {
-  font-size: 36px;
-  color: #677A70;
-  font-family: minerva-modern, sans-serif;
-  font-weight: 700;
-  font-style: normal;
+#status h3 {
   text-transform: uppercase;
+  font-size: 13px;
 }
-#profil .line {
-  width: 80px;
-  height: 1px;
-  border: 2px solid #677A70;
-  margin-top: 15px;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: #677A70;
-}
-@media screen and (max-width: 700px) {
-  .profil_container {
-    width: 70%;
-  }
-}
-.profil_container {
-  height: auto;
-  padding: 50px 20px;
-  width: 50%;
-  background-color: #d0dad0;
-  margin: 5% auto;
-}
-.profil_banner h3 {
-  text-transform: uppercase;
-  color: #677A70;
-  font-size: 24px;
-  font-weight: 500;
-  font-family: minerva-modern, sans-serif;
-  font-weight: 700;
-  font-style: normal;
-}
-.profil_banner {
-  background-color: #f8f4ed;
-  height: auto;
-  width: 100%;
-  padding-top: 40px;
-  padding-bottom: 40px;
-}
-.profil_container input {
+#password input[type=password] {
+  padding: 5px 10px;
   width: 60%;
   height: 40px;
   border: none;
-  margin-top: 20px;
+  background-color: inherit;
+  border-bottom: 1px solid black;
 }
-.profil_container input[type=text] {
-  padding: 5px 10px;
+#password input[type=password]::placeholder {
+  color: black;
 }
-.profil_container input[type=password] {
-  padding: 5px 10px;
+#password p {
+  font-size: 7px;
 }
-.profil_container input[type=submit] {
-  text-transform: uppercase;
-  color: white;
-  text-decoration: none;
-  font-family: 'helvetica', sans-serif;
-  font-weight: bold;
-  font-size: 12px;
-  letter-spacing: 1px;
+#profil input[type=submit] {
   width: 40%;
-  transition: .5s;
-  margin-right: 10px;
-  padding: 5px;
-  border: none;
-  background-color: #677A70;
-}
-.profil_container input[type=submit]:hover {
-  background-color: black;
-}
-.profil_container button {
-  text-transform: uppercase;
-  color: white;
-  height: 40px;
-  text-decoration: none;
-  font-family: 'helvetica', sans-serif;
-  font-weight: bold;
-  font-size: 12px;
-  letter-spacing: 1px;
-  width: 40%;
-  transition: .5s;
-  margin-right: 10px;
-  padding: 5px;
-  border: none;
-  background-color: #677A70;
-}
-.profil_container button:hover {
-  background-color: black;
-}
-.profil_item {
-  background-color: #F2F2F2;
-  height: 150px;
-  width: auto;
-  padding: 10px;
-  margin-bottom: 20px;
-}
-.profil_pic {
-  height: 230px;
-  width: 230px;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 140px;
+  margin: 20px auto;
+  padding: 10px 15px;
   background-color: white;
-  background-position: top;
-  background-repeat: no-repeat;
-  background-size: cover;
+  border: none;
+  border-radius: 40px;
+  color: black;
+  text-transform: uppercase;
+  -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
+  -moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
+  box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
+  transition: .5s;
 }
-.profil_container h3 {
-  margin-bottom: 20px;
+#profil input[type=submit]:hover {
+  transform: scale(1.1);
 }
-.profil_desc p {
+#order h3 {
+  text-transform: uppercase;
   font-size: 13px;
-  font-weight: bold;
-  text-transform: uppercase;
-  color: #677A70;
-  margin: 0;
-  margin-bottom: 10px;
 }
-.profil_info p {
-  font-size: 10px;
-  font-weight: bold;
-  text-transform: uppercase;
-  color: #677A70;
-  margin: 0;
-  margin-bottom: 10px;
+#order {
+  padding: 0 10px;
 }
-.profil_message {
-  margin-top: 20px;
-}
-.profil_message a {
-  text-transform: uppercase;
-  color: #677A70;
-  text-decoration: underline;
-}
-.profil_message a:hover {
-  opacity: .50;
-}
-.order_history {
-  height: auto;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  background-color: white;
+#order .order {
   width: 100%;
-  margin-bottom: 10px;
+  height: auto;
+  padding: 7px;
+  background-color: rgba(0, 0, 0, 0.05);
   transition: .5s;
+  margin: 10px 0;
 }
-.order_history:hover {
-  transform: scale(.98);
+#order .order:hover {
+  transform: scale(1.02);
 }
-.order_history p {
+#order .order p {
   margin: 0;
 }
-.logout input[type=button] {
-  text-transform: uppercase;
-  color: white;
-  text-decoration: none;
-  font-family: 'helvetica', sans-serif;
-  font-weight: bold;
-  font-size: 12px;
-  letter-spacing: 1px;
-  width: 10%;
-  transition: .5s;
-  margin-right: 10px;
-  padding: 5px;
-  border: none;
-  background-color: #677A70;
-}
-.logout input[type=button]:hover {
-  background-color: black;
-}
-.profil_container button {
-  margin: 20px 0 0 0;
-  width: 15%;
-}
-#info {
-  display: block;
-}
-#edit {
+#order #orderBottom {
   display: none;
-} */
+}
+#order #orderBottom table {
+  width: 100%;
+  margin: 10px 0;
+}
+#order #orderBottom thead {
+  border-bottom: .5px solid black;
+}

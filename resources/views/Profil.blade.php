@@ -8,6 +8,7 @@
         <div class="card">
           <div class="pic" style="background-image: url(../img/img.jpg);"></div>
           <div id="info">
+{{--              {{ dump($profil) }}--}}
             <div class="name">
               <h2>{{$profil['user']->user_name}} {{$profil['user']->user_surname}}</h2>
             </div>
@@ -44,97 +45,71 @@
           </div>
           <button type="button" name="button" onclick="btnEdit()">Edit</button>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-
-
-
-
-
-
-<div id="profil">
-  <div class="row" style="margin:0;">
-    <div class="col-md-12" style="padding:0;">
-      <div class="profil_container text-center">
-        <div class="row" style="margin:0;">
-          <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-            <div class="profil_pic" style="background-image: url();"></div>
-
-            <div class="profil_message">
-              <a href="{{ url('message') }}">My messages</a>
-            </div>
-            <button type="button" name="button" onclick="btnEdit()">Edit</button>
+        <div class="card">
+          <div id="status">
+            <h3>Change status</h3>
+            <p>Actual status : {{ $profil['active_status']->status_user_label }}</p>
+            <button type="button" name="button">Switch to seller</button>
           </div>
         </div>
-      </div>
-      <div class="profil_container text-center">
-        <div class="row" style="margin:0;">
-          <div class="col-md-12 text-center">
+        <div class="card">
+          <div id="password">
             <h3>Change password</h3>
-            <form class="" action="index.html" method="post">
-              <input type="password" name="password" value="" placeholder="New password">
-              <input type="password" name="confirm_password" value="" placeholder="Confirm new password">
+            <p><span style="color:red;">*</span><i>Required field</i></p>
+            <form class="" action="" method="post">
+              <input type="password" name="password" value="" placeholder="Actual password *">
+              <input type="password" name="password" value="" placeholder="New password *">
+              <input type="password" name="confirm_password" value="" placeholder="Confirm new password *">
               <input type="submit" name="" value="Submit">
             </form>
           </div>
         </div>
-      </div>
-      <div class="profil_container text-center">
-        <div class="row" style="margin:0;">
-          <div class="col-md-12 text-center">
+{{--        debut--}}
+        <div class="card">
+          <div id="order">
             <h3>Order history</h3>
-            <div class="order_history">
-              <div class="col-md-12">
-                <div class="row" style="margin:0;">
-                  <div class="col-md-4 text-left">
-                    <p>Order 0001</p>
-                  </div>
-                  <div class="col-md-4 text-center">
-                    <p>Tomatoes</p>
-                  </div>
-                  <div class="col-md-4 text-right">
-                    <p>$15</p>
-                  </div>
+            @foreach($payments as $payment)
+            <div class="order">
+              <div class="row" style="margin:0;">
+                <div class="col-md-4 text-left">
+                  <p>{{ $payment->announce_name }}</p>
+                </div>
+                <div class="col-md-4 text-center">
+                  <p>{{ $payment->product_name }}</p>
+                </div>
+                <div class="col-md-4 text-right">
+                  <p>{{ $payment->totalAmount }}  {{ $payment->payment_currency }}</p>
                 </div>
               </div>
             </div>
-            <div class="order_history">
-              <div class="col-md-12">
-                <div class="row" style="margin:0;">
-                  <div class="col-md-4 text-left">
-                    <p>Order 0002</p>
-                  </div>
-                  <div class="col-md-4 text-center">
-                    <p>Orange</p>
-                  </div>
-                  <div class="col-md-4 text-right">
-                    <p>$6</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+            @endforeach
+            <!-- fin  -->
           </div>
         </div>
+{{--        fin--}}
+        <form action="logout" method="post">
+          @csrf
+          <div class="form-group text-center">
+            <input type="submit" name="" value="Logout">
+          </div>
+        </form>
       </div>
-      <form class="" action="logout" method="post">
-        @csrf
-        <div class="form-group text-center">
-          <input type="submit" name="" value="Disconnect">
-        </div>
-      </form>
     </div>
   </div>
 </div>
 <script type="text/javascript">
-  const x = document.getElementById("edit");
-  const y = document.getElementById("info");
-    function btnEdit() {
-      x.style.display = (x.style.display === 'block') ? 'none':'block';
-    }
+const x = document.getElementById("edit");
+const y = document.getElementById("info");
+function btnEdit() {
+  x.style.display = (x.style.display === 'block') ? 'none':'block';
+}
+
+const orderTop = document.getElementById('orderTop');
+const orderBottom = document.getElementById('orderBottom');
+orderTop.addEventListener('click',function(){
+  orderBottom.style.display = (orderBottom.style.display === 'block') ? 'none':'block';
+});
+
+
 </script>
 @include('layouts.footer')

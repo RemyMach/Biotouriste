@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Payment;
 use Illuminate\Support\Facades\DB;
 use JasonGuru\LaravelMakeRepository\Repository\BaseRepository;
 //use Your Model
@@ -17,7 +18,7 @@ class PaymentRepository extends BaseRepository
      */
     public function model()
     {
-        //return YourModel::class;
+        return Payment::class;
     }
 
     /*public static function filterPaymentDateAndPaymentAmountByUser($limitDate, $minimum_amount){
@@ -33,12 +34,25 @@ class PaymentRepository extends BaseRepository
     }*/
     public static function filterPaymentDateAndPaymentAmountByUser($limitDate, $minimum_amount){
 
-        return DB::table('payments')
-            ->join('Users','payments.Users_idUser','=','Users.idUser')
+        return DB::table('Payments')
+            ->join('Users','payments.Users_idUse','=','Users.idUser')
             ->select('payments.Users_idUser')
             ->where('payment_date','>',$limitDate)
             ->where('payment_status','=','succeeded')
             ->groupBy('Users.idUser')
+            ->get();
+    }
+
+    public static function findPaymentsForProfil($idUser){
+
+        return DB::table('Payments')
+            ->select('Payments.*', 'Users.*', 'Announces.*', 'Products.*', DB::raw('SUM(Payments.payment_amount) as totalAmount'))
+            ->where('Payments.Users_idUser','=',$idUser)
+            ->join('Users','Users.idUser','=','Payments.Users_idUser')
+            ->join('Announces','Announces.idAnnounce','=','Payments.Announces_idAnnounce')
+            ->join('Products','Products.idProduct','=','Announces.products_idProduct')
+            ->groupBy('Payments.id_order')
+            ->orderBy('Payments.payment_date')
             ->get();
     }
 }
