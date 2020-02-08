@@ -36,7 +36,6 @@ $(function() {
 });
 
 function findByCity(cityData){
-    console.log(cityData);
     $.ajax({
         url: '/filterByCity',
         type: 'POST',
@@ -147,6 +146,7 @@ function showPosition(position) {
         data: {cityData: cityData,  _token: '{{csrf_token()}}'},
         dataType: "json",
         success: function(result){
+
             mymap.removeLayer(this);
             mymap.setView([result.geonames[0].lat, result.geonames[0].lng], 10, { animation: true });
             remplirDivAnnonce(result.announces);
@@ -155,19 +155,6 @@ function showPosition(position) {
 }
 
 function showError(error) {
-    switch(error.code) {
-        case error.PERMISSION_DENIED:
-            x.innerHTML = "User denied the request for Geolocation.";
-            break;
-        case error.POSITION_UNAVAILABLE:
-            x.innerHTML = "Location information is unavailable.";
-            break;
-        case error.TIMEOUT:
-            x.innerHTML = "The request to get user location timed out.";
-            break;
-        case error.UNKNOWN_ERROR:
-            x.innerHTML = "An unknown error occurred.";
-            break;
-    }
+    console.log('error');
 }
 </script>
