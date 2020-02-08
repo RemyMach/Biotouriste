@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Seller;
 use Illuminate\Support\Facades\DB;
 use JasonGuru\LaravelMakeRepository\Repository\BaseRepository;
 //use Your Model
@@ -17,7 +18,7 @@ class SellerRepository extends BaseRepository
      */
     public function model()
     {
-        //return YourModel::class;
+        return Seller::class;
     }
 
     public static function GetAllSellersWithComments(){

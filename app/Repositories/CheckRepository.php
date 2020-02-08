@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Announce;
+use App\Check;
 use Illuminate\Support\Facades\DB;
 use JasonGuru\LaravelMakeRepository\Repository\BaseRepository;
 
@@ -17,7 +17,7 @@ class CheckRepository extends BaseRepository
      */
     public function model()
     {
-        return Announce::class;
+        return Check::class;
     }
 
     public static function selectCheckUndone(){

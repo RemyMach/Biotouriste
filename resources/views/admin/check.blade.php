@@ -17,16 +17,11 @@
                 <div class="row" style="margin:0;">
                     <div class="col-md-12 text-center">
                         <h3>Create a Check For a controller</h3>
-                        <form class="" action="/discountCode" method="post">
+                        <form class="" action="{{ url('check/storeForAnAdmin') }}" method="post">
                             @csrf
-                            <input type="integer" name="discount_code_amount" value="" placeholder="reduction amount %" >
-                            <input type="integer" name="expiration_time" value="" placeholder="expiration time">
-                            <select class="form-control" name="OneOrMultipleUser">
-                                <option>Multiple</option>
-                            </select>
-                            <input type="integer" name="minimum_amount" placeholder="minimum amount">
-                            <input type="text" name="periode_minimum_amount" placeholder="range minimum amount calcul">
-                            <input type="submit" value="Submit">
+                            <input type="integer" name="idSeller" value="" placeholder="id of the Seller" >
+                            <input type="integer" name="idController" placeholder="id of the Controller">
+                            <input type="submit" value="Send">
                         </form>
                     </div>
                 </div>

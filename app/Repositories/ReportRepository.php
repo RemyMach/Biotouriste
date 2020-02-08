@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Report;
 use Illuminate\Support\Facades\DB;
 use JasonGuru\LaravelMakeRepository\Repository\BaseRepository;
 //use Your Model
@@ -17,7 +18,7 @@ class ReportRepository extends BaseRepository
      */
     public function model()
     {
-        //return YourModel::class;
+        return Report::class;
     }
 
     public static function getAllReportsFromAnUser($idUser){

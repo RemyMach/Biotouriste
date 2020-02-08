@@ -30,7 +30,7 @@ class CheckController extends Controller
     {
         //
         $user = User::find(1);
-@    }
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -47,10 +47,10 @@ class CheckController extends Controller
      */
     public function storeForAnAdmin(Request $request, Client $client)
     {
-
+        $this->sessionUser = $request->session()->get('user');
         $data = request()->all();
-        $data['idUser'] = config('api.api_admin_id');
-        $data['api_token'] = config('api.api_admin_token');
+        $data['idUser'] = $this->sessionUser->idUser;
+        $data['api_token'] = $this->sessionUser->api_token;
 
 
         $query = $client->request('POST','http://localhost:8001/api/check/store',

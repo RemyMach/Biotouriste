@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Discount_Code;
 use Illuminate\Support\Facades\DB;
 use JasonGuru\LaravelMakeRepository\Repository\BaseRepository;
 //use Your Model
@@ -17,6 +18,7 @@ class Discount_CodeRepository extends BaseRepository
      */
     public function model()
     {
+        return Discount_Code::class;
         //return YourModel::class;
     }
 

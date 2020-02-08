@@ -6,6 +6,7 @@ use App\Check;
 use App\Http\Controllers\API\NoApiClass\UsefullController;
 use App\Http\Controllers\Controller;
 use App\Repositories\CheckRepository;
+use App\Repositories\StatusUserRepository;
 use App\Seller;
 use App\User;
 use DateTime;
@@ -29,7 +30,7 @@ class CheckController extends Controller
         );
 
         $this->middleware('apiController')->only(
-            'store','showChecksOfAController','controllerSendACompleteCheck'
+            'showChecksOfAController','controllerSendACompleteCheck'
         );
 
         $this->middleware('apiAdmin')->only(
@@ -37,8 +38,9 @@ class CheckController extends Controller
         );
     }
 
-    public function store()
+    public function store(Request $request)
     {
+        $this->requestData = $request->all();
         $data = request()->all();
 
         if(!$this->verificationIfCheckIsForASeller($data['idSeller'])){
@@ -53,7 +55,7 @@ class CheckController extends Controller
         //vendeur
         $this->validData['Sellers_idSeller'] = $data['idSeller'];
 
-        $this->setValidDataAccordinglyToUserStatus($data);
+        return $this->setValidDataAccordinglyToUserStatus($data);
 
 
         $check = Check::create($this->validData);
@@ -311,7 +313,9 @@ class CheckController extends Controller
     {
         $user = User::findOrFail($data['idUser']);
 
-        if(preg_match('#admin#i',$user->status['status_user_label'])){
+        $current_status = StatusUserRepository::getDefaultStatus($user->idUser);
+        return $current_status;
+        if(preg_match('#admin#i',$current_status[0])){
             //controller car c'est l'admin dans un formulaire qui indique qui fera le control
             $this->validData['Users_idUser'] = $data['idController'];
             //status
