@@ -82,6 +82,9 @@ class RegisterController extends Controller
         $data['api_token'] = config('api.api_admin_token');
         $data['idUser'] = config('api.api_admin_id');
         //$data['seller_description'] = 'j\'aime les pommes surtout les 2';
+        //$data['seller_adress'] = '12 rue de Mona Lisa',
+        //$data['seller_postal_code'] = 75018,
+        //$data['seller_city'] = 'Paris',
         $data['user_name'] = 'pomme1';
         $data['user_surname'] = 'surname';
         $data['user_adress'] = '12 rue bangbang';

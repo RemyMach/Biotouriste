@@ -24,7 +24,7 @@ class ChecksTableSeeder extends Seeder
                 'Sellers_idSeller' => 1
             ),
             array(
-                'check_status_verification' => 'In Progress',
+                'check_status_verification' => 'In progress',
                 'check_date' => null,
                 'check_comment' => null,
                 'check_customer_service' => null,

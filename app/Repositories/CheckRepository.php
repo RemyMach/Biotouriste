@@ -20,6 +20,15 @@ class CheckRepository extends BaseRepository
         return Check::class;
     }
 
+    public static function AllChecksAndSellerInformation($idUser){
+
+        return DB::table('Checks')
+            ->join('Sellers','Checks.Sellers_idSeller','=','Sellers.idSeller')
+            ->join('Users','Sellers.Users_idUser','=','Users.idUser')
+            ->where('Checks.Users_idUser','=',$idUser)
+            ->get();
+    }
+
     public static function selectCheckUndone(){
 
         return DB::table('Checks')
@@ -28,5 +37,7 @@ class CheckRepository extends BaseRepository
             ->orWhere('check_status_verification', '=','waiting')
             ->get();
     }
+
+
 
 }

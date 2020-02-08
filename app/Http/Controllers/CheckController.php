@@ -22,27 +22,6 @@ class CheckController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-        $user = User::find(1);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('testCheck');
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function storeForAnAdmin(Request $request, Client $client)
@@ -142,12 +121,12 @@ class CheckController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function updateStatus(Request $request, Check $check, Client $client)
+    public function updateStatusVerification(Request $request, Client $client, $idCheck)
     {
         $this->sessionUser = $request->session()->get('user');
 
-        $data['status'] = request('status');
-        $data['idCheck'] = $check->idCheck;
+        $data = $request->all();
+        $data['idCheck'] = $idCheck;
         $data['idUser'] = $this->sessionUser->idUser;
         $data['api_token'] = $this->sessionUser->api_token;
 
@@ -157,11 +136,12 @@ class CheckController extends Controller
 
         $response = json_decode($query->getBody()->getContents());
 
-        //dd($response);
+        if($response->status === '400')
+        {
+            return redirect('controller')->with('messageStatus','The update has fail');
+        }
 
-        //mettre la bonne réponse
-        return view('testCheck');
-
+        return redirect('controller')->with('messageStatus','The update is a success');
     }
 
     /**
@@ -183,5 +163,14 @@ class CheckController extends Controller
 
 
         return redirect('admin/checks');
+    }
+
+    public function displayFormCheckregister(Request $request, $idCheck){
+
+        $data = $request->all();
+        $data['$idCheck'] = $idCheck;
+
+        return view('',['check' => $data]);
+
     }
 }

@@ -63,6 +63,8 @@ Route::get('check','CheckController@create');
 
 Route::get('check/status/{check}/{status}','CheckController@updateStatus');
 
+Route::post('check/statusVerification/{idCheck}','CheckController@UpdateStatusVerification');
+
 Route::post('check/storeForAController','CheckController@storeForAController');
 
 Route::post('check/showChecksOfAController','CheckController@showChecksOfAController');
@@ -70,6 +72,8 @@ Route::post('check/showChecksOfAController','CheckController@showChecksOfAContro
 Route::post('admin/checks','CheckController@storeForAnAdmin');
 
 Route::post('check/controllerSendACompleteCheck','CheckController@controllerSendACompleteCheck');
+
+Route::post('check/displayFormCheckregister/{idCheck}','CheckController@displayFormCheckregister');
 
 Route::post('check/destroy/{idCheck}','CheckController@destroy');
 
@@ -197,6 +201,12 @@ Route::get('announce/addAnnounces','AnnounceController@addAnnounces');
 Route::get('admin','AdminController@index');
 
 Route::get('admin/checks','AdminController@showChecks');
+
+//Controller
+
+Route::get('controller','ControllerController@index');
+
+
 
 
 //Route::post('admin','AdminController@index');

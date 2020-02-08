@@ -36,6 +36,9 @@ class SellerController extends Controller
 
         $data['seller_product_bio'] = false;
         $data['seller_verify'] = false;
+        $data['seller_city'] = $validData['seller_city'];
+        $data['seller_adress'] = $validData['seller_adress'];
+        $data['seller_postal_code'] = $validData['seller_postal_code'];
         $data['seller_description'] = $validData['seller_description'];
         $data['Users_idUser'] = $user->idUser;
 
