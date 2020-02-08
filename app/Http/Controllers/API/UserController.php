@@ -23,7 +23,6 @@ class UserController extends Controller
         $this->middleware('apiMergeJsonInRequest');
         $this->middleware('apiTokenAndIdUserExistAndMatch')->only('show','updateProfile','updatePassword','destroy','profil');
         $this->middleware('apiAdmin')->only('destroy','index');
-        $this->middleware('apiTouristController')->only('profil');
     }
 
     public function profil(Request $request){

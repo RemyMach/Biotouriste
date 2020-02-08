@@ -63,7 +63,7 @@
             </form>
           </div>
         </div>
-{{--        debut--}}
+        @if($profil->status_user_label === 'Tourist' or $profil->status_user_label === 'Controller')
         <div class="card">
           <div id="order">
             <h3>Order history</h3>
@@ -85,7 +85,7 @@
             <!-- fin  -->
           </div>
         </div>
-{{--        fin--}}
+        @endif
         <form action="logout" method="post">
           @csrf
           <div class="form-group text-center">

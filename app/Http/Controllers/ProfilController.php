@@ -17,7 +17,6 @@ class ProfilController extends Controller
     public function __construct()
     {
         $this->middleware('SessionAuth')->only('index');
-        $this->middleware('touristController');
     }
 
     /**
