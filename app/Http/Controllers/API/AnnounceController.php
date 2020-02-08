@@ -18,7 +18,9 @@ class AnnounceController extends Controller
     public function selectHistorySeller(Request $request){
         $this->request = $request;
         $data = $request->all();
-        $announces = Announce::where('Users_idUser', $data['idUser'])->orderBy('announce_date')->get();
+        $announces = Announce::where('Users_idUser', $data['idUser'])
+            ->where('announce_is_available', 1)
+            ->orderBy('announce_date')->get();
         return response()->json([
             'announces' => $announces,
             'totalAnnounces' => count($announces),
@@ -39,7 +41,7 @@ class AnnounceController extends Controller
         if($validator->original['status'] == '400') {
             return $validator;
         }
-        $announce->announce_quantity = $announce->announce_quantity + $data['newQuantityToAdd'];
+        $announce->announce_quantity = $data['newQuantityToAdd'];
         $announce->save();
         return response()->json([
             'announce' => $announce,
@@ -53,8 +55,9 @@ class AnnounceController extends Controller
         $announce = Announce::find($data['idAnnounce']);
         if($announce === null){
             return response()->json([
-            'error'   => 'The announce does not exist, we cant delete it',
-            'status'    => '400']);
+                'error'   => 'The announce does not exist, we cant delete it',
+                'status'    => '400'
+            ]);
         }
 
         $announce->announce_is_available = false;
