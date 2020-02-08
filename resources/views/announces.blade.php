@@ -5,7 +5,6 @@
             <div class="col-md-12">
                 <input type="text" name="cityZone" id="cityZone" value="paris"><button onclick="getLocation()">try it<i class="fas fa-search-location"></i></button>
                 <button type="submit" onclick="findCityData()">Find</button>
-                <p id="demo">ef</p>
             </div>
             <div class="col-md-12 navbar navbar-expand-lg">
                   <ul class="navbar-nav inline categories">
@@ -18,7 +17,7 @@
         </div>
         <div class="row">
             <div id="divAnnounces" class="col-md-6 divAnnounces"></div>
-            <div class="col-md-6" id="mapid"></div>
+            <div class="col-md-6" id="mapid" style="height: 600px;"></div>
         </div>
 </div>
 @include('modal-announce')
@@ -127,11 +126,8 @@ function showAnnounce(announce) {
     $('#announcePrice').html(announce['announce_price']+'$');
     $('#idAnnounce').val(announce['idAnnounce']);
 
-    // $('#titlePrice').html('Modification du tarif n°' + announce['announce_name']);
     jQuery('#modal-announce').modal('show');
 }
-
-var x = document.getElementById("demo");
 
 function getLocation() {
     if (navigator.geolocation) {
@@ -142,24 +138,23 @@ function getLocation() {
 }
 
 function showPosition(position) {
-    x.innerHTML = "Latitude: " + position.coords.latitude +
-        "<br>Longitude: " + position.coords.longitude;
+    var cityData = { 'lat': position.coords.latitude, 'lng': position.coords.longitude};
+    $.ajax({
+        url: '/filterByCity',
+        type: 'POST',
+        data: {cityData: cityData,  _token: '{{csrf_token()}}'},
+        dataType: "json",
+        success: function(result){
+            console.log(result);
+            $("#cityZone").val(result.announces[0]['announce_city']);
+            mymap.removeLayer(this);
+            mymap.setView([result.lat, result.lng], 10, { animation: true });
+            remplirDivAnnonce(result.announces);
+        }
+    });
 }
 
 function showError(error) {
-    switch(error.code) {
-        case error.PERMISSION_DENIED:
-            x.innerHTML = "User denied the request for Geolocation.";
-            break;
-        case error.POSITION_UNAVAILABLE:
-            x.innerHTML = "Location information is unavailable.";
-            break;
-        case error.TIMEOUT:
-            x.innerHTML = "The request to get user location timed out.";
-            break;
-        case error.UNKNOWN_ERROR:
-            x.innerHTML = "An unknown error occurred.";
-            break;
-    }
+    console.log('error');
 }
 </script>
