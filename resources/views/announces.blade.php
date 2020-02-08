@@ -148,7 +148,7 @@ function showPosition(position) {
         success: function(result){
             console.log(result);
             mymap.removeLayer(this);
-            mymap.setView([result.geonames[0].lat, result.geonames[0].lng], 10, { animation: true });
+            mymap.setView([result.lat, result.lng], 10, { animation: true });
             remplirDivAnnonce(result.announces);
         }
     });
