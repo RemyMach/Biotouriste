@@ -139,7 +139,6 @@ function getLocation() {
 
 function showPosition(position) {
     var cityData = { 'lat': position.coords.latitude, 'lng': position.coords.longitude};
-
     $.ajax({
         url: '/filterByCity',
         type: 'POST',
@@ -147,6 +146,7 @@ function showPosition(position) {
         dataType: "json",
         success: function(result){
             console.log(result);
+            $("#cityZone").val(result.announces[0]['announce_city']);
             mymap.removeLayer(this);
             mymap.setView([result.lat, result.lng], 10, { animation: true });
             remplirDivAnnonce(result.announces);
