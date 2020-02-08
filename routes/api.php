@@ -38,6 +38,8 @@ Route::post('user/updateProfile','API\UserController@updateProfile');
 
 Route::post('user/updatePassword','API\UserController@updatePassword');
 
+Route::post('user/profil', 'API\UserController@profil');
+
 
 //comment
 Route::post('comment/store','API\CommentController@store');
@@ -139,6 +141,8 @@ Route::post('announce/delete','API\AnnounceController@delete');
 Route::post('announce/update','API\AnnounceController@update');
 
 Route::post('announce/historySeller','API\AnnounceController@selectHistorySeller');
+
+Route::post('announce/addAnnounces','API\AnnounceController@addAnnounces');
 
 
 

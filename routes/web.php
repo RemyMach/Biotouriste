@@ -129,7 +129,7 @@ Route::post('report/show/user','ReportController@showAllMyReports');
 Route::get('cart', 'CartController@index');
 
 // Profil
-Route::get('profil', 'ProfilController@index');
+Route::get('profil', 'ProfilController@profil');
 Route::get('message', 'ProfilController@message');
 Route::get('favorite', 'ProfilController@favorite');
 
@@ -186,6 +186,8 @@ Route::get('announce/delete','AnnounceController@delete');
 Route::get('announce/update','AnnounceController@update');
 
 Route::get('announce/historySeller','AnnounceController@selectHistorySeller');
+
+Route::get('announce/addAnnounces','AnnounceController@addAnnounces');
 
 
 /********************************************** Fin Routes Announces **********************************************/
