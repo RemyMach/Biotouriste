@@ -63,15 +63,15 @@ Route::get('check','CheckController@create');
 
 Route::get('check/status/{check}/{status}','CheckController@updateStatus');
 
-Route::post('check/storeForAnAdmin','CheckController@storeForAnAdmin');
-
 Route::post('check/storeForAController','CheckController@storeForAController');
 
 Route::post('check/showChecksOfAController','CheckController@showChecksOfAController');
 
+Route::post('admin/checks','CheckController@storeForAnAdmin');
+
 Route::post('check/controllerSendACompleteCheck','CheckController@controllerSendACompleteCheck');
 
-Route::post('check/destroy','CheckController@destroy');
+Route::post('check/destroy/{idCheck}','CheckController@destroy');
 
 Route::get('myMap','AnnounceController@printMap');
 
@@ -195,5 +195,6 @@ Route::get('announce/historySeller','AnnounceController@selectHistorySeller');
 Route::get('admin','AdminController@index');
 
 Route::get('admin/checks','AdminController@showChecks');
+
 
 //Route::post('admin','AdminController@index');

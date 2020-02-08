@@ -16,8 +16,17 @@
             <div class="profil_container text-center">
                 <div class="row" style="margin:0;">
                     <div class="col-md-12 text-center">
+                        @if (isset($success))
+                            <div class="alert alert-success" role="alert">
+                                {{ $success }}
+                            </div>
+                        @elseif(isset($error))
+                            <div class="alert alert-danger" role="alert">
+                                {{ $error }}
+                            </div>
+                        @endif
                         <h3>Create a Check For a controller</h3>
-                        <form class="" action="{{ url('check/storeForAnAdmin') }}" method="post">
+                        <form class="" action="{{ url('admin/checks') }}" method="post">
                             @csrf
                             <input type="integer" name="idSeller" value="" placeholder="id of the Seller" >
                             <input type="integer" name="idController" placeholder="id of the Controller">
@@ -35,25 +44,23 @@
                                 {{ $error }}
                             </div>
                         @endif
-                        @if(isset($contacts))
+                        @if(isset($checks))
                             <table class="table">
                                 <thead class="thead-light">
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">mail</th>
-                                    <th scope="col">subject</th>
-                                    <th scope="col">content</th>
-                                    <th scope="col">Delete the contact</th>
+                                    <th scope="col">controller</th>
+                                    <th scope="col">idSeller</th>
+                                    <th scope="col">Delete the Check</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($contacts as $contact)
+                                @foreach($checks as $check)
                                     <tr>
-                                        <th scope="row">1</th>
-                                        <td>{{ $contact->contact_email }}</td>
-                                        <td>{{ $contact->contact_subject }}</td>
-                                        <td>{{ $contact->contact_content }}</td>
-                                        <td><form action="/contact/destroy/{{$contact->idContact}}" method="get"><button style="margin: 0" type="submit">Suppression</button></form></td>
+                                        <th scope="row">{{ $check->idCheck }}</th>
+                                        <td>{{ $check->user_name }} {{ $check->user_surname }}</td>
+                                        <td>{{ $check->Sellers_idSeller }}</td>
+                                        <td><form action="{{ url('check/destroy/'. $check->idCheck) }}" method="post">@csrf<button style="margin: 0" type="submit">Suppression</button></form></td>
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -62,61 +69,6 @@
                     </div>
                 </div>
             </div>
-            <div class="profil_container text-center">
-                <div class="row" style="margin:0;">
-                    <div class="col-md-12 text-center">
-                        <h3>Change password</h3>
-                        <form class="" action="index.html" method="post">
-                            <input type="password" name="password" value="" placeholder="New password">
-                            <input type="password" name="confirm_password" value="" placeholder="Confirm new password">
-                            <input type="submit" name="" value="Submit">
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="profil_container text-center">
-                <div class="row" style="margin:0;">
-                    <div class="col-md-12 text-center">
-                        <h3>Order history</h3>
-                        <div class="order_history">
-                            <div class="col-md-12">
-                                <div class="row" style="margin:0;">
-                                    <div class="col-md-4 text-left">
-                                        <p>Order 0001</p>
-                                    </div>
-                                    <div class="col-md-4 text-center">
-                                        <p>Tomatoes</p>
-                                    </div>
-                                    <div class="col-md-4 text-right">
-                                        <p>$15</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="order_history">
-                            <div class="col-md-12">
-                                <div class="row" style="margin:0;">
-                                    <div class="col-md-4 text-left">
-                                        <p>Order 0002</p>
-                                    </div>
-                                    <div class="col-md-4 text-center">
-                                        <p>Orange</p>
-                                    </div>
-                                    <div class="col-md-4 text-right">
-                                        <p>$6</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <form class="" action="logout" method="post">
-                @csrf
-                <div class="form-group text-center">
-                    <input type="submit" name="" value="Disconnect">
-                </div>
-            </form>
         </div>
     </div>
 </div>

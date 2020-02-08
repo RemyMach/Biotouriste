@@ -58,9 +58,17 @@ class CheckController extends Controller
 
         $response = json_decode($query->getBody()->getContents());
 
-        dd($response);
+        $checksQuery = $client->request('POST','http://localhost:8001/api/check/allUnDone',
+            ['form_params' => $data]);
 
-        return view('testCheck',["response" => $response]);
+        $checksResponse = json_decode($checksQuery->getBody()->getContents());
+
+        if($response->status === '400')
+        {
+            return view('admin.check',['error' => 'Your check has not been register','checks' => $checksResponse->checks]);
+        }
+
+        return view('admin.check',['success' => 'Your check has been register','checks' => $checksResponse->checks]);
     }
 
     public function storeForAController(Request $request, Client $client)
@@ -159,21 +167,21 @@ class CheckController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request, Client $client)
+    public function destroy(Request $request, Client $client, $idCheckDelete)
     {
         $this->sessionUser = $request->session()->get('user');
 
         $data = request()->all();
         $data['idUser']     = $this->sessionUser->idUser;
         $data['api_token']  = $this->sessionUser->api_token;
+        $data['idCheckDelete'] = $idCheckDelete;
 
         $query = $client->request('POST','http://localhost:8001/api/check/destroy',
             ['form_params' => $data]);
 
         $response = json_decode($query->getBody()->getContents());
 
-        dd($response);
 
-        return view('testCheck',["response" => $response]);
+        return redirect('admin/checks');
     }
 }

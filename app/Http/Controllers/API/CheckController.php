@@ -55,7 +55,7 @@ class CheckController extends Controller
         //vendeur
         $this->validData['Sellers_idSeller'] = $data['idSeller'];
 
-        return $this->setValidDataAccordinglyToUserStatus($data);
+        $this->setValidDataAccordinglyToUserStatus($data);
 
 
         $check = Check::create($this->validData);
@@ -170,12 +170,14 @@ class CheckController extends Controller
     {
         $this->request = $request;
 
+
         if(!$this->verifyIfCheckExist()){
             return response()->json([
                 'message'   => 'The Check doesn\'t exists',
                 'status'    => '400',
             ]);
         }
+
 
         $this->check->delete();
 
@@ -314,8 +316,8 @@ class CheckController extends Controller
         $user = User::findOrFail($data['idUser']);
 
         $current_status = StatusUserRepository::getDefaultStatus($user->idUser);
-        return $current_status;
-        if(preg_match('#admin#i',$current_status[0])){
+
+        if(preg_match('#admin#i',$current_status[0]->status_user_label)){
             //controller car c'est l'admin dans un formulaire qui indique qui fera le control
             $this->validData['Users_idUser'] = $data['idController'];
             //status

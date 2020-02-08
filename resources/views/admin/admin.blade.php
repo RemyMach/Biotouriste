@@ -87,18 +87,6 @@
             <div class="profil_container text-center">
                 <div class="row" style="margin:0;">
                     <div class="col-md-12 text-center">
-                        <h3>Change password</h3>
-                        <form class="" action="index.html" method="post">
-                            <input type="password" name="password" value="" placeholder="New password">
-                            <input type="password" name="confirm_password" value="" placeholder="Confirm new password">
-                            <input type="submit" name="" value="Submit">
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="profil_container text-center">
-                <div class="row" style="margin:0;">
-                    <div class="col-md-12 text-center">
                         <h3>Order history</h3>
                         <div class="order_history">
                             <div class="col-md-12">
