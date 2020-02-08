@@ -55,11 +55,9 @@ class AdminController extends Controller
             ['form_params' => $data]);
 
         $response = json_decode($query->getBody()->getContents());
-
         dd($response);
 
-
-            return view('admin.check')->with('checks',$response->checks);
+        return view('admin.check')->with('checks',$response->checks);
     }
 
 }

@@ -23,6 +23,7 @@ class CheckRepository extends BaseRepository
     public static function selectCheckUndone(){
 
         return DB::table('Checks')
+            ->join('Users','Checks.Users_idUser','=','Users.idUser')
             ->where('check_status_verification','=','In progress')
             ->orWhere('check_status_verification', '=','waiting')
             ->get();
