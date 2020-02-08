@@ -110,7 +110,6 @@ class CheckController extends Controller
     {
         $this->requestData = request()->all();
 
-        return $this->verifyOwnerCheck();
         if(!$this->verifyOwnerCheck()){
             return response()->json([
                 'message'   => 'This Check isn\'t for this User',
@@ -119,7 +118,6 @@ class CheckController extends Controller
         }
 
         $validator = $this->validateCheck();
-
         if($validator->original['status'] == '400') {
             return $validator;
         }
@@ -132,12 +130,11 @@ class CheckController extends Controller
         //status
         $validData['check_status_verification'] = 'done';
 
-        $check = Check::update($validData);
+        $check = Check::find($this->requestData['idCheck'])->update($validData);
 
         return response()->json([
             'message'   => 'Your Check has been update',
             'status'    => '200',
-            'check'     => $check,
         ]);
 
     }
@@ -249,7 +246,7 @@ class CheckController extends Controller
             'check_customer_service'    => 'required|integer|max:5',
             'check_state_place'         => 'required|integer|max:5',
             'check_quality_product'     => 'required|integer|max:5',
-            'check_bio_status'          => 'required',
+            'check_bio_status'          => ['required','regex:/^(bio|not bio)$/'],
         ]);
 
         if($validator->fails()) {

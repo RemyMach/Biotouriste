@@ -45,6 +45,11 @@
                     </div>
                     @endif
 
+                    @if(session('completeCheck'))
+                        <div class="alert alert-success" role="alert">
+                            {{session('completeCheck')}}
+                        </div>
+                    @endif
                     @if(isset($checks->checks_In_progress[0]))
                         <div class="card">
                             <h3>Checks In Progress</h3>
@@ -70,7 +75,7 @@
                                         <td>{{ $check->seller_city }}</td>
                                         <td>{{ $check->seller_adress }}</td>
                                         <td>{{ $check->seller_postal_code }}</td>
-                                        <td><form action="{{ url('check/displayFormCheckregister'. $check->idCheck) }}" method="post">@csrf<input type="hidden" name="status" value="{{ $check->user_name }} {{ $check->user_surname }}"><button style="margin: 0" type="submit">Complete</button></form></td>
+                                        <td><form action="{{ url('check/showForm/' . $check->idCheck . '/' . $check->user_name . ' ' . $check->user_surname) }}" method="get">@csrf<button style="margin: 0" type="submit">Complete</button></form></td>
                                     </tr>
                                 @endforeach
                                 </tbody>

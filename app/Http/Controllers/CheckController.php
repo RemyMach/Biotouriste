@@ -84,9 +84,11 @@ class CheckController extends Controller
 
         $response = json_decode($query->getBody()->getContents());
 
-        dd($response);
+        if($response->status == '400'){
 
-        return view('testCheck',["response" => $response]);
+            return back()->with('error', 'All the fields are required');
+        }
+        return redirect('controller')->with('completeCheck', 'The Check has been completed');
     }
 
     /**
@@ -94,20 +96,23 @@ class CheckController extends Controller
      */
     public function showChecksOfAController(Request $request, Client $client)
     {
-        $sessionUser = $request->session()->get('user');
+        $this->sessionUser = $request->session()->get('user');
 
         $data['idUser'] = $this->sessionUser->idUser;
         $data['api_token'] = $this->sessionUser->api_token;
-        $data['idSeller'] = 1;
 
         $query = $client->request('POST','http://localhost:8001/api/check/showChecksOfAController',
             ['form_params' => $data]);
 
         $response = json_decode($query->getBody()->getContents());
 
+        if($response->status == '400'){
+
+            return view('testCheck',["response" => $response]);
+        }
+        return view('testCheck',["response" => $response]);
         dd($response);
 
-        return view('testCheck',["response" => $response]);
     }
 
     /**
@@ -165,12 +170,13 @@ class CheckController extends Controller
         return redirect('admin/checks');
     }
 
-    public function displayFormCheckregister(Request $request, $idCheck){
+    public function displayFormCheckregister(Request $request, $idCheck, $nameSeller){
 
         $data = $request->all();
-        $data['$idCheck'] = $idCheck;
+        $data['idCheck'] = $idCheck;
+        $data['user_name'] = $nameSeller;
 
-        return view('',['check' => $data]);
+        return view('controller.completeCheck',['check' => $data]);
 
     }
 }
