@@ -43,6 +43,8 @@ Route::get('user/{token}','UserController@show');
 
 Route::post('user/update','UserController@updateProfile');
 
+Route::post('user/updatePassword','UserController@updatePassword');
+
 Route::get('admin/user/{user}','UserController@destroy');
 
 //comment

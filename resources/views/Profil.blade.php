@@ -51,15 +51,26 @@
             <button type="button" name="button">Switch to seller</button>
           </div>
         </div>
+        @if(session('errorPassword'))
+          <div class="alert alert-danger" role="alert">
+            {{session('errorPassword')}}
+          </div>
+        @endif
+        @if(session('successPasword'))
+          <div class="alert alert-success" role="alert">
+            {{session('successPasword')}}
+          </div>
+        @endif
         <div class="card">
           <div id="password">
             <h3>Change password</h3>
             <p><span style="color:red;">*</span><i>Required field</i></p>
-            <form class="" action="" method="post">
-              <input type="password" name="password" value="" placeholder="Actual password *">
-              <input type="password" name="password" value="" placeholder="New password *">
-              <input type="password" name="confirm_password" value="" placeholder="Confirm new password *">
-              <input type="submit" name="" value="Submit">
+            <form class="" action="{{ url('user/updatePassword') }}" method="post">
+              @csrf
+              <input type="password" name="oldPassword"  placeholder="Actual password *">
+              <input type="password" name="password"  placeholder="New password *">
+              <input type="password" name="password_confirmation"  placeholder="Confirm new password *">
+              <input type="submit" value="Submit">
             </form>
           </div>
         </div>

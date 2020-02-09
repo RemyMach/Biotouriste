@@ -123,7 +123,9 @@ class UserController extends Controller
     public function updatePassword(Request $request)
     {
 
+        $this->request = $request;
         $data = request()->all();
+
 
         $validator = Validator::make($this->request->all(), [
             'password' => ['required', 'string', 'min:8', 'confirmed'],
@@ -138,7 +140,6 @@ class UserController extends Controller
                 'status'    => '400'
             ]);
         }
-
 
         $user = User::findOrFail($this->request->input('idUser'));
 
