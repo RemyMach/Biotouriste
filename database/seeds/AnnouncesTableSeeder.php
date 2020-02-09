@@ -26,7 +26,8 @@ class AnnouncesTableSeeder extends Seeder
                 'announce_lat' => 48.837273,
                 'announce_lng' => 2.33538,
                 'announce_quantity' => 1,
-                'announce_measure' => 'unity'
+                'announce_measure' => 'unity',
+                'announce_lot' => 5
             ),
             array(
                 'announce_name' => 'Test2',
@@ -42,7 +43,8 @@ class AnnouncesTableSeeder extends Seeder
                 'announce_lat' => 48.789612,
                 'announce_lng' => 2.452600,
                 'announce_quantity' => 1,
-                'announce_measure' => 'unity'
+                'announce_measure' => 'unity',
+                'announce_lot' => 10
             ),
             array(
                 'announce_name' => 'Test3',
@@ -57,8 +59,9 @@ class AnnouncesTableSeeder extends Seeder
                 'Users_idUser' => 3,
                 'announce_lat' => 33.5731104,
                 'announce_lng' => -7.5898434,
-                'announce_quantity' => 1,
-                'announce_measure' => 'gramme'
+                'announce_quantity' => 50,
+                'announce_measure' => 'gramme',
+                'announce_lot' => 100
             ),
             array(
                 'announce_name' => 'Test4',
@@ -73,8 +76,9 @@ class AnnouncesTableSeeder extends Seeder
                 'Users_idUser' => 4,
                 'announce_lat' => 48.833832,
                 'announce_lng' => 2.243230,
-                'announce_quantity' => 1,
-                'announce_measure' => 'gramme'
+                'announce_quantity' => 50,
+                'announce_measure' => 'gramme',
+                'announce_lot' => 100
             ),
             array(
                 'announce_name' => 'Test5',
@@ -89,8 +93,9 @@ class AnnouncesTableSeeder extends Seeder
                 'Users_idUser' => 3,
                 'announce_lat' => 55.751244,
                 'announce_lng' => 37.618423,
-                'announce_quantity' => 1,
-                'announce_measure' => 'gramme'
+                'announce_quantity' => 50,
+                'announce_measure' => 'gramme',
+                'announce_lot' => 100
             ),
         ));
     }

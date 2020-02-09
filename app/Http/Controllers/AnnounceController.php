@@ -39,6 +39,7 @@ class AnnounceController extends Controller
         return view('historySeller', [
             'announces' => $response->announces,
             'totalAnnounces' => $response->totalAnnounces,
+            'products' => $response->products
         ]);
 
     }
@@ -77,22 +78,7 @@ class AnnounceController extends Controller
 
     public function store(Request $request, Client $client){
         $this->sessionUser = $request->session()->get('user');
-
-        $data = [
-            'announce_name' => 'TestSTORAGE',
-            'announce_price' => 8,
-            'announce_comment' => 'TestSTORAGEComment',
-            'announce_adresse' => 'TestSTORAGEADRESSE',
-            'announce_city' => 'punta cana',
-            'announce_img' => null,
-            'products_idProduct' => 130,
-            'Users_idUser' => 3,
-            'announce_lat' => 18.582010,
-            'announce_lng' => -68.405472,
-            'announce_quantity' => 3,
-            'announce_measure' => 'Kilo',
-            'announce_is_available' => true
-        ];
+        $data = request()->all();
 
         $data['idUser'] = $this->sessionUser->idUser;
         $data['api_token'] = $this->sessionUser->api_token;
