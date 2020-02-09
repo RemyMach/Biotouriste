@@ -142,10 +142,6 @@ Route::post('announce/update','API\AnnounceController@update');
 
 Route::post('announce/historySeller','API\AnnounceController@selectHistorySeller');
 
-Route::post('announce/addAnnounces','API\AnnounceController@addAnnounces');
-
-
-
 /*Route::get('/users', function () {
     return UserResource::collection(User::paginate(2));
 });*/

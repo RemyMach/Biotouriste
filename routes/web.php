@@ -187,16 +187,12 @@ Route::post('filterByCity','AnnounceController@filterByCity');
 
 Route::get('announce/store','AnnounceController@store');
 
-Route::get('announce/delete','AnnounceController@delete');
+Route::post('announce/delete','AnnounceController@delete');
 
-Route::get('announce/update','AnnounceController@update');
+Route::post('announce/update','AnnounceController@update');
 
 Route::get('announce/historySeller','AnnounceController@selectHistorySeller');
 
-Route::get('announce/addAnnounces','AnnounceController@addAnnounces');
-
-
-/********************************************** Fin Routes Announces **********************************************/
 
 //Admin
 
