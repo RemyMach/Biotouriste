@@ -6,6 +6,7 @@ namespace App\Http\Controllers\API;
 
 use App\Announce;
 use App\Http\Controllers\Controller;
+use App\Product;
 use App\Repositories\AnnounceRepository;
 use DateTime;
 use Illuminate\Http\Request;
@@ -21,9 +22,11 @@ class AnnounceController extends Controller
         $announces = Announce::where('Users_idUser', $data['idUser'])
             ->where('announce_is_available', 1)
             ->orderBy('announce_date')->get();
+        $products = Product::all();
         return response()->json([
             'announces' => $announces,
             'totalAnnounces' => count($announces),
+            'products' => $products,
             'status' => '200'
         ]);
     }
@@ -74,7 +77,7 @@ class AnnounceController extends Controller
 
         $data = $request->all();
         $col =[
-            'announce_measure' => 0, 'announce_name' => 0,'announce_price' => 0,'announce_comment' => 0,'announce_adresse' => 0,'announce_date' => 0,'announce_city' => 0,
+            'announce_lot' => 0,'announce_measure' => 0, 'announce_name' => 0,'announce_price' => 0,'announce_comment' => 0,'announce_adresse' => 0,'announce_city' => 0,
             'announce_img' => 0,'products_idProduct' => 0,'Users_idUser' => 0,'announce_lat' => 0,'announce_lng' => 0,'announce_quantity' => 0, 'announce_is_available' => 1
         ];
         // fusionne tab1 et tab2 si les key dans le tab 1 exist dans le 2 avec les value du tab 2
