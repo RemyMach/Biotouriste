@@ -185,7 +185,7 @@ Route::post('filterByCategorie','AnnounceController@filterByCategorie');
 
 Route::post('filterByCity','AnnounceController@filterByCity');
 
-Route::get('announce/store','AnnounceController@store');
+Route::post('announce/store','AnnounceController@store');
 
 Route::post('announce/delete','AnnounceController@delete');
 

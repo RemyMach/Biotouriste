@@ -41,8 +41,8 @@
         </div>
     </div>
 </div>
-@include('modal-addAnnounce')
 @include('layouts.footer')
+@include('modal-addAnnounce')
 <script>
 function updateAnnounce(idAnnounce){
     $.ajax({
