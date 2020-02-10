@@ -99,6 +99,7 @@ class LoginController extends Controller
         $request->session()->forget('user');
         $request->session()->forget('allStatus');
         $request->session()->forget('active_status');
+        $request->session()->forget('cart');
 
         return $this->loggedOut($request) ?: redirect('/');
     }

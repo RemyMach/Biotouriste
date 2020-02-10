@@ -128,9 +128,10 @@ Route::post('report/store','ReportController@store');
 Route::post('report/show/user','ReportController@showAllMyReports');
 
 // Cart
-Route::get('cart', 'CartController@show');
-
-//Route::get('cart','CartController@add');
+Route::get('cart', 'CartController@index')->name('cart');
+Route::post('cart/remove','CartController@remove');
+Route::get('carte','CartController@add');
+Route::get('ccart','CartController@countCart');
 
 
 // Profil

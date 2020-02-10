@@ -15,36 +15,48 @@
         </div>
       </div>
       <div class="cart_container text-center">
-        @foreach($announces as $announce)
+{{--        {{dd( session()->get('cart')) }}--}}
+        @if($announces != null)
+        @foreach($announces as $key => $announce)
+          {{ $key }}
         <div class="cart_item">
-          <form class="" action="" method="post">
+          <form class="" action="cart/remove" method="post">
+            {{ csrf_field() }}
           <div class="row" style="margin:0;">
             <div class="col-md-4">
               <div class="cart_pic" style="background-image:url('/img/home/block-3.png')"></div>
             </div>
             <div class="col-md-4 text-left">
               <div class="cart_name">
-                <h2>{{ $announce->announce_name }}</h2>
+                <h2>{{ $announce['announce_name'] }}</h2>
               </div>
               <div class="cart_desc">
-                <p>{{ $announce->announce_comment }}</p>
+                <p>{{ $announce['announce_comment'] }}</p>
               </div>
               <div class="cart_price">
-                <p>{{ $announce->announce_price }}€</p>
+                <p>{{ $announce['announce_price'] }}€</p>
               </div>
             </div>
             <div class="col-md-4">
               <div class="cart_remove">
-                <button type="button" name="button">Remove</button>
+                <input type="hidden" value="{{ $key }}" name="index">
+                <button type="submit" name="button">Remove</button>
               </div>
             </div>
           </div>
         </form>
         </div>
+
         @endforeach
+        @endif
+
         <div class="form-group">
+          @if($announces != null)
           <button type="button" name="button" onclick="">Continue shopping</button>
           <input type="submit" name="" value="Proceed to payment">
+          @else
+            <h2>Your cart is empty</h2>
+          @endif
         </div>
       </div>
     </div>

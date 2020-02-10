@@ -115,7 +115,7 @@
     </div>
 </div>
 <form class="form-horizontal" method="POST" id="payment-form" role="form" action="{!!route('addmoney.stripe')!!}" >
-    {{ csrf_field() }}
+        {{ csrf_field() }}
 <div class="form-container">
     <div class="field-container">
         <label for="name">Name</label>
