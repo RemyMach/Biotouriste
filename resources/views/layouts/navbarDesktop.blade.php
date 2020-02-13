@@ -7,8 +7,8 @@
       <div class="col-md-3 menu"></div>
       <div class="col-md-6 text-center menu">
         <a href="{{ url('announces') }}">Announces</a>
-        <a href="{{ url('#about') }}">About us</a>
-        <a href="{{ url('#contact') }}">Contact</a>
+        <a href="{{ url('/#about') }}">About us</a>
+        <a href="{{ url('/#contact') }}">Contact</a>
         <a href="{{ url('faq') }}">FAQ</a>
       </div>
       <div class="col-md-3 text-center menu">

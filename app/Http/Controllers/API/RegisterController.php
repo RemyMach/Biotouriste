@@ -27,6 +27,7 @@ class RegisterController extends Controller
 
     public function store(Request $request, UsefullController $usefullController, User_Status_CorrespondenceController $user_Status_CorrespondenceController)
     {
+
         $this->request = $request;
 
         $validator = $this->validateUser();
@@ -45,7 +46,6 @@ class RegisterController extends Controller
 
         $checkStatus = User_status_correspondenceController::getAllStatusFromAnUser($user->idUser);
         if($checkStatus->original['status'] == '400'){
-
             return $checkStatus;
         }
 
@@ -74,7 +74,7 @@ class RegisterController extends Controller
         $rules = [
             'user_name' => ['required', 'string', 'max:45'],
             'user_surname' => ['required', 'string', 'max:45'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:Users'],
             'user_postal_code' => ['integer'],
             'user_phone' => ['unique:users','regex:/^(\d\d(\s)?){4}(\d\d)$/'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
@@ -126,7 +126,6 @@ class RegisterController extends Controller
             $validData['seller_postal_code'] = $this->request->input('seller_postal_code');
             $validData['seller_city'] = $this->request->input('seller_city');
         }else{
-
             $this->status_User_idStatus_User = 1;
         }
 
