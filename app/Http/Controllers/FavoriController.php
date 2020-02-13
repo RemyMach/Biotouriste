@@ -31,7 +31,6 @@ class FavoriController extends Controller
             ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
 
-        dd($response);
         if ($response->status == '400') {
           return view('favorite',["response" => $response]);
         } else {
@@ -70,8 +69,6 @@ class FavoriController extends Controller
             ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
 
-        dd($response);
-
         return view('testFavori',["response" => $response]);
     }
 
@@ -86,8 +83,6 @@ class FavoriController extends Controller
         $query = $client->request('POST','http://localhost:8001/api/favori/destroy',
             ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
-
-        dd($response);
 
         return view('testFavori',["response" => $response]);
     }
