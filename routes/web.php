@@ -133,9 +133,11 @@ Route::post('report/show/user','ReportController@showAllMyReports');
 
 // Cart
 Route::get('cart', 'CartController@index')->name('cart');
-Route::post('cart/remove','CartController@remove');
+Route::get('cart/remove','CartController@remove');
 Route::get('carte','CartController@add');
-Route::get('ccart','CartController@countCart');
+Route::get('ccart','CartController@countCart')->name('ccart');
+Route::get('qantmore','CartController@qantmore')->name('qantmore');
+Route::get('qantless','CartController@qantless')->name('qantless');
 
 
 // Profil
@@ -186,9 +188,7 @@ Route::get('aide',function(){
 
 /********************************************** Route Anthony pour stripe **********************************************/
 Route::post('addmoney/stripe', array('as' => 'addmoney.stripe','uses' => 'StripeController@stripe'));
-Route::get('pay', function () {
-    return view('Payment');
-});
+Route::get('stripe', 'StripeController@index');
 Route::get('payed', function () {
     return view('ValidatePayment');
 });

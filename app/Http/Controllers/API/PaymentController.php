@@ -38,13 +38,7 @@ class PaymentController extends Controller
     {
 
         $strip = Stripe::make(env('STRIPE_SECRET'));
-        /*$stripe = response()->json(['version' => $strip->getVersion(),
-                                    'apiKey' => $strip->getApiKey(),
-                                    'apiVersion' => $strip->getApiVersion(),
-                                    'idempotencykey' => null,
-                                    'accountId' => null,
-                                    'appInfo' => null
-        ]);*/
+
 
         $orderdate = explode('/', $request->get("ccExpiry"));
         try {
@@ -72,16 +66,13 @@ class PaymentController extends Controller
 
     public function chargePaymentStripe($request, $tokenfrompost)
     {
-        $i = 2;
-        $nbannounces = $request->get('nbannouncesorder');
-        $ordervalue = $request->get('announcesammount1');
-        while ($i != $nbannounces + 1) {
-            $ordervalue =  $ordervalue + $request->get("announcesammount$i");
-            $i++;
+        $announces = $request->get('announces');
+        $ordervalue = 0;
+        foreach ($announces as $announce){
+            $ordervalue =  $ordervalue + $announce['announcesammount'] * $announce['announce_quantity'];
         }
 
         $strip = Stripe::make(env('STRIPE_SECRET'));
-
 
         if (!isset($tokenfrompost)) {
             return redirect()->route('addmoney.paymentstripe');
@@ -89,7 +80,7 @@ class PaymentController extends Controller
         try {
             $charge = $strip->charges()->create([
                 'card' => $tokenfrompost['id'],
-                'currency' => 'eur',
+                'currency' => 'usd',
                 'amount' => $ordervalue,
             ]);
 
@@ -133,8 +124,8 @@ class PaymentController extends Controller
     {
 
 
-        $mytime = Carbon::now();
-        $i = 1;
+       /* $mytime = Carbon::now();
+        $i = 0;
         $id_orderunique = preg_replace("/[^0-9,.]/", "", $mytime);
         $id_user = $request->get('idUser');
         $id_order = "$id_user$id_orderunique";
@@ -156,7 +147,25 @@ class PaymentController extends Controller
                     'Announces_idAnnounce' => $Announces_idAnnounce
                 ]);
             $i = $i + 1;
+        }*/
+        $mytime = Carbon::now();
+        $announces = $request->get('announces');
+        $id_orderunique = preg_replace("/[^0-9,.]/", "", $mytime);
+        $id_user = $request->get('idUser');
+        $id_order = "$id_user$id_orderunique";
+        foreach ($announces as $announce){
+            DB::table('Payments')->insert(
+                ['payment_status' => $charge['status'],
+                    'payment_amount' => $announce['announcesammount'],
+                    'payment_currency' => $charge['currency'],
+                    'payment_date' => $mytime,
+                    'order_quantity' => $announce['quantityorderannounce'],
+                    'id_order' => $id_order,
+                    'Users_idUser' => $id_user,
+                    'Announces_idAnnounce' => $announce['idAnnounce']
+                ]);
         }
+
         if($charge['status'] == 'succeeded'){
             return response()->json([
                 'message' => 'Bien ajouté a la db et le paiment est bien passé',
