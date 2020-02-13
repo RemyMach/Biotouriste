@@ -45,7 +45,7 @@ class CartController extends Controller
 
 //        $announces = json_encode($announces);
 //        dd($announces);
-        return redirect('cart')->with('announces',$announces);
+        return redirect('cart');
      }
 
     public function remove(Request $request){
@@ -56,13 +56,16 @@ class CartController extends Controller
         session()->put('cart', $cart);
         $announces = session()->get('cart');
 //        dd($announces);
-        return redirect('cart')->with('announces',$announces);
+        return redirect('cart');
     }
 
 
     public function countCart(Request $request){
         $cart = session()->get('cart');
         $cart = count($cart);
+        if($cart === 0){
+            return redirect('cart');
+        }
         dd($cart);
     }
 }

@@ -183,7 +183,7 @@ Route::get('aide',function(){
 
 /********************************************** Route pour front test **********************************************/
 
-/********************************************** Route Anthony pour test stripe **********************************************/
+/********************************************** Route Anthony pour stripe **********************************************/
 Route::post('addmoney/stripe', array('as' => 'addmoney.stripe','uses' => 'StripeController@stripe'));
 Route::get('pay', function () {
     return view('Payment');
