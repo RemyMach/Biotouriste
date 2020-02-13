@@ -13,7 +13,7 @@
               <div class="line"></div>
               @if(isset($respsonse_login))
               <div id="register_error">
-              @foreach($response->error as $errors)
+              @foreach($respsonse_login->error as $errors)
               @foreach($errors as $error)
               <p>{{ $error }}</p>
               @endforeach

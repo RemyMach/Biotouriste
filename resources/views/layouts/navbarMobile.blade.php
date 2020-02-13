@@ -8,7 +8,6 @@
         <a href="{{ url('/') }}"><img src="../img/nav/logo.png" alt="Healthy's"></a>
       </div>
       <div class="col-4 text-center menu">
-        <button type="button" name="button" onclick="window.location.href='{{ url('favorite') }}'"><i class="fas fa-heart"></i></button>
         @if(Session::has('user'))
           <button type="button" name="button" onclick="window.location.href='{{ url('favorite') }}'"><i class="fas fa-heart"></i></button>
           <button type="button" name="button" onclick="window.location.href='{{ url('profil') }}'"><i class="fas fa-user"></i></button>
@@ -25,7 +24,7 @@
 </div>
 <div id="overlay" class="overlay text-center menu" style="display:none;" id="sidebar">
   <a href="{{ url('announces') }}">Announces</a>
-  <a href="{{ url('about') }}">About us</a>
-  <a href="{{ url('contact') }}">Contact</a>
+  <a href="{{ url('/#about') }}">About us</a>
+  <a href="{{ url('/#contact') }}">Contact</a>
   <a href="{{ url('faq') }}">FAQ</a>
 </div>
