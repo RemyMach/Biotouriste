@@ -57,7 +57,7 @@
               </div>
               @elseif(isset($response_register->message))
               <div id="register_error">
-                <p>{{ $message }}</p>
+                <p>{{ $response_register->message }}</p>
               </div>
               @endif
               <div class="register">

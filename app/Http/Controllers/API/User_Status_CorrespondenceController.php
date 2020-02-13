@@ -86,7 +86,7 @@ class User_Status_CorrespondenceController extends Controller
 
         if(!isset($current_status[0])){
 
-            User_Status_Correspondence::where('idUser_Status_Correspondence',$allStatus[0]->idUser_status_Correspondence)
+            User_Status_Correspondence::where('idUser_status_Correspondence',$allStatus[0]->idUser_status_Correspondence)
                 ->update(['default_status' => true]);
 
             return $allStatus[0];
