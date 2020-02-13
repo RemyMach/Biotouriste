@@ -11,12 +11,12 @@
               @csrf
               <h2>Login</h2>
               <div class="line"></div>
-              @if(isset($respsonse_login))
+              @if(isset($response_login))
               <div id="register_error">
-              @foreach($respsonse_login->error as $errors)
-              @foreach($errors as $error)
-              <p>{{ $error }}</p>
-              @endforeach
+              @foreach($response_login->error as $errors)
+                @foreach($errors as $error)
+                <p>{{ $error }}</p>
+                @endforeach
               @endforeach
               </div>
               @endif
@@ -46,9 +46,9 @@
               @if(isset($response_register))
               <div id="register_error">
               @foreach($response_register->error as $errors)
-              @foreach($errors as $error)
-              <p>{{ $error }}</p>
-              @endforeach
+                @foreach($errors as $error)
+                <p>{{ $error }}</p>
+                @endforeach
               @endforeach
               </div>
               @endif
