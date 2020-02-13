@@ -11,13 +11,17 @@
               @csrf
               <h2>Login</h2>
               <div class="line"></div>
-              @if(isset($response_login))
+              @if(isset($response_login->error))
               <div id="register_error">
-              @foreach($response_login->error as $errors)
-                @foreach($errors as $error)
-                <p>{{ $error }}</p>
+                @foreach($response_login->error as $errors)
+                  @foreach($errors as $error)
+                  <p>{{ $error }}</p>
+                  @endforeach
                 @endforeach
-              @endforeach
+              </div>
+              @elseif(isset($response_login->message))
+              <div id="register_error">
+                <p>{{ $response_login->message }}</p>
               </div>
               @endif
               <div class="login">
@@ -43,13 +47,17 @@
             <div class="card">
               <h2>Register</h2>
               <div class="line"></div>
-              @if(isset($response_register))
+              @if(isset($response_register->error))
               <div id="register_error">
-              @foreach($response_register->error as $errors)
-                @foreach($errors as $error)
-                <p>{{ $error }}</p>
+                @foreach($response_register->error as $errors)
+                  @foreach($errors as $error)
+                  <p>{{ $error }}</p>
+                  @endforeach
                 @endforeach
-              @endforeach
+              </div>
+              @elseif(isset($response_register->message))
+              <div id="register_error">
+                <p>{{ $message }}</p>
               </div>
               @endif
               <div class="register">
