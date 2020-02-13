@@ -49,7 +49,9 @@ Route::get('admin/user/{user}','UserController@destroy');
 
 //comment
 
-Route::get('comment','CommentController@create')->name('comment');;
+Route::get('comment','CommentController@CommentsOfASeller')->name('comment');
+
+Route::get('comment/create','CommentController@create');
 
 Route::post('comment/store/{idAnnounce}','CommentController@store');
 

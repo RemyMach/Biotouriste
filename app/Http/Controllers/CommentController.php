@@ -22,7 +22,9 @@ class CommentController extends Controller
      */
     public function index(Request $request)
     {
-        //
+
+
+        return view('comment.index');
     }
 
     /**
@@ -32,9 +34,8 @@ class CommentController extends Controller
      */
     public function create()
     {
-        $pomme = PaymentRepository::findPaymentsOfAUserForASeller(3,1);
-        dd($pomme);
-        //return view('testComment');
+
+        return view('comment.index');
     }
 
     public function store(Request $request, Client $client, $idAnnounce)
@@ -62,29 +63,28 @@ class CommentController extends Controller
      * @param  \App\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function CommentsOfASeller(Announce $announce, Request $request,Client $client)
+    public function CommentsOfASeller(Request $request,Client $client)
     {
         $data = request()->all();
 
         //vérification pour sécu api de qui fait l'appel
         $data['idUser'] = config('api.api_admin_id');
         $data['api_token'] = config('api.api_admin_token');
-        $data['idAnnounce'] = $announce->idAnnounce;
+        $data['idUserSeller'] = 3;
 
         $query = $client->request('POST','http://localhost:8001/api/comment/seller',
             ['form_params' => $data]);
 
         $response = json_decode($query->getBody()->getContents());
-
-        if($response->status === "400")
+        dd($response);
+        if($response->status == '400')
         {
-            return redirect($this->redirectTo);
+            return view('comment.index',['messageError' => $response->message]);
         }
-
 
         //retourne la page annonce avec un tableau contenant commentaires
         // et les users qui ont posté les commentaires
-        return view('testComment',['comments' => $response->comments]);
+        return view('comment.index',['comments' => $response->comments]);
     }
 
     /**

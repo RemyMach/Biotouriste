@@ -7,6 +7,8 @@ use App\Comment;
 use App\Http\Controllers\API\ApiTokenController;
 use App\Http\Controllers\API\NoApiClass\UsefullController;
 use App\Http\Controllers\Controller;
+use App\Repositories\CommentRepository;
+use App\Repositories\PaymentRepository;
 use App\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -26,49 +28,30 @@ class CommentController extends Controller
 
     public function CommentsOfASeller()
     {
-        $data = request()->all();
+        $this->request = request();
 
-        if(isset($data['idAnnounce'])){
-            //pour quand on est fait une recherche depuis l'id d'une annonce
-            $announce = Announce::findOrFail($data['idAnnounce']);
-            if(!$announce)
-            {
-                return response()->json([
-                    'error'   => 'The id of the announce doesn\'t exist',
-                    'status'    => '400',
-                ]);
-            }
+        if(!$this->request->has('idUserSeller')){
 
-            $announces = $announce->user->announces;
-        }else{
-            //pour quand on est dans le profil pour que le vendeur voit tous ses comments
-            $user = User::findOrFail($data['idUser']);
-            //normalement ne sert à rien car findorfail sort une 404
-            if(!$user)
-            {
-                return response()->json([
-                    'error'   => 'The id of the announce doesn\'t exist',
-                    'status'    => '400',
-                ]);
-            }
-        }
-
-        $comments = $this->collectCommentsFromAnnounces($announces);
-        if(!$comments)
-        {
             return response()->json([
-                'error'   => 'The seller doesn\'t has comments',
+                'message'   => 'The seller doesn\'t has comments',
                 'status'    => '200',
             ]);
         }
 
-        $users = $this->collectCommentsUser($comments);
+        $comments = CommentRepository::AllCommentsForASeller($this->request->input('idUserSeller'));
+
+        if(!$comments[0]){
+            return response()->json([
+                'message'   => 'The Seller doesn\'t has comments',
+                'status'  => '400',
+            ]);
+        }
 
         return response()->json([
-            'comments'  => $comments,
-            'users'     => $users,
-            'status'    => '200'
-            ]);
+            'comments'   => $comments,
+            'status'  => '200',
+        ]);
+
     }
 
     public function store(Request $request, UsefullController $usefullController)
@@ -82,6 +65,15 @@ class CommentController extends Controller
         {
             return $validator;
         }
+
+        if(!$this->verifyIfTheUserHasDoneAPaymentForSeller()){
+
+            return response()->json([
+                'status' => '400',
+                'message' => 'You can\'t do a comment because you don\'t have Payment for this Seller'
+            ]);
+        }
+
         $validData = $usefullController->keepKeysThatWeNeed($this->request->all(),['comment_subject','comment_note','comment_content']);
         $validData['Announces_idAnnounce'] = $this->request->input('idAnnounce');
         $validData['Users_idUser'] = $this->request->input('idUser');
@@ -235,5 +227,16 @@ class CommentController extends Controller
         }
 
         return $comment;
+    }
+
+    private function verifyIfTheUserHasDoneAPaymentForSeller(){
+
+        $Announce = Announce::find($this->request->input('idAnnounce'));
+        $payments = PaymentRepository::findPaymentsOfAUserForASeller($Announce->Users_idUser,$this->request->input('idUser'));
+        if(isset($payments[0])){
+
+            return true;
+        }
+        return false;
     }
 }
