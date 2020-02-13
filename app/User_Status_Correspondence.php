@@ -12,7 +12,7 @@ class User_Status_Correspondence extends Model
      *
      * @var string
      */
-    protected $table = 'User_status_Correspondences';
+    protected $table = 'User_Status_Correspondences';
 
     /**
      * The primary key for the model.
