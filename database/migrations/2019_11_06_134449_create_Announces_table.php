@@ -17,6 +17,7 @@ class CreateAnnouncesTable extends Migration {
 			$table->integer('idAnnounce', true);
 			$table->integer('announce_quantity');
 			$table->string('announce_name', 45);
+			$table->integer('announce_lot');
 			$table->boolean('announce_is_available');
 			$table->string('announce_measure', 25);
             $table->decimal('announce_lat', 13, 10);
@@ -29,7 +30,9 @@ class CreateAnnouncesTable extends Migration {
 			$table->string('announce_img', 45)->nullable();
 			$table->integer('products_idProduct')->index('fk_Announces_products1_idx');
 			$table->integer('Users_idUser')->index('fk_Announces_Users1_idx');
-		});
+            $table->timestamps();
+
+        });
 	}
 
 

@@ -84,7 +84,10 @@ class RegisterController extends Controller
 
         if($this->request->input('status_user') == 'Seller'){
 
-            $rules ['seller_description'] = 'required|string|max:255';
+            $rules['seller_description'] = 'required|string|max:255';
+            $rules['seller_adress'] = 'required|string|max:60';
+            $rules['seller_postal_code'] = 'required|integer|max:99999';
+            $rules['seller_adress'] = 'required|string|max:60';
         }
 
         return $rules;
@@ -119,6 +122,9 @@ class RegisterController extends Controller
             $this->status_User_idStatus_User = 3;
             //appel à une fonction qui crée dans User_Status_Correspondences une ligne avec le user et son statut
             $validData['seller_description'] = $this->request->input('seller_description');
+            $validData['seller_adress'] = $this->request->input('seller_adress');
+            $validData['seller_postal_code'] = $this->request->input('seller_postal_code');
+            $validData['seller_city'] = $this->request->input('seller_city');
         }else{
 
             $this->status_User_idStatus_User = 1;

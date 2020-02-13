@@ -14,13 +14,13 @@ class Discount_CodeController extends Controller
     private $sessionUser;
 
     public function __construct(){
-        $this->middleware('admin')->only(
+        /*$this->middleware('admin')->only(
            'store'
-        );
+        );*/
 
-        $this->middleware('SessionAuth')->only(
+        /*$this->middleware('SessionAuth')->only(
             'checkDiscountCodeIsValid','updateStatus','showDiscountCodeOfAUser'
-        );
+        );*/
     }
     /**
      * Display a listing of the resource.
@@ -50,17 +50,35 @@ class Discount_CodeController extends Controller
      */
     public function store(Request $request, Client $client)
     {
+        $data = request()->all();
+
+
+        $data['idUser'] = config('api.api_admin_id');
+        $data['api_token'] = config('api.api_admin_token');
+
+
+        $query = $client->request('POST','http://localhost:8001/api/discount_code/store',
+            ['form_params' => $data]);
+
+        $response = json_decode($query->getBody()->getContents());
+
+        dd($response);
+
+        return view('testDiscount_code',["response" => $response]);
+    }
+
+    public function testStore(Request $request, Client $client)
+    {
         //$data = request()->all();
         $data['discount_code_amount'] = 20;
-        $data['expiration_time'] = '30days';
-        $data['periode_minimum_amount'] = '30days';
-        $data['OneOrMultipleUser'] = 'multiple';
-        $data['idUserDiscount_codeBeneficiary'] = 1;
         $data['minimum_amount'] = 20;
+        $data['expiration_time'] = '30days';
+        $data['periode_minimum_amount'] = '20days';
+        $data['OneOrMultipleUser'] = 'one';
+        $data['idUserDiscount_codeBeneficiary'] = 2;
 
-        $UserIdAndSumPaymentAmount = PaymentRepository::filterPaymentDateAndPaymentAmountByUser('2019-11-24',30);
+        $UserIdAndSumPaymentAmount = PaymentRepository::filterPaymentDateAndPaymentAmountByUser('2019-09-24',30);
 
-        dd($UserIdAndSumPaymentAmount);
         $data['idUser'] = config('api.api_admin_id');
         $data['api_token'] = config('api.api_admin_token');
 
