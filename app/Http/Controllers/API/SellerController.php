@@ -36,6 +36,9 @@ class SellerController extends Controller
 
         $data['seller_product_bio'] = false;
         $data['seller_verify'] = false;
+        $data['seller_city'] = $validData['seller_city'];
+        $data['seller_adress'] = $validData['seller_adress'];
+        $data['seller_postal_code'] = $validData['seller_postal_code'];
         $data['seller_description'] = $validData['seller_description'];
         $data['Users_idUser'] = $user->idUser;
 
@@ -105,12 +108,16 @@ class SellerController extends Controller
 
         $sellerCommentsAvgNotesCountComments = $this->CalculateAvgAndCountCommentsForAUser($SellerComments);
 
+        $fiveBetters = $this->TakeFiveBetterSellers($sellerCommentsAvgNotesCountComments);
+
+
         $sellerCommentsAvgNotesCountCommentsOrderByNotes = $this->OrderByNotesDescending($sellerCommentsAvgNotesCountComments);
 
         return response()->json([
             'message'   => 'The description has been update',
             'status'    => '200',
             'arrays'    =>  $SellerComments,
+            'fiveBetters' => $fiveBetters,
             'note'      => $sellerCommentsAvgNotesCountComments,
             'sellerComments'       => $sellerCommentsAvgNotesCountCommentsOrderByNotes,
         ]);
@@ -137,6 +144,10 @@ class SellerController extends Controller
             }
             $sellerCommentsAvgNotesCountComments[$i]['nombreNote'] = count($array);
             $sellerCommentsAvgNotesCountComments[$i]['moyenne'] = $note/count($array);
+            if(!isset($sellerCommentsAvgNotesCountComments[$i]['user'])){
+                $user = User::find($sellerCommentsAvgNotesCountComments[$i][0]->Users_idUser);
+                $sellerCommentsAvgNotesCountComments[$i]['user'] = $user;
+            }
             $i++;
         }
 
@@ -204,7 +215,7 @@ class SellerController extends Controller
             return response()->json([
                 'message'   => 'The request is not good',
                 'error'     => $validator->errors(),
-                'status'    => "400"
+                'status'    => '400'
             ]);
         }
 
@@ -212,6 +223,21 @@ class SellerController extends Controller
             'message'   => 'The request is good',
             'status'    => '200'
         ]);
+    }
+
+    private function TakeFiveBetterSellers($array){
+        $i=0;
+        $fiveBetters = [];
+        foreach($array as $value){
+            if($i == 5){
+                break;
+            }
+            $fiveBetters[] = $value;
+            $i++;
+        }
+
+        return $fiveBetters;
+
     }
 
 }

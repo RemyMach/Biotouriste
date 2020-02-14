@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Message;
 use Illuminate\Support\Facades\DB;
 use JasonGuru\LaravelMakeRepository\Repository\BaseRepository;
 //use Your Model
@@ -17,7 +18,7 @@ class MessageRepository extends BaseRepository
      */
     public function model()
     {
-        //return YourModel::class;
+        return Message::class;
     }
 
     public static function getAllMessagesOfATouristControllerForAnAnnounce($idAnnounce, $idUser){

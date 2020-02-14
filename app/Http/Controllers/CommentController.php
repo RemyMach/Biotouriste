@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Announce;
 use App\Comment;
+use App\Repositories\PaymentRepository;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
@@ -31,10 +32,12 @@ class CommentController extends Controller
      */
     public function create()
     {
-        return view('testComment');
+        $pomme = PaymentRepository::findPaymentsOfAUserForASeller(3,1);
+        dd($pomme);
+        //return view('testComment');
     }
 
-    public function store(Request $request, Client $client)
+    public function store(Request $request, Client $client, $idAnnounce)
     {
 
         $this->user = $request->session()->get('user');
@@ -42,6 +45,7 @@ class CommentController extends Controller
         $data = request()->all();
         $data['idUser'] = $this->user->idUser;
         $data['api_token'] = $this->user->api_token;
+        $data['idAnnounce'] = $idAnnounce;
         $query = $client->request('POST','http://localhost:8001/api/comment/store',
             ['form_params' => $data]);
 
@@ -127,6 +131,7 @@ class CommentController extends Controller
 
         return back()->with('le commentaire a bien été détruit');
     }
+
     public function showYourPostedComments(Request $request, Client $client)
     {
         $this->user = $request->session()->get('user');

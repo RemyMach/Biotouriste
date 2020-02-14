@@ -17,6 +17,9 @@ class CreateSellersTable extends Migration {
 			$table->integer('idSeller', true);
 			$table->boolean('seller_product_bio')->nullable();
 			$table->boolean('seller_verify')->nullable();
+			$table->string('seller_adress', 60)->nullable();
+			$table->integer('seller_postal_code')->nullable();
+			$table->string('seller_city', 60)->nullable();
 			$table->text('seller_description')->nullable();
 			$table->integer('Users_idUser')->index('fk_Sellers_Users1_idx');
 		});

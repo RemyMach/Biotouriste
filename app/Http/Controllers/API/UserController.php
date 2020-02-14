@@ -2,30 +2,40 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\API\ApiTokenController;
+use App\Http\Controllers\API\NoApiClass\UsefullController;
 use App\Http\Resources\User as UserResource;
+use App\Repositories\PaymentRepository;
+use App\Repositories\StatusUserRepository;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
 
+    private $user;
+    private $request;
+
     public function __construct(){
         $this->middleware('apiMergeJsonInRequest');
-
-        $this->middleware('apiTokenAndIdUserExistAndMatch')->only(
-            'show','updateProfile','updatePassword','destroy'
-        );
-        $this->middleware('apiAdmin')->only(
-            'destroy','index'
-        );
+        $this->middleware('apiTokenAndIdUserExistAndMatch')->only('show','updateProfile','updatePassword','destroy','profil');
+        $this->middleware('apiAdmin')->only('destroy','index');
     }
 
-    private $user;
+    public function profil(Request $request){
+        $this->request = $request;
+        $data = $request->all();
+        $profil = StatusUserRepository::getUserAndAlldata($data['idUser']);
+        $payments = PaymentRepository::findPaymentsForProfil($data['idUser']);
+        return response()->json([
+            'payments'   => $payments,
+            'profil'     => $profil,
+            'status'    => '200',
+        ]);
+    }
 
     public function index(ApiTokenController $apiTokenController)
     {
@@ -42,12 +52,10 @@ class UserController extends Controller
         return response()->json($response, 200);*/
     }
 
-    public function show()
+    public function show(Request $request)
     {
-        $data = request()->all();
-        $idUser = $data['idUser'];
-        $api_token = $data['api_token'];
-
+        $this->request = $request;
+        $idUser = $this->request->get('idUser');
 
         $user =  User::findorFail($idUser);
 
@@ -57,16 +65,17 @@ class UserController extends Controller
             ]);
     }
 
-    public function updateProfile()
+    public function updateProfile(Request $request, UsefullController $usefullController)
     {
-        $data = request()->all();
+        $this->request = $request;
 
-        $validator = Validator::make($data, [
-            'user_name' => ['required','string', 'max:45'],
-            'user_surname' => [ 'required','string', 'max:45'],
-            'email' => ['required','string', 'email', 'max:255', 'unique:users'],
-            'user_postal_code' => ['required','integer'],
-            'user_phone' => ['required','unique:users'],
+
+        $validator = Validator::make($this->request->all(), [
+            'user_name' => ['required', 'string', 'max:45'],
+            'user_surname' => ['required', 'string', 'max:45'],
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'user_postal_code' => ['required', 'integer'],
+            'user_phone' => ['required','regex:/^(\d\d(\s)?){4}(\d\d)$/'],
             'user_img' => ['string'],
         ]);
 
@@ -75,38 +84,52 @@ class UserController extends Controller
             return response()->json([
                 'message'   => 'The request is not good',
                 'error'     => $validator->errors(),
-                'status'    => "400"
+                'status'    => '400'
             ]);
         }
 
-        if(isset($data['password']) || ($data['remember_token']) || $data['Status_User_idStatus_User'] || $data['api_token'])
-        {
-            unset($data['password']);
-            unset($data['remember_token']);
-            unset($data['Status_User_idStatus_User']);
-            unset($data['api_token']);
+        $data = $this->checkIfEmailAndPasswordExisting($this->request->all());
+
+        if(!$data){
+
+            return response()->json([
+                'message'   => 'The Email of Phone exist',
+                'status'    => '400',
+            ]);
         }
 
-        $user = User::findorFail('idUser',$data['idUser'])->first();
+
+        $data = $usefullController->keepKeysThatWeNeed($data,[
+            'user_name','user_surname','email','user_postal_code','user_phone','user_img'
+        ]);
+
+
+        $user = User::find($this->request->input('idUser'));
+
 
         $user->update($data);
+
+        $userUpdate = User::find($this->request->input('idUser'));
 
         return response()->json([
             'message'   => 'The informations are update',
             'status'    => '200',
-            'user'      => $data
+            'user'      => $userUpdate
         ]);
 
 
     }
 
-    public function updatePassword()
+    public function updatePassword(Request $request)
     {
 
+        $this->request = $request;
         $data = request()->all();
 
-        $validator = Validator::make($data, [
+
+        $validator = Validator::make($this->request->all(), [
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'oldPassword' => ['required', 'string']
         ]);
 
         if($validator->fails())
@@ -114,20 +137,28 @@ class UserController extends Controller
             return response()->json([
                 'message'   => 'The request is not good',
                 'error'     => $validator->errors(),
-                'status'    => "400"
+                'status'    => '400'
             ]);
         }
 
-        $validArray = $data['password'];
+        $user = User::findOrFail($this->request->input('idUser'));
 
-        $user = User::findorFail('idUser',$requestParameters['idUser'])->first();
+        if(!$this->verifyPassword($user,$this->request->get('oldPassword')))
+        {
+            return response()->json([
+                'message'   => 'Your password is not correct',
+                'status'    => '400'
+            ]);
+        }
 
-        $user->update($validArray);
+        $newPassword = Hash::make($this->request->get('password'));
+
+        $user->update(['password' => $newPassword]);
 
         return response()->json([
-            'message'   => 'The informations are update',
+            'message'   => 'The password has been update',
             'status'    => '200',
-            'user'      => $validArray
+            'user'      => $user
         ]);
 
     }
@@ -161,6 +192,45 @@ class UserController extends Controller
             return false;
         }
 
+        return true;
+    }
+
+    private function checkIfEmailAndPasswordExisting($data){
+
+        $emails = DB::table('Users')->select('email')->get();
+        $email = DB::table('Users')->select('email')->where('idUser','=',$data['idUser'])->get();
+        $phones = DB::table('Users')->select('user_phone')->get();
+        $phone = DB::table('Users')->select('user_phone')->where('idUser','=',$data['idUser'])->get();
+
+        foreach($emails as $key => $value){
+            if($data['email'] === $email[0]->email){
+                unset($data['email']);
+                break;
+            }elseif($data['email'] === $value->email ){
+                return false;
+            }
+        }
+
+        foreach($phones as $key => $value){
+            if($data['user_phone'] === $phone[0]->user_phone){
+                unset($data['user_phone']);
+                break;
+            }elseif($data['user_phone'] === $value->user_phone ){
+                return false;
+            }
+        }
+
+        return $data;
+    }
+
+    private function verifyPassword($user,$requestPassword)
+    {
+        $validateCredentials = Hash::check($requestPassword,$user->password);
+
+        if(!$validateCredentials)
+        {
+            return false;
+        }
         return true;
     }
 }

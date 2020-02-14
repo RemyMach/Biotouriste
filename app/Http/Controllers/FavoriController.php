@@ -31,8 +31,11 @@ class FavoriController extends Controller
             ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
 
-
-        return view('testFavori',["response" => $response]);
+        if ($response->status == '400') {
+          return view('favorite',["response" => $response]);
+        } else {
+          return view('favoriteFail',["response" => $response]);
+        }
 
     }
 
@@ -54,9 +57,11 @@ class FavoriController extends Controller
 
 
     public function store(Request $request, Client $client){
+
         $this->sessionUser = $request->session()->get('user');
 
         $data = request()->all();
+        //$data['idAnnounce'] = 5;
         $data['idUser']     = $this->sessionUser->idUser;
         $data['api_token']  = $this->sessionUser->api_token;
 
@@ -64,8 +69,7 @@ class FavoriController extends Controller
             ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
 
-        return response()->json($response);
-
+        return view('testFavori',["response" => $response]);
     }
 
     public function destroy(Request $request, Client $client)
@@ -79,8 +83,6 @@ class FavoriController extends Controller
         $query = $client->request('POST','http://localhost:8001/api/favori/destroy',
             ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
-
-        dd($response);
 
         return view('testFavori',["response" => $response]);
     }

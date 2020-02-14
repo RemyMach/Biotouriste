@@ -49,10 +49,9 @@ class MessageController extends Controller
 
         $data = request()->all();
 
-        /*test
-         * $data['message_subject'] = 'this is a message about your shitty announce';
-        $data['message_content'] = 'Your announce is like a big shit';
-        $data['idAnnounce'] = 2;*/
+        /*$data['message_subject'] = 'this is a message about your shitty announce';*/
+        $data['message_content'] = 'Your announce is like a big caca';
+        $data['idAnnounce'] = 1;
         $data['idUser']     = $this->sessionUser->idUser;
         $data['api_token']  = $this->sessionUser->api_token;
         $query = $client->request('POST','http://localhost:8001/api/message/store',
@@ -68,8 +67,6 @@ class MessageController extends Controller
     {
         $this->sessionUser = $request->session()->get('user');
 
-        //$data = request()->all();
-        $data['idAnnounce'] = 2;
         $data['idUser']     = $this->sessionUser->idUser;
         $data['api_token']  = $this->sessionUser->api_token;
         $query = $client->request('POST','http://localhost:8001/api/message/showMessagesOfATouristController',
@@ -85,8 +82,6 @@ class MessageController extends Controller
     {
         $this->sessionUser = $request->session()->get('user');
 
-        $data = request()->all();
-        $data['idAnnounce'] = 2;
         $data['idUser']     = $this->sessionUser->idUser;
         $data['api_token']  = $this->sessionUser->api_token;
 

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API;
 use App\Check;
 use App\Http\Controllers\API\NoApiClass\UsefullController;
 use App\Http\Controllers\Controller;
+use App\Repositories\CheckRepository;
+use App\Repositories\StatusUserRepository;
 use App\Seller;
 use App\User;
 use DateTime;
@@ -16,6 +18,7 @@ class CheckController extends Controller
 {
     private $user;
     private $check;
+    private $checks;
     private $validData;
     private $requestData;
     private $request;
@@ -28,7 +31,7 @@ class CheckController extends Controller
         );
 
         $this->middleware('apiController')->only(
-            'store','showChecksOfAController','controllerSendACompleteCheck'
+            'showChecksOfAController','controllerSendACompleteCheck'
         );
 
         $this->middleware('apiAdmin')->only(
@@ -36,8 +39,9 @@ class CheckController extends Controller
         );
     }
 
-    public function store()
+    public function store(Request $request)
     {
+        $this->requestData = $request->all();
         $data = request()->all();
 
         if(!$this->verificationIfCheckIsForASeller($data['idSeller'])){
@@ -66,6 +70,19 @@ class CheckController extends Controller
 
     }
 
+    public function showAllUnDoneChekcs(Request $request){
+
+        $this->request = $request;
+
+        $checksUnDone = CheckRepository::selectCheckUndone();
+
+
+        return response()->json([
+            'status'    => '200',
+            'checks'     => $checksUnDone,
+        ]);
+    }
+
     public function showChecksOfAController()
     {
         $data = request()->all();
@@ -77,13 +94,15 @@ class CheckController extends Controller
             ]);
         }
 
+
         $arrayChecks = $this->statusChecks();
 
         //utile d'avoir les historique des check
         return response()->json([
-            'checks_to_do'  => $arrayChecks['checkNotVerify'],
-            'checks_done'     => $arrayChecks['checkVerify'],
-            'status'    => '200'
+            'checks_waiting'        => $arrayChecks['checkWaiting'],
+            'checks_In_progress'    => $arrayChecks['checkInProgress'],
+            'checks_done'           => $arrayChecks['checkDone'],
+            'status'                => '200'
         ]);
     }
 
@@ -99,7 +118,6 @@ class CheckController extends Controller
         }
 
         $validator = $this->validateCheck();
-
         if($validator->original['status'] == '400') {
             return $validator;
         }
@@ -112,20 +130,19 @@ class CheckController extends Controller
         //status
         $validData['check_status_verification'] = 'done';
 
-        $check = Check::update($validData);
+        $check = Check::find($this->requestData['idCheck'])->update($validData);
 
         return response()->json([
             'message'   => 'Your Check has been update',
             'status'    => '200',
-            'check'     => $check,
         ]);
 
     }
 
     /**The Controller decline the offer of the Admin**/
-    public function UpdateStatusVerification()
+    public function UpdateStatusVerification(Request $request)
     {
-        $this->requestData = request()->all();
+        $this->requestData = $request->all();
 
         if(!$this->verifyOwnerCheck()){
             return response()->json([
@@ -154,12 +171,14 @@ class CheckController extends Controller
     {
         $this->request = $request;
 
+
         if(!$this->verifyIfCheckExist()){
             return response()->json([
                 'message'   => 'The Check doesn\'t exists',
                 'status'    => '400',
             ]);
         }
+
 
         $this->check->delete();
 
@@ -183,11 +202,9 @@ class CheckController extends Controller
 
     private function collectChecks($idUser)
     {
-        $this->user = User::findOrFail($idUser);
+        $this->checks = CheckRepository::AllChecksAndSellerInformation($idUser);
 
-        $checks = $this->user->checks;
-
-        if(!$checks){
+        if(!isset($this->checks[0])){
             return false;
         }
 
@@ -196,23 +213,28 @@ class CheckController extends Controller
 
     private function statusChecks()
     {
-        $checkNotVerify = [];
         $checkVerify = [];
-        foreach ($this->user->checks as $check){
+        $checkInProgress = [];
+        $checkWaiting = [];
+        foreach ($this->checks as $check){
 
             if($check->check_status_verification == 'done'){
 
                 $checkVerify[] = $check;
             }
-            else{
+            elseif($check->check_status_verification == 'In progress'){
 
-                $checkNotVerify[] = $check;
+                $checkInProgress[] = $check;
+            }
+            elseif($check->check_status_verification == 'waiting'){
+                $checkWaiting[] = $check;
             }
         }
 
         return [
-            'checkNotVerify'    => $checkNotVerify,
-            'checkVerify'       => $checkVerify
+            'checkDone'         => $checkVerify,
+            'checkInProgress'   => $checkInProgress,
+            'checkWaiting'      => $checkWaiting
         ];
     }
 
@@ -224,7 +246,7 @@ class CheckController extends Controller
             'check_customer_service'    => 'required|integer|max:5',
             'check_state_place'         => 'required|integer|max:5',
             'check_quality_product'     => 'required|integer|max:5',
-            'check_bio_status'          => 'required',
+            'check_bio_status'          => ['required','regex:/^(bio|not bio)$/'],
         ]);
 
         if($validator->fails()) {
@@ -260,7 +282,7 @@ class CheckController extends Controller
             return false;
         }
 
-        if($this->requestData['idUser'] != $this->check->user->id)
+        if($this->requestData['idUser'] != $this->check->user->idUser)
         {
             return false;
         }
@@ -272,14 +294,14 @@ class CheckController extends Controller
     {
         if(isset($this->requestData['status']))
         {
-            $this->validNewStatusValue();
+            return $this->validNewStatusValue();
         }
         return false;
     }
 
     private function validNewStatusValue(){
 
-        if($this->requestData['status'] == 'decline' || $this->requestData['status'] == 'accept'){
+        if($this->requestData['status'] == 'decline' || $this->requestData['status'] == 'In progress'){
             return true;
         }
         return false;
@@ -297,7 +319,9 @@ class CheckController extends Controller
     {
         $user = User::findOrFail($data['idUser']);
 
-        if(preg_match('#admin#i',$user->status['status_user_label'])){
+        $current_status = StatusUserRepository::getDefaultStatus($user->idUser);
+
+        if(preg_match('#admin#i',$current_status[0]->status_user_label)){
             //controller car c'est l'admin dans un formulaire qui indique qui fera le control
             $this->validData['Users_idUser'] = $data['idController'];
             //status

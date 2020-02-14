@@ -11,13 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 //Auth::routes();
-
-Route::get('home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index');
 
 Route::get('users','UserController@index')->name('users');
 
@@ -27,6 +22,7 @@ Route::get('testLogin','Auth\LoginController@testLogin');
 Route::get('login','Auth\LoginController@showLoginForm')->name('login');
 
 Route::post('logout','Auth\LoginController@logout')->name('logout');
+Route::get('logout','Auth\LoginController@logout')->name('logout');
 
 Route::get('register','Auth\RegisterController@showRegistrationForm')->name('register');
 
@@ -45,7 +41,9 @@ Route::post('password/email','Auth\ForgotPasswordController@sendResetLinkEmail')
 
 Route::get('user/{token}','UserController@show');
 
-Route::get('user/update/{user}','UserController@updateProfile');
+Route::post('user/update','UserController@updateProfile');
+
+Route::post('user/updatePassword','UserController@updatePassword');
 
 Route::get('admin/user/{user}','UserController@destroy');
 
@@ -53,7 +51,7 @@ Route::get('admin/user/{user}','UserController@destroy');
 
 Route::get('comment','CommentController@create')->name('comment');;
 
-Route::post('comment/store','CommentController@store');
+Route::post('comment/store/{idAnnounce}','CommentController@store');
 
 Route::get('comment/announce/{announce}','CommentController@CommentsOfASeller');
 
@@ -67,15 +65,19 @@ Route::get('check','CheckController@create');
 
 Route::get('check/status/{check}/{status}','CheckController@updateStatus');
 
-Route::post('check/storeForAnAdmin','CheckController@storeForAnAdmin');
+Route::get('check/showForm/{idCheck}/{nameSeller}','CheckController@displayFormCheckregister');
+
+Route::post('check/statusVerification/{idCheck}','CheckController@UpdateStatusVerification');
 
 Route::post('check/storeForAController','CheckController@storeForAController');
 
 Route::post('check/showChecksOfAController','CheckController@showChecksOfAController');
 
+Route::post('admin/checks','CheckController@storeForAnAdmin');
+
 Route::post('check/controllerSendACompleteCheck','CheckController@controllerSendACompleteCheck');
 
-Route::post('check/destroy','CheckController@destroy');
+Route::post('check/destroy/{idCheck}','CheckController@destroy');
 
 Route::get('myMap','AnnounceController@printMap');
 
@@ -89,13 +91,15 @@ Route::post('contact/storeForAnAnonymous','ContactController@storeForAnAnonymous
 
 Route::post('contact/storeForAnAuthentifiedUser','ContactController@storeForAnAnonymous');
 
-Route::post('contact/destroy','ContactController@destroy');
+Route::get('contact/destroy/{idContact}','ContactController@destroy');
 
 Route::post('contact/user','ContactController@ContactsOfAUser');
+
 
 //Discount_code
 
 Route::get('discountCode','Discount_CodeController@store');
+Route::post('discountCode','Discount_CodeController@store');
 
 Route::post('discountCode/updateStatus','Discount_CodeController@updateStatus');
 
@@ -115,11 +119,11 @@ Route::post('favori/destroy','FavoriController@destroy');
 
 //Messages
 
-Route::post('message/store','MessageController@store');
+Route::get('message/store','MessageController@store');
 
-Route::post('message/show/seller','MessageController@showMessagesOfASeller');
+Route::get('message/show/seller','MessageController@showMessagesOfASeller');
 
-Route::post('message/show/User','MessageController@showMessagesOfATouristController');
+Route::get('message/show/User','MessageController@showMessagesOfATouristController');
 
 //Report
 
@@ -131,7 +135,7 @@ Route::post('report/show/user','ReportController@showAllMyReports');
 Route::get('cart', 'CartController@index');
 
 // Profil
-Route::get('profil', 'ProfilController@index');
+Route::get('profil', 'ProfilController@profil');
 Route::get('message', 'ProfilController@message');
 Route::get('favorite', 'ProfilController@favorite');
 
@@ -161,10 +165,7 @@ Route::get('seller/testSelect','SellerController@testSelectSellersByCommentsNote
 
 /********************************************** Route pour front test **********************************************/
 
-
 Route::get('register','UserController@profil');
-
-
 
 Route::get('messages','MessageController@index');
 
@@ -195,13 +196,26 @@ Route::post('filterByCategorie','AnnounceController@filterByCategorie');
 
 Route::post('filterByCity','AnnounceController@filterByCity');
 
-Route::get('announce/store','AnnounceController@store');
+Route::post('announce/store','AnnounceController@store');
 
-Route::get('announce/delete','AnnounceController@delete');
+Route::post('announce/delete','AnnounceController@delete');
 
-Route::get('announce/update','AnnounceController@update');
+Route::post('announce/update','AnnounceController@update');
 
 Route::get('announce/historySeller','AnnounceController@selectHistorySeller');
 
 
-/********************************************** Fin Routes Announces **********************************************/
+//Admin
+
+Route::get('admin','AdminController@index');
+
+Route::get('admin/checks','AdminController@showChecks');
+
+//Controller
+
+Route::get('controller','ControllerController@index');
+
+
+
+
+//Route::post('admin','AdminController@index');
