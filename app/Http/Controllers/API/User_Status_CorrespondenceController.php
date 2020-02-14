@@ -227,7 +227,7 @@ class User_Status_CorrespondenceController extends Controller
                 ]);
             }
 
-            User_Status_Correspondence::where('idUser_Status_Correspondence',$this->status->idUser_status_Correspondence)
+            User_Status_Correspondence::where('idUser_status_Correspondence',$this->status->idUser_status_Correspondence)
                 ->update(['default_status' => true]);
 
 
@@ -253,7 +253,7 @@ class User_Status_CorrespondenceController extends Controller
             return false;
         }
 
-        User_Status_Correspondence::where('idUser_Status_Correspondence',$currentDefaultStatus[0]->idUser_status_Correspondence)
+        User_Status_Correspondence::where('idUser_status_Correspondence',$currentDefaultStatus[0]->idUser_status_Correspondence)
             ->update(['default_status' => false]);
 
         return true;

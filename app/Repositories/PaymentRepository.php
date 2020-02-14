@@ -55,4 +55,13 @@ class PaymentRepository extends BaseRepository
             ->orderBy('Payments.payment_date')
             ->get();
     }
+
+    public static function findPaymentsOfAUserForASeller($idUserSeller,$idUserTourist){
+
+        return DB::table('Payments')
+            ->join('Announces','Payments.Announces_idAnnounce','Announces.idAnnounce')
+            ->where('Payments.Users_idUser','=',$idUserSeller)
+            ->where('Announces.Users_idUser','=',$idUserTourist)
+            ->get();
+    }
 }

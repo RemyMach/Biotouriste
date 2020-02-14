@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
+
+    private $request;
     public function __construct()
     {
         $this->middleware('apiMergeJsonInRequest');
@@ -72,17 +74,17 @@ class CommentController extends Controller
     public function store(Request $request, UsefullController $usefullController)
     {
 
-        $data = request()->all();
+        $this->request = $request;
 
-        $validator = $this->validateComment($data);
+        $validator = $this->validateComment($this->request->all());
 
         if($validator->original['status'] == '400')
         {
             return $validator;
         }
-        $validData = $usefullController->keepKeysThatWeNeed($data,['comment_subject','comment_note','comment_content']);
-        $validData['Announces_idAnnounce'] = 1;
-        $validData['Users_idUser'] = (int) $requestParameters['idUser'];
+        $validData = $usefullController->keepKeysThatWeNeed($this->request->all(),['comment_subject','comment_note','comment_content']);
+        $validData['Announces_idAnnounce'] = $this->request->input('idAnnounce');
+        $validData['Users_idUser'] = $this->request->input('idUser');
         $validData['comment_note'] = (int) $validData['comment_note'];
         //return $validData;
         $comment = Comment::create($validData);
@@ -181,7 +183,8 @@ class CommentController extends Controller
         $validator = Validator::make($data, [
             'comment_subject'   => 'required|string|max:50',
             'comment_note'      => 'required|integer|max:5',
-            'comment_content'   => 'required|min:5|max:200'
+            'comment_content'   => 'required|min:5|max:200',
+            'idAnnounce'        => 'required|integer',
         ]);
 
         if($validator->fails())
