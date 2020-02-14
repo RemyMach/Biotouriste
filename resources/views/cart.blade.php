@@ -1,79 +1,72 @@
 @include('layouts.header')
 @include('layouts.navbarDesktop')
 @include('layouts.navbarMobile')
-@if(session()->has('user'))
+
 <div id="cart">
-  <div class="row" style="margin:0;">
-    <div class="col-md-12" style="padding:0;">
-      <div class="cart_banner">
-        <div class="row" style="margin:0;">
-          <div class="col-md-12 text-center">
-            <h2>Cart</h2>
-            <div class="line"></div>
+  <div class="col-md-12 text-center">
+    <div class="row" style="margin:0;">
+      <div class="col-xs-12 col-sm-12 col-md-10 offset-md-1 text-center">
+        <div class="card">
+          <div id="product">
+            @if($announces != null)
+
+            <h3>Cart</h3>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Order summary</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Total</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                @foreach($announces as $key => $announce)
+
+                <tbody>
+                  <tr>
+                    <td><img src="../img/product/blueberry.png" alt="">{{ $announce['announce_name'] }}</td>
+                    <td>
+
+                      <form action="qantmore" method="get">
+                        <input type="hidden" value="{{ $key }}" name="index">
+                      <button class="+button" value="" onclick="window.location.href='{!!route('qantmore')!!}'">+</button>
+                      </form>
+                      <form action="qantless" method="get">
+                        <input type="hidden" value="{{ $key }}" name="index">
+                      <button class="-button" onclick="window.location.href='{!!route('qantless')!!}'">-</button>
+                      </form>
+                      <form class="" action="cart/remove" method="get">
+                      {{ $announce['announce_quantity'] }}
+                    </td>
+                    <td>{{ $announce['announce_price'] }}$</td>
+                    <td>{{ $total = $announce['announce_quantity'] * $announce['announce_price'] }}$</td>
+                    <input type="hidden" value="{{ $key }}" name="index">
+{{--                      <input type="hidden" value="{{ $announce['announce_quantity'] }}" name="index">--}}
+                    <td><button type="submit"  name="button">Remove</button></td>
+                    </form>
+                  </tr>
+
+                </tbody>
+                @endforeach
+              </table>
           </div>
         </div>
-      </div>
-      <div class="cart_container text-center">
-        <div class="cart_item">
-          <form class="" action="" method="post">
-          <div class="row" style="margin:0;">
-            <div class="col-md-4">
-              <div class="cart_pic" style="background-image:url('/img/home/block-3.png')"></div>
-            </div>
-            <div class="col-md-4 text-left">
-              <div class="cart_name">
-                <h2></h2>
-              </div>
-              <div class="cart_desc">
-                <p></p>
-              </div>
-              <div class="cart_price">
-                <p></p>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="cart_quantity">
-                <input type="text" name="" value="150">
-                <select class="" name="">
-                  <option value="gm">GM</option>
-                  <option value="kg">KG</option>
-                </select>
-              </div>
-              <div class="cart_remove">
-                <button type="button" name="button">Remove</button>
-              </div>
+
+
+        <div class="cta">
+          <div class="row">
+            <div class="col-md-12">
+              <button type="button" name="button" onclick="window.location.href='{{ url('announces') }}'">Continue shopping</button>
+              <button type="submit" name="button" onclick="window.location.href='{!!route('ccart')!!}'" formmethod="post">Proceed to payment</button>
+              @else
+                <h2>Your cart is empty</h2>
+              @endif
             </div>
           </div>
-        </form>
-        </div>
-        <div class="form-group">
-          <button type="button" name="button" onclick="">Continue shopping</button>
-          <input type="submit" name="" value="Proceed to payment">
         </div>
       </div>
     </div>
   </div>
 </div>
-@else
-<div id="favorite">
-  <div class="row" style="margin:0;">
-    <div class="col-md-12" style="padding:0;">
-      <div class="favorite_banner">
-        <div class="row" style="margin:0;">
-          <div class="col-md-12 text-center">
-            <h2>Cart</h2>
-            <div class="line"></div>
-          </div>
-        </div>
-      </div>
-      <div class="favorite_container text-center">
-        <h3>Please login to access your cart</h3>
-        <p>Go to login page</p>
-        <button type="button" name="button" onclick="window.location.href='{{ url('register#login') }}'">Login</button>
-        <p>Or create an account <a href="{{ url('register#register')}}">here</a> </p>
-      </div>
-    </div>
-  </div>
-</div>
-@endif
 @include('layouts.footer')

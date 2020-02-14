@@ -11,7 +11,7 @@ class TypeMeasureTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('Types_Measure')->insert(array(
+        DB::table('Types_measure')->insert(array(
             array('Type_measure_label' => 'Unité'),
             array('Type_measure_label' => 'Kilogramme'),
             array('Type_measure_label' => 'Litre'),

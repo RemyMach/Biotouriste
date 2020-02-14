@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\ReportCategories;
 use Illuminate\Support\Facades\DB;
 use JasonGuru\LaravelMakeRepository\Repository\BaseRepository;
 //use Your Model
@@ -17,7 +18,7 @@ class ReportCategoriesRepository extends BaseRepository
      */
     public function model()
     {
-        //return YourModel::class;
+        return ReportCategories::class;
     }
 
     public static function getIdCategorieFromCategorieLabel($categorie_label){

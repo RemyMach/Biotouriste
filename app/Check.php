@@ -29,6 +29,8 @@ class Check extends Model
      */
     protected $primaryKey = 'idCheck';
 
+    protected $table = 'Checks';
+
     /**
      * @var array
      */

@@ -50,7 +50,7 @@ class ContactController extends Controller
         $this->sendCreatedEmail($mail);
 
         return response()->json([
-            'message'   => 'Your Contact has been register',
+            'message'   => 'Your message has been sent !',
             'status'    => '200',
             'check'     => $this->contact,
         ]);
@@ -81,6 +81,19 @@ class ContactController extends Controller
             'message'   => 'The contact has been deleted',
             'status'    => '200',
             'idUser'    => $this->contact
+        ]);
+    }
+
+    public function listAllContacts(Request $request){
+
+        $this->request = $request;
+
+        $contacts = Contact::all();
+
+        return response()->json([
+            'message'   => 'There is all the contacts',
+            'status'    => '200',
+            'contacts'    => $contacts
         ]);
     }
 
@@ -201,7 +214,7 @@ class ContactController extends Controller
 
     private function verifyIfContactExist(){
 
-        $this->contact = Contact::findOrFail($this->request->input('idContactDelete'));
+        $this->contact = Contact::find($this->request->input('idContactDelete'));
         if(!$this->contact){
 
             return false;

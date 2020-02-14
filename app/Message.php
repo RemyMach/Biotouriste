@@ -27,7 +27,7 @@ class Message extends Model
     /**
      * @var array
      */
-    protected $fillable = ['message_subject', 'message_content', 'Announces_idAnnounce', 'Users_idUser', 'message_date'];
+    protected $fillable = ['message_subject', 'message_content', 'Announces_idAnnounce', 'Users_idUser', 'message_date','message_idSender'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Favori;
 use Illuminate\Support\Facades\DB;
 use JasonGuru\LaravelMakeRepository\Repository\BaseRepository;
 //use Your Model
@@ -17,7 +18,7 @@ class FavoriRepository extends BaseRepository
      */
     public function model()
     {
-        //return YourModel::class;
+        return Favori::class;
     }
 
     public static function allFavorisAnnounceOfAUser($idUser){

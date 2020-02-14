@@ -32,9 +32,9 @@ class Discount_CodeController extends Controller
             'DiscountCodesOfAUser','isUseFalseToTrue'
         );
 
-        $this->middleware('apiAdmin')->only(
+        /*$this->middleware('apiAdmin')->only(
             'DiscountCodesOfAUser','store'
-        );
+        );*/
     }
 
     public function store(Request $request, Mail $mail){
@@ -48,6 +48,42 @@ class Discount_CodeController extends Controller
         }
 
         $limitDate = $this->buildLimitDate($this->request->input('expiration_time'),'+');
+
+        $valid = $this->setAllUsersThatCorrespondOrTheUser();
+        if($valid !== true){
+            return response()->json([
+                'message'   => 'Your filter has not match',
+                'status'    => '400',
+            ]);
+        }
+
+        $this->validData['is_use'] = false;
+        $this->validData['discount_code_expiration_date'] = $limitDate;
+        $this->validData['discount_code_amount'] = $this->request->input('discount_code_amount');
+
+        $this->createDiscountCodeForUsers();
+
+        $this->sendCreatedEmail($mail);
+
+        return response()->json([
+            'message'   => 'Your Discount_Code has been register',
+            'status'    => '200',
+            'check'     => $this->validData,
+        ]);
+    }
+
+    public function storeDiscountCodeForAUser(Request $request, Mail $mail){
+
+        $this->request = $request;
+
+        $validator = $this->validateDiscount_Code();
+
+        if($validator->original['status'] == '400') {
+            return $validator;
+        }
+
+        $limitDate = $this->buildLimitDate($this->request->input('expiration_time'),'+');
+
         $this->setAllUsersThatCorrespondOrTheUser();
 
         $this->validData['is_use'] = false;
@@ -186,7 +222,7 @@ class Discount_CodeController extends Controller
 
     private function testIfMultipleUser(){
 
-        if($this->request->input('OneOrMultipleUser') === 'multiple'){
+        if($this->request->input('OneOrMultipleUser') == 'Multiple'){
             return true;
         }
 
@@ -198,10 +234,17 @@ class Discount_CodeController extends Controller
             $limitDateForpaymentClacul = $this->buildLimitDate($this->request->input('periode_minimum_amount'),'-');
             $minimum_amount = $this->request->input('minimum_amount');
             $UserIdAndSumPaymentAmount = PaymentRepository::filterPaymentDateAndPaymentAmountByUser($limitDateForpaymentClacul,$minimum_amount);
+            if(!isset($UserIdAndSumPaymentAmount[0])){
+                return false;
+            }
             $this->users = $this->getUsersFromAnIdUserList($UserIdAndSumPaymentAmount);
+        }else{
+            $this->user = User::find($this->request->input('idUserDiscount_codeBeneficiary'));
+            if(!isset($this->user)){
+                return false;
+            }
         }
-
-        $this->user = User::findOrFail($this->request->input('idUserDiscount_codeBeneficiary'));
+        return true;
     }
 
     private function buildLimitDate($date, $operation){
