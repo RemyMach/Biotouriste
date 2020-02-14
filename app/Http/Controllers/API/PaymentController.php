@@ -69,7 +69,7 @@ class PaymentController extends Controller
         $announces = $request->get('announces');
         $ordervalue = 0;
         foreach ($announces as $announce){
-            $ordervalue =  $ordervalue + $announce['announcesammount'] * $announce['announce_quantity'];
+            $ordervalue =  $ordervalue + $announce['announcesammount'] * $announce['quantityorderannounce'];
         }
 
         $strip = Stripe::make(env('STRIPE_SECRET'));
@@ -122,32 +122,6 @@ class PaymentController extends Controller
 
     public function addpaymentindb($request, $charge, $e)
     {
-
-
-       /* $mytime = Carbon::now();
-        $i = 0;
-        $id_orderunique = preg_replace("/[^0-9,.]/", "", $mytime);
-        $id_user = $request->get('idUser');
-        $id_order = "$id_user$id_orderunique";
-        $nbannounces = $request->get('nbannouncesorder');
-        while ($i != $nbannounces + 1) {
-            $payment_status = $charge['status'];
-            $payment_amount = $request->get("announcesammount$i");
-            $payment_currency = $charge['currency'];
-            $order_quantity = $request->get("quantityorderannounce$i");
-            $Announces_idAnnounce = $request->get("idAnnounces$i");
-            DB::table('Payments')->insert(
-                ['payment_status' => $payment_status,
-                    'payment_amount' => $payment_amount,
-                    'payment_currency' => $payment_currency,
-                    'payment_date' => $mytime,
-                    'order_quantity' => $order_quantity,
-                    'id_order' => $id_order,
-                    'Users_idUser' => $id_user,
-                    'Announces_idAnnounce' => $Announces_idAnnounce
-                ]);
-            $i = $i + 1;
-        }*/
         $mytime = Carbon::now();
         $announces = $request->get('announces');
         $id_orderunique = preg_replace("/[^0-9,.]/", "", $mytime);
@@ -159,7 +133,7 @@ class PaymentController extends Controller
                     'payment_amount' => $announce['announcesammount'],
                     'payment_currency' => $charge['currency'],
                     'payment_date' => $mytime,
-                    'order_quantity' => $announce['quantityorderannounce'],
+                    'order_lot' => $announce['quantityorderannounce'],
                     'id_order' => $id_order,
                     'Users_idUser' => $id_user,
                     'Announces_idAnnounce' => $announce['idAnnounce']

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Announce;
 use Illuminate\Http\Request;
 use Session;
+use Illuminate\Support\Facades\DB;
 
 class CartController extends Controller
 {
@@ -75,8 +76,18 @@ class CartController extends Controller
         $index = $request->get('index');
         $announces = session()->get('cart');
         $announces[$index]['announce_quantity'] = $announces[$index]['announce_quantity'] + 1;
-        session()->put('cart', $announces);
-        return redirect()->route('cart');
+        $id = $announces[$index]['idAnnounce'];
+        $qantall = DB::table('Announces')->select('announce_lot')->where('idAnnounce', '=' , $id)->get();
+        foreach ($qantall as $qantalll){
+            $qantall = $qantalll->announce_lot;
+        }
+        if ($qantall < $announces[$index]['announce_quantity']){
+            return redirect('cart');
+        }
+        else {
+            session()->put('cart', $announces);
+            return redirect()->route('cart');
+        }
     }
 
     public function qantless(Request $request)
@@ -86,9 +97,8 @@ class CartController extends Controller
         $announces[$index]['announce_quantity'] = $announces[$index]['announce_quantity'] - 1;
         if ($announces[$index]['announce_quantity'] === 0) {
             return redirect('cart');
-        }elseif (DB::table('Announces')->select('announce_quantity')->where("idAnnounce == $announces[$index]['idAnnounce']")->get() ){
-
-        } else {
+        }
+        else {
             session()->put('cart', $announces);
             return redirect()->route('cart');
         }

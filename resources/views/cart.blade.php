@@ -27,7 +27,7 @@
                   <tr>
                     <td><img src="../img/product/blueberry.png" alt="">{{ $announce['announce_name'] }}</td>
                     <td>
-                      {{ $announce['announce_quantity'] }}
+
                       <form action="qantmore" method="get">
                         <input type="hidden" value="{{ $key }}" name="index">
                       <button class="+button" value="" onclick="window.location.href='{!!route('qantmore')!!}'">+</button>
@@ -36,11 +36,13 @@
                         <input type="hidden" value="{{ $key }}" name="index">
                       <button class="-button" onclick="window.location.href='{!!route('qantless')!!}'">-</button>
                       </form>
+                      <form class="" action="cart/remove" method="get">
+                      {{ $announce['announce_quantity'] }}
                     </td>
                     <td>{{ $announce['announce_price'] }}$</td>
                     <td>{{ $total = $announce['announce_quantity'] * $announce['announce_price'] }}$</td>
-                    <form class="" action="cart/remove" method="get">
                     <input type="hidden" value="{{ $key }}" name="index">
+{{--                      <input type="hidden" value="{{ $announce['announce_quantity'] }}" name="index">--}}
                     <td><button type="submit"  name="button">Remove</button></td>
                     </form>
                   </tr>
