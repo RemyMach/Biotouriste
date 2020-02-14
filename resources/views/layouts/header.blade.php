@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="{{ URL::asset('/css/footer.css') }}">
   <link rel="stylesheet" href="{{ URL::asset('/css/navbar.css') }}">
   <link rel="stylesheet" href="{{ URL::asset('/css/profil.css') }}">
+  <link rel="stylesheet" href="{{ URL::asset('/css/seller.css') }}">
   <link rel="stylesheet" href="{{ URL::asset('/css/message.css') }}">
   <link rel="stylesheet" href="{{ URL::asset('/css/cart.css') }}">
   <link rel="stylesheet" href="{{ URL::asset('/css/favorite.css') }}">

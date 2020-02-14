@@ -144,3 +144,14 @@
 #order #orderBottom thead {
   border-bottom: .5px solid black;
 }
+
+@media screen and (max-width: 1500px) {
+  #profil {
+    padding: 0;
+  }
+  #profil .card {
+    width: 100%;
+    height: auto;
+  }
+
+}

@@ -35,7 +35,7 @@
       </div>
     </div>
     <div id="announce">
-      <div class="card" style="height:620px;">
+      <div class="card" style="min-height:620px;">
         <div class="row">
           <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 text-center">
             <h3>Announces in <span id="city"></span></h3>

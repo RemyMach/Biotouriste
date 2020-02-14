@@ -24,6 +24,11 @@
 </div>
 <div id="overlay" class="overlay text-center menu" style="display:none;" id="sidebar">
   <a href="{{ url('announces') }}">Announces</a>
+  @if(session('active_status'))
+    @if(session('active_status')->status_user_label == 'Seller')
+    <a href="{{ url('/announce/historySeller') }}">My announces</a>
+    @endif
+  @endif
   <a href="{{ url('/#about') }}">About us</a>
   <a href="{{ url('/#contact') }}">Contact</a>
   <a href="{{ url('faq') }}">FAQ</a>

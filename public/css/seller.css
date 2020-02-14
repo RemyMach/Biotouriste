@@ -1,89 +1,27 @@
-#announces {
+#sellerPanel {
   height: auto;
   width: 100%;
-  padding: 0 5% 5% 5%;
+  padding: 5% 15%;
 }
-#announces .card {
+#sellerPanel .card {
   background-color: rgba(255, 255, 255, 0.9);
-  padding: 10px 20px;
+  padding: 5% 20px;
   border: none;
   border-radius: 0;
-  margin: 20px auto;
+  margin: 5% auto;
 }
-#filter li  {
-  display: inline;
-  list-style: none;
-  margin: 0 5px;
-}
-#filter ul {
-  width: auto;
-  margin: auto;
-  padding: 0;
-}
-#filter input[type=text] {
-  padding: 5px 10px;
-  width: 60%;
-  height: 40px;
-  border: none;
-  background-color: inherit;
-  border-bottom: 1px solid black;
-}
-#filter input[type=text]::placeholder {
-  color: black;
-}
-#filter button {
-  width: auto;
-  margin: 20px auto;
-  padding: 10px 15px;
-  background-color: white;
-  border: none;
-  border-radius: 40px;
-  color: black;
-  text-transform: uppercase;
-  -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
-  -moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
-  box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
-  transition: .5s;
-}
-#filter button:hover {
-  transform: scale(1.1);
-}
-#category {
-  display: none;
-}
-#mapid {
-  display: none;
-}
-
-#announce .announce {
-  border-bottom: .5px solid #dee2e6;
-}
-#announce h3 {
+#sellerPanel h3 {
   text-transform: uppercase;
   font-size: 13px;
 }
-#sellerAnnounces img {
+#AddAnnounce {
+  width: 50px;
   height: 50px;
-  width: auto;
-}
-#sellerAnnounces p {
-  text-transform: uppercase;
-  font-size: 11px;
-  padding: 10px 0;
-}
-
-#btnHeart {
-  background-color: inherit;
-  border: none;
-  font-size: 11px;
-  padding: 10px 0;
-}
-#btnView {
-  width: auto;
-  padding: 10px 15px;
+  margin: 20px 20px;
+  padding: 15px 15px;
   background-color: white;
   border: none;
-  border-radius: 40px;
+  border-radius: 50px;
   color: black;
   text-transform: uppercase;
   -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
@@ -91,16 +29,49 @@
   box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
   transition: .5s;
 }
-#btnView:hover {
+#AddAnnounce:hover {
   transform: scale(1.1);
 }
-#announce #sellerAnnounces td {
+#myAnnounces input[type=number] {
+  background-color: inherit;
+  width: 15%;
+  border: none;
+}
+#myAnnounces table,td {
+  border: none;
+}
+#myAnnounces table th {
+  border: none;
+  border-bottom: .5px solid #dee2e6;
+  border-top: none;
+}
+#myAnnounces tbody td {
   padding: 0;
   vertical-align: middle;
   height: auto;
 }
+#myAnnounces table img {
+  height: 50px;
+  width: auto;
+}
+#myAnnounces table td button {
+  width: 60%;
+  background-color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 40px;
+  color: black;
+  text-transform: uppercase;
+  -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
+  -moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
+  box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
+  transition: .5s;
+}
+#myAnnounces button:hover {
+  transform: scale(1.1);
+}
 @media screen and (max-width: 1500px) {
-  #announces table td button {
+  #myAnnounces table td button {
     width: auto;
     background-color: white;
     border: none;
@@ -116,11 +87,14 @@
 
 }
 @media screen and (max-width: 1000px) {
-  #announces {
+  #sellerPanel {
     padding: 0;
   }
-  #announces .card {
+  #sellerPanel .card {
     width: 100%;
     height: auto;
+  }
+  #myAnnounces table td button {
+    width: auto;
   }
 }
