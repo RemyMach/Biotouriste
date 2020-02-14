@@ -19,7 +19,7 @@ class User_Status_Correspondence extends Model
      *
      * @var string
      */
-    protected $primaryKey = 'idUser_status_Correspondence';
+    protected $primaryKey = 'idUser_Status_Correspondence';
 
     /**
      * @var array
