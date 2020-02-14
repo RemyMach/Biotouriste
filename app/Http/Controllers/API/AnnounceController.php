@@ -19,14 +19,14 @@ class AnnounceController extends Controller
     public function selectHistorySeller(Request $request){
         $this->request = $request;
         $data = $request->all();
-        $Announces = Announce::where('Users_idUser', $data['idUser'])
+        $announces = Announce::where('Users_idUser', $data['idUser'])
             ->where('announce_is_available', 1)
             ->orderBy('announce_date')->get();
-        $Products = Product::all();
+        $products = Product::all();
         return response()->json([
-            'Announces' => $Announces,
-            'totalAnnounces' => count($Announces),
-            'Products' => $Products,
+            'announces' => $announces,
+            'totalAnnounces' => count($announces),
+            'products' => $products,
             'status' => '200'
         ]);
     }

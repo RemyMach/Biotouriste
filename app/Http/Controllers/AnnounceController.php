@@ -37,9 +37,9 @@ class AnnounceController extends Controller
             return response()->json(['error' => $response->error]);
         }
         return view('historySeller', [
-            'announces' => $response->Announces,
+            'announces' => $response->announces,
             'totalAnnounces' => $response->totalAnnounces,
-            'products' => $response->Products
+            'products' => $response->products
         ]);
 
     }
