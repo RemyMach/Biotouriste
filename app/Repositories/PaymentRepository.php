@@ -50,7 +50,7 @@ class PaymentRepository extends BaseRepository
             ->where('Payments.Users_idUser','=',$idUser)
             ->join('Users','Users.idUser','=','Payments.Users_idUser')
             ->join('Announces','Announces.idAnnounce','=','Payments.Announces_idAnnounce')
-            ->join('Products','Products.idProduct','=','Announces.products_idProduct')
+            ->join('Products','Products.idProduct','=','Announces.Products_idProduct')
             ->groupBy('Payments.id_order')
             ->orderBy('Payments.payment_date')
             ->get();

@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $announce_adresse
  * @property string $announce_date
  * @property string $announce_img
- * @property int $products_idProduct
+ * @property int $Products_idProduct
  * @property int $Users_idUser
  * @property Product $product
  * @property User $user
@@ -50,13 +50,13 @@ class Announce extends Model
     /**
      * @var array
      */
-    protected $fillable =['announce_lot', 'announce_city', 'announce_measure', 'announce_name', 'announce_price', 'products_idProduct', 'Users_idUser', 'announce_comment', 'announce_img', 'announce_lat', 'announce_lng', 'announce_adresse', 'announce_date', 'announce_is_available', 'announce_quantity'];
+    protected $fillable =['announce_lot', 'announce_city', 'announce_measure', 'announce_name', 'announce_price', 'Products_idProduct', 'Users_idUser', 'announce_comment', 'announce_img', 'announce_lat', 'announce_lng', 'announce_adresse', 'announce_date', 'announce_is_available', 'announce_quantity'];
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function product()
     {
-        return $this->belongsTo('App\Product', 'products_idProduct', 'idProduct');
+        return $this->belongsTo('App\Product', 'Products_idProduct', 'idProduct');
     }
 
     /**

@@ -28,7 +28,7 @@ class CreateAnnouncesTable extends Migration {
 			$table->string('announce_adresse', 45);
 			$table->dateTime('announce_date');
 			$table->string('announce_img', 45)->nullable();
-			$table->integer('products_idProduct')->index('fk_Announces_products1_idx');
+			$table->integer('Products_idProduct')->index('fk_Announces_Products1_idx');
 			$table->integer('Users_idUser')->index('fk_Announces_Users1_idx');
             $table->timestamps();
 
