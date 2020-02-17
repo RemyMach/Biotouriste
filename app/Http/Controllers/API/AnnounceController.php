@@ -22,7 +22,7 @@ class AnnounceController extends Controller
         $announces = Announce::where('Users_idUser', $data['idUser'])
             ->where('announce_is_available', 1)
             ->orderBy('announce_date')->get();
-        $Products = Product::where('Types_measure_idTypes_measure', 2 )->get();
+        $Products = Product::all();
         return response()->json([
             'announces' => $announces,
             'totalAnnounces' => count($announces),
