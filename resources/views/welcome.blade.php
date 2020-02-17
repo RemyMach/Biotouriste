@@ -21,7 +21,7 @@
         <div class="line"></div>
         <h2>What is Healthy's ?</h2>
         <div class="col-md-6 offset-md-3 text-center">
-          <p>No matter where you are, in travel or home, you will be able to access to the best selection of organic producers. You will be able to buy your Products from the plateform, also from our application available <a href="#">here</a>.</p>
+          <p>No matter where you are, in travel or home, you will be able to access to the best selection of organic producers. You will be able to buy your products from the plateform, also from our application available <a href="#">here</a>.</p>
           <p>The first step is to reference your adress to have access to our listed producers in the area. Then you will be able to select your list of product in different type of unit.</p>
           <p>Eating healthy has never been so simple !</p>
           <button type="button" name="button" onclick="window.location.href='{{ url('about') }}'">Read more</button>

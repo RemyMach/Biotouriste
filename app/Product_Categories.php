@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property int $idproduct_category
  * @property string $product_label
- * @property Product[] $Products
+ * @property Product[] $products
  */
 class Product_Categories extends Model
 {
@@ -34,7 +34,7 @@ class Product_Categories extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function Products()
+    public function products()
     {
         return $this->hasMany('App\Product', 'product_categories_idproduct_category', 'idproduct_category');
     }

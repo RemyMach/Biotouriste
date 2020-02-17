@@ -39,7 +39,7 @@ class AnnounceController extends Controller
         return view('historySeller', [
             'announces' => $response->announces,
             'totalAnnounces' => $response->totalAnnounces,
-            'Products' => $response->Products
+            'products' => $response->products
         ]);
 
     }

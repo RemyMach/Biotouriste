@@ -25,9 +25,9 @@
                                class="form-control" id="announce_adresse">
                     </div>
                     <div class="form-group">
-                        <label class="sr-only" for="Products_idProduct">Product</label>
-                        <select name="Products_idProduct" id="Products_idProduct">
-                            @foreach($Products as $product)
+                        <label class="sr-only" for="products_idProduct">Product</label>
+                        <select name="products_idProduct" id="products_idProduct">
+                            @foreach($products as $product)
                                 <option value="{{ $product->idProduct }}">{{ $product->product_name }}</option>
                             @endforeach
                         </select>
@@ -86,7 +86,7 @@ function showPosition(position) {
             announce_comment: $('#announce_comment').val(),
             announce_adresse: $('#announce_adresse').val(),
             announce_city: $('#announce_city').val(),
-            Products_idProduct: $('#Products_idProduct').val(),
+            products_idProduct: $('#products_idProduct').val(),
             announce_lat: $('#announce_lat').val(),
             announce_lng: $('#announce_lng').val(),
             announce_quantity: $('#announce_quantity').val(),
