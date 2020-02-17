@@ -57,9 +57,7 @@ class RegisterController extends Controller
 
         $data['api_token'] = config('api.api_admin_token');
         $data['idUser'] = config('api.api_admin_id');
-        $query = $client->request('POST','http://localhost:8001/api/user/store',
-            ['form_params' => $data
-            ]);
+        $query = $client->request('POST','http://localhost:8001/api/user/store', ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
 
         if($response->status === '400')

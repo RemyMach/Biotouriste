@@ -40,7 +40,7 @@ class ProfilController extends Controller
             return response()->json(['error' => $response->error]);
         }
 
-        return view('profil', [
+        return view('Profil', [
             'payments' => $response->payments,
             'profil' => $response->profil[0],
         ]);

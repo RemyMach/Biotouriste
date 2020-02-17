@@ -149,7 +149,7 @@ Route::get('favorite', 'ProfilController@favorite');
 Route::get('faq', 'FaqController@index');
 Route::get('report/show/admin','ReportController@showAllReportsForAdmin');
 
-//User_status_Correspondence
+//User_Status_Correspondence
 
 Route::post('User_status/change','User_Status_CorrespondenceController@changeDefaultUserStatus');
 Route::get('User_status/change','User_Status_CorrespondenceController@testChangeDefaultUserStatus');

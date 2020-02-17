@@ -14,7 +14,7 @@ class CreateUserStatusCorrespondence extends Migration
     public function up()
     {
         Schema::create('User_Status_Correspondences', function (Blueprint $table) {
-            $table->integer('idUser_status_Correspondence',true);
+            $table->integer('idUser_Status_Correspondence',true);
             $table->boolean('default_status');
             $table->integer('Users_idUser')->index('fk_User_S_C_Users_idUser');
             $table->integer('Status_User_idStatus_User')->index('fk_User_S_C_Status_User_idStatus_User');

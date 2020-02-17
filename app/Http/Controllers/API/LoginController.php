@@ -48,13 +48,13 @@ class LoginController extends Controller
             ]);
         }
 
-        $checkStatus = User_status_correspondenceController::getAllStatusFromAnUser($user->idUser);
+        $checkStatus = User_Status_CorrespondenceController::getAllStatusFromAnUser($user->idUser);
         if($checkStatus->original['status'] == '400'){
 
             return $checkStatus;
         }
 
-        $current_status = User_status_correspondenceController::getCurrentStatus($user->idUser, $checkStatus->original['allStatus']);
+        $current_status = User_Status_CorrespondenceController::getCurrentStatus($user->idUser, $checkStatus->original['allStatus']);
 
         return response()->json([
             'message'               => 'You are now login',

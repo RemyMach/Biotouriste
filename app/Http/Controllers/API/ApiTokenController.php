@@ -22,13 +22,13 @@ class ApiTokenController extends Controller
         }
 
 
-        $this->allStatus = User_status_correspondenceController::getAllStatusFromAnUser($this->user->idUser);
+        $this->allStatus = User_Status_CorrespondenceController::getAllStatusFromAnUser($this->user->idUser);
         if($this->allStatus->original['status'] == '400'){
 
             return false;
         }
 
-        $this->currentStatus = User_status_correspondenceController::getCurrentStatus(
+        $this->currentStatus = User_Status_CorrespondenceController::getCurrentStatus(
             $this->user->idUser, $this->allStatus->original['allStatus']
         );
 
