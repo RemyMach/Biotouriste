@@ -28,6 +28,7 @@ class CommentRepository extends BaseRepository
             ->join('Users','Comments.Users_idUser','Users.idUser')
             ->select('Announces.*','Users.*','Comments.comment_note','Comments.idComment','Comments.comment_content','Comments.comment_subject','Comments.Users_idUser as Comments_User')
             ->where('Announces.Users_idUser','=',$idUserSeller)
+            ->orderBy('Comments.comment_date')
             ->get();
     }
 }
