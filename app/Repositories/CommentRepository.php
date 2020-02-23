@@ -26,9 +26,9 @@ class CommentRepository extends BaseRepository
         return DB::table('Comments')
             ->join('Announces','Comments.Announces_idAnnounce','Announces.idAnnounce')
             ->join('Users','Comments.Users_idUser','Users.idUser')
-            ->select('Announces.*','Users.*','Comments.comment_note','Comments.idComment','Comments.comment_content','Comments.comment_subject','Comments.Users_idUser as Comments_User')
+            ->select('Announces.*','Users.*','Comments.comment_note','Comments.idComment','Comments.comment_content','Comments.comment_date','Comments.comment_subject','Comments.Users_idUser as Comments_User')
             ->where('Announces.Users_idUser','=',$idUserSeller)
-            ->orderBy('Comments.comment_date')
+            ->orderByDesc('Comments.comment_date')
             ->get();
     }
 }

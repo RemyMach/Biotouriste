@@ -21,6 +21,29 @@
                     </div>
                     @endforeach
                 @endif
+                @if(isset($messageError))
+                        <div class="card">
+                            <div class="card-body">
+                                <h3  class="comment_center">{{ $messageError }}</h3>
+                            </div>
+                        </div>
+                    @endif
+                    <div class="card">
+                        <div class="card-body">
+                            @if(session('errorDisplayForm'))
+                                <div class="alert alert-danger" role="alert">
+                                    {{ session('errorDisplayForm') }}
+                                </div>
+                            @endif
+                            <div class="card-title" style="display: flex; justify-content: space-between; align-items: center;">
+                                <p  class="comment_center">Rate this Seller</p>
+                                <!-- mettre l'id de l'announce à la fin de l'url -->
+                                <form action="{{ url('comment/displayFormToStore/3') }}" method="get">
+                                    <input type="submit"  value="Post a comment">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
             </div>
         </div>
     </div>

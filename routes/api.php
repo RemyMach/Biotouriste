@@ -46,6 +46,8 @@ Route::post('comment/store','API\CommentController@store');
 
 Route::post('comment/seller','API\CommentController@CommentsOfASeller');
 
+Route::post('comment/displayFormToStore','API\CommentController@verifyIfTheuserCanStoreCommentForThisSeller');
+
 Route::post('comment/destroy','API\CommentController@destroy');
 
 Route::post('comment/showYourPostedComments','API\CommentController@showYourPostedComments');

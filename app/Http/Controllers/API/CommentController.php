@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\CommentRepository;
 use App\Repositories\PaymentRepository;
 use App\User;
+use DateTime;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
@@ -40,7 +41,8 @@ class CommentController extends Controller
 
         $comments = CommentRepository::AllCommentsForASeller($this->request->input('idUserSeller'));
 
-        if(!$comments[0]){
+
+        if(!isset($comments[0])){
             return response()->json([
                 'message'   => 'The Seller doesn\'t has comments',
                 'status'  => '400',
@@ -50,6 +52,24 @@ class CommentController extends Controller
         return response()->json([
             'comments'   => $comments,
             'status'  => '200',
+        ]);
+
+    }
+
+    public function verifyIfTheuserCanStoreCommentForThisSeller(Request $request){
+
+        $this->request = $request;
+        if(!$this->verifyIfTheUserHasDoneAPaymentForSeller()){
+
+            return response()->json([
+                'message' => 'You can\'t do a comment because you don\'t have Payment for this Seller',
+                'status' => '400'
+            ]);
+        }
+
+        return response()->json([
+            'message'   => 'you can post a comment',
+            'status'    => '200'
         ]);
 
     }
@@ -78,7 +98,8 @@ class CommentController extends Controller
         $validData['Announces_idAnnounce'] = $this->request->input('idAnnounce');
         $validData['Users_idUser'] = $this->request->input('idUser');
         $validData['comment_note'] = (int) $validData['comment_note'];
-        //return $validData;
+        $validData['comment_date'] = date("Y-m-d H:i:s");
+
         $comment = Comment::create($validData);
 
         return response()->json([
@@ -232,7 +253,13 @@ class CommentController extends Controller
     private function verifyIfTheUserHasDoneAPaymentForSeller(){
 
         $Announce = Announce::find($this->request->input('idAnnounce'));
+        if(!isset($Announce)){
+
+            return false;
+        }
+
         $payments = PaymentRepository::findPaymentsOfAUserForASeller($Announce->Users_idUser,$this->request->input('idUser'));
+
         if(isset($payments[0])){
 
             return true;

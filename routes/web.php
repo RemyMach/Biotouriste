@@ -49,13 +49,13 @@ Route::get('admin/user/{user}','UserController@destroy');
 
 //comment
 
-Route::get('comment','CommentController@CommentsOfASeller')->name('comment');
+Route::get('comment/{idUser}','CommentController@CommentsOfASeller')->name('comment');
 
 Route::get('comment/create','CommentController@create');
 
 Route::post('comment/store/{idAnnounce}','CommentController@store');
 
-Route::get('comment/announce/{announce}','CommentController@CommentsOfASeller');
+Route::get('comment/displayFormToStore/{idAnnounce}','CommentController@displayFormToStore');
 
 Route::get('comment/destroy/{comment}','CommentController@destroy');
 
