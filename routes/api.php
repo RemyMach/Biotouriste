@@ -144,6 +144,11 @@ Route::post('announce/update','API\AnnounceController@update');
 
 Route::post('announce/historySeller','API\AnnounceController@selectHistorySeller');
 
+
+Route::post('payment/stripe','API\PaymentController@getidforcard');
+
+Route::post('payment/showUserPayment','API\PaymentController@showUserPayment');
+
 /*Route::get('/users', function () {
     return UserResource::collection(User::paginate(2));
 });*/

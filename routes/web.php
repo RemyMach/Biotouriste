@@ -134,7 +134,13 @@ Route::post('report/store','ReportController@store');
 Route::post('report/show/user','ReportController@showAllMyReports');
 
 // Cart
-Route::get('cart', 'CartController@index');
+Route::get('cart', 'CartController@index')->name('cart');
+Route::get('cart/remove','CartController@remove');
+Route::get('carte','CartController@add');
+Route::get('ccart','CartController@countCart')->name('ccart');
+Route::get('qantmore','CartController@qantmore')->name('qantmore');
+Route::get('qantless','CartController@qantless')->name('qantless');
+
 
 // Profil
 Route::get('profil', 'ProfilController@profil');
@@ -145,7 +151,7 @@ Route::get('favorite', 'ProfilController@favorite');
 Route::get('faq', 'FaqController@index');
 Route::get('report/show/admin','ReportController@showAllReportsForAdmin');
 
-//User_status_Correspondence
+//User_Status_Correspondence
 
 Route::post('User_status/change','User_Status_CorrespondenceController@changeDefaultUserStatus');
 Route::get('User_status/change','User_Status_CorrespondenceController@testChangeDefaultUserStatus');
@@ -179,6 +185,19 @@ Route::get('aide',function(){
 /********************************************** Fin Route pour front test **********************************************/
 
 
+
+/********************************************** Route pour front test **********************************************/
+
+/********************************************** Route Anthony pour stripe **********************************************/
+Route::post('addmoney/stripe', array('as' => 'addmoney.stripe','uses' => 'StripeController@stripe'));
+Route::get('stripe', 'StripeController@index');
+Route::get('payed', function () {
+    return view('ValidatePayment');
+});
+Route::get('add', function(){
+    return view('test');
+});
+Route::get('allpay','StripeController@showpayments');
 /********************************************** Debut Routes Announces **********************************************/
 
 Route::get('announces','AnnounceController@index');

@@ -1,9 +1,15 @@
+@include('layouts.header')
+@include('layouts.navbarDesktop')
+@include('layouts.navbarMobile')
 <div>
     pomme
 </div>
-{{  $responses->status }}
-@foreach($responses->data as $response)
-    {{$response->user_name}}
-@endforeach
-{{ $responses->data[0]->user_name }}
+<?php
 
+ //return app()->make(\App\Http\Controllers\CartController::class)->callAction('add');
+
+
+
+
+
+@include('layouts.footer')

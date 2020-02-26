@@ -1,0 +1,18 @@
+body{
+    background-image: url(../img/background.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.achat{
+    text-align: center;
+    color: #2d995b;
+    font-family: sans-serif;
+}
+
+.biotourist{
+    text-align: center;
+    color: #0a721b;
+    font-family: cursive;
+}

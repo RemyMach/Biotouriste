@@ -53,7 +53,7 @@ class LoginController extends Controller
             'form_params' => $data
             ]);
         $response = json_decode($query->getBody()->getContents());
-
+        
         if($response->status === '400')
         {
             return view('register')->with('response_login', $response);
@@ -99,6 +99,7 @@ class LoginController extends Controller
         $request->session()->forget('user');
         $request->session()->forget('allStatus');
         $request->session()->forget('active_status');
+        $request->session()->forget('cart');
 
         return $this->loggedOut($request) ?: redirect('/');
     }

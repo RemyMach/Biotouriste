@@ -25,8 +25,9 @@ class RegisterController extends Controller
         $this->middleware('apiAdmin');
     }
 
-    public function store(Request $request, UsefullController $usefullController, User_Status_CorrespondenceController $user_Status_CorrespondenceController)
+    public function store(Request $request, UsefullController $usefullController, User_Status_CorrespondenceController $User_Status_CorrespondenceController)
     {
+
         $this->request = $request;
 
         $validator = $this->validateUser();
@@ -40,16 +41,15 @@ class RegisterController extends Controller
         $validData['api_token'] = Str::random(80);
 
         $user = User::create($validData);
-        $user_Status_CorrespondenceController->createUserStatusCorrespondence($this->status_User_idStatus_User, $user,true);
+        $User_Status_CorrespondenceController->createUserStatusCorrespondence($this->status_User_idStatus_User, $user,true);
         $this->createSellerIfUserHasSellerStatus($validData, $user);
 
-        $checkStatus = User_status_correspondenceController::getAllStatusFromAnUser($user->idUser);
+        $checkStatus = User_Status_CorrespondenceController::getAllStatusFromAnUser($user->idUser);
         if($checkStatus->original['status'] == '400'){
-
             return $checkStatus;
         }
 
-        $current_status = User_status_correspondenceController::getCurrentStatus($user->idUser, $checkStatus->original['allStatus']);
+        $current_status = User_Status_CorrespondenceController::getCurrentStatus($user->idUser, $checkStatus->original['allStatus']);
 
         return response()->json([
             'message'   => 'the User has been Register',
@@ -74,9 +74,9 @@ class RegisterController extends Controller
         $rules = [
             'user_name' => ['required', 'string', 'max:45'],
             'user_surname' => ['required', 'string', 'max:45'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:Users'],
             'user_postal_code' => ['integer'],
-            'user_phone' => ['unique:users','regex:/^(\d\d(\s)?){4}(\d\d)$/'],
+            'user_phone' => ['unique:Users','regex:/^(\d\d(\s)?){4}(\d\d)$/'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'user_img' => ['string'],
             'status_user' => ['required','string','regex:/^(Tourist|Seller)$/'],
@@ -126,7 +126,6 @@ class RegisterController extends Controller
             $validData['seller_postal_code'] = $this->request->input('seller_postal_code');
             $validData['seller_city'] = $this->request->input('seller_city');
         }else{
-
             $this->status_User_idStatus_User = 1;
         }
 

@@ -15,6 +15,10 @@
   <link rel="stylesheet" href="{{ URL::asset('/css/favorite.css') }}">
   <link rel="stylesheet" href="{{ URL::asset('/css/register.css') }}">
   <link rel="stylesheet" href="https://use.typekit.net/vsp1spg.css">
+  <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.css">
+  <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
+
+{{-- Link for announce --}}
   <link rel="stylesheet" href="{{ URL::asset('/css/leaflet.css') }}" />
   <link rel="stylesheet" href="{{ URL::asset('/css/announces.css') }}" />
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
