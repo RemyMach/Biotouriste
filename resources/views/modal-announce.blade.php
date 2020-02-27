@@ -8,6 +8,7 @@
                 </div>
                 <div class="modal-body">
                     <input type="hidden" name="idAnnounce" id="idAnnounce">
+                    <input type="hidden" name="idFavori" id="idFavori">
                     <div class="row">
                         <div class="col-md-6">
                             <p type="text" class="" name="announceComment" id="announceComment"></p>
@@ -21,7 +22,7 @@
                     </div>
                     <br>
                     <div class="row">
-                        <div class="col-md-5"><i class="far fa-heart" onclick="addFavorite()"></i></div>
+                        <div class="col-md-5"><i id='heart' class="far fa-heart" onclick="addFavorite()"></i></div>
                         <div class="col-md-4"><a href="#" class="btn btn-primary">Add to card</a></div>
                     </div>
                 </div>
@@ -33,16 +34,23 @@
 
 <script>
     function addFavorite(){
-        console.log($("#idAnnounce").val());
+        let path = '/favori/store';
+        let data = {idAnnounce: $("#idAnnounce").val(),  _token: '{{csrf_token()}}' };
+        if ($('#heart').hasClass('fas')){
+            path = 'favori/destroy';
+            data = {idAnnounce: $("#idAnnounce").val(), idFavori: 1,  _token: '{{csrf_token()}}' }
+        }
        $.ajax({
-           url: '/favori/store',
+           url: path,
            type: 'POST',
-           data: {idAnnounce: $("#idAnnounce").val(),  _token: '{{csrf_token()}}' },
+           data: data,
            dataType: "json",
            success: function(result){
-               console.log(result);
-               // mymap.removeLayer(this);
-               // remplirDivAnnonce(result.announces);
+               if($('#heart').hasClass('far')){
+                    $('#heart').removeClass('far').addClass('fas');
+               } else {
+                   $('#heart').removeClass('fas').addClass('far');
+               }
            }
        });
    }

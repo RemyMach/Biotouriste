@@ -13,12 +13,21 @@ class FavoriController extends Controller
 
     public function __construct(){
 
-        $this->middleware('touristController')->only(
-            'showFavorisOfAUser'
-        );
+        $this->middleware('touristController')->only('showFavorisOfAUser', 'store', 'destroy', 'findIdFavori');
 
     }
 
+    public function findIdFavori(Request $request, Client $client){
+        $this->sessionUser = $request->session()->get('user');
+        $data = request()->all();
+        $data['idUser']     = $this->sessionUser->idUser;
+        $data['api_token']  = $this->sessionUser->api_token;
+        $query = $client->request('POST','http://localhost:8001/api/favori/findIdFavori', ['form_params' => $data]);
+        $response = json_decode($query->getBody()->getContents());
+
+        return response()->json(['result' => ['response' => $response]]);
+
+    }
     public function showFavorisOfAUser(Request $request, Client $client)
     {
 
@@ -57,26 +66,19 @@ class FavoriController extends Controller
 
 
     public function store(Request $request, Client $client){
-
         $this->sessionUser = $request->session()->get('user');
-
         $data = request()->all();
-        //$data['idAnnounce'] = 5;
         $data['idUser']     = $this->sessionUser->idUser;
         $data['api_token']  = $this->sessionUser->api_token;
-
-        $query = $client->request('POST','http://localhost:8001/api/favori/store',
-            ['form_params' => $data]);
+        $query = $client->request('POST','http://localhost:8001/api/favori/store', ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
-
-        return view('testFavori',["response" => $response]);
+        return response()->json(["response" => $response]);
     }
 
     public function destroy(Request $request, Client $client)
     {
         $this->sessionUser = $request->session()->get('user');
-        //$data = request()->all();
-        $data['idFavori']   = 3;
+
         $data['idUser']     = $this->sessionUser->idUser;
         $data['api_token']  = $this->sessionUser->api_token;
 

@@ -16,16 +16,27 @@ class FavoriController extends Controller
 
     public function __construct()
     {
-        $this->middleware('apiMergeJsonInRequest');
-        //$this->middleware('apiTouristController')->only(
-        //  'showFavorisOfAUser','apiTouristController','destroy'
-        //);
+//        $this->middleware('apiMergeJsonInRequest');
+        $this->middleware('apiTouristController')->only('showFavorisOfAUser', 'store', 'destroy', 'findIdFavori');
     }
+    public function findIdFavori(Request $request){
+        $this->request = $request;
 
+        $favoris = FavoriRepository::selectIdFavoriWithUserAndAnnounce($this->request->input('idUser'), $this->request->input('idAnnounce'));
+
+        if (count($favoris) > 0){
+            $return = true;
+        }else{
+            $return = false;
+        }
+        return response()->json([
+            'status'            => '200',
+            'favoris'    => $return
+        ]);
+    }
     public function showFavorisOfAUser(Request $request){
 
         $this->request = $request;
-
 
         $favoris = FavoriRepository::allFavorisAnnounceOfAUser($this->request->input('idUser'));
         @$firstFavori = $favoris[0];
@@ -68,8 +79,8 @@ class FavoriController extends Controller
         $favori = FavoriRepository::FavorisFromAnIdAnnounceAndAnIdUser($validData['Users_idUser'], $validData['Announces_idAnnounce']);
         if(isset($favori[0])){
             return response()->json([
-                'message'   => 'This Announce is already a favorite one',
-                'status'    => '400',
+                'message'   => 'Your favori has been remove',
+                'status'    => '200',
             ]);
         }
 
@@ -86,7 +97,6 @@ class FavoriController extends Controller
     public function destroy(Request $request){
 
         $this->request = $request;
-
         $validator = $this->validateIdFavoriFormat();
         if($validator->original['status'] == '400') {
             return $validator;
@@ -99,7 +109,6 @@ class FavoriController extends Controller
                 'status'    => '400',
             ]);
         }
-
         Favori::destroy($favori[0]->idFavori);
 
         return response()->json([
@@ -110,7 +119,6 @@ class FavoriController extends Controller
     }
 
     private function validateIdAnnounceFormat(){
-
         $validator = Validator::make($this->request->all(), [
             'idAnnounce'      => 'required|integer',
         ]);
@@ -119,9 +127,8 @@ class FavoriController extends Controller
     }
 
     private function validateIdFavoriFormat(){
-
         $validator = Validator::make($this->request->all(), [
-            'idFavori'      => 'required|integer',
+            'idFavori' => 'required|integer',
         ]);
 
         return $this->resultValidator($validator);

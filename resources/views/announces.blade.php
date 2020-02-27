@@ -115,12 +115,26 @@ function remplirDivAnnonce(announces){
 }
 
 function showAnnounce(announce) {
+    $.ajax({
+        url: '/favori/findIdFavori',
+        type: 'POST',
+        data: {idAnnounce: announce['idAnnounce'],  _token: '{{csrf_token()}}'},
+        dataType: "json",
+        success: function(result){
+            console.log('ezgzegzg = '+result);
+            $('#idFavori').val(result);
+            if(){
+                $('#heart').removeClass('fas').addClass('far');
+            }
+        }
+    });
     $('#titleAnnounce').html(announce['announce_name']);
     $('#imgAnnounce').html(announce['imgAnnounce']);
     $('#announceComment').html(announce['announce_comment']);
     $('#announceAdresse').html(announce['announce_adresse']);
     $('#announcePrice').html(announce['announce_price']+'$');
     $('#idAnnounce').val(announce['idAnnounce']);
+    $('#idUserSeller').val(announce['Users_idUser']);
 
     jQuery('#modal-announce').modal('show');
 }
