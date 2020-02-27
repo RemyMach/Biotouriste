@@ -15,7 +15,7 @@
         @endif
         <a href="{{ url('/#about') }}">About us</a>
         <a href="{{ url('/#contact') }}">Contact</a>
-        <a href="{{ url('faq') }}">FAQ</a>
+        <a href="{{ url('/blog') }}">Blog</a>
       </div>
       <div class="col-md-3 text-center menu">
         @if(Session::has('user'))

@@ -33,7 +33,7 @@
     @endif
     <li><a href="{{ url('/#about') }}">About us</a></li>
     <li><a href="{{ url('/#contact') }}">Contact</a></li>
-    <li><a href="{{ url('faq') }}">FAQ</a></li>
+    <li><a href="{{ url('/blog') }}">Blog</a></li>
     <li><button id="close" type="button" name="button" onclick="menu()"><i class="fas fa-times"></i></i></button></li>
   </ul>
 </div>
