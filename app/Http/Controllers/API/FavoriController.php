@@ -30,8 +30,9 @@ class FavoriController extends Controller
             $return = false;
         }
         return response()->json([
-            'status'            => '200',
-            'favoris'    => $return
+            'status'  => '200',
+            'return' => $return,
+            'favoris' => $favoris,
         ]);
     }
     public function showFavorisOfAUser(Request $request){
@@ -103,12 +104,12 @@ class FavoriController extends Controller
         }
 
         $favori = FavoriRepository::verifyOwnerFavori($this->request->input('idUser'), $this->request->input('idFavori'));
-        if(!isset($favori[0])){
-            return response()->json([
-                'message'   => 'This Favori is not yours',
-                'status'    => '400',
-            ]);
-        }
+//        if($favori[0]){
+//            return response()->json([
+//                'message'   => 'This Favori is not yours',
+//                'status'    => '400',
+//            ]);
+//        }
         Favori::destroy($favori[0]->idFavori);
 
         return response()->json([

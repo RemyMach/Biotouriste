@@ -22,11 +22,10 @@
                     </div>
                     <br>
                     <div class="row">
-                        <div class="col-md-5"><i id='heart' class="far fa-heart" onclick="addFavorite()"></i></div>
+                        <div class="col-md-5 divHeart"><i id="" class="heart far fa-heart" onclick="addFavorite()"></i></div>
                         <div class="col-md-4"><a href="#" class="btn btn-primary">Add to card</a></div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -35,10 +34,10 @@
 <script>
     function addFavorite(){
         let path = '/favori/store';
-        let data = {idAnnounce: $("#idAnnounce").val(),  _token: '{{csrf_token()}}' };
-        if ($('#heart').hasClass('fas')){
+        let data = {idAnnounce: $('#idAnnounce').val(),  _token: '{{csrf_token()}}' };
+        if ($('.heart').hasClass('fas')){
             path = 'favori/destroy';
-            data = {idAnnounce: $("#idAnnounce").val(), idFavori: 1,  _token: '{{csrf_token()}}' }
+            data = {idAnnounce: $('#idAnnounce').val(), idFavori: $('#idFavori').val(),  _token: '{{csrf_token()}}' }
         }
        $.ajax({
            url: path,
@@ -46,10 +45,11 @@
            data: data,
            dataType: "json",
            success: function(result){
-               if($('#heart').hasClass('far')){
-                    $('#heart').removeClass('far').addClass('fas');
+               if(result.response.message != 'The Favori has been deleted'){
+                   $('#idFavori').val(result.response.favori.idFavori);
+                   $('i').removeClass('far fa-heart').addClass('fas fa-heart');
                } else {
-                   $('#heart').removeClass('fas').addClass('far');
+                   $('i').removeClass('fas fa-heart').addClass('far fa-heart');
                }
            }
        });
