@@ -23,7 +23,7 @@ class User_Status_CorrespondenceController extends Controller
 
         $this->middleware('apiMergeJsonInRequest');
         $this->middleware('apiTokenAndIdUserExistAndMatch')->only(
-            'update'
+            'update','changeDefaultUserStatus'
         );
 
         $this->middleware('apiAdmin')->only(
@@ -234,7 +234,7 @@ class User_Status_CorrespondenceController extends Controller
             return response()->json([
                 'message'   => 'The Update is done',
                 'status'    => '200',
-                'default_status' => $this->status
+                'active_status' => $this->status
             ]);
         }
 

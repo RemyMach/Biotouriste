@@ -28,6 +28,10 @@ class ProfilController extends Controller
     public function profil(Client $client, Request $request)
     {
         $data = request()->all();
+        if(!$request->session()->has('user')){
+
+            return redirect('register');
+        }
         $this->sessionUser = $request->session()->get('user');
 
         $data['idUser'] = $this->sessionUser->idUser;
@@ -35,7 +39,7 @@ class ProfilController extends Controller
 
         $query = $client->request('POST', 'http://localhost:8001/api/user/profil', ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
-
+        //dd($request->session()->all());
         if ($response->status === '400'){
             return response()->json(['error' => $response->error]);
         }

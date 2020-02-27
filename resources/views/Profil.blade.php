@@ -12,7 +12,7 @@
               <h2>{{$profil->user_name}} {{$profil->user_surname}}</h2>
             </div>
             <div class="desc">
-              <p>{{$profil->status_user_label}}</p>
+              <p>{{session('active_status')->status_user_label}}</p>
               <p>{{$profil->email}}</p>
             </div>
             <div class="info">
@@ -46,9 +46,18 @@
         </div>
         <div class="card">
           <div id="status">
-            <h3>Change status</h3>
-            <p>Actual status : {{ $profil->status_user_label }}</p>
-            <button type="button" name="button">Switch to seller</button>
+            <h3>Your status</h3>
+            <p>Actual status : {{ session('active_status')->status_user_label }}</p>
+            @foreach(session('allStatus') as $status)
+              @if($status->status_user_label != session('active_status')->status_user_label)
+                <p>Other status : {{ $status->status_user_label }}</p>
+                <form action="{{ url('User_status/change') }}" method="post">
+                  @csrf
+                  <input type="hidden" name="default_status" value="{{strtolower($status->status_user_label)}}">
+                  <button type="submit" name="button">Switch to {{ $status->status_user_label }}</button>
+                </form>
+              @endif
+            @endforeach
           </div>
         </div>
         @if(session('errorPassword'))

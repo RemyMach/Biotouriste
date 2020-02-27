@@ -23,24 +23,30 @@ class User_Status_CorrespondenceController extends Controller
         $data = request()->all();
         $data['idUser'] = $this->sessionUser->idUser;
         $data['api_token'] = $this->sessionUser->api_token;
-
-        $query = $client->request('POST','http://localhost:8001/api/user_status/login', [
+        $query = $client->request('POST','http://localhost:8001/api/user_status/change', [
             'form_params' => $data
         ]);
         $response = json_decode($query->getBody()->getContents());
 
-        dd($response);
         if($response->status === '400')
         {
-            return redirect('login');
+            return redirect('profil')->with(['erreurUpdateDefaultStatus' => 'You can\'t update your statuswhith this value' ]);
         }
+
+        $request->session()->remove('active_status');
+        session([
+            'active_status' => $response->active_status,
+        ]);
+
+        return redirect('profil');
+
     }
 
     public function testChangeDefaultUserStatus(Request $request, Client $client){
 
         $data['idUser'] = 4;
-        $data['api_token'] = 'my0t5u6lbJPVIHaXC0GSN9Wg84bJ7GGNnFOj5uVs5QyX7nkAW85VUxakMyYLFDt1sGyuNDaNZdk6kj13';
-        $data['default_status'] = 'tourist';
+        $data['api_token'] = 'jjtZlaoHMAKn2ktuGHzCxLfnCgdL71eihaNTUqKS80V997IXiqBdACIZNzjOlhfrpdZEduWfffaqKQxg';
+        $data['default_status'] = 'seller';
 
         $query = $client->request('POST','http://localhost:8001/api/user_status/change', [
             'form_params' => $data
