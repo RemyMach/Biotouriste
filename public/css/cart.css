@@ -64,6 +64,14 @@
 #product button:hover {
   transform: scale(1.1);
 }
+#product tr td div {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top;
+  height: 50px;
+  width: 50px;
+  border-radius: 50px;
+}
 @media screen and (max-width: 1500px) {
   #product table td button {
     width: auto;

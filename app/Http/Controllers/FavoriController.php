@@ -23,7 +23,7 @@ class FavoriController extends Controller
     {
 
         $this->sessionUser = $request->session()->get('user');
-
+        
         $data['idUser']     = $this->sessionUser->idUser;
         $data['api_token']  = $this->sessionUser->api_token;
 
@@ -33,6 +33,7 @@ class FavoriController extends Controller
 
         if ($response->status == '400') {
           return view('favorite',["response" => $response]);
+
         } else {
           return view('favoriteFail',["response" => $response]);
         }

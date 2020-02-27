@@ -10,6 +10,7 @@
         @if(session('active_status'))
           @if(session('active_status')->status_user_label == 'Seller')
           <a href="{{ url('/announce/historySeller') }}">My announces</a>
+          <a href="{{ url('/message') }}">Messages</a>
           @endif
         @endif
         <a href="{{ url('/#about') }}">About us</a>

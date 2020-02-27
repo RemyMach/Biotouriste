@@ -11,6 +11,7 @@
               <table class="table">
                 <thead>
                   <tr>
+                    <th scope="col"></th>
                     <th scope="col">Order summary</th>
                     <th scope="col">Quantity</th>
                     <th scope="col">Price</th>
@@ -20,21 +21,24 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td><img src="../img/product/blueberry.png" alt=""> Blueberry</td>
+                    <td><div style="background-image:url('../img/product/strawberry.png')"></div></td>
+                    <td>Blueberry</td>
                     <td><input type="number" name="" value="4"></td>
                     <td>$15</td>
                     <td>$60</td>
                     <td><button type="button" name="button">Remove</button></td>
                   </tr>
                   <tr>
-                    <td><img src="../img/product/blueberry.png" alt=""> Blueberry</td>
+                    <td><div style="background-image:url('../img/product/strawberry.png')"></div></td>
+                    <td>Blueberry</td>
                     <td><input type="number" name="" value="4"></td>
                     <td>$15</td>
                     <td>$60</td>
                     <td><button type="button" name="button">Remove</button></td>
                   </tr>
                   <tr>
-                    <td><img src="../img/product/blueberry.png" alt=""> Blueberry</td>
+                    <td><div style="background-image:url('../img/product/strawberry.png')"></div></td>
+                    <td>Blueberry</td>
                     <td><input type="number" name="" value="4"></td>
                     <td>$15</td>
                     <td>$60</td>
