@@ -154,7 +154,7 @@ Route::get('report/show/admin','ReportController@showAllReportsForAdmin');
 Route::post('User_status/change','User_Status_CorrespondenceController@changeDefaultUserStatus');
 Route::get('User_status/change','User_Status_CorrespondenceController@testChangeDefaultUserStatus');
 
-Route::post('user/addStatus','User_Status_CorrespondenceController@addUserStatusTouristOrSeller');
+Route::post('User_status/addStatus','User_Status_CorrespondenceController@addUserStatusTouristOrSeller');
 Route::get('User_status/addStatus','User_Status_CorrespondenceController@testaddUserStatusTouristOrSeller');
 
 Route::get('User_status/addStatusAdminController','User_Status_CorrespondenceController@testaddUserStatusAdminOrController');

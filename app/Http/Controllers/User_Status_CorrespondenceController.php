@@ -23,24 +23,30 @@ class User_Status_CorrespondenceController extends Controller
         $data = request()->all();
         $data['idUser'] = $this->sessionUser->idUser;
         $data['api_token'] = $this->sessionUser->api_token;
-
-        $query = $client->request('POST','http://localhost:8001/api/user_status/login', [
+        $query = $client->request('POST','http://localhost:8001/api/user_status/change', [
             'form_params' => $data
         ]);
         $response = json_decode($query->getBody()->getContents());
 
-        dd($response);
         if($response->status === '400')
         {
-            return redirect('login');
+            return redirect('profil')->with(['erreurUpdateDefaultStatus' => 'You can\'t update your statuswhith this value' ]);
         }
+
+        $request->session()->remove('active_status');
+        session([
+            'active_status' => $response->active_status,
+        ]);
+
+        return redirect('profil');
+
     }
 
     public function testChangeDefaultUserStatus(Request $request, Client $client){
 
         $data['idUser'] = 4;
-        $data['api_token'] = 'my0t5u6lbJPVIHaXC0GSN9Wg84bJ7GGNnFOj5uVs5QyX7nkAW85VUxakMyYLFDt1sGyuNDaNZdk6kj13';
-        $data['default_status'] = 'tourist';
+        $data['api_token'] = 'jjtZlaoHMAKn2ktuGHzCxLfnCgdL71eihaNTUqKS80V997IXiqBdACIZNzjOlhfrpdZEduWfffaqKQxg';
+        $data['default_status'] = 'seller';
 
         $query = $client->request('POST','http://localhost:8001/api/user_status/change', [
             'form_params' => $data
@@ -59,21 +65,24 @@ class User_Status_CorrespondenceController extends Controller
         $this->sessionUser = $request->session()->get('user');
 
         $data = request()->all();
+
         $data['idUser'] = $this->sessionUser->idUser;
         $data['api_token'] = $this->sessionUser->api_token;
 
-        $query = $client->request('POST','http://localhost:8001/api/user_status/login', [
+        $query = $client->request('POST','http://localhost:8001/api/user_status/addStatus', [
             'form_params' => $data
         ]);
         $response = json_decode($query->getBody()->getContents());
-
-        dd($response);
-
         if($response->status === '400')
         {
-            return redirect('login');
+            return back()->with(['errorAddStatus' => 'Your informations are not valid']);
         }
+        $request->session()->remove('allStatus');
+        session([
+            'allStatus' => $response->allStatus,
+        ]);
 
+        return back()->with(['successAddStatus' => 'The status has been add']);
     }
 
     public function testaddUserStatusTouristOrSeller(Request $request, Client $client){
@@ -82,6 +91,9 @@ class User_Status_CorrespondenceController extends Controller
 
         $data['new_status'] = 'Seller';
         $data['seller_description'] = 'je suis une pomme rouge';
+        $data['seller_adress'] = 'je suis une pomme rouge';
+        $data['seller_city'] = 'je suis une pomme rouge';
+        $data['seller_postal_code'] = 'je suis une pomme rouge';
         $data['idUser'] = $this->sessionUser->idUser;
         $data['api_token'] = $this->sessionUser->api_token;
 
