@@ -5,7 +5,7 @@
   <div class="col-md-12 text-center">
     <div class="row" style="margin:0;">
       <div class="col-xs-12 col-sm-12 col-md-10 offset-md-1 text-center">
-        <div class="card">
+        <div class="card" data-aos="fade-down">
           <div id="wish">
             <h3>Favorite</h3>
               <table class="table">
@@ -40,7 +40,7 @@
               </table>
           </div>
         </div>
-        <div class="cta">
+        <div class="cta" data-aos="fade-up">
           <div class="row">
             <div class="col-md-12">
               <button type="button" name="button" onclick="window.location.href='{{ url('announces') }}'">Continue shopping</button>

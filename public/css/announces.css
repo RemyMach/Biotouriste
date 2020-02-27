@@ -52,7 +52,7 @@
   display: none;
 }
 #mapid {
-  display: none;
+  display: block;
 }
 
 #announce .announce {

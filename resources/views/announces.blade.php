@@ -3,7 +3,7 @@
 @include('layouts.navbarMobile')
 <div id="announces">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
-    <div id="filter">
+    <div id="filter" data-aos="fade-right">
       <div class="card">
         <div class="row" style="margin:0;">
           <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
@@ -34,7 +34,7 @@
         </div>
       </div>
     </div>
-    <div id="announce">
+    <div id="announce" data-aos="fade-left">
       <div class="card" style="min-height:620px;">
         <div class="row">
           <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 text-center">
