@@ -16,6 +16,7 @@ use Illuminate\Support\Str;
 
 class ForgotPasswordController extends Controller
 {
+    private $request;
 
     public function __construct(){
         $this->middleware('apiMergeJsonInRequest');
@@ -23,19 +24,15 @@ class ForgotPasswordController extends Controller
 
     public function sendResetLinkEmail(Mail $mail,Request $request)
     {
+        $this->request = $request;
 
-        $data = $request->all();
-        //on valide l'email
-        $validator = $this->validateEmail(['email' => $data['email']]);
-
+        $validator = $this->validateEmail();
         if($validator->original['status'] == '400') {
             return $validator;
         }
 
-        $idAdmin = $data['idUser'];
-        $admin_api_token = $data['api_token'];
 
-        $user = $this->verifyEmailExist($data['email']);
+        $user = $this->verifyEmailExist($this->request->input('email'));
 
         if(!$user){
             return response()->json([
@@ -44,7 +41,8 @@ class ForgotPasswordController extends Controller
             ]);
         }
         $token = Str::random(80);
-        $urlgenerate = action('Auth\ResetPasswordController@reset', ['token' => $token,'email' => $email]);
+        $urlgenerate = action('Auth\ResetPasswordController@reset', ['token' => $token,'email' => $user->email]);
+
 
         $urlgenerate = preg_replace('#8001#','8000',$urlgenerate);
 
@@ -52,11 +50,15 @@ class ForgotPasswordController extends Controller
 
         $urlgenerate = preg_replace('#&amp#','&',$urlgenerate);
 
-        $password_resets = $this->addTokenEmailToDB($token,$email);
+
+        $password_resets = $this->addTokenEmailToDB($token,$user->email);
+
+        $this->deleteDuplicateToken();
 
         $mail->send('rmachavoine@wynd.eu','UserForgotPassword',['password_reset' => $password_resets, 'url' => $urlgenerate]);
 
         return response()->json([
+            'message'   => 'the email has been sent',
             'status'    => '200',
         ]);
     }
@@ -72,9 +74,9 @@ class ForgotPasswordController extends Controller
         return $user;
     }
 
-    protected function validateEmail($data)
+    private function validateEmail()
     {
-        $validator = Validator::make($data, [
+        $validator = Validator::make($this->request->all(), [
             'email' => 'required|email']);
 
         if($validator->fails())
@@ -91,10 +93,25 @@ class ForgotPasswordController extends Controller
         ]);
     }
 
-    protected function addTokenEmailToDB(string $token, string $email)
+    private function addTokenEmailToDB(string $token, string $email)
     {
         $password_reset = password_resets::create(['email' => $email,'token' => $token]);
 
         return $password_reset;
+    }
+
+    private function deleteDuplicateToken(){
+
+        $password_resets = password_resets::where('email','=',$this->request->input('email'))->get();
+        $numberLine = count($password_resets);
+        if($numberLine >= 1){
+            foreach($password_resets as $key => $password_reset){
+                if($numberLine == ($key+1)){
+                    break;
+                }
+                password_resets::destroy($password_reset->idPasswordReset);
+            }
+        }
+        return 'googd';
     }
 }

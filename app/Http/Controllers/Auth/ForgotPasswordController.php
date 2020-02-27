@@ -58,10 +58,10 @@ class ForgotPasswordController extends Controller
 
         if($response->status == '400')
         {
-            return back()->with(['error' => 'Votre email n\'existe pas']);
+            return back()->with(['error' => 'Your mail doesn\'t exist']);
         }
 
-        return view('auth.passwords.email')->with(['error' => 'Vous avez reçu un message pour reset votre mot de passe']);
+        return back()->with(['success' => 'You have receive a mail to reset your password']);
     }
 
     protected function validateEmail(Request $request)

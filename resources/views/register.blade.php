@@ -24,6 +24,11 @@
                 <p>{{ $response_login->message }}</p>
               </div>
               @endif
+              @if(session('succesModifPassword'))
+                <div class="alert alert-success" role="alert">
+                  {{ session('succesModifPassword') }}
+                </div>
+              @endif
               <div class="login">
                 <h3>Identifiers</h3>
                 <p><span style="color:red;">*</span><i>Required field</i></p>

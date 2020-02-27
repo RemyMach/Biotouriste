@@ -6,30 +6,24 @@ use App\Http\Controllers\API\ApiTokenController;
 use App\Http\Controllers\Controller;
 use App\password_resets;
 use App\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class ResetPasswordController extends Controller
 {
+    private $request;
 
     public function __construct()
     {
         $this->middleware('apiMergeJsonInRequest');
+        $this->middleware('apiTokenAndIdUserExistAndMatch');
     }
 
-    public function showResetForm(ApiTokenController $apiTokenController)
+    public function showResetForm(Request $request)
     {
-        $requestParameters = $apiTokenController->verifyAdminCredentials();
+        $this->request = $request;
 
-        if(!$requestParameters)
-        {
-            return response()->json([
-                'message'   => 'Your credentials are not valid',
-                'status'    => '400',
-            ]);
-        }
-
-        $data = request()->all();
 
         if(!$this->validTokenAndEmail())
         {
@@ -39,26 +33,19 @@ class ResetPasswordController extends Controller
             ]);
         }
 
+
         return response()->json([
             'message'   => 'Your credentials are valid',
             'status'    => '200'
         ]);
     }
 
-    public function reset(ApiTokenController $apiTokenController)
+    public function reset(Request $request)
     {
-        $requestParameters = $apiTokenController->verifyAdminCredentials();
 
-        if(!$requestParameters)
-        {
-            return response()->json([
-                'message'   => 'Your credentials are not valid',
-                'status'    => '400',
-            ]);
-        }
-        $data = request()->all();
+        $this->request = $request;
 
-        $validate = $this->validateEmailPassword($data);
+        $validate = $this->validateEmailPassword($this->request->all());
 
         if($validate->original['status'] == '400')
         {
@@ -74,7 +61,7 @@ class ResetPasswordController extends Controller
         }
 
 
-        $user = User::where('email',$data['email'])->first();
+        $user = User::where('email',$this->request->input('email'))->first();
 
         if(!$user)
         {
@@ -84,9 +71,9 @@ class ResetPasswordController extends Controller
             ]);
         }
 
-        $user->update(['password' => Hash::make($data['password'])]);
+        $user->update(['password' => Hash::make($this->request->input('password'))]);
 
-        $this->deleteLineUsePasswordReset($data['email']);
+        $this->deleteLineUsePasswordReset($this->request->input(['email']));
 
         return response()->json([
             'error'   => 'The password has been updated',
@@ -94,10 +81,10 @@ class ResetPasswordController extends Controller
         ]);
     }
 
-    public function validTokenAndEmail()
+    private function validTokenAndEmail()
     {
-        $token = request('token');
-        $email = request('email');
+        $token = $this->request->input('token');
+        $email = $this->request->input('email');
         if(!$token || !$email)
         {
             return false;
@@ -105,13 +92,12 @@ class ResetPasswordController extends Controller
 
         $password_reset = password_resets::where('email',$email)->first();
 
-
         if(!$password_reset)
         {
             return false;
         }
 
-        if($password_reset->email != $email)
+        if($password_reset->token != $token)
         {
             return false;
         }
@@ -119,7 +105,7 @@ class ResetPasswordController extends Controller
         return true;
     }
 
-    protected function validateEmailPassword($data)
+    private function validateEmailPassword($data)
     {
         $validator = Validator::make($data, [
             'email' => ['required','email'],
@@ -140,7 +126,7 @@ class ResetPasswordController extends Controller
         ]);
     }
 
-    protected function deleteLineUsePasswordReset($email)
+    private function deleteLineUsePasswordReset($email)
     {
         //supprime toutes les lignes ou l'email est présent et pas seulement la première rencontré
         password_resets::where('email',$email)->delete();

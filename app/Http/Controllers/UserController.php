@@ -171,9 +171,13 @@ class UserController extends Controller
         return back()->with('success','The Profile has been destroy');
     }
 
-    public function profil() {
+    public function profil(Request $request) {
 
-      return view('register');
+        if($request->session()->has('succesModifPassword')){
+            return view('register')->with(['succesModifPassword' => $request->session()->get('succesModifPassword')]);
+        }
+
+        return view('register');
 
     }
 }

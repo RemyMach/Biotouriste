@@ -54,6 +54,7 @@ class ResetPasswordController extends Controller
 
         $response = json_decode($query->getBody()->getContents());
 
+
         if($response->status == '400')
         {
             return back()->with(['error' => 'Votre email n\'existe pas']);
@@ -83,8 +84,8 @@ class ResetPasswordController extends Controller
         {
             return back()->with(['error' => $response->error]);
         }
-        return redirect('login')->with(
-            ['email' => $request->email,"succes" => 'Votre mot de passe a bien été reset']
+        return redirect('register')->with(
+            ['email' => $request->email,"succesModifPassword" => 'Votre mot de passe a bien été reset']
         );
     }
 }

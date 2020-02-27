@@ -8,6 +8,15 @@
         <div class="row" style="margin:0;">
           <div class="col-md-12 text-center">
             <h2>Reset Password</h2>
+            @if(session('error'))
+              <div class="alert alert-danger" role="alert">
+                {{  session('error') }}
+              </div>
+            @elseif(session('success'))
+              <div class="alert alert-success" role="alert">
+                {{  session('success') }}
+              </div>
+            @endif
             <div class="line"></div>
           </div>
         </div>
