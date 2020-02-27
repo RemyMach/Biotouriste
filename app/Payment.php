@@ -26,6 +26,8 @@ class Payment extends Model
      */
     protected $primaryKey = 'idPayment';
 
+    protected $table = 'Payments';
+
     /**
      * @var array
      */

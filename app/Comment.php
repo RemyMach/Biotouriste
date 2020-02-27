@@ -24,6 +24,8 @@ class Comment extends Model
      */
     protected $primaryKey = 'idComment';
 
+    protected $table = 'Comments';
+
     /**
      * @var array
      */
