@@ -2,66 +2,48 @@
 @include('layouts.navbarDesktop')
 @include('layouts.navbarMobile')
 <div id="profil">
-    <div class="col-md-12 text-center">
+    <div class="col-md-12">
         <div class="row" style="margin:0;">
-            <div class="col-xs-12 col-sm-12 col-md-6 offset-md-3 text-center">
-                <div class="card">
-                    <div id="password">
-                        <h3>Complete the check for {{ $check['user_name'] }}</h3>
-                        <p><span style="color:red;">*</span><i>Required field</i></p>
-                        <form class="" action="{{ url('comment/store') }}" method="post">
-                            @csrf
-                            <div class="form-group">
-                                <label>Date Of the Chec*</label>
-                                <input type="date" name="check_date" placeholder="Actual password *">
+            <div class="col-xs-12 col-sm-12 col-md-6 offset-md-3">
+                @if(isset($comments))
+                    @foreach($comments as $comment)
+                    <div class="card">
+                        <div class="card-body">
+                            <h3  class="comment_center">{{ $comment->user_name }} {{ $comment->user_surname }}</h3>
+                            <hr>
+                            <div class="card-title">
+                                <p  class="comment_center" style="display: flex;justify-content: space-between;"><span>{{ $comment->comment_subject }}</span><span>{{ $comment->comment_note }}</span></p>
                             </div>
-                            <div class="form-group">
-                                <label >Note Customer Service*</label>
-                                <select class="form-control" name="check_customer_service">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                </select>
+                            <div class="card-text">
+                                <p>{{ $comment->comment_content }}</p>
                             </div>
-                            <div class="form-group">
-                                <label>Note State Place*</label>
-                                <select class="form-control" name="check_state_place">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Note Quality Product*</label>
-                                <select class="form-control" name="check_quality_product">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Bio Status*</label>
-                                <select class="form-control" name="check_bio_status">
-                                    <option>bio</option>
-                                    <option>not bio</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Description of the content*</label>
-                                <textarea class="form-control"  name="check_comment" rows="3"></textarea>
-                            </div>
-                            <input type="hidden" name="idCheck" value="{{ $check['idCheck'] }}">
-                            <input type="submit" value="Submit">
-                        </form>
+                        </div>
                     </div>
-                </div>
-
+                    @endforeach
+                @endif
+                @if(isset($messageError))
+                        <div class="card">
+                            <div class="card-body">
+                                <h3  class="comment_center">{{ $messageError }}</h3>
+                            </div>
+                        </div>
+                    @endif
+                    <div class="card">
+                        <div class="card-body">
+                            @if(session('errorDisplayForm'))
+                                <div class="alert alert-danger" role="alert">
+                                    {{ session('errorDisplayForm') }}
+                                </div>
+                            @endif
+                            <div class="card-title" style="display: flex; justify-content: space-between; align-items: center;">
+                                <p  class="comment_center">Rate this Seller</p>
+                                <!-- mettre l'id de l'announce à la fin de l'url -->
+                                <form action="{{ url('comment/displayFormToStore/3') }}" method="get">
+                                    <input type="submit"  value="Post a comment">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
             </div>
         </div>
     </div>

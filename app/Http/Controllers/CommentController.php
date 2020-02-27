@@ -10,50 +10,59 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
+    private $sessionUser;
+
     public function __construct()
     {
-        $this->middleware('SessionAuth')->only('store','destroy','showYourPostedComments');
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $pomme = PaymentRepository::findPaymentsOfAUserForASeller(3,1);
-        dd($pomme);
-        //return view('testComment');
+        $this->middleware('SessionAuth')->only('store','destroy','showYourPostedComments','displayFormToStore');
     }
 
     public function store(Request $request, Client $client, $idAnnounce)
     {
 
-        $this->user = $request->session()->get('user');
-
-        $data = request()->all();
-        $data['idUser'] = $this->user->idUser;
-        $data['api_token'] = $this->user->api_token;
+        $this->sessionUser = $request->session()->get('user');
+        $data = $request->all();
+        $data['idUser'] = $this->sessionUser->idUser;
+        $data['api_token'] = $this->sessionUser->api_token;
         $data['idAnnounce'] = $idAnnounce;
         $query = $client->request('POST','http://localhost:8001/api/comment/store',
             ['form_params' => $data]);
 
         $response = json_decode($query->getBody()->getContents());
+        if($response->status == '400')
+        {
+            if(isset($response->error))
+            {
+                //dd($response->error);
+                return back()->with('errorValidator' , $response);
+            }
+            return back()->with(['errorMassage' => $response->message]);
+        }
+        //return vers la route des announces
+        return redirect('CommentsOfASeller')->with(['successRegisterComment' => 'your comment has been register']);
+    }
 
-        dd($response);
+    public function displayFormToStore(Request $request, Client $client, $idAnnounce)
+    {
 
-        return view('comment');
+        $this->sessionUser = $request->session()->get('user');
+
+        $data['idUser'] = $this->sessionUser->idUser;
+        $data['api_token'] = $this->sessionUser->api_token;
+        $data['idAnnounce'] = $idAnnounce;
+        $query = $client->request('POST','http://localhost:8001/api/comment/displayFormToStore',
+            ['form_params' => $data]);
+
+        $response = json_decode($query->getBody()->getContents());
+        if($response->status == '400')
+        {
+            return back()->with(['errorDisplayForm' => 'You can\'t post a comment for this Announce because you don\'t have payment for this Seller']);
+        }
+
+        //retourne la page annonce avec un tableau contenant commentaires
+        // et les users qui ont posté les commentaires
+        return view('comment.create',['idAnnounce' => $idAnnounce]);
+
     }
 
     /**
@@ -62,52 +71,26 @@ class CommentController extends Controller
      * @param  \App\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function CommentsOfASeller(Announce $announce, Request $request,Client $client)
+    public function CommentsOfASeller(Request $request,Client $client,$idUser)
     {
         $data = request()->all();
-
         //vérification pour sécu api de qui fait l'appel
         $data['idUser'] = config('api.api_admin_id');
         $data['api_token'] = config('api.api_admin_token');
-        $data['idAnnounce'] = $announce->idAnnounce;
+        $data['idUserSeller'] = $idUser;
 
         $query = $client->request('POST','http://localhost:8001/api/comment/seller',
             ['form_params' => $data]);
 
         $response = json_decode($query->getBody()->getContents());
-
-        if($response->status === "400")
+        if($response->status == '400')
         {
-            return redirect($this->redirectTo);
+            return view('comment.index',['messageError' => $response->message]);
         }
-
 
         //retourne la page annonce avec un tableau contenant commentaires
         // et les users qui ont posté les commentaires
-        return view('testComment',['comments' => $response->comments]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Comment  $comment
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Comment $comment)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Comment  $comment
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Comment $comment)
-    {
-        //
+        return view('comment.index',['comments' => $response->comments]);
     }
 
     /**
@@ -118,11 +101,11 @@ class CommentController extends Controller
      */
     public function destroy(Request $request, Comment $comment, Client $client)
     {
-        $this->user = $request->session()->get('user');
+        $this->sessionUser = $request->session()->get('user');
 
         $data['idComment'] = $comment->idComment;
-        $data['idUser'] = $this->user->idUser;
-        $data['api_token'] = $this->user->api_token;
+        $data['idUser'] = $this->sessionUser->idUser;
+        $data['api_token'] = $this->sessionUser->api_token;
 
         $query = $client->request('POST','http://localhost:8001/api/comment/destroy',
             ['form_params' => $data]);
@@ -134,10 +117,10 @@ class CommentController extends Controller
 
     public function showYourPostedComments(Request $request, Client $client)
     {
-        $this->user = $request->session()->get('user');
+        $this->sessionUser = $request->session()->get('user');
 
-        $data['idUser'] = $this->user->idUser;
-        $data['api_token'] = $this->user->api_token;
+        $data['idUser'] = $this->sessionUser->idUser;
+        $data['api_token'] = $this->sessionUser->api_token;
 
         $query = $client->request('POST','http://localhost:8001/api/comment/showYourPostedComments',
             ['form_params' => $data]);

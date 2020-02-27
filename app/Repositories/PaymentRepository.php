@@ -60,8 +60,9 @@ class PaymentRepository extends BaseRepository
 
         return DB::table('Payments')
             ->join('Announces','Payments.Announces_idAnnounce','Announces.idAnnounce')
-            ->where('Payments.Users_idUser','=',$idUserSeller)
-            ->where('Announces.Users_idUser','=',$idUserTourist)
+            ->where('Payments.Users_idUser','=',$idUserTourist)
+            ->where('Announces.Users_idUser','=',$idUserSeller)
+            ->where('Payments.payment_status','=','succeeded')
             ->get();
     }
 }

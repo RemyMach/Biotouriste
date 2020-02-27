@@ -15,6 +15,9 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     public $timestamps = false;
+
+    protected $table = 'Products';
+
     /**
      * The primary key for the model.
      * 
