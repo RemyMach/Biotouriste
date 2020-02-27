@@ -113,7 +113,13 @@ class User_Status_CorrespondenceController extends Controller
 
         $this->createSellerDependingNewStatus($user);
 
-        return $resultVerifAndCreation;
+        $allStatus = User_Status_CorrespondenceController::getAllStatusFromAnUser($user->idUser);
+
+        return response()->json([
+            'status'    => '200',
+            'message'   => 'Your new status is available',
+            'allStatus' => $allStatus->original['allStatus']
+        ]);
     }
 
     public function addUserStatusAdminOrController(Request $request){
@@ -264,6 +270,9 @@ class User_Status_CorrespondenceController extends Controller
         if($this->request->input('new_status') == 'Seller'){
 
            $rules['seller_description'] = ['required','string','max:255'];
+           $rules['seller_postal_code'] = ['required','integer'];
+           $rules['seller_city'] = ['required','string','max:255'];
+           $rules['seller_adress'] = ['required','string','max:255'];
         }
 
         $rules['new_status'] = ['required','string','regex:/^(Tourist|Seller)$/'];

@@ -65,21 +65,24 @@ class User_Status_CorrespondenceController extends Controller
         $this->sessionUser = $request->session()->get('user');
 
         $data = request()->all();
+
         $data['idUser'] = $this->sessionUser->idUser;
         $data['api_token'] = $this->sessionUser->api_token;
 
-        $query = $client->request('POST','http://localhost:8001/api/user_status/login', [
+        $query = $client->request('POST','http://localhost:8001/api/user_status/addStatus', [
             'form_params' => $data
         ]);
         $response = json_decode($query->getBody()->getContents());
-
-        dd($response);
-
         if($response->status === '400')
         {
-            return redirect('login');
+            return back()->with(['errorAddStatus' => 'Your informations are not valid']);
         }
+        $request->session()->remove('allStatus');
+        session([
+            'allStatus' => $response->allStatus,
+        ]);
 
+        return back()->with(['successAddStatus' => 'The status has been add']);
     }
 
     public function testaddUserStatusTouristOrSeller(Request $request, Client $client){
@@ -88,6 +91,9 @@ class User_Status_CorrespondenceController extends Controller
 
         $data['new_status'] = 'Seller';
         $data['seller_description'] = 'je suis une pomme rouge';
+        $data['seller_adress'] = 'je suis une pomme rouge';
+        $data['seller_city'] = 'je suis une pomme rouge';
+        $data['seller_postal_code'] = 'je suis une pomme rouge';
         $data['idUser'] = $this->sessionUser->idUser;
         $data['api_token'] = $this->sessionUser->api_token;
 

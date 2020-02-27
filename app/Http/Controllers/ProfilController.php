@@ -45,6 +45,7 @@ class ProfilController extends Controller
         }
 
         return view('Profil', [
+            'allProfils' => ['Tourist', 'Seller'],
             'payments' => $response->payments,
             'profil' => $response->profil[0],
         ]);

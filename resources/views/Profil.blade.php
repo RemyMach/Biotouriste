@@ -5,6 +5,11 @@
   <div class="col-md-12 text-center">
     <div class="row" style="margin:0;">
       <div class="col-xs-12 col-sm-12 col-md-6 offset-md-3 text-center">
+        @if(session('successAddStatus'))
+          <div class="alert alert-success" role="alert">
+            {{session('successAddStatus')}}
+          </div>
+        @endif
         <div class="card">
           <div class="pic" style="background-image: url(../img/img.jpg);"></div>
           <div id="info">
@@ -49,6 +54,11 @@
             <h3>Your status</h3>
             <p>Actual status : {{ session('active_status')->status_user_label }}</p>
             @foreach(session('allStatus') as $status)
+              @foreach($allProfils as $key => $profile)
+                @if($profile == $status->status_user_label)
+                  @php unset($allProfils[$key]) @endphp
+                @endif
+              @endforeach
               @if($status->status_user_label != session('active_status')->status_user_label)
                 <p>Other status : {{ $status->status_user_label }}</p>
                 <form action="{{ url('User_status/change') }}" method="post">
@@ -60,6 +70,28 @@
             @endforeach
           </div>
         </div>
+
+        @if(count($allProfils) >= 1)
+          <div class="card">
+            <div id="status">
+              <h3>Add status</h3>
+              @if(session('errorAddStatus'))
+                <div class="alert alert-danger" role="alert">
+                  {{session('errorAddStatus')}}
+                </div>
+              @endif
+              @foreach($allProfils as $profile)
+                  <form id="formInitial" action="{{ url('User_status/addStatus') }}" method="post">
+                    @csrf
+                    <span id="formAddStatus"></span>
+                    <input type="hidden" name="new_status" value="{{ $profile }}"/>
+                    <button class="{{ $profile }}" type="button" id="addStatus" name="button">Add {{ $profile }} status</button>
+                  </form>
+              @endforeach
+            </div>
+          </div>
+        @endif
+
         @if(session('errorPassword'))
           <div class="alert alert-danger" role="alert">
             {{session('errorPassword')}}
@@ -116,19 +148,13 @@
     </div>
   </div>
 </div>
+<script type="text/javascript" src="{{ url('/js/addStatus.js') }}"></script>
 <script type="text/javascript">
 const x = document.getElementById("edit");
 const y = document.getElementById("info");
 function btnEdit() {
   x.style.display = (x.style.display === 'block') ? 'none':'block';
 }
-
-const orderTop = document.getElementById('orderTop');
-const orderBottom = document.getElementById('orderBottom');
-orderTop.addEventListener('click',function(){
-  orderBottom.style.display = (orderBottom.style.display === 'block') ? 'none':'block';
-});
-
 
 </script>
 @include('layouts.footer')
