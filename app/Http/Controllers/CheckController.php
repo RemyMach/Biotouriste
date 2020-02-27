@@ -22,35 +22,14 @@ class CheckController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-        $user = User::find(1);
-@    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('testCheck');
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function storeForAnAdmin(Request $request, Client $client)
     {
-
+        $this->sessionUser = $request->session()->get('user');
         $data = request()->all();
-        $data['idUser'] = config('api.api_admin_id');
-        $data['api_token'] = config('api.api_admin_token');
+        $data['idUser'] = $this->sessionUser->idUser;
+        $data['api_token'] = $this->sessionUser->api_token;
 
 
         $query = $client->request('POST','http://localhost:8001/api/check/store',
@@ -58,9 +37,17 @@ class CheckController extends Controller
 
         $response = json_decode($query->getBody()->getContents());
 
-        dd($response);
+        $checksQuery = $client->request('POST','http://localhost:8001/api/check/allUnDone',
+            ['form_params' => $data]);
 
-        return view('testCheck',["response" => $response]);
+        $checksResponse = json_decode($checksQuery->getBody()->getContents());
+
+        if($response->status === '400')
+        {
+            return view('admin.check',['error' => 'Your check has not been register','checks' => $checksResponse->checks]);
+        }
+
+        return view('admin.check',['success' => 'Your check has been register','checks' => $checksResponse->checks]);
     }
 
     public function storeForAController(Request $request, Client $client)
@@ -97,9 +84,11 @@ class CheckController extends Controller
 
         $response = json_decode($query->getBody()->getContents());
 
-        dd($response);
+        if($response->status == '400'){
 
-        return view('testCheck',["response" => $response]);
+            return back()->with('error', 'All the fields are required');
+        }
+        return redirect('controller')->with('completeCheck', 'The Check has been completed');
     }
 
     /**
@@ -107,20 +96,23 @@ class CheckController extends Controller
      */
     public function showChecksOfAController(Request $request, Client $client)
     {
-        $sessionUser = $request->session()->get('user');
+        $this->sessionUser = $request->session()->get('user');
 
         $data['idUser'] = $this->sessionUser->idUser;
         $data['api_token'] = $this->sessionUser->api_token;
-        $data['idSeller'] = 1;
 
         $query = $client->request('POST','http://localhost:8001/api/check/showChecksOfAController',
             ['form_params' => $data]);
 
         $response = json_decode($query->getBody()->getContents());
 
+        if($response->status == '400'){
+
+            return view('testCheck',["response" => $response]);
+        }
+        return view('testCheck',["response" => $response]);
         dd($response);
 
-        return view('testCheck',["response" => $response]);
     }
 
     /**
@@ -134,12 +126,12 @@ class CheckController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function updateStatus(Request $request, Check $check, Client $client)
+    public function updateStatusVerification(Request $request, Client $client, $idCheck)
     {
         $this->sessionUser = $request->session()->get('user');
 
-        $data['status'] = request('status');
-        $data['idCheck'] = $check->idCheck;
+        $data = $request->all();
+        $data['idCheck'] = $idCheck;
         $data['idUser'] = $this->sessionUser->idUser;
         $data['api_token'] = $this->sessionUser->api_token;
 
@@ -149,31 +141,42 @@ class CheckController extends Controller
 
         $response = json_decode($query->getBody()->getContents());
 
-        //dd($response);
+        if($response->status === '400')
+        {
+            return redirect('controller')->with('messageStatus','The update has fail');
+        }
 
-        //mettre la bonne réponse
-        return view('testCheck');
-
+        return redirect('controller')->with('messageStatus','The update is a success');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request, Client $client)
+    public function destroy(Request $request, Client $client, $idCheckDelete)
     {
         $this->sessionUser = $request->session()->get('user');
 
         $data = request()->all();
         $data['idUser']     = $this->sessionUser->idUser;
         $data['api_token']  = $this->sessionUser->api_token;
+        $data['idCheckDelete'] = $idCheckDelete;
 
         $query = $client->request('POST','http://localhost:8001/api/check/destroy',
             ['form_params' => $data]);
 
         $response = json_decode($query->getBody()->getContents());
 
-        dd($response);
 
-        return view('testCheck',["response" => $response]);
+        return redirect('admin/checks');
+    }
+
+    public function displayFormCheckregister(Request $request, $idCheck, $nameSeller){
+
+        $data = $request->all();
+        $data['idCheck'] = $idCheck;
+        $data['user_name'] = $nameSeller;
+
+        return view('controller.completeCheck',['check' => $data]);
+
     }
 }

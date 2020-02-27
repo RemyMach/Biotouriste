@@ -65,11 +65,6 @@ class UserController extends Controller
     {
         $this->sessionUser = $request->session()->get('user');
 
-        if($api_token !== $this->user->api_token){
-            return redirect('home');
-        }
-
-        $client = new Client();
         $query = $client->request('POST','http://localhost:8001/api/user/show', [
             'form_params' => [
                 "api_token"=>$api_token,"idUser"=>$this->user->idUser]
@@ -115,9 +110,13 @@ class UserController extends Controller
         ]);
         $response = json_decode($query->getBody()->getContents());
 
-        dd($response);
+        if($response->status == '400'){
+            dd('erreur');
+        }
 
-        $this->sessionUser->update($response);
+        session([
+            'user' => $response->user,
+        ]);
 
         return back()->with('success','The Profile has been updated');
     }
@@ -126,9 +125,6 @@ class UserController extends Controller
     {
         $this->sessionUser = $request->session()->get('user');
 
-        if($user->idUser != $this->sessionUser->idUser){
-            return redirect('home');
-        }
 
         $data = request()->all();
         $data['api_token'] = $this->sessionUser->api_token;
@@ -142,13 +138,9 @@ class UserController extends Controller
 
         if($response->status === '400')
         {
-            return back()->with('fail','The request is not good');;
+            return back()->with('errorPassword','Your password informations are not valid');
         }
-
-        //passer à la vue, ce sont les paramètre update
-        $User_attributes_array = json_decode(json_encode($response->user),true);
-
-        return back()->with('success','The Profile has been updated');
+        return back()->with('successPasword','The Password has been updated');
     }
 
     /**

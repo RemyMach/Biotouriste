@@ -38,6 +38,8 @@ Route::post('user/updateProfile','API\UserController@updateProfile');
 
 Route::post('user/updatePassword','API\UserController@updatePassword');
 
+Route::post('user/profil', 'API\UserController@profil');
+
 
 //comment
 Route::post('comment/store','API\CommentController@store');
@@ -58,6 +60,8 @@ Route::post('check/controllerSendACompleteCheck','API\CheckController@controller
 
 Route::post('check/showChecksOfAController','API\CheckController@showChecksOfAController');
 
+Route::post('check/allUnDone','API\CheckController@showAllUnDoneChekcs');
+
 Route::post('check/destroy','API\CheckController@destroy');
 
 //Contact
@@ -69,6 +73,8 @@ Route::post('contact/ContactsWithAssociedUsers','API\ContactController@ContactsW
 Route::post('contact/destroy','API\ContactController@destroy');
 
 Route::post('contact/ContactsOfAUser','API\ContactController@ContactsOfAUser');
+
+Route::post('contact/admin/all','API\ContactController@listAllContacts');
 
 //Discount_code
 
@@ -135,8 +141,6 @@ Route::post('announce/delete','API\AnnounceController@delete');
 Route::post('announce/update','API\AnnounceController@update');
 
 Route::post('announce/historySeller','API\AnnounceController@selectHistorySeller');
-
-
 
 /*Route::get('/users', function () {
     return UserResource::collection(User::paginate(2));

@@ -254,7 +254,7 @@
 <div id="contact">
   <div class="row" style="margin:0;">
     <div class="col-xs-12 col-sm-12 col-md-10 offset-md-1 text-center">
-      <div id="content_5" data-aos="fade-left">
+      <div id="content_5">
         <h3>Contact Us</h3>
         <div class="line"></div>
         <div class="row" style="margin:0;">

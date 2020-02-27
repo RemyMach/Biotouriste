@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Resources\User as UserResource;
-use App\Repositories\StatusUserRepository;
 use App\User;
-use App\User_Status_Correspondence;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 
 class LoginController extends Controller
 {

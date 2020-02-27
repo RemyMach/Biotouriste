@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Payment;
-use App\Repositories\PaymentRepository;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class ProfilController extends Controller
 {
+
+    private $sessionUser;
     /**
      * Create a new controller instance.
      *
@@ -16,7 +17,6 @@ class ProfilController extends Controller
     public function __construct()
     {
         $this->middleware('SessionAuth')->only('index');
-
     }
 
     /**
@@ -25,15 +25,29 @@ class ProfilController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
 
-    public function index(Request $request)
+    public function profil(Client $client, Request $request)
     {
-        $data = $request->session()->all();
-        $user = $request->session()->get('user');
-        $payments = PaymentRepository::findPaymentsForProfil($user->idUser);
+        $data = request()->all();
+        $this->sessionUser = $request->session()->get('user');
+
+        if (isset($this->sessionUser)) {
+          $data['idUser'] = $this->sessionUser->idUser;
+          $data['api_token'] = $this->sessionUser->api_token;
+        }
+
+
+        $query = $client->request('POST', 'http://localhost:8001/api/user/profil', ['form_params' => $data]);
+        $response = json_decode($query->getBody()->getContents());
+
+        if ($response->status === '400'){
+            return response()->json(['error' => $response->error]);
+        }
+
         return view('profil', [
-            'payments' => $payments,
-            'profil' =>$data,
+            'payments' => $response->payments,
+            'profil' => $response->profil[0],
         ]);
+
     }
 
     public function message(Request $request)

@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\API\ApiTokenController;
 use App\Http\Controllers\API\NoApiClass\UsefullController;
 use App\Http\Resources\User as UserResource;
+use App\Repositories\PaymentRepository;
+use App\Repositories\StatusUserRepository;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -22,13 +21,20 @@ class UserController extends Controller
 
     public function __construct(){
         $this->middleware('apiMergeJsonInRequest');
+        $this->middleware('apiTokenAndIdUserExistAndMatch')->only('show','updateProfile','updatePassword','destroy','profil');
+        $this->middleware('apiAdmin')->only('destroy','index');
+    }
 
-        $this->middleware('apiTokenAndIdUserExistAndMatch')->only(
-            'show','updateProfile','updatePassword','destroy'
-        );
-        $this->middleware('apiAdmin')->only(
-            'destroy','index'
-        );
+    public function profil(Request $request){
+        $this->request = $request;
+        $data = $request->all();
+        $profil = StatusUserRepository::getUserAndAlldata($data['idUser']);
+        $payments = PaymentRepository::findPaymentsForProfil($data['idUser']);
+        return response()->json([
+            'payments'   => $payments,
+            'profil'     => $profil,
+            'status'    => '200',
+        ]);
     }
 
     public function index(ApiTokenController $apiTokenController)
@@ -69,7 +75,7 @@ class UserController extends Controller
             'user_surname' => ['required', 'string', 'max:45'],
             'email' => ['required', 'string', 'email', 'max:255'],
             'user_postal_code' => ['required', 'integer'],
-            'user_phone' => ['required'],
+            'user_phone' => ['required','regex:/^(\d\d(\s)?){4}(\d\d)$/'],
             'user_img' => ['string'],
         ]);
 
@@ -117,7 +123,9 @@ class UserController extends Controller
     public function updatePassword(Request $request)
     {
 
+        $this->request = $request;
         $data = request()->all();
+
 
         $validator = Validator::make($this->request->all(), [
             'password' => ['required', 'string', 'min:8', 'confirmed'],
@@ -132,7 +140,6 @@ class UserController extends Controller
                 'status'    => '400'
             ]);
         }
-
 
         $user = User::findOrFail($this->request->input('idUser'));
 
@@ -193,8 +200,7 @@ class UserController extends Controller
         $emails = DB::table('Users')->select('email')->get();
         $email = DB::table('Users')->select('email')->where('idUser','=',$data['idUser'])->get();
         $phones = DB::table('Users')->select('user_phone')->get();
-        $phone = DB::table('Users')->select('user_phone')->where('user_phone','=',$data['user_phone'])->get();
-
+        $phone = DB::table('Users')->select('user_phone')->where('idUser','=',$data['idUser'])->get();
 
         foreach($emails as $key => $value){
             if($data['email'] === $email[0]->email){

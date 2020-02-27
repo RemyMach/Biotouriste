@@ -17,6 +17,7 @@ class CreateAnnouncesTable extends Migration {
 			$table->integer('idAnnounce', true);
 			$table->integer('announce_quantity');
 			$table->string('announce_name', 45);
+			$table->integer('announce_lot');
 			$table->boolean('announce_is_available');
 			$table->string('announce_measure', 25);
             $table->decimal('announce_lat', 13, 10);

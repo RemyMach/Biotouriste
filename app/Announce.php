@@ -50,7 +50,7 @@ class Announce extends Model
     /**
      * @var array
      */
-    protected $fillable =['announce_city', 'announce_measure', 'announce_name', 'announce_price', 'products_idProduct', 'Users_idUser', 'announce_comment', 'announce_img', 'announce_lat', 'announce_lng', 'announce_adresse', 'announce_date', 'announce_is_available', 'announce_quantity'];
+    protected $fillable =['announce_lot', 'announce_city', 'announce_measure', 'announce_name', 'announce_price', 'products_idProduct', 'Users_idUser', 'announce_comment', 'announce_img', 'announce_lat', 'announce_lng', 'announce_adresse', 'announce_date', 'announce_is_available', 'announce_quantity'];
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

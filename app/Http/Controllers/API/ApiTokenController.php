@@ -27,18 +27,17 @@ class ApiTokenController extends Controller
 
             return false;
         }
-        return $role;
+
         $this->currentStatus = User_status_correspondenceController::getCurrentStatus(
             $this->user->idUser, $this->allStatus->original['allStatus']
         );
-
 
         $method = 'verifyApiTokenRequestCorrespondTo' . $role;
 
         if(!$this->$method()){
             return false;
         }
-        return $parameters;
+        return true;
     }
 
     public function verifyCredentials()
