@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="{{ URL::asset('/css/seller.css') }}">
   <link rel="stylesheet" href="{{ URL::asset('/css/message.css') }}">
   <link rel="stylesheet" href="{{ URL::asset('/css/cart.css') }}">
+  <link rel="stylesheet" href="{{ URL::asset('/css/blog.css') }}">
   <link rel="stylesheet" href="{{ URL::asset('/css/favorite.css') }}">
   <link rel="stylesheet" href="{{ URL::asset('/css/register.css') }}">
   <link rel="stylesheet" href="https://use.typekit.net/vsp1spg.css">

@@ -70,7 +70,7 @@ let menu_set = 0;
   function menu() {
     if (menu_set == 0) {
       $('#overlay').slideDown("slow");
-      set = 1;
+      menu_set = 1;
     }else {
       $('#overlay').slideUp("slow");
       menu_set = 0;
