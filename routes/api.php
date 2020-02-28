@@ -151,6 +151,10 @@ Route::post('payment/stripe','API\PaymentController@getidforcard');
 
 Route::post('payment/showUserPayment','API\PaymentController@showUserPayment');
 
+//RequestController
+
+Route::post('RequestController/become','API\ControllerController@become');
+
 /*Route::get('/users', function () {
     return UserResource::collection(User::paginate(2));
 });*/

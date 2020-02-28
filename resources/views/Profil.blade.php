@@ -10,6 +10,15 @@
             {{session('successAddStatus')}}
           </div>
         @endif
+        @if(session('successController'))
+          <div class="alert alert-success" role="alert">
+            {{session('successController')}}
+          </div>
+        @elseif(session('errorController'))
+            <div class="alert alert-danger" role="alert">
+              {{session('errorController')}}
+            </div>
+          @endif
         <div class="card">
           <div class="pic" style="background-image: url(../img/img.jpg);"></div>
           <div id="info">
@@ -55,6 +64,9 @@
             <p>Actual status : {{ session('active_status')->status_user_label }}</p>
             @foreach(session('allStatus') as $status)
               @foreach($allProfils as $key => $profile)
+                @if($status->status_user_label == 'Controller')
+                  @php $controller = 'Controller' @endphp
+                @endif
                 @if($profile == $status->status_user_label)
                   @php unset($allProfils[$key]) @endphp
                 @endif
@@ -102,6 +114,7 @@
             {{session('successPasword')}}
           </div>
         @endif
+
         <div class="card">
           <div id="password">
             <h3>Change password</h3>
@@ -115,6 +128,18 @@
             </form>
           </div>
         </div>
+
+          @if(!isset($controller))
+            <div class="card">
+              <div id="password">
+                <h3>Become a Controller</h3>
+                <form class="" action="{{ url('controller/become') }}" method="get">
+                  <input type="submit" value="Become">
+                </form>
+              </div>
+            </div>
+          @endif
+
         @if($profil->status_user_label === 'Tourist' or $profil->status_user_label === 'Controller')
         <div class="card">
           <div id="order">

@@ -228,6 +228,7 @@ Route::get('admin/checks','AdminController@showChecks');
 
 Route::get('controller','ControllerController@index');
 
+Route::get('controller/become','ControllerController@become');
 
 
 
