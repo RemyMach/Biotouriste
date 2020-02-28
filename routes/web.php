@@ -12,7 +12,7 @@
 */
 
 //Auth::routes();
-Route::get('/', 'HomeController@index');
+Route::get('/', 'HomeController@index')->name('/');
 
 Route::get('users','UserController@index')->name('users');
 
@@ -128,6 +128,9 @@ Route::get('message/show/User','MessageController@showMessagesOfATouristControll
 //Report
 
 Route::post('report/store','ReportController@store');
+Route::get('report/store','ReportController@testStore');
+
+Route::get('report/create/{idUserReported}','ReportController@create');
 
 Route::post('report/show/user','ReportController@showAllMyReports');
 

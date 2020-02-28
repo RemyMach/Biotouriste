@@ -15,7 +15,7 @@ class ReportController extends Controller
     public function __construct()
     {
         $this->middleware('SessionAuth')->only(
-          'store'
+          'store','testStore'
         );
 
         $this->middleware('admin')->only(
@@ -24,24 +24,9 @@ class ReportController extends Controller
 
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+    public function create(Request $request, $idUserReported){
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return view('Report.create',['idUserReported' => $idUserReported]);
     }
 
     /**
@@ -55,12 +40,35 @@ class ReportController extends Controller
         $this->sessionUser = $request->session()->get('user');
 
         $data = request()->all();
-        /*@test
-         * $data['idAnnounce'] = 2;
+        $data['idUser'] = $this->sessionUser->idUser;
+        $data['api_token'] = $this->sessionUser->api_token;
+
+        $query = $client->request('POST','http://localhost:8001/api/report/store',
+            ['form_params' => $data]);
+        $response = json_decode($query->getBody()->getContents());
+        if($response->status == '400')
+        {
+            if(isset($response->error))
+            {
+
+                return back()->with('errorValidator' , $response);
+            }
+            return back()->with(['errorNotSpecified' => 'The informations are not valid']);
+        }
+
+        return redirect('/')->with(['successReport' => 'the report has been register']);
+    }
+
+    public function testStore(Request $request, Client $client)
+    {
+        $this->sessionUser = $request->session()->get('user');
+
+        $data = request()->all();
+        //$data['idAnnounce'] = 2;
         $data['ReportCategorie'] = 'Message';
-        $data['idUserReported'] = 2;
+        $data['idUserReported'] = 4;
         $data['report_subject'] = 'je n\'aime pas cette personne';
-        $data['report_comment'] = 'il a manqué de respect lorsqu\'on c\'est rencontré pour l\'annonce';*/
+        $data['report_comment'] = 'il a manqué de respect lorsqu\'on c\'est rencontré pour l\'annonce';
         $data['idUser'] = $this->sessionUser->idUser;
         $data['api_token'] = $this->sessionUser->api_token;
 

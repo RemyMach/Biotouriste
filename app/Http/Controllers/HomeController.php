@@ -27,6 +27,13 @@ class HomeController extends Controller
     public function index(Request $request)
     {
       $session = $request->session()->all();
+
+      if($request->session()->has('successReport')){
+          return view('welcome')->with([
+              'session'         => $session,
+              'successReport'   => $request->session()->get('successReport')
+              ]);
+      }
       if (isset($session['user'])) {
         return view('welcome')->with('session', $session);
 

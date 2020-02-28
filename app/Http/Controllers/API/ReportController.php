@@ -52,7 +52,6 @@ class ReportController extends Controller
             return $resultCheck;
         }
 
-
         $validData = $this->setValidDataDependingIdAnnounceExistence();
 
         $this->report = Report::create($validData);
@@ -118,6 +117,8 @@ class ReportController extends Controller
         return Validator::make($this->request->all(), [
             'ReportCategorie' => ['required','string','regex:/^(Message|Announce|Commentary|behavior)$/'],
             'idUserReported'  => 'required|integer',
+            'report_comment'  => 'required|string|max:500',
+            'report_subject'  => 'required|string|max:255',
         ]);
     }
 
@@ -179,6 +180,14 @@ class ReportController extends Controller
     private function checkUserExistence(){
 
         $this->user = User::find($this->request->input('idUserReported'));
+
+        if($this->request->input('idUserReported') == $this->request->input('idUser')){
+
+            return response()->json([
+                'message'   => 'You can\'t report yourself',
+                'status'    => '400',
+            ]);
+        }
 
         if(!isset($this->user)){
 

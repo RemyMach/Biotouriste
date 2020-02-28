@@ -4,6 +4,11 @@
 <div id="cta">
   <div class="row" style="margin:0;">
     <div class="col-xs-12 col-sm-12 col-md-8 offset-md-2 text-center">
+      @if(session('successReport'))
+        <div class="alert alert-success" role="alert">
+          {{ session('successReport') }}
+        </div>
+      @endif
       <div id="content_1" class="animated slideInUp">
         <h3>From now</h3>
         <h2>Eating healthy has never been so simple</h2>
