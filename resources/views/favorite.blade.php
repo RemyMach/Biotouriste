@@ -25,9 +25,9 @@
                   <input type="hidden" name="idFavori" value="{{ $favorite->idFavori }}">
                   <tr>
                     <td><img src="../img/product/strawberry.png" alt="">{{ $favorite->announce_name }}</td>
-                    <td>{{ $favorite->announce_price}}$/{{ $favorite->announce_quantity }} {{ $favorite->announce_measure }}</td>
+                    <td>{{ $favorite->announce_price}}$/{{ $favorite->announce_quantity }}{{ $favorite->announce_measure }}</td>
                     <td>Remaining : {{ $favorite->announce_lot }}</td>
-                    <td><button type="button" name="button">Buy</button></td>
+{{--                    <td><button type="button" name="button">Buy</button></td>--}}
                     <td><button type="submit" name="button">Remove</button></td>
                   </tr>
                   </form>

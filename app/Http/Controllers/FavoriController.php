@@ -39,7 +39,6 @@ class FavoriController extends Controller
             ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
         return view('favorite',["response" => $response->favoris]);
-
     }
 
     public function testShowFavorisOfAUser(Request $request, Client $client)
@@ -81,7 +80,7 @@ class FavoriController extends Controller
         $response = json_decode($query->getBody()->getContents());
         if($response->idUser->idFavori){
             return redirect('favori/show');
-        } else{
+        } else {
             return view('favorite',["response" => $response]);
         }
     }

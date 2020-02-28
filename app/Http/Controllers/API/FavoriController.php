@@ -47,6 +47,7 @@ class FavoriController extends Controller
             return response()->json([
                 'message'   => 'No Favoris for this User',
                 'status'    => '400',
+                'favoris'    => $favoris,
             ]);
         }
 
