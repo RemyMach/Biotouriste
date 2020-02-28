@@ -15,27 +15,23 @@
                     <th scope="col"></th>
                     <th scope="col"></th>
                     <th scope="col"></th>
+                    <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody>
+                @foreach($response as $favorite)
+                <form action="{{ url('favori/destroy') }}" method="POST">
+                  @csrf
+                  <input type="hidden" name="idFavori" value="{{ $favorite->idFavori }}">
                   <tr>
-                    <td><img src="../img/product/strawberry.png" alt="">Strawberry</td>
-                    <td>$15/Kg</td>
-                    <td><button type="button" name="button">Buy</button></td>
-                    <td><button type="button" name="button">Remove</button></td>
+                    <td><img src="../img/product/strawberry.png" alt="">{{ $favorite->announce_name }}</td>
+                    <td>{{ $favorite->announce_price}}$/{{ $favorite->announce_quantity }}{{ $favorite->announce_measure }}</td>
+                    <td>Remaining : {{ $favorite->announce_lot }}</td>
+{{--                    <td><button type="button" name="button">Buy</button></td>--}}
+                    <td><button type="submit" name="button">Remove</button></td>
                   </tr>
-                  <tr>
-                    <td><img src="../img/product/strawberry.png" alt="">Strawberry</td>
-                    <td>$15/Kg</td>
-                    <td><button type="button" name="button">Buy</button></td>
-                    <td><button type="button" name="button">Remove</button></td>
-                  </tr>
-                  <tr>
-                    <td><img src="../img/product/strawberry.png" alt="">Strawberry</td>
-                    <td>$15/Kg</td>
-                    <td><button type="button" name="button">Buy</button></td>
-                    <td><button type="button" name="button">Remove</button></td>
-                  </tr>
+                  </form>
+                @endforeach
                 </tbody>
               </table>
           </div>

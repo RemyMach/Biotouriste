@@ -115,13 +115,33 @@ function remplirDivAnnonce(announces){
 }
 
 function showAnnounce(announce) {
+    let idAnnounce = '#heart'+announce['idAnnounce'];
+    $(".heart").prop('id', JSON.stringify(idAnnounce));
+
     $('#titleAnnounce').html(announce['announce_name']);
     $('#imgAnnounce').html(announce['imgAnnounce']);
     $('#announceComment').html(announce['announce_comment']);
     $('#announceAdresse').html(announce['announce_adresse']);
     $('#announcePrice').html(announce['announce_price']+'$');
     $('#idAnnounce').val(announce['idAnnounce']);
-
+    $('#idUserSeller').val(announce['Users_idUser']);
+    $.ajax({
+        url: '/favori/findIdFavori',
+        type: 'POST',
+        data: {idAnnounce: announce['idAnnounce'],  _token: '{{csrf_token()}}'},
+        dataType: "json",
+        success: function(result){
+            let idFav = Object.values(result)[0].favoris[0];
+            if(typeof idFav !== 'undefined' ){
+                $('#idFavori').val(idFav.idFavori);
+            }
+            if(Object.values(result)[0].return === true){
+                $('i').removeClass('far fa-heart').addClass('fas fa-heart');
+            } else {
+                $('i').removeClass('fas fa-heart').addClass('far fa-heart');
+            }
+        }
+    });
     jQuery('#modal-announce').modal('show');
 }
 
