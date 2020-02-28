@@ -124,3 +124,94 @@
     height: auto;
   }
 }
+#modal-announce .modal-header {
+  border-radius: 0;
+  border: none;
+}
+#modal-announce .modal-content {
+  border-radius: 0;
+  border: none;
+}
+#modal-announce .modal-body button {
+  width: auto;
+  margin: 10px 5px;
+  padding: 10px 15px;
+  background-color: white;
+  border: none;
+  border-radius: 40px;
+  color: black;
+  text-transform: uppercase;
+  -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
+  -moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
+  box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
+  transition: .5s;
+}
+#modal-announce .modal-body button:hover {
+  transform: scale(1.1);
+}
+#modal-announce .modal-body img {
+  height: 50px;
+  width: auto;
+}
+#modal-announce .modal-body td {
+  padding: 0;
+  vertical-align: middle;
+  height: auto;
+}
+#modal-announce .modal-header h4 {
+  text-transform: uppercase;
+  font-size: 19px;
+}
+#modal-addAnnounce .modal-header {
+  border-radius: 0;
+  border: none;
+}
+#modal-addAnnounce .modal-content {
+  border-radius: 0;
+  border: none;
+}
+#modal-addAnnounce .modal-header h4 {
+  text-transform: uppercase;
+  font-size: 19px;
+}
+#modal-addAnnounce .modal-body input {
+  padding: 5px 10px;
+  width: 60%;
+  height: 40px;
+  border: none;
+  background-color: inherit;
+  border-bottom: 1px solid black;
+}
+#modal-addAnnounce .modal-body input::placeholder {
+  color: black;
+}
+#modal-addAnnounce .modal-body textarea {
+  padding: 5px 10px;
+  width: 60%;
+  height: 40px;
+  border: none;
+  background-color: inherit;
+  border-bottom: 1px solid black;
+}
+#modal-addAnnounce .modal-body select {
+  margin: 5px 10px;
+  width: 60%;
+  height: 40px;
+}
+#modal-addAnnounce .modal-body button {
+  width: 40%;
+  margin: 10px 5px;
+  padding: 10px 15px;
+  background-color: white;
+  border: none;
+  border-radius: 40px;
+  color: black;
+  text-transform: uppercase;
+  -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
+  -moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
+  box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
+  transition: .5s;
+}
+#modal-addAnnounce .modal-body button:hover {
+  transform: scale(1.1);
+}

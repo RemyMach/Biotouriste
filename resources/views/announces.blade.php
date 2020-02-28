@@ -82,83 +82,83 @@ function map() {
 <script src="{{ URL::asset('js/map.js') }}"></script>
 <script>
 $(function() {
-    findCityData();
+  findCityData();
 });
 function findByCity(cityData){
-    $.ajax({
-        url: '/filterByCity',
-        type: 'POST',
-        data: {cityData: cityData[0],  _token: '{{csrf_token()}}'},
-        dataType: "json",
-        success: function(result){
-            mymap.removeLayer(this);
-            remplirDivAnnonce(result.announces);
-            $('#city')
-        }
-    });
+  $.ajax({
+    url: '/filterByCity',
+    type: 'POST',
+    data: {cityData: cityData[0],  _token: '{{csrf_token()}}'},
+    dataType: "json",
+    success: function(result){
+      mymap.removeLayer(this);
+      remplirDivAnnonce(result.announces);
+      $('#city')
+    }
+  });
 }
 function findCityData(){
-    $.ajax({
-        url: 'https://secure.geonames.org/searchJSON?&',
-        type: 'GET',
-        data: {q : $('#cityZone').val(), maxRows: 1, username: 'biotouriste'},
-        dataType: "json",
-        success: function (result){
-          $('#city').html($('#cityZone').val());
-          mymap.setView([result.geonames[0].lat, result.geonames[0].lng], 10, { animation: true });
-          findByCity(result.geonames);
-        }
-    });
+  $.ajax({
+    url: 'https://secure.geonames.org/searchJSON?&',
+    type: 'GET',
+    data: {q : $('#cityZone').val(), maxRows: 1, username: 'biotouriste'},
+    dataType: "json",
+    success: function (result){
+      $('#city').html($('#cityZone').val());
+      mymap.setView([result.geonames[0].lat, result.geonames[0].lng], 10, { animation: true });
+      findByCity(result.geonames);
+    }
+  });
 }
 function filterByCategorieProduct(categorie){
-    $.ajax({
-        url: 'https://secure.geonames.org/searchJSON?&',
-        type: 'GET',
-        data: {q : $('#cityZone').val(), maxRows: 1, username: 'biotouriste'},
-        dataType: "json",
-        success: function (result){
-            result.geonames[0]['categorie'] = categorie;
-            $.ajax({
-                url: "/filterByCategorie",
-                type: 'POST',
-                data: {cityData: result.geonames[0], _token: '{{csrf_token()}}'},
-                success: function (retour, statut) {
-                    remplirDivAnnonce(retour.announces);
-                },
-                error: function (resultat) {
-                    console.log('marche pas frero')
-                }});
-        }
+  $.ajax({
+    url: 'https://secure.geonames.org/searchJSON?&',
+    type: 'GET',
+    data: {q : $('#cityZone').val(), maxRows: 1, username: 'biotouriste'},
+    dataType: "json",
+    success: function (result){
+      result.geonames[0]['categorie'] = categorie;
+      $.ajax({
+        url: "/filterByCategorie",
+        type: 'POST',
+        data: {cityData: result.geonames[0], _token: '{{csrf_token()}}'},
+        success: function (retour, statut) {
+          remplirDivAnnonce(retour.announces);
+        },
+        error: function (resultat) {
+          console.log('marche pas frero')
+        }});
+      }
     });
-}
-function remplirDivAnnonce(announces){
+  }
+  function remplirDivAnnonce(announces){
     lgMarkers.clearLayers();
     $('#sellerAnnounces').empty();
     var tbody = '';
     if( typeof announces !== 'undefined'){
-        announces.forEach(function (announce) {
-              tbody = tbody +
-               "<tr id="+announce['idAnnounce']+" class='post'>"+
-                 "<td><img src='../img/product/blueberry.png'></td>"+
-                 "<td>"+announce['announce_name']+"</td>"+
-                 "<td>"+announce['announce_comment']+"</td>"+
-                 "<td>"+announce['announce_price']+"$</td>"+
-                 "<td>"+announce['announce_name']+"</td>"+
-                 "<td><button id='btnHeart' type='button' name='' onclick='fav()'><i class='far fa-heart'></i></button></td>"+
-                 "<td><button id='btnView' type='button' name='' onclick='showAnnounce("+JSON.stringify(announce)+")'>View</button></td>"+
-               "</tr>";
+      announces.forEach(function (announce) {
+        tbody = tbody +
+        "<tr id="+announce['idAnnounce']+" class='post'>"+
+        "<td><img src='../img/product/blueberry.png'></td>"+
+        "<td>"+announce['announce_name']+"</td>"+
+        "<td>"+announce['announce_comment']+"</td>"+
+        "<td>"+announce['announce_price']+"$</td>"+
+        "<td>"+announce['announce_name']+"</td>"+
+        "<td><button id='btnHeart' type='button' name='' onclick='fav()'><i class='far fa-heart'></i></button></td>"+
+        "<td><button id='btnView' type='button' name='' onclick='showAnnounce("+JSON.stringify(announce)+")'>View</button></td>"+
+        "</tr>";
 
-            var marker = new L.marker([announce['announce_lat'], announce['announce_lng']], {icon: icone}).addTo(lgMarkers);
-            marker.bindPopup(announce['announce_name']);
-        });
-        $('#sellerAnnounces').append(tbody);
+        var marker = new L.marker([announce['announce_lat'], announce['announce_lng']], {icon: icone}).addTo(lgMarkers);
+        marker.bindPopup(announce['announce_name']);
+      });
+      $('#sellerAnnounces').append(tbody);
     } else {
-       // faire un toast ici
+      // faire un toast ici
 
     }
-}
+  }
 
-function showAnnounce(announce) {
+  function showAnnounce(announce) {
     $('#titleAnnounce').html(announce['announce_name']);
     $('#imgAnnounce').html(announce['imgAnnounce']);
     $('#announceComment').html(announce['announce_comment']);
@@ -167,34 +167,34 @@ function showAnnounce(announce) {
     $('#idAnnounce').val(announce['idAnnounce']);
 
     jQuery('#modal-announce').modal('show');
-}
+  }
 
-function getLocation() {
+  function getLocation() {
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition, showError);
+      navigator.geolocation.getCurrentPosition(showPosition, showError);
     } else {
-        x.innerHTML = "Geolocation is not supported by this browser.";
+      x.innerHTML = "Geolocation is not supported by this browser.";
     }
-}
+  }
 
-function showPosition(position) {
+  function showPosition(position) {
     var cityData = { 'lat': position.coords.latitude, 'lng': position.coords.longitude};
     $.ajax({
-        url: '/filterByCity',
-        type: 'POST',
-        data: {cityData: cityData,  _token: '{{csrf_token()}}'},
-        dataType: "json",
-        success: function(result){
-            $("#cityZone").val(result.announces[0]['announce_city']);
-            $("#city").val(result.announces[0]['announce_city']);
-            mymap.removeLayer(this);
-            mymap.setView([result.lat, result.lng], 10, { animation: true });
-            remplirDivAnnonce(result.announces);
-        }
+      url: '/filterByCity',
+      type: 'POST',
+      data: {cityData: cityData,  _token: '{{csrf_token()}}'},
+      dataType: "json",
+      success: function(result){
+        $("#cityZone").val(result.announces[0]['announce_city']);
+        $("#city").val(result.announces[0]['announce_city']);
+        mymap.removeLayer(this);
+        mymap.setView([result.lat, result.lng], 10, { animation: true });
+        remplirDivAnnonce(result.announces);
+      }
     });
-}
+  }
 
-function showError(error) {
+  function showError(error) {
     console.log('error');
-}
+  }
 </script>
