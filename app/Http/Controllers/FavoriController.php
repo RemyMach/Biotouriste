@@ -30,7 +30,6 @@ class FavoriController extends Controller
 
     public function showFavorisOfAUser(Request $request, Client $client)
     {
-
         $this->sessionUser = $request->session()->get('user');
 
         $data['idUser']     = $this->sessionUser->idUser;
@@ -39,12 +38,7 @@ class FavoriController extends Controller
         $query = $client->request('POST','http://localhost:8001/api/favori/showFavorisOfAUser',
             ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
-
-        if ($response->status == '400') {
-          return view('favorite',["response" => $response]);
-        } else {
-          return view('favoriteFail',["response" => $response]);
-        }
+        return view('favorite',["response" => $response->favoris]);
 
     }
 
@@ -85,7 +79,10 @@ class FavoriController extends Controller
         $query = $client->request('POST','http://localhost:8001/api/favori/destroy',
             ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
-
-        return view('testFavori',["response" => $response]);
+        if($response->idUser->idFavori){
+            return redirect('favori/show');
+        } else{
+            return view('favorite',["response" => $response]);
+        }
     }
 }
