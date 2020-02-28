@@ -29,7 +29,6 @@ class HomeController extends Controller
       $session = $request->session()->all();
       if (isset($session['user'])) {
         return view('welcome')->with('session', $session);
-
       }
 
       //récupération des 5 sellers les mieux noté

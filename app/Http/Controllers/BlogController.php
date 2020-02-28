@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class FaqController extends Controller
+class BlogController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -13,7 +13,6 @@ class FaqController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->only('index');
 
     }
 
@@ -24,6 +23,6 @@ class FaqController extends Controller
      */
     public function index(Request $request)
     {
-        return view('Faq');
+        return view('Blog');
     }
 }

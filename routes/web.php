@@ -148,7 +148,7 @@ Route::get('message', 'ProfilController@message');
 Route::get('favorite', 'ProfilController@favorite');
 
 // FAQ
-Route::get('faq', 'FaqController@index');
+Route::get('blog', 'BlogController@index');
 Route::get('report/show/admin','ReportController@showAllReportsForAdmin');
 
 //User_Status_Correspondence
