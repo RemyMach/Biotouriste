@@ -189,6 +189,9 @@
                 <div class="article" data-aos="fade-up">
                   <div class="pic" style="background-image:url(../img/article/article_3.jpg)"></div>
                   <div class="content">
+                    <div class="meta">
+                      <p>2020-02-02 23:00:00</p>
+                    </div>
                     <div class="title">
                       <h3>News 2020</h3>
                     </div>
@@ -207,6 +210,9 @@
                 <div class="article" data-aos="fade-down">
                   <div class="pic" style="background-image:url(../img/article/article_1.jpg)"></div>
                   <div class="content">
+                    <div class="meta">
+                      <p>2020-02-02 23:00:00</p>
+                    </div>
                     <div class="title">
                       <h3>News 2020</h3>
                     </div>
@@ -225,6 +231,9 @@
                 <div class="article" data-aos="fade-up">
                   <div class="pic" style="background-image:url(../img/article/article_2.jpg)"></div>
                   <div class="content">
+                    <div class="meta">
+                      <p>2020-02-02 23:00:00</p>
+                    </div>
                     <div class="title">
                       <h3>News 2020</h3>
                     </div>
