@@ -30,8 +30,11 @@ class ProfilController extends Controller
         $data = request()->all();
         $this->sessionUser = $request->session()->get('user');
 
-        $data['idUser'] = $this->sessionUser->idUser;
-        $data['api_token'] = $this->sessionUser->api_token;
+        if (isset($this->sessionUser)) {
+          $data['idUser'] = $this->sessionUser->idUser;
+          $data['api_token'] = $this->sessionUser->api_token;
+        }
+
 
         $query = $client->request('POST', 'http://localhost:8001/api/user/profil', ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());

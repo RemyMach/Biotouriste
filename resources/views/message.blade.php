@@ -2,39 +2,52 @@
 @include('layouts.navbarDesktop')
 @include('layouts.navbarMobile')
 <div id="message">
-  <div class="row" style="margin:0;">
-    <div class="col-md-12" style="padding:0;">
-      <div class="message_banner">
-        <div class="row" style="margin:0;">
-          <div class="col-md-12 text-center">
-            <h2>Message</h2>
-            <div class="line"></div>
+  <div class="col-md-12 text-center">
+    <div class="row" style="margin:0;">
+      <div class="col-xs-12 col-sm-12 col-md-10 offset-md-1 text-center">
+        <div class="card" data-aos="fade-down">
+          <div id="message_list">
+            <h3>Message</h3>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><div style="background-image:url('../img/img.jpg')"></div></td>
+                    <td>John Doe</td>
+                    <td>15/04/2020 11:49:05</td>
+                    <td><button type="button" name="button">See</button></td>
+                    <td><button type="button" name="button">Delete</button></td>
+                  </tr>
+                  <tr>
+                    <td><div style="background-image:url('../img/img.jpg')"></div></td>
+                    <td>John Doe</td>
+                    <td>15/04/2020 11:49:05</td>
+                    <td><button type="button" name="button">See</button></td>
+                    <td><button type="button" name="button">Delete</button></td>
+                  </tr>
+                  <tr>
+                    <td><div style="background-image:url('../img/img.jpg')"></div></td>
+                    <td>John Doe</td>
+                    <td>15/04/2020 11:49:05</td>
+                    <td><button type="button" name="button">See</button></td>
+                    <td><button type="button" name="button">Delete</button></td>
+                  </tr>
+                </tbody>
+              </table>
           </div>
         </div>
-      </div>
-      <div class="message_link">
-        <div class="col-md-12 text-right">
-          <a href="{{ url('profil') }}">Return to profil</a>
-        </div>
-      </div>
-      <div class="message_container">
-        <div class="message_item">
-          <div class="row" style="margin:0;">
-            <div class="col-md-12 text-center" style="margin-top: auto;margin-bottom: auto;">
-              <div class="message_pic" style="background-image:url('/img/home/jakob-owens-lkMJcGDZLVs-unsplash.jpg')"></div>
-              <p>Jakob Owens</p>
-              <p>15/01/2020</p>
-              <a href="#">click to see the conversation</a>
-            </div>
-          </div>
-        </div>
-        <div class="message_item">
-          <div class="row" style="margin:0;">
-            <div class="col-md-12 text-center" style="margin-top: auto;margin-bottom: auto;">
-              <div class="message_pic" style="background-image:url('/img/home/jakob-owens-lkMJcGDZLVs-unsplash.jpg')"></div>
-              <p>Jakob Owens</p>
-              <p>15/01/2020</p>
-              <a href="#">click to see the conversation</a>
+        <div class="cta" data-aos="fade-up">
+          <div class="row">
+            <div class="col-md-12">
+              <button type="button" name="button" onclick="window.location.href='{{ url('profil') }}'">Return to profil</button>
             </div>
           </div>
         </div>
