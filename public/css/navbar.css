@@ -48,6 +48,11 @@
 .menu button:hover {
   color: rgba(0, 0, 0, 0.5);
 }
+@media screen and (min-width: 1150px) {
+  #overlay {
+    display: none;
+  }
+}
 @media screen and (max-width: 1150px) {
   #navbar_desktop {
     display: none;
@@ -81,4 +86,45 @@
   .menu button:hover {
     color: rgba(0, 0, 0, 0.5);
   }
+}
+#menu {
+  z-index: 1000;
+}
+#overlay {
+  display: none;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  z-index: 998;
+  left: 0;
+  top: 0;
+  background-color: rgba(0,0,0, 0.5);
+  overflow-x: hidden;
+}
+#overlay ul {
+  margin-top: 25%;
+  margin-bottom: auto;
+}
+#overlay ul li {
+  transition: .5s;
+}
+#overlay ul li a {
+  color: white;
+  transition: .5s;
+}
+#overlay ul li:hover {
+  transform: scale(1.10);
+}
+#overlay ul li {
+  text-decoration: none;
+  list-style: none;
+  padding: 10px;
+}
+#overlay ul li button {
+  color: white;
+  transition: .5s;
+}
+#overlay ul li button:hover {
+  transform: scale(1.10);
+
 }

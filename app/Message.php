@@ -24,6 +24,8 @@ class Message extends Model
      */
     protected $primaryKey = 'idMessage';
 
+    protected $table = 'Messages';
+
     /**
      * @var array
      */

@@ -21,13 +21,9 @@ class Status_User extends Model
      */
     protected $primaryKey = 'idStatus_User';
 
-    /**
-     * @var array
-     */
-    protected $fillable = ["idStatus_User"];
 
-       public function UsersId()
-       {
-           return $this->hasMany('App\User_Status_Correspondence', 'Status_User_idStatus_User', 'idStatus_User');
-       }
+    public function UsersId()
+    {
+        return $this->hasMany('App\User_Status_Correspondence', 'Status_User_idStatus_User', 'idStatus_User');
+    }
 }

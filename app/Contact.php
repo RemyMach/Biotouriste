@@ -22,6 +22,8 @@ class Contact extends Model
      */
     protected $primaryKey = 'idContact';
 
+    protected $table  = 'Contacts';
+
     /**
      * @var array
      */

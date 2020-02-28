@@ -1,206 +1,102 @@
 #message {
-  padding-top: 20px;
-  height: 100%;
-  width: 100%;
-}
-#message .title {
-  padding: 20px;
-}
-#message h3 {
-  font-size: 18px;
-  color: #677A70;
-  text-transform: uppercase;
-}
-#message h2 {
-  font-size: 36px;
-  color: #677A70;
-  font-family: minerva-modern, sans-serif;
-  font-weight: 700;
-  font-style: normal;
-  text-transform: uppercase;
-}
-#message .line {
-  width: 80px;
-  height: 1px;
-  border: 2px solid #677A70;
-  margin-top: 15px;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: #677A70;
-}
-.message_container {
   height: auto;
-  padding: 50px 20px;
-  width: 50%;
-  background-color: #d0dad0;
+  width: 100%;
+  padding: 5% 15%;
+}
+#message .card {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 5% 20px;
+  border: none;
+  border-radius: 0;
   margin: 5% auto;
 }
-@media screen and (max-width: 1400px) {
-  .message_container {
-    height: auto;
-    padding: 50px 20px;
-    width: 90%;
-    background-color: #d0dad0;
-    margin: 5% auto;
-  }
-}
-@media screen and (max-width: 765px) {
-  .message_item {
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .message_pic {
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .message_name h2 {
-    text-align: center;
-  }
-  .message_desc p {
-    text-align: center;
-  }
-  .message_price p {
-    text-align: center;
-  }
-  .message_quantity input[type=text] {
-    width: 40%;
-  }
-  .message_quantity p{
-    display: inline-block;
-  }
-  .message_remove button[type=button]{
-    height: 20px;
-    font-size: 10px;
-    font-weight: normal;
-    padding: 0;
-    margin-top: 30px;
-  }
-  .message_quantity select {
-    height: 40px;
-    border: none;
-    background-color: white;
-  }
-}
-.message_banner h3 {
+#message h3 {
   text-transform: uppercase;
-  color: #677A70;
-  font-size: 24px;
-  font-weight: 500;
-  font-family: minerva-modern, sans-serif;
-  font-weight: 700;
-  font-style: normal;
+  font-size: 13px;
 }
-.message_banner {
-  background-color: #f8f4ed;
-  height: auto;
-  width: 100%;
-  padding-top: 40px;
-  padding-bottom: 40px;
-}
-.message_container input {
-  width: 60%;
-  height: 40px;
-  border: none;
-  margin-top: 20px;
-}
-.message_container input[type=text] {
-  padding: 5px 10px;
-}
-.message_container input[type=submit] {
-  text-transform: uppercase;
-  color: white;
-  text-decoration: none;
-  font-family: 'helvetica', sans-serif;
-  font-weight: bold;
-  font-size: 12px;
-  letter-spacing: 1px;
-  width: 40%;
-  transition: .5s;
-  margin-right: 10px;
-  padding: 5px;
-  border: none;
-  background-color: #677A70;
-}
-.message_container input[type=submit]:hover {
-  background-color: black;
-}
-.message_container button {
-  text-transform: uppercase;
-  color: white;
-  height: 40px;
-  text-decoration: none;
-  font-family: 'helvetica', sans-serif;
-  font-weight: bold;
-  font-size: 12px;
-  letter-spacing: 1px;
-  width: 40%;
-  transition: .5s;
-  margin-right: 10px;
-  padding: 5px;
-  border: none;
-  background-color: #677A70;
-}
-.message_container button:hover {
-  background-color: black;
-}
-.message_item {
-  background-color: #F2F2F2;
-  height: auto;
-  width: auto;
-  padding: 10px;
-  margin-bottom: 20px;
-  transition: .5s;
-}
-.message_item:hover {
-  transform: scale(.98);
-}
-.message_pic {
-  height: 50px;
-  width: 50px;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 25px;
+#message .cta button {
+  width: 20%;
+  margin: 20px 10px;
+  padding: 10px 15px;
   background-color: white;
-  background-position: top;
+  border: none;
+  border-radius: 40px;
+  color: black;
+  text-transform: uppercase;
+  -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
+  -moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
+  box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
+  transition: .5s;
+}
+#message button:hover {
+  transform: scale(1.1);
+}
+#message_list input[type=number] {
+  background-color: inherit;
+  width: 10%;
+  border: none;
+}
+#message_list table,td {
+  border: none;
+}
+#message_list table th {
+  border: none;
+  border-bottom: .5px solid black;
+  border-top: none;
+}
+#message_list table img {
+  height: 50px;
+  width: auto;
+}
+#message_list table td button {
+  width: 60%;
+  background-color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 40px;
+  color: black;
+  text-transform: uppercase;
+  -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
+  -moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
+  box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
+  transition: .5s;
+}
+#message_list button:hover {
+  transform: scale(1.1);
+}
+#message_list tr td div {
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: top;
+  height: 50px;
+  width: 50px;
+  border-radius: 50px;
 }
-.message_desc p {
-  font-size: 10px;
-  font-weight: 500;
+@media screen and (max-width: 1500px) {
+  #message_list table td button {
+    width: auto;
+    background-color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 40px;
+    color: black;
+    text-transform: uppercase;
+    -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
+    -moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
+    box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
+    transition: .5s;
+  }
+
 }
-.message_price p {
-  font-size: 16px;
-  font-weight: bold;
-  color: #677A70;
-}
-.message_quantity input[type=text] {
-  width: 40%;
-}
-.message_quantity p {
-  display: inline-block;
-}
-.message_link {
-  margin-top: 20px;
-}
-.message_item i {
-  font-size: 16px;
-  font-weight: bold;
-  color: #677A70;
-}
-.message_item p {
-  font-size: 10px;
-  margin-top: 5px;
-  font-weight: bold;
-  color: #677A70;
-}
-.message_link a {
-  text-transform: uppercase;
-  color: #677A70;
-  text-decoration: underline;
-}
-.message_item a {
-  text-transform: uppercase;
-  color: #677A70;
-  text-decoration: underline;
+@media screen and (max-width: 1000px) {
+  #message {
+    padding: 0;
+  }
+  #message .card {
+    width: 100%;
+    height: auto;
+  }
+  #message_list table td button {
+    width: auto;
+  }
 }

@@ -13,15 +13,23 @@ class FavoriController extends Controller
 
     public function __construct(){
 
-        $this->middleware('touristController')->only(
-            'showFavorisOfAUser'
-        );
+        $this->middleware('touristController')->only('showFavorisOfAUser', 'store', 'destroy', 'findIdFavori');
 
+    }
+
+    public function findIdFavori(Request $request, Client $client){
+        $this->sessionUser = $request->session()->get('user');
+        $data = request()->all();
+        $data['idUser']     = $this->sessionUser->idUser;
+        $data['api_token']  = $this->sessionUser->api_token;
+        $query = $client->request('POST','http://localhost:8001/api/favori/findIdFavori', ['form_params' => $data]);
+        $response = json_decode($query->getBody()->getContents());
+
+        return response()->json(['response' => $response]);
     }
 
     public function showFavorisOfAUser(Request $request, Client $client)
     {
-
         $this->sessionUser = $request->session()->get('user');
 
         $data['idUser']     = $this->sessionUser->idUser;
@@ -30,13 +38,7 @@ class FavoriController extends Controller
         $query = $client->request('POST','http://localhost:8001/api/favori/showFavorisOfAUser',
             ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
-
-        if ($response->status == '400') {
-          return view('favorite',["response" => $response]);
-        } else {
-          return view('favoriteFail',["response" => $response]);
-        }
-
+        return view('favorite',["response" => $response->favoris]);
     }
 
     public function testShowFavorisOfAUser(Request $request, Client $client)
@@ -57,33 +59,29 @@ class FavoriController extends Controller
 
 
     public function store(Request $request, Client $client){
-
         $this->sessionUser = $request->session()->get('user');
-
         $data = request()->all();
-        //$data['idAnnounce'] = 5;
         $data['idUser']     = $this->sessionUser->idUser;
         $data['api_token']  = $this->sessionUser->api_token;
-
-        $query = $client->request('POST','http://localhost:8001/api/favori/store',
-            ['form_params' => $data]);
+        $query = $client->request('POST','http://localhost:8001/api/favori/store', ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
-
-        return view('testFavori',["response" => $response]);
+        return response()->json(["response" => $response]);
     }
 
     public function destroy(Request $request, Client $client)
     {
         $this->sessionUser = $request->session()->get('user');
-        //$data = request()->all();
-        $data['idFavori']   = 3;
+        $data = request()->all();
         $data['idUser']     = $this->sessionUser->idUser;
         $data['api_token']  = $this->sessionUser->api_token;
 
         $query = $client->request('POST','http://localhost:8001/api/favori/destroy',
             ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
-
-        return view('testFavori',["response" => $response]);
+        if($response->idUser->idFavori){
+            return redirect('favori/show');
+        } else {
+            return view('favorite',["response" => $response]);
+        }
     }
 }
