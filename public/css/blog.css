@@ -1,0 +1,66 @@
+#blog {
+  height: auto;
+  width: 100%;
+  padding: 5% 15%;
+}
+#article {
+  padding: 0;
+}
+#blog .card {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 5% 20px;
+  border: none;
+  border-radius: 0;
+  margin: 5% auto;
+}
+#blog .article {
+  padding: 2% 0;
+  border-bottom: 1px solid #dee2e6;
+  width: 100%:
+}
+#blog .article_image img {
+  width: 100%;
+  height: 20%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover
+}
+#blog h3 {
+  text-transform: uppercase;
+  font-size: 13px;
+}
+#blog .article_cta button {
+  width: 40%;
+  margin: 20px 0;
+  padding: 10px 15px;
+  background-color: white;
+  border: none;
+  border-radius: 40px;
+  color: black;
+  text-transform: uppercase;
+  -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
+  -moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
+  box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
+  transition: .5s;
+}
+#blog .article_cta button:hover {
+  transform: scale(1.1);
+}
+@media screen and (max-width: 700px) {
+  #blog .article .article_image img {
+    width: 100%;
+    height: 20%;
+  }
+}
+#blog .article_meta p {
+  color: black;
+  font-size: 9px;
+  text-transform: uppercase;
+  margin: 5px 0;
+}
+#blog .article_title p {
+  color: black;
+  font-size: 19px;
+  text-transform: uppercase;
+  margin: 5px 0;
+}

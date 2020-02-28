@@ -117,6 +117,8 @@ Route::post('favori/store','FavoriController@store');
 
 Route::post('favori/destroy','FavoriController@destroy');
 
+Route::post('favori/findIdFavori','FavoriController@findIdFavori');
+
 //Messages
 
 Route::get('message/store','MessageController@store');
@@ -146,7 +148,7 @@ Route::get('message', 'ProfilController@message');
 Route::get('favorite', 'ProfilController@favorite');
 
 // FAQ
-Route::get('faq', 'FaqController@index');
+Route::get('blog', 'BlogController@index');
 Route::get('report/show/admin','ReportController@showAllReportsForAdmin');
 
 //User_Status_Correspondence
