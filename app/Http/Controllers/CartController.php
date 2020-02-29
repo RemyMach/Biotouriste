@@ -31,7 +31,7 @@ class CartController extends Controller
     }
 
     public function add(Request $request){
-        $announce = Announce::find($request->session()->get('cart'));
+        $announce = Announce::find($request->get('idAnnounce'));
         $request->session()->push('cart', $announce);
 
         return redirect('cart');
