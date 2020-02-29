@@ -30,37 +30,25 @@ class StripeController extends Controller
         $iduser = get_object_vars($iduser);
         $data['idUser'] = $iduser['idUser'];
         $data['api_token'] = $iduser['api_token'];
-          $data['nbannouncesorder'] = session()->get('number');
+        $data['nbannouncesorder'] = session()->get('number');
         foreach ($announces as $key => $announce) {
             $data["announces"][] =
                 [
-                    'idAnnounce' => $announce['idAnnounce'],'quantityorderannounce' =>$announce['announce_quantity'] , 'announcesammount' => $announce['announce_price']
+                    'idAnnounce' => $announce['idAnnounce'],
+                    'quantityorderannounce' => $announce['announce_quantity'],
+                    'announcesammount' => $announce['announce_price']
                 ];
         }
-
-
-        $query = $client->request('POST','http://localhost:8001/api/payment/stripe', [
-            'form_params' => $data
-        ]);
+        $query = $client->request('POST','http://localhost:8001/api/payment/stripe', ['form_params' => $data ]);
         $response = json_decode($query->getBody()->getContents());
 
-
-
-
-        if($response->status === '400')
-        {
+        if($response->status === '400') {
             return view('Payment')->with('response' , $response);
-        }
-        else{
-
+        } else {
             return view('ValidatePayment')->with('response' , $response);
-
         }
-
-
     }
     public function showpayments(Request $Request, Client $client){
-
         $data = $Request->all();
         $iduser = session()->get('user');
         $iduser = get_object_vars($iduser);
@@ -70,9 +58,6 @@ class StripeController extends Controller
             'form_params' => $data
         ]);
         $response = json_decode($query->getBody()->getContents());
-
-        dd($response);
-
     }
 
 }
