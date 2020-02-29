@@ -91,7 +91,6 @@ function findByCity(cityData){
     data: {cityData: cityData[0],  _token: '{{csrf_token()}}'},
     dataType: "json",
     success: function(result){
-      console.log(result);
       mymap.removeLayer(this);
       remplirDivAnnonce(result.announces);
       $('#city')
@@ -194,6 +193,15 @@ function addFavorite(idAnnounce, idFavori){
     $('#announcePrice').html(announce['announce_price']+'$');
     $('#idAnnounce').val(announce['idAnnounce']);
     $('#idUserSeller').val(announce['Users_idUser']);
+    $.ajax({
+      url: '/comment/1',
+      type: 'POST',
+      data: {_token: '{{csrf_token()}}'},
+      dataType: "json",
+      success: function(result){
+        console.log(result);
+      }
+    });
     jQuery('#modal-announce').modal('show');
   }
 

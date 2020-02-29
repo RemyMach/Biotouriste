@@ -1,5 +1,4 @@
-<form action="{{ url('carte') }}" method="post">
-    @csrf
+
     <div class="modal fade custom-width" id="modal-announce">
         <div class="modal-dialog" style="width: 90%">
             <div class="modal-content">
@@ -8,6 +7,8 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
+                    <form action="{{ url('carte') }}" method="post">
+                    @csrf
                     <input type="hidden" name="idAnnounce" id="idAnnounce">
                     <input type="hidden" name="idFavori" id="idFavori">
                     <div class="row">
@@ -25,8 +26,12 @@
                     <div class="row">
                         <div class="col-md-4"><button type="submit">Add to cart</button></div>
                     </div>
+                </form>
+                </div>
+
+                <div class="modal-footer">
+                    Metttre les Commentaire ici ta vu
                 </div>
             </div>
         </div>
     </div>
-</form>
