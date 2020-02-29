@@ -23,11 +23,11 @@
                 <form action="{{ url('favori/destroy') }}" method="POST">
                   @csrf
                   <input type="hidden" name="idFavori" value="{{ $favorite->idFavori }}">
+                  <input type="hidden" name="pageFavorite" value="remyLeMoldu">
                   <tr>
                     <td><div style="background-image:url('../img/product/strawberry.png')"></div>{{ $favorite->announce_name }}</td>
                     <td>{{ $favorite->announce_price}}$/{{ $favorite->announce_quantity }}{{ $favorite->announce_measure }}</td>
                     <td>Remaining : {{ $favorite->announce_lot }}</td>
-{{--                    <td><button type="button" name="button">Buy</button></td>--}}
                     <td><button type="submit" name="button">Remove</button></td>
                   </tr>
                   </form>
@@ -48,23 +48,3 @@
   </div>
 </div>
 @include('layouts.footer')
-
-
-<!-- <div class="row" style="margin:0;">
-<div class="col-md-12" style="padding:0;">
-<div class="favorite_banner">
-<div class="row" style="margin:0;">
-<div class="col-md-12 text-center">
-<h2>Favorite</h2>
-<div class="line"></div>
-</div>
-</div>
-</div>
-<div class="favorite_container text-center">
-<h3>Please login to access your favorites</h3>
-<p>Go to login page</p>
-<button type="button" name="button" onclick="window.location.href='{{ url('register#login') }}'">Login</button>
-<p>Or create an account <a href="{{ url('register#register')}}">here</a> </p>
-</div>
-</div>
-</div> -->

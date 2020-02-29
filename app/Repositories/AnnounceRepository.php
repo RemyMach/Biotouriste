@@ -27,7 +27,8 @@ class AnnounceRepository extends BaseRepository
         $lngmin = (float)$lng -1;
         if ($idCategorie == 0){
             return DB::table('Announces')
-                ->select('Announces.*')
+                ->select('Announces.*', 'Favoris.*')
+                ->leftJoin('Favoris','Announces.idAnnounce','=','Favoris.Announces_idAnnounce')
                 ->where('announce_lat', '>=', $latmin)
                 ->where('announce_lat', '<=', $latmax)
                 ->where('announce_lng', '>=', $lngmin)
@@ -37,7 +38,8 @@ class AnnounceRepository extends BaseRepository
         } else {
             $qb = DB::table('Announces')
                 ->select('Announces.*')
-                ->join('Products', 'Announces.products_idproduct', '=', 'Products.idproduct');
+                ->join('Products', 'Announces.products_idproduct', '=', 'Products.idproduct')
+                ->leftJoin('Favoris','Announces.idAnnounce','=','Favoris.Announces_idAnnounce');
                 if($idCategorie == 0){
                     $qb->where('product_categories_idproduct_category', [1,2,3,4,5,6]);
                 }else{

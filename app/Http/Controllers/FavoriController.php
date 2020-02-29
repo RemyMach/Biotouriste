@@ -78,10 +78,10 @@ class FavoriController extends Controller
         $query = $client->request('POST','http://localhost:8001/api/favori/destroy',
             ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
-        if($response->idUser->idFavori){
+        if($request->request->get('pageFavorite')){
             return redirect('favori/show');
         } else {
-            return view('favorite',["response" => $response]);
+            return response()->json(["response" => $response]);
         }
     }
 }

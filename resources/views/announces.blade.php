@@ -137,14 +137,20 @@ function filterByCategorieProduct(categorie){
     var tbody = '';
     if( typeof announces !== 'undefined'){
       announces.forEach(function (announce) {
+      let idFavClass = announce['idFavori'];
+      let isActif = 'far fa-heart';
+      if(announce['idFavori'] != null){
+        isActif = 'fas fa-heart';
+      }
         tbody = tbody +
+        "<tr id="+idFavori+" class='post'>"+
         "<tr id="+announce['idAnnounce']+" class='post'>"+
         "<td><img src='../img/product/blueberry.png'></td>"+
         "<td>"+announce['announce_name']+"</td>"+
         "<td>"+announce['announce_comment']+"</td>"+
         "<td>"+announce['announce_price']+"$</td>"+
         "<td>"+announce['announce_name']+"</td>"+
-        "<td><button id='btnHeart' type='button' name='' onclick='fav()'><i class='far fa-heart'></i></button></td>"+
+        "<td id='announce"+announce['idAnnounce']+"'><button id='btnHeart' type='button' onclick='addFavorite("+announce['idAnnounce']+","+announce['idFavori']+")'><i class='"+idFavClass+" "+isActif+"'></i></button></td>"+
         "<td><button id='btnView' type='button' name='' onclick='showAnnounce("+JSON.stringify(announce)+")'>View</button></td>"+
         "</tr>";
 
@@ -157,10 +163,29 @@ function filterByCategorieProduct(categorie){
 
     }
   }
+function addFavorite(idAnnounce, idFavori){
+  let path = '/favori/store';
+  let data = {idAnnounce: idAnnounce,  _token: '{{csrf_token()}}' };
+  if (idFavori != null){
+    path = '/favori/destroy';
+    data = {idAnnounce: idAnnounce, idFavori: idFavori,  _token: '{{csrf_token()}}' }
+  }
 
+  $.ajax({
+    url: path,
+    type: 'POST',
+    data: data,
+    dataType: "json",
+    success: function(result){
+      if(result.response.message == 'Your Favori has been register'){
+        $('#announce'+idAnnounce).html("<button id='btnHeart' type='button' onclick='addFavorite("+idAnnounce+", "+result.response.favori.idFavori+")'><i class='"+result.response.favori.idFavori+" fas fa-heart'></i></button>");
+      } else {
+        $('#announce'+idAnnounce).html("<button id='btnHeart' type='button' onclick='addFavorite("+idAnnounce+", null)'><i class='null far fa-heart'></i></button>");
+      }
+    }
+  });
+}
   function showAnnounce(announce) {
-    let idAnnounce = '#heart'+announce['idAnnounce'];
-    $(".heart").prop('id', JSON.stringify(idAnnounce));
     $('#titleAnnounce').html(announce['announce_name']);
     $('#imgAnnounce').html(announce['imgAnnounce']);
     $('#announceComment').html(announce['announce_comment']);
@@ -168,23 +193,6 @@ function filterByCategorieProduct(categorie){
     $('#announcePrice').html(announce['announce_price']+'$');
     $('#idAnnounce').val(announce['idAnnounce']);
     $('#idUserSeller').val(announce['Users_idUser']);
-    $.ajax({
-        url: '/favori/findIdFavori',
-        type: 'POST',
-        data: {idAnnounce: announce['idAnnounce'],  _token: '{{csrf_token()}}'},
-        dataType: "json",
-        success: function(result){
-            let idFav = Object.values(result)[0].favoris[0];
-            if(typeof idFav !== 'undefined' ){
-                $('#idFavori').val(idFav.idFavori);
-            }
-            if(Object.values(result)[0].return === true){
-                $('i').removeClass('far fa-heart').addClass('fas fa-heart');
-            } else {
-                $('i').removeClass('fas fa-heart').addClass('far fa-heart');
-            }
-        }
-    });
     jQuery('#modal-announce').modal('show');
   }
 
