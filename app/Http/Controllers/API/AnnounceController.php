@@ -83,6 +83,7 @@ class AnnounceController extends Controller
         // fusionne tab1 et tab2 si les key dans le tab 1 exist dans le 2 avec les value du tab 2
         $newAnnounce = array_merge($col, array_intersect_key($data, $col));
         $newAnnounce['announce_date'] = DateTime::createFromFormat('Y-m-d H:i:s', NOW());
+        $newAnnounce['Users_idUser'] = $data['idUser'];
         $validator = $this->validateAnnounce($newAnnounce);
         if($validator->original['status'] == '400') {
             return $validator;
@@ -187,7 +188,6 @@ class AnnounceController extends Controller
             'announce_price' => ['required','string'],
             'announce_name' => ['required','string'],
             'announce_measure' => ['required','string'],
-            'announce_comment' => ['required','string'],
             'announce_adresse' => ['required','string'],
             'announce_city' => ['required','string'],
             'products_idProduct' => ['required','int'],
