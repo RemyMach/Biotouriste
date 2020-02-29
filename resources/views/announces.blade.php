@@ -91,6 +91,7 @@ function findByCity(cityData){
     data: {cityData: cityData[0],  _token: '{{csrf_token()}}'},
     dataType: "json",
     success: function(result){
+      console.log(result);
       mymap.removeLayer(this);
       remplirDivAnnonce(result.announces);
       $('#city')

@@ -31,7 +31,8 @@ class StripeController extends Controller
         $data['idUser'] = $iduser['idUser'];
         $data['api_token'] = $iduser['api_token'];
         $data['nbannouncesorder'] = session()->get('number');
-        foreach ($announces as $key => $announce) {
+        array_pop($announces);
+        foreach ($announces as $announce) {
             $data["announces"][] =
                 [
                     'idAnnounce' => $announce['idAnnounce'],

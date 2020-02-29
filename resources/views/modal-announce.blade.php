@@ -1,4 +1,5 @@
-<form action="">
+<form action="{{ url('carte') }}" method="post">
+    @csrf
     <div class="modal fade custom-width" id="modal-announce">
         <div class="modal-dialog" style="width: 90%">
             <div class="modal-content">
@@ -22,8 +23,7 @@
                     </div>
                     <br>
                     <div class="row">
-                        <div class="col-md-5 divHeart"><i id="" class="heart far fa-heart" onclick="addFavorite()"></i></div>
-                        <div class="col-md-4"><a href="#" class="btn btn-primary">Add to card</a></div>
+                        <div class="col-md-4"><button type="submit">Add to cart</button></div>
                     </div>
                 </div>
             </div>

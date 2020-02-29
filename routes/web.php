@@ -139,7 +139,7 @@ Route::post('report/show/user','ReportController@showAllMyReports');
 // Cart
 Route::get('cart', 'CartController@index')->name('cart');
 Route::get('cart/remove','CartController@remove');
-Route::get('carte','CartController@add');
+Route::post('carte','CartController@add');
 Route::get('ccart','CartController@countCart')->name('ccart');
 Route::get('qantmore','CartController@qantmore')->name('qantmore');
 Route::get('qantless','CartController@qantless')->name('qantless');
