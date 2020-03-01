@@ -46,7 +46,6 @@ Route::post('user/updatePassword','UserController@updatePassword');
 Route::get('admin/user/{user}','UserController@destroy');
 
 //comment
-
 Route::get('comment/{idUser}','CommentController@CommentsOfASeller')->name('comment');
 
 Route::get('comment/create','CommentController@create');
@@ -58,8 +57,7 @@ Route::get('comment/displayFormToStore/{idAnnounce}','CommentController@displayF
 Route::get('comment/destroy/{comment}','CommentController@destroy');
 
 Route::get('comment/show','CommentController@showYourPostedComments');
-
-//checks
+//Checks
 
 Route::get('check','CheckController@create');
 
@@ -139,17 +137,14 @@ Route::post('report/show/user','ReportController@showAllMyReports');
 // Cart
 Route::get('cart', 'CartController@index')->name('cart');
 Route::get('cart/remove','CartController@remove');
-Route::get('carte','CartController@add');
+Route::post('carte','CartController@add');
 Route::get('ccart','CartController@countCart')->name('ccart');
 Route::get('qantmore','CartController@qantmore')->name('qantmore');
 Route::get('qantless','CartController@qantless')->name('qantless');
-
-
 // Profil
 Route::get('profil', 'ProfilController@profil');
 Route::get('message', 'ProfilController@message');
 Route::get('favorite', 'ProfilController@favorite');
-
 // FAQ
 Route::get('blog', 'BlogController@index');
 Route::get('report/show/admin','ReportController@showAllReportsForAdmin');

@@ -13,6 +13,7 @@ class AnnounceController extends Controller
 
     public function __construct(){
         $this->middleware('seller')->only('store', 'update', 'selectHistorySeller');
+        $this->middleware('touristController');
     }
         /**
      * Display a listing of the resource.
@@ -94,8 +95,14 @@ class AnnounceController extends Controller
 
     public function filterByCategorie(Request $request, Client $client){
         $data = request()->all();
-        $data['idUser'] = config('api.api_admin_id');
-        $data['api_token'] = config('api.api_admin_token');
+        $this->sessionUser = $request->session()->get('user');
+        if ($this->sessionUser->idUser){
+            $data['idUser'] = $this->sessionUser->idUser;
+            $data['api_token'] = $this->sessionUser->api_token;
+        } else {
+            $data['idUser'] = config('api.api_admin_id');
+            $data['api_token'] = config('api.api_admin_token');
+        }
 
         $query = $client->request('POST', 'http://localhost:8001/api/filterByCategorie', ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
@@ -109,10 +116,16 @@ class AnnounceController extends Controller
     }
 
     public function filterByCity(Request $request, Client $client){
-
         $data = request()->all();
-        $data['idUser'] = config('api.api_admin_id');
-        $data['api_token'] = config('api.api_admin_token');
+        $this->sessionUser = $request->session()->get('user');
+        if ($this->sessionUser->idUser){
+            $data['idUser'] = $this->sessionUser->idUser;
+            $data['api_token'] = $this->sessionUser->api_token;
+        } else {
+            $data['idUser'] = config('api.api_admin_id');
+            $data['api_token'] = config('api.api_admin_token');
+        }
+
         $query = $client->request('POST', 'http://localhost:8001/api/filterByCity', ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
 

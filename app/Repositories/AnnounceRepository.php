@@ -20,20 +20,21 @@ class AnnounceRepository extends BaseRepository
         return Announce::class;
     }
 
-    public static function filterByLngAndLatOrAndCategorie($lng, $lat, int $idCategorie = 0){
+    public static function filterByLngAndLatOrAndCategorie($idUser, $lng, $lat, int $idCategorie = 0){
         $latmax = (float)$lat +1;
         $latmin = (float)$lat -1;
         $lngmax = (float)$lng +1;
         $lngmin = (float)$lng -1;
         if ($idCategorie == 0){
             return DB::table('Announces')
-                ->select('Announces.*', 'Favoris.*')
-                ->leftJoin('Favoris','Announces.idAnnounce','=','Favoris.Announces_idAnnounce')
+                ->select('Announces.*', 'Favoris.idFavori')
+                ->leftJoin('Favoris','Announces.Users_idUser','=','Favoris.Users_idUser')
                 ->where('announce_lat', '>=', $latmin)
                 ->where('announce_lat', '<=', $latmax)
                 ->where('announce_lng', '>=', $lngmin)
                 ->where('announce_lng', '<=', $lngmax)
                 ->where('announce_is_available', '=', true)
+//                ->where('Favoris.Users_idUser', '=', $idUser)
                 ->get();
         } else {
             $qb = DB::table('Announces')
@@ -50,6 +51,7 @@ class AnnounceRepository extends BaseRepository
                 ->where('announce_lng', '>=', $lngmin)
                 ->where('announce_lng', '<=', $lngmax)
                 ->where('announce_is_available', '=', true)
+//                ->where('Favoris.Users_idUser', '=', $idUser) a la place mettre l'id de l'annonce
                 ->get();
         }
     }

@@ -36,10 +36,7 @@ class PaymentController extends Controller
 
     public function getidforcard(Request $request)
     {
-
         $strip = Stripe::make(env('STRIPE_SECRET'));
-
-
         $orderdate = explode('/', $request->get("ccExpiry"));
         try {
             $tokenfrompost = $strip->tokens()->create([
@@ -57,9 +54,6 @@ class PaymentController extends Controller
                 'error' => $e->getMessage(),
             ]);
         }
-
-
-        //return $tokenfrompost;
 
         return $this->chargePaymentStripe($request, $tokenfrompost);
     }
@@ -83,13 +77,6 @@ class PaymentController extends Controller
                 'currency' => 'usd',
                 'amount' => $ordervalue,
             ]);
-
-
-            /*return response()->json([
-                'message' => 'Validate',
-                'status' => '200',
-                'user' => $request->get('ordervalue'),
-            ]);*/
             $e = 'No error';
             return $this->addpaymentindb($request, $charge ,$e);
         } catch (CardErrorException $e) {

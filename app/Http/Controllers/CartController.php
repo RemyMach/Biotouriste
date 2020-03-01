@@ -31,32 +31,18 @@ class CartController extends Controller
     }
 
     public function add(Request $request){
+        $announce = Announce::find($request->get('idAnnounce'));
+        $request->session()->push('cart', $announce);
 
-        //$annouce =  $this->sessionUser->cartUser;
-        //$newannouces = $request;
-//        //Session::forget('cart');
-//        $prout = Announce::find([1]);
-//        dd($prout);
-        $prout = ['idAnnounce' => 1, "announce_name" => "Test1", 'announce_quantity' => 3 , 'announce_price' => "25.88"];
-        $request->session()->push('cart', $prout);
-        $prout = ['idAnnounce' => 3, "announce_name" => "Test3", 'announce_quantity' => 2 , 'announce_price' => "2.88"];
-        $request->session()->push('cart', $prout);
-        $announces = $request->session()->get('cart');
-
-
-//        $announces = json_encode($announces);
-//        dd($announces);
         return redirect('cart');
      }
 
     public function remove(Request $request){
-//        dd($request);
         $cart = session()->get('cart');
         $index = $request->get('index');
         unset($cart[$index]);
         session()->put('cart', $cart);
         $announces = session()->get('cart');
-//        dd($announces);
         return redirect('cart');
     }
 
