@@ -78,15 +78,15 @@ let menu_set = 0;
   }
 </script>
 <script>
-  window.onscroll = function() {myFunction()};
+  // window.onscroll = function() {myFunction()};
 
-  function myFunction() {
-    if (document.body.scrollTop > 1000 || document.documentElement.scrollTop > 1000) {
-      document.getElementById("top").style.display = "block";
-    } else {
-      document.getElementById("top").style.display = "none";
-    }
-  }
+  // function myFunction() {
+  //   if (document.body.scrollTop > 1000 || document.documentElement.scrollTop > 1000) {
+  //     document.getElementById("top").style.display = "block";
+  //   } else {
+  //     document.getElementById("top").style.display = "none";
+  //   }
+  // }
 
   AOS.init({
   disable: false,

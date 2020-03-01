@@ -51,7 +51,7 @@ class AnnounceRepository extends BaseRepository
                 ->where('announce_lng', '>=', $lngmin)
                 ->where('announce_lng', '<=', $lngmax)
                 ->where('announce_is_available', '=', true)
-                ->where('Favoris.Users_idUser', '=', $idUser)
+//                ->where('Favoris.Users_idUser', '=', $idUser) a la place mettre l'id de l'annonce
                 ->get();
         }
     }
