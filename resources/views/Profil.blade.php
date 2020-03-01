@@ -148,7 +148,7 @@
             <div class="order">
               <div class="row" style="margin:0;">
                 <div class="col-md-4 text-left">
-                  <p>{{ $payment->announce_name }}</p>
+                  <p>{{ $payment->announce_name }} n°{{ $payment->idAnnounce  }}</p>
                 </div>
                 <div class="col-md-4 text-center">
                   <p>{{ $payment->product_name }}</p>
