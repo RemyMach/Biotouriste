@@ -83,6 +83,7 @@ function map() {
 <script>
 $(function() {
   findCityData();
+  $('#postAComment').hide();
 });
 function findByCity(cityData){
   $.ajax({
@@ -193,24 +194,43 @@ function addFavorite(idAnnounce, idFavori){
     $('#announcePrice').html(announce['announce_price']+'$');
     $('#idAnnounce').val(announce['idAnnounce']);
     $('#idUserSeller').val(announce['Users_idUser']);
+    let comments = '';
     $.ajax({
-      url: '/comment/1',
-      type: 'POST',
+      url: '/comment/'+announce['Users_idUser'],
+      type: 'GET',
       data: {_token: '{{csrf_token()}}'},
       dataType: "json",
       success: function(result){
-        console.log(result);
+        result.response.comments.forEach(function (announce) {
+          comments = comments +
+            "<div class='card'>"+
+                "<div class='card-body'>"+
+                    "<h3 class='comment_center'>"+announce['user_name']+" "+announce['user_surname']+"</h3>"+
+                    "<hr>"+
+                    "<div class='card-title'>"+
+                        "<p  class='comment_center' style='display: flex;justify-content: space-between;'>"+
+                          "<span>"+announce['comment_subject']+"</span>"+
+                          "<span>"+announce['comment_note']+"</span>"+
+                        "</p>"+
+                    "</div>"+
+                    "<div class='card-text'>"+
+                        "<p>"+announce['comment_content']+"</p>"+
+                    "</div>"+
+                "</div>"+
+            "</div>"
+        });
+        $('#modal-announce-footer-comments').html(comments);
       }
     });
     jQuery('#modal-announce').modal('show');
   }
 
   function getLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(showPosition, showError);
-    } else {
-      x.innerHTML = "Geolocation is not supported by this browser.";
-    }
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+      } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+      }
   }
 
   function showPosition(position) {

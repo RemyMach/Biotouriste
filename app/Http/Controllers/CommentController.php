@@ -25,8 +25,7 @@ class CommentController extends Controller
         $data['idUser'] = $this->sessionUser->idUser;
         $data['api_token'] = $this->sessionUser->api_token;
         $data['idAnnounce'] = $idAnnounce;
-        $query = $client->request('POST','http://localhost:8001/api/comment/store',
-            ['form_params' => $data]);
+        $query = $client->request('POST','http://localhost:8001/api/comment/store', ['form_params' => $data]);
 
         $response = json_decode($query->getBody()->getContents());
         if($response->status == '400')
@@ -39,7 +38,7 @@ class CommentController extends Controller
             return back()->with(['errorMassage' => $response->message]);
         }
         //return vers la route des announces
-        return redirect('CommentsOfASeller')->with(['successRegisterComment' => 'your comment has been register']);
+        return response()->json(['response'  => $response, 'idAnnounce' => $idAnnounce]);
     }
 
     public function displayFormToStore(Request $request, Client $client, $idAnnounce)
@@ -61,7 +60,7 @@ class CommentController extends Controller
 
         //retourne la page annonce avec un tableau contenant commentaires
         // et les users qui ont posté les commentaires
-        return view('comment.create',['idAnnounce' => $idAnnounce]);
+        return response()->json(['response'  => $response, 'idAnnounce' => $idAnnounce]);
 
     }
 
@@ -90,7 +89,8 @@ class CommentController extends Controller
 
         //retourne la page annonce avec un tableau contenant commentaires
         // et les users qui ont posté les commentaires
-        return view('comment.index',['comments' => $response->comments]);
+//        return view('comment.index',['comments' => $response->comments]);
+        return response()->json(['response'  => $response]);
     }
 
     /**
