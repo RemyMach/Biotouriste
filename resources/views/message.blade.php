@@ -7,7 +7,7 @@
       <div class="col-xs-12 col-sm-12 col-md-10 offset-md-1 text-center">
         <div class="card" data-aos="fade-down">
           <div id="message_list">
-            <h3>Message</h3>
+            <h3>Messages</h3>
               <table class="table">
                 <thead>
                   <tr>
@@ -16,30 +16,24 @@
                     <th scope="col"></th>
                     <th scope="col"></th>
                     <th scope="col"></th>
+                    <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody>
+                @foreach($response as $key => $messages)
                   <tr>
-                    <td><div style="background-image:url('../img/img.jpg')"></div></td>
+                    <td><div style="background-image:url('../../public/img/img.jpg')"></div></td>
                     <td>John Doe</td>
                     <td>15/04/2020 11:49:05</td>
-                    <td><button type="button" name="button">See</button></td>
-                    <td><button type="button" name="button">Delete</button></td>
+                    <td>Discussion N°{{$key}}</td>
+                    <td><button type="submit" name="button" onclick="seeMessages({{ $key }})">See</button></td>
                   </tr>
-                  <tr>
-                    <td><div style="background-image:url('../img/img.jpg')"></div></td>
-                    <td>John Doe</td>
-                    <td>15/04/2020 11:49:05</td>
-                    <td><button type="button" name="button">See</button></td>
-                    <td><button type="button" name="button">Delete</button></td>
-                  </tr>
-                  <tr>
-                    <td><div style="background-image:url('../img/img.jpg')"></div></td>
-                    <td>John Doe</td>
-                    <td>15/04/2020 11:49:05</td>
-                    <td><button type="button" name="button">See</button></td>
-                    <td><button type="button" name="button">Delete</button></td>
-                  </tr>
+                  @foreach($messages as $message)
+                    <div class="messages{{$key}} messagesHidden" style="display: none">
+                      {{$message->message_content}}
+                    </div>
+                  @endforeach
+                @endforeach
                 </tbody>
               </table>
           </div>
@@ -56,3 +50,14 @@
   </div>
 </div>
 @include('layouts.footer')
+
+
+<script>
+
+  function seeMessages(idMessages){
+    // let oldId = 'messages'+idMessages;
+    let newId = '.messages'+idMessages;
+    $('.messagesHidden').hide();
+    $(newId).show();
+  }
+</script>

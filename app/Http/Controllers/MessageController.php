@@ -32,16 +32,6 @@ class MessageController extends Controller
         return view('');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-
-    }
-
 
     public function store(Request $request, Client $client)
     {
@@ -72,10 +62,8 @@ class MessageController extends Controller
         $query = $client->request('POST','http://localhost:8001/api/message/showMessagesOfATouristController',
             ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
-
-        dd($response);
-
-        return view('testMessage',["response" => $response]);
+//        dd($response->conversations[0]);
+        return view('message',["response" => $response->conversations]);
     }
 
     public function showMessagesOfASeller(Request $request, Client $client)
@@ -88,32 +76,7 @@ class MessageController extends Controller
         $query = $client->request('POST','http://localhost:8001/api/message/showMessagesOfASeller',
             ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
-
-        dd($response);
-
-        return view('testMessage',["response" => $response]);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Message  $message
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Message $message)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Message  $message
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Message $message)
-    {
-        //
+        return view('message',["response" => $response->conversations]);
     }
 
     private function utilePourPlusTardNePasSupprimer(){
