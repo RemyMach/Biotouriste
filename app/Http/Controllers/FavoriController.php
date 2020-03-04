@@ -16,6 +16,17 @@ class FavoriController extends Controller
         $this->middleware('touristController')->only('showFavorisOfAUser', 'store', 'destroy', 'findIdFavori');
 
     }
+    public function isFavoris(Request $request, Client $client){
+        $this->sessionUser = $request->session()->get('user');
+        $data = request()->all();
+        $data['idUser']     = $this->sessionUser->idUser;
+        $data['api_token']  = $this->sessionUser->api_token;
+
+        $query = $client->request('POST', 'http://localhost:8001/api/favori/isFavoris', ['form_params' => $data]);
+        $response = json_decode($query->getBody()->getContents());
+
+        return response()->json($response);
+    }
 
     public function findIdFavori(Request $request, Client $client){
         $this->sessionUser = $request->session()->get('user');

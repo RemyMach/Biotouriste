@@ -19,6 +19,20 @@ class FavoriController extends Controller
 //        $this->middleware('apiMergeJsonInRequest');
         $this->middleware('apiTouristController')->only('showFavorisOfAUser', 'store', 'destroy', 'findIdFavori');
     }
+
+    public function isFavoris(Request $request){
+
+        $this->request = $request;
+
+
+        $favoris = FavoriRepository::isFavoris($this->request->input('idAnnounce'), $this->request->input('idUser'));
+        if(isset($favoris[0])){
+            return response()->json(['succes' => true,'favoris' => $favoris[0]] );
+
+        }
+        return response()->json(false);
+    }
+
     public function findIdFavori(Request $request){
         $this->request = $request;
 

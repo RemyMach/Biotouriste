@@ -115,7 +115,7 @@ Route::post('favori/store','FavoriController@store');
 
 Route::post('favori/destroy','FavoriController@destroy');
 
-Route::post('favori/findIdFavori','FavoriController@findIdFavori');
+Route::post('favori/isFavoris','FavoriController@isFavoris');
 
 //Messages
 

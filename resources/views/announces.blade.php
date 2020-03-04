@@ -155,6 +155,17 @@ function filterByCategorieProduct(categorie){
         "<td><button id='btnView' type='button' name='' onclick='showAnnounce("+JSON.stringify(announce)+")'>View</button></td>"+
         "</tr>";
 
+      $.ajax({
+          url: 'favori/isFavoris',
+          type: 'POST',
+          data: {idAnnounce : announce['idAnnounce'], _token: '{{csrf_token()}}'},
+          dataType: "json",
+          success: function (result){
+            if(result.succes === true){
+              $('#announce'+announce['idAnnounce']).html("<button id='btnHeart' type='button' onclick='addFavorite("+announce['idAnnounce']+", "+result.favoris.idFavori+")'><i class='"+result.favoris.idFavori+" fas fa-heart'></i></button>");
+            }
+          }
+        });
         var marker = new L.marker([announce['announce_lat'], announce['announce_lng']], {icon: icone}).addTo(lgMarkers);
         marker.bindPopup(announce['announce_name']);
       });

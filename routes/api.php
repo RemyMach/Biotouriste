@@ -96,7 +96,7 @@ Route::post('favori/store','API\FavoriController@store');
 
 Route::post('favori/destroy','API\FavoriController@destroy');
 
-Route::post('favori/findIdFavori','API\FavoriController@findIdFavori');
+Route::post('favori/isFavoris','API\FavoriController@isFavoris');
 
 //Messages
 

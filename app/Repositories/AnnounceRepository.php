@@ -27,20 +27,17 @@ class AnnounceRepository extends BaseRepository
         $lngmin = (float)$lng -1;
         if ($idCategorie == 0){
             return DB::table('Announces')
-                ->select('Announces.*', 'Favoris.idFavori')
-                ->leftJoin('Favoris','Announces.Users_idUser','=','Favoris.Users_idUser')
+                ->select('Announces.*')
                 ->where('announce_lat', '>=', $latmin)
                 ->where('announce_lat', '<=', $latmax)
                 ->where('announce_lng', '>=', $lngmin)
                 ->where('announce_lng', '<=', $lngmax)
                 ->where('announce_is_available', '=', true)
-//                ->where('Favoris.Users_idUser', '=', $idUser)
                 ->get();
         } else {
             $qb = DB::table('Announces')
                 ->select('Announces.*')
-                ->join('Products', 'Announces.products_idproduct', '=', 'Products.idproduct')
-                ->leftJoin('Favoris','Announces.idAnnounce','=','Favoris.Announces_idAnnounce');
+                ->join('Products', 'Announces.products_idproduct', '=', 'Products.idproduct');
                 if($idCategorie == 0){
                     $qb->where('product_categories_idproduct_category', [1,2,3,4,5,6]);
                 }else{
@@ -51,7 +48,6 @@ class AnnounceRepository extends BaseRepository
                 ->where('announce_lng', '>=', $lngmin)
                 ->where('announce_lng', '<=', $lngmax)
                 ->where('announce_is_available', '=', true)
-//                ->where('Favoris.Users_idUser', '=', $idUser) a la place mettre l'id de l'annonce
                 ->get();
         }
     }

@@ -21,6 +21,13 @@ class FavoriRepository extends BaseRepository
         return Favori::class;
     }
 
+    public static function isFavoris($idAnnounce, $idUser){
+        return DB::table('Favoris')
+            ->where('Favoris.Announces_idAnnounce','=',$idAnnounce)
+            ->where('Favoris.Users_idUser','=',$idUser)
+            ->get();
+    }
+
     public static function selectIdFavoriWithUserAndAnnounce($idUser, $idAnnounce){
         return DB::table('Favoris')
             ->select('Favoris.idFavori')
