@@ -12,8 +12,7 @@ class AnnounceController extends Controller
 
 
     public function __construct(){
-        $this->middleware('seller')->only('store', 'update', 'selectHistorySeller');
-        $this->middleware('touristController');
+        $this->middleware('seller');
     }
         /**
      * Display a listing of the resource.
@@ -34,9 +33,6 @@ class AnnounceController extends Controller
         $query = $client->request('POST', 'http://localhost:8001/api/announce/historySeller', ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
 
-        if ($response->status === '400'){
-            return response()->json(['error' => $response->error]);
-        }
         return view('historySeller', [
             'announces' => $response->announces,
             'totalAnnounces' => $response->totalAnnounces,
