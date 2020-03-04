@@ -57,11 +57,11 @@ class ProfilController extends Controller
 
     public function message(Request $request)
     {
-        return view('Message');
+        return view('message');
     }
 
     public function favorite(Request $request)
     {
-        return view('Favorite');
+        return view('favorite');
     }
 }

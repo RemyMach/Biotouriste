@@ -48,9 +48,7 @@ class MessageController extends Controller
             ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
 
-        dd($response);
-
-        return view('testMessage',["response" => $response]);
+        return view('message',["response" => $response]);
     }
 
     public function showMessagesOfATouristController(Request $request, Client $client)
@@ -62,7 +60,6 @@ class MessageController extends Controller
         $query = $client->request('POST','http://localhost:8001/api/message/showMessagesOfATouristController',
             ['form_params' => $data]);
         $response = json_decode($query->getBody()->getContents());
-//        dd($response->conversations[0]);
         return view('message',["response" => $response->conversations]);
     }
 
