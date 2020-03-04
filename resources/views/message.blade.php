@@ -28,13 +28,13 @@
                       <td>Discussion N°{{$key}}</td>
                       <td><button type="submit" name="button" onclick="seeMessages({{ $key }})">See</button></td>
                     </tr>
-                    @if(isset($messages))
-                      @foreach($messages as $message)
-                        <div class="messages{{$key}} messagesHidden" style="display: none">
-                          {{$message->message_content}}
-                        </div>
-                      @endforeach
-                    @endif
+                    @foreach($messages as $message)
+                      @if(isset($message))
+                          <div class="messages{{$key}} messagesHidden" style="display: none">
+                            {{$message->message_content}}
+                          </div>
+                      @endif
+                    @endforeach
                   @endforeach
                 @endif
                 </tbody>
