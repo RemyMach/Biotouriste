@@ -11,9 +11,10 @@ class AnnounceController extends Controller
     private $sessionUser;
 
 
-    public function __construct(){
-        $this->middleware('seller');
-    }
+//    public function __construct(){
+//        $this->middleware('seller');
+//        $this->middleware('SessionAuth');
+//    }
         /**
      * Display a listing of the resource.
      *

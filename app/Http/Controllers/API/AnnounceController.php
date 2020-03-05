@@ -16,9 +16,9 @@ class AnnounceController extends Controller
 {
     private $request;
 
-    public function __construct(){
-        $this->middleware('apiSeller');
-    }
+//    public function __construct(){
+//        $this->middleware('apiSeller');
+//    }
 
     public function selectHistorySeller(Request $request){
         $this->request = $request;
