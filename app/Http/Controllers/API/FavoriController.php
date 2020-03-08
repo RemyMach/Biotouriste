@@ -16,8 +16,8 @@ class FavoriController extends Controller
 
     public function __construct()
     {
-//        $this->middleware('apiMergeJsonInRequest');
-        $this->middleware('apiTouristController')->only('showFavorisOfAUser', 'store', 'destroy', 'findIdFavori');
+        $this->middleware('apiMergeJsonInRequest');
+        $this->middleware('apiTouristController');
     }
 
     public function isFavoris(Request $request){
@@ -52,7 +52,6 @@ class FavoriController extends Controller
     public function showFavorisOfAUser(Request $request){
 
         $this->request = $request;
-
         $favoris = FavoriRepository::allFavorisAnnounceOfAUser($this->request->input('idUser'));
         @$firstFavori = $favoris[0];
 
