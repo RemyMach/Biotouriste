@@ -25,9 +25,9 @@ class MessageController extends Controller
     public function __construct()
     {
         $this->middleware('apiMergeJsonInRequest');
-        $this->middleware('apiTokenAndIdUserExistAndMatch')->only(
+        /*$this->middleware('apiTokenAndIdUserExistAndMatch')->only(
                 'store'
-        );
+        );*/
     }
 
     public function store(Request $request, Mail $mail){
