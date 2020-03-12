@@ -13,7 +13,7 @@ class FavoriController extends Controller
 
     public function __construct(){
 
-        $this->middleware('touristController')->only('showFavorisOfAUser', 'store', 'destroy', 'findIdFavori');
+        $this->middleware('touristController');
 
     }
     public function isFavoris(Request $request, Client $client){
