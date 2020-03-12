@@ -57,7 +57,7 @@ class MessageRepository extends BaseRepository
             ->join('Announces','Messages.Announces_idAnnounce','=','Announces.idAnnounce')
             ->select('Messages.Announces_idAnnounce')
             ->where('Announces.Users_idUser','=',$idUser)
-            ->groupBy('messages.Announces_idAnnounce')
+            ->groupBy('Messages.Announces_idAnnounce')
             ->get();
     }
 
