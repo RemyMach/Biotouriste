@@ -54,7 +54,7 @@ class MessageRepository extends BaseRepository
     public static function getAllAnnouncesWithMessagesFromASeller($idUser){
 
         return DB::table('Messages')
-            ->join('Announces','messages.Announces_idAnnounce','=','Announces.idAnnounce')
+            ->join('Announces','Messages.Announces_idAnnounce','=','Announces.idAnnounce')
             ->select('Messages.Announces_idAnnounce')
             ->where('Announces.Users_idUser','=',$idUser)
             ->groupBy('messages.Announces_idAnnounce')
