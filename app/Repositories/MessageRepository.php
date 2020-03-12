@@ -23,7 +23,7 @@ class MessageRepository extends BaseRepository
 
     public static function getAllMessagesOfATouristControllerForAnAnnounce($idAnnounce, $idUser){
 
-        return DB::table('messages')
+        return DB::table('Messages')
             ->where('Announces_idAnnounce','=',$idAnnounce)
             ->where('Users_idUser','=',$idUser)
             ->get();
@@ -31,31 +31,31 @@ class MessageRepository extends BaseRepository
 
     public static function getAllAnnouncesWhereUserSendAMessage($idUser){
 
-        return DB::table('messages')
-            ->join('Announces','messages.Announces_idAnnounce','=','Announces.idAnnounce')
-            ->select('messages.Announces_idAnnounce')
-            ->where('messages.Users_idUser','=',$idUser)
-            ->groupBy('messages.Announces_idAnnounce')
+        return DB::table('Messages')
+            ->join('Announces','Messages.Announces_idAnnounce','=','Announces.idAnnounce')
+            ->select('Messages.Announces_idAnnounce')
+            ->where('Messages.Users_idUser','=',$idUser)
+            ->groupBy('Messages.Announces_idAnnounce')
             ->get();
     }
 
     public static function getAllMessagesFromAnnouncesAndTouristController($idUser,array $idAnnounces){
 
-        return DB::table('messages')
-            ->join('Announces','messages.Announces_idAnnounce','=','Announces.idAnnounce')
+        return DB::table('Messages')
+            ->join('Announces','Messages.Announces_idAnnounce','=','Announces.idAnnounce')
             ->join('Users','Announces.Users_idUser','=','Users.idUser')
-            ->select('messages.*','Announce_name','announce_is_available','Users.*')
-            ->where('messages.Users_idUser','=',$idUser)
+            ->select('Messages.*','Announce_name','announce_is_available','Users.*')
+            ->where('Messages.Users_idUser','=',$idUser)
             ->whereIn('Announces_idAnnounce',$idAnnounces)
-            ->orderByDesc('messages.message_date')
+            ->orderByDesc('Messages.message_date')
             ->get();
     }
 
     public static function getAllAnnouncesWithMessagesFromASeller($idUser){
 
-        return DB::table('messages')
+        return DB::table('Messages')
             ->join('Announces','messages.Announces_idAnnounce','=','Announces.idAnnounce')
-            ->select('messages.Announces_idAnnounce')
+            ->select('Messages.Announces_idAnnounce')
             ->where('Announces.Users_idUser','=',$idUser)
             ->groupBy('messages.Announces_idAnnounce')
             ->get();
@@ -63,13 +63,13 @@ class MessageRepository extends BaseRepository
 
     public static function getAllMessagesFromAnnouncesAndSeller($idUser,array $idAnnounces){
 
-        return DB::table('messages')
-            ->join('Announces','messages.Announces_idAnnounce','=','Announces.idAnnounce')
-            ->join('Users','messages.Users_idUser','=','Users.idUser')
-            ->select('messages.*','Announce_name','announce_is_available','Users.*')
+        return DB::table('Messages')
+            ->join('Announces','Messages.Announces_idAnnounce','=','Announces.idAnnounce')
+            ->join('Users','Messages.Users_idUser','=','Users.idUser')
+            ->select('Messages.*','Announce_name','announce_is_available','Users.*')
             ->where('Announces.Users_idUser','=',$idUser)
             ->whereIn('Announces_idAnnounce',$idAnnounces)
-            ->orderByDesc('messages.message_date')
+            ->orderByDesc('Messages.message_date')
             ->get();
     }
 }
